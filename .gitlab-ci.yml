@@ -26,10 +26,18 @@ build-iamge:
     - "docker image rm registry.gitlab.com/sn-curtain/sn-curtain.com"
   only:
     - master
+  
+before_script:
+  - "apk add --no-cache py-pip"
+  - "pip install docker-compose"
+  - "docker-compose version"
 
 # Deploy Development
 deploy-staging:
+  image: docker:stable
   stage: deploy
+  services:
+    - docker:dind
   script:
     - "docker-compose -f .cdconfig/docker-compose.staging.yml pull"
     - "docker-compose -f .cdconfig/docker-compose.staging.yml stop"
@@ -42,7 +50,10 @@ deploy-staging:
 
 # Deploy Production (manual)
 deploy-production:
+  image: docker:stable
   stage: deploy
+  services:
+    - docker:dind
   script:
     - "docker-compose -f .cdconfig/docker-compose.staging.yml pull"
     - "docker-compose -f .cdconfig/docker-compose.staging.yml stop"

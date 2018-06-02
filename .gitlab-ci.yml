@@ -1,0 +1,50 @@
+# Step
+stages:
+  - build
+  - deploy
+
+# Login Registry
+before_script:
+  - "docker login registry.gitlab.com -u $GITLAB_USERNAME -password-stdin $GITLAB_TOKEN"\
+
+# Build Image
+build-iamge:
+  stage: build
+  image: docker:stable
+  servies:
+    - docker:dind
+  script:
+    - "docker build -t registry.gitlab.com/sn-curtain/sn-curtain.com ."
+    - "docker push registry.gitlab.com/sn-curtain/sn-curtain.com"
+  after_script:
+    - "docker image rm registry.gitlab.com/sn-curtain/sn-curtain.com"
+  only:
+    - master
+
+# Deploy Development
+staging-deploy:
+  stage: deploy
+  script:
+    - "docker-compose -f .cdconfig/docker-compose.staging.yml pull"
+    - "docker-compose -f .cdconfig/docker-compose.staging.yml stop"
+    - "docker-compose -f .cdconfig/docker-compose.staging.yml rm --force"
+    - "docker-compose -f .cdconfig/docker-compose.staging.yml up -d"
+  environment:
+    name: staging
+  only:
+    - master
+
+# Deploy Production (manual)
+production-deploy:
+  stage: deploy
+  script:
+    - "docker-compose -f .cdconfig/docker-compose.staging.yml pull"
+    - "docker-compose -f .cdconfig/docker-compose.staging.yml stop"
+    - "docker-compose -f .cdconfig/docker-compose.staging.yml rm --force"
+    - "docker-compose -f .cdconfig/docker-compose.staging.yml up -d"
+  environment:
+    name: production
+  only:
+    - master
+  when: manual
+

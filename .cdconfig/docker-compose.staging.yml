@@ -1,0 +1,10 @@
+version: '3'
+
+servies:
+  sn-curtain.com-staging:
+    image: registry.gitlab.com/sn-curtain/sn-curtain.com
+    restart: always
+    volumes:
+      - var/www/dev.sn-curtain.com/html:/home/app/sn-curtain.com
+    environment:
+      - NODE_ENV=staging

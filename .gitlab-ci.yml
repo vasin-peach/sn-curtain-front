@@ -5,7 +5,7 @@ stages:
 
 # Login Registry
 before_script:
-  - "docker login registry.gitlab.com -u $GITLAB_USERNAME -password-stdin $GITLAB_TOKEN"\
+  - "docker login registry.gitlab.com -u $GITLAB_USERNAME -password-stdin $GITLAB_TOKEN"
 
 # Build Image
 build-iamge:

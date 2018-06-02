@@ -2,7 +2,7 @@
 FROM node:8-alpine as frontend
 
 # Create folder
-RUN mkdir -p /home/app/sn-curtain.com
+RUN mkdir -p /home/ && mkdir -p /home/app && mkdir -p /home/app/sn-curtain.com
 
 # Copy current to build folder
 COPY . /home/app/sn-curtain.com

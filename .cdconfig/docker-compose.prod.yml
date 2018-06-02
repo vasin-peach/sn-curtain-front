@@ -4,6 +4,7 @@ services:
   sn-curtain.com-staging:
     image: registry.gitlab.com/sn-curtain/sn-curtain.com
     restart: always
+    build: .
     volumes:
       - /var/www/html:/home/app/sn-curtain.com/dist
     environment:

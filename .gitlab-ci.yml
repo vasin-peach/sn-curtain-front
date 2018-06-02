@@ -11,7 +11,7 @@ variables:
 
 # Login Registry
 before_script:
-  - "docker login registry.gitlab.com -u $GITLAB_USERNAME -p $GITLAB_TOKEN registry.gitlab.com"
+  - "docker login -u $GITLAB_USERNAME -p $GITLAB_TOKEN registry.gitlab.com"
 
 # Build Image
 build-iamge:

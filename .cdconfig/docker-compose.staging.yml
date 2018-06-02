@@ -5,6 +5,6 @@ services:
     image: registry.gitlab.com/sn-curtain/sn-curtain.com
     restart: always
     volumes:
-      - var/www/dev.sn-curtain.com/html:/home/app/sn-curtain.com/dist
+      - /var/www/dev.sn-curtain.com/html:/home/app/sn-curtain.com/dist
     environment:
       - NODE_ENV=staging

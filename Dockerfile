@@ -1,25 +1,14 @@
 # Frontend build
 FROM node:8-alpine as frontend
 
+RUN mkdir -p /home && mkdir -p /home/app && mkdir -p /home/app/sn-curtain.com && mkdir -p /home/app/sn-curtain.com/frontend
+
+COPY . /home/app/sn-curtain.com/frontend
+
 WORKDIR /home/app/sn-curtain.com/frontend
-COPY . ./
 
 RUN yarn install
-
-CMD ["yarn", "build"]
-
-# # Backend build
-# FROM node:8-alpine as backend
-
-# WORKDIR /home/app/sn-curtain.com/backend
-# COPY . ./
-
-# RUN yarn install
-
-# EXPOSE 5000
-
-# CMD ["yarn", "start"]
-
+RUN yarn build
 
 
 # # Create folder

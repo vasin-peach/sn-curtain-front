@@ -3,10 +3,12 @@ version: '3'
 services:
   sn-curtain.com-staging:
     container_name: sn-curtain.com-frontend-staging
-    image: registry.gitlab.com/sn-curtain/sn-curtain.com
+    # image: registry.gitlab.com/sn-curtain/sn-curtain.com
+    build: ../
     restart: always
     volumes:
       - /home/app/sn-curtain.com:/home/app/sn-curtain.com
+      - /var/www/dev.sn-curtain.com/html:/home/app/sn-curtain.com/dist
     environment:
       - NODE_ENV=staging
   

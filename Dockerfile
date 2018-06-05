@@ -5,7 +5,8 @@ WORKDIR /home/app/sn-curtain.com/frontend
 COPY . ./
 
 RUN yarn install
-RUN yarn build
+
+CMD ["yarn", "build"]
 
 # # Backend build
 # FROM node:8-alpine as backend

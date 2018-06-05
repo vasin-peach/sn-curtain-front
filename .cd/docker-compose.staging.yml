@@ -7,19 +7,6 @@ services:
     restart: always
     volumes:
       - /var/www/dev.sn-curtain.com/html:/home/app/sn-curtain.com
-      - /home/app/sn-curtain.com/nginx:/home/app/sn-curtain.com/.nginx/*
-      - /home/app/sn-curtain.com/ssl:/home/app/sn-curtain.com/.ssl/*
     environment:
       - NODE_ENV=staging
-
-
-  sn-curtain.com-nginx-staging:
-    container_name: sn-curtain.com-nginx-staging
-    image: nginx:1.14-alpine
-    ports:
-      - 80:80
-    restart: always
-    volumes:
-      - /home/app/sn-curtain.com/nginx:
-      - /home/app/sn-curtain.com/ssl:
       

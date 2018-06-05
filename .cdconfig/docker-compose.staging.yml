@@ -6,8 +6,6 @@ services:
     restart: always
     volumes:
       - /home/app/sn-curtain.com:/home/app/sn-curtain.com
-    ports:
-      - 80:80
     environment:
       - NODE_ENV=staging
   

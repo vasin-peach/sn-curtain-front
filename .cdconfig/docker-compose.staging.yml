@@ -3,7 +3,17 @@ version: '3'
 services:
   sn-curtain.com-staging:
     image: registry.gitlab.com/sn-curtain/sn-curtain.com
+    restart: always
     volumes:
-      - /var/www/dev.sn-curtain.com/html:/home/app/sn-curtain.com/dist
+      - /home/app/sn-curtain.com:/home/app/sn-curtain.com
+    ports:
+      - 80:80
     environment:
       - NODE_ENV=staging
+  
+  backend-staging:
+    image: mongo:latest
+    restart: always
+      - /home/app/sn-curtain.com/mongo:/data/db
+    ports:
+      - 27017

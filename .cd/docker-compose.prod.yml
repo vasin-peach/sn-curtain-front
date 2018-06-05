@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  sn-curtain.com-staging:
+    container_name: sn-curtain.com-staging
+    restart: always
+    build: .
+    volumes:
+      - /var/www/html:/home/app/sn-curtain.com/dist
+    environment:
+      - NODE_ENV=production

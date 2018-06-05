@@ -11,6 +11,11 @@ RUN yarn install
 RUN yarn build
 
 
+# Backend build
+FROM node:8-alpine
+
+RUN mkdir -p /home/app/sn-curtain.com/backend
+
 # # Create folder
 # RUN mkdir -p /home/ && mkdir -p /home/app && mkdir -p /home/app/sn-curtain.com
 

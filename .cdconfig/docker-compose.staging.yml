@@ -2,6 +2,7 @@ version: '3'
 
 services:
   sn-curtain.com-staging:
+    container_name: sn-curtain.com-frontend-staging
     image: registry.gitlab.com/sn-curtain/sn-curtain.com
     restart: always
     volumes:
@@ -9,7 +10,8 @@ services:
     environment:
       - NODE_ENV=staging
   
-  backend-staging:
+  database-staging:
+    container_name: sn-curtain.com-database-staging
     image: mongo:latest
     restart: always
     volumes:

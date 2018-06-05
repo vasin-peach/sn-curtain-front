@@ -8,15 +8,15 @@ services:
     restart: always
     volumes:
       - /home/app/sn-curtain.com:/home/app/sn-curtain.com
-      - /var/www/dev.sn-curtain.com/html:/home/app/sn-curtain.com/dist
+      - /var/www/dev.sn-curtain.com/html:/home/app/sn-curtain.com
     environment:
       - NODE_ENV=staging
   
-  database-staging:
-    container_name: sn-curtain.com-database-staging
-    image: mongo:latest
-    restart: always
-    volumes:
-      - /home/app/sn-curtain.com/mongo:/data/db
-    ports:
-      - 27017
+  # database-staging:
+  #   container_name: sn-curtain.com-database-staging
+  #   image: mongo:latest
+  #   restart: always
+  #   volumes:
+  #     - /home/app/sn-curtain.com/mongo:/data/db
+  #   ports:
+  #     - 27017

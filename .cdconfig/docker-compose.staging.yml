@@ -14,6 +14,7 @@ services:
   backend-staging:
     image: mongo:latest
     restart: always
+    volumes:
       - /home/app/sn-curtain.com/mongo:/data/db
     ports:
       - 27017

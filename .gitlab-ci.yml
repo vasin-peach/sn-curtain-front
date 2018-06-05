@@ -16,19 +16,19 @@ variables:
 #   - "docker login -u $GITLAB_USERNAME -p $GITLAB_TOKEN registry.gitlab.com"
 
 
-# # Build Image
-# build-image:
-#   stage: build
-#   image: docker:stable
-#   services:
-#     - docker:dind
-#   only:
-#     - master
-#   script:
-#     - "docker build --pull -t $DOCKER_IMAGE_NAME ."
-#     - "docker push $DOCKER_IMAGE_NAME"
-#   after_script:
-#     - "docker image rm $DOCKER_IMAGE_NAME"
+# Build Image
+build-image:
+  stage: build
+  image: docker:stable
+  services:
+    - docker:dind
+  only:
+    - master
+  script:
+    - "docker build --pull -t $DOCKER_IMAGE_NAME ."
+    - "docker push $DOCKER_IMAGE_NAME"
+  after_script:
+    - "docker image rm $DOCKER_IMAGE_NAME"
 
 
 # Deploy Development

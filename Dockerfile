@@ -6,7 +6,7 @@ WORKDIR /home/app/sn-curtain.com
 COPY ./package.json /home/app/sn-curtain.com
 RUN yarn install
 
-COPY . /home/app/sn-curtain.com
+COPY . ./
 
 CMD [ "yarn", "build" ]
 

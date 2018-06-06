@@ -10,6 +10,9 @@ COPY . /home/app/sn-curtain.com
 
 CMD [ "yarn", "build" ]
 
+
+
+
 # Backend build
 # FROM node:8-alpine
 

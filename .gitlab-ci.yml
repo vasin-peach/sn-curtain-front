@@ -11,9 +11,9 @@ variables:
   DOCKER_IMAGE_NAME: registry.gitlab.com/$CI_PROJECT_PATH
 
 
-# # # Login Registry
-# before_script:
-#   - "docker login -u $GITLAB_USERNAME -p $GITLAB_TOKEN registry.gitlab.com"
+# # Login Registry
+before_script:
+  - "docker login -u $GITLAB_USERNAME -p $GITLAB_TOKEN registry.gitlab.com"
 
 
 # Build Image

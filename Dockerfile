@@ -3,10 +3,10 @@ FROM node:9-alpine as frontend
 
 WORKDIR /home/app/sn-curtain.com
 
-COPY ./package.json /home/app/sn-curtain.com
+COPY package*.json ./
 RUN yarn install
 
-COPY . ./
+COPY . .
 
 CMD [ "yarn", "build" ]
 

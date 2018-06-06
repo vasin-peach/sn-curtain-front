@@ -4,7 +4,7 @@ services:
   sn-curtain.com-frontend-staging:
     image: registry.gitlab.com/sn-curtain/sn-curtain.com:latest
     container_name: sn-curtain.com-frontend-staging
-    restart: always
+    restart: on-failure
     volumes:
       - /var/www/dev.sn-curtain.com/html:/home/app/sn-curtain.com/
     environment:

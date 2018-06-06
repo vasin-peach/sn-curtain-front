@@ -40,6 +40,7 @@ deploy-staging:
     - "pip install docker-compose"
     - "docker-compose version"
   script:
+    - "docker-compose -f .cdconfig/docker-compose.staging.yml down"
     - "docker-compose -f .cd/docker-compose.staging.yml pull"
     - "docker-compose -f .cd/docker-compose.staging.yml stop"
     - "docker-compose -f .cd/docker-compose.staging.yml rm --force"

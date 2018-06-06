@@ -7,10 +7,7 @@ COPY ./package.json /home/app/sn-curtain.com
 RUN yarn install
 
 COPY . /home/app/sn-curtain.com
-
-RUN yarn cache clean
-
-CMD [ "yarn", "build" ]
+RUN yarn build
 
 
 # Backend build

@@ -6,7 +6,7 @@ services:
     container_name: sn-curtain.com-frontend-staging
     restart: always
     volumes:
-      - /var/www/dev.sn-curtain.com/html:/home/app/sn-curtain.com
+      - /var/www/dev.sn-curtain.com/html:/home/app/sn-curtain.com/dist/
     environment:
       - NODE_ENV=staging
       

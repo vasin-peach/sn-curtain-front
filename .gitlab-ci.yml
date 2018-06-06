@@ -28,12 +28,13 @@ build-image:
     - "docker build --pull -t $DOCKER_IMAGE_NAME ."
     - "docker push $DOCKER_IMAGE_NAME"
   after_script:
-    - "docker image rm $DOCKER_IMAGE_NAME"
+    - "docker image rm -f $DOCKER_IMAGE_NAME"
 
 
 # Deploy Development
 deploy-staging:
   stage: deploy
+  image: docker:stable
   before_script:
     - "apk add --no-cache py-pip"
     - "pip install docker-compose"

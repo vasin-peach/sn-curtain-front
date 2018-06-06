@@ -7,9 +7,8 @@ COPY ./package.json /home/app/sn-curtain.com
 RUN yarn install
 
 COPY . /home/app/sn-curtain.com
-RUN yarn build
 
-CMD [ "bin/sh" ]
+CMD [ "yarn", "build" ]
 
 # Backend build
 # FROM node:8-alpine

@@ -9,4 +9,3 @@ services:
       - /var/www/dev.sn-curtain.com/html:/home/app/sn-curtain.com/dist/
     environment:
       - NODE_ENV=staging
-      

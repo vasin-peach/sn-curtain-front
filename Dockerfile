@@ -1,16 +1,18 @@
 # Frontend build
 FROM node:9-alpine as frontend
 
+RUN mkdir -p /home && mkdir -p /home/app && mkdir -p /home/app/sn-curtain.com
+
+COPY . /home/app/sn-curtain.com
+
 WORKDIR /home/app/sn-curtain.com
-COPY . ./
 
 RUN yarn install
-
-CMD [ "yarn", "build" ]
-
+RUN yarn build
 
 
 
+# CMD [ "yarn", "build" ]
 # Backend build
 # FROM node:8-alpine
 

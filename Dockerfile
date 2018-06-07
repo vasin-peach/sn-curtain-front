@@ -1,5 +1,5 @@
 # Frontend build
-FROM node:alpine as frontend
+FROM node:8-alpine as frontend
 
 WORKDIR /home/app/sn-curtain.com
 COPY . ./
@@ -9,13 +9,13 @@ RUN yarn install
 RUN yarn build
 
 # Runner build
-FROM node:alpine
+FROM node:8-alpine
 
 WORKDIR /home/app/sn-curtain.com
 
 COPY . ./
 
-RUN rm - rf frontend
+RUN rm -rf frontend
 
 RUN mkdir frontend
 

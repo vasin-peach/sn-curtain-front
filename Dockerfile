@@ -2,30 +2,27 @@
 FROM node:alpine as frontend
 
 WORKDIR /home/app/sn-curtain.com
-COPY ./package.json /home/app/sn-curtain.com
-RUN yarn install
+COPY . ./
+WORKDIR /home/app/sn-curtain.com/frontend
 
-COPY . /home/app/sn-curtain.com
+RUN yarn install
 RUN yarn build
 
-CMD ["/bin/sh", "yarn run start"]
+# Runner build
+FROM node:alpine
 
+WORKDIR /home/app/sn-curtain.com
 
+COPY . ./
 
-# Backend build
-# FROM node:8-alpine
+RUN rm - rf frontend
 
-# RUN mkdir -p /home/app/sn-curtain.com/backend
+RUN mkdir frontend
 
-# # Create folder
-# RUN mkdir -p /home/ && mkdir -p /home/app && mkdir -p /home/app/sn-curtain.com
+COPY --from=frontend /home/app/sn-curtain.com/frontend/dist ./frontend
 
-# # Copy current to build folder
-# COPY . /home/app/sn-curtain.com
+RUN yarn install
 
-# # Change workdir to build folder
-# WORKDIR /home/app/sn-curtain.com
+EXPOSE 5000
 
-# # Run build
-# RUN yarn install
-# RUN yarn build
+CMD [ "yarn", "start" ]

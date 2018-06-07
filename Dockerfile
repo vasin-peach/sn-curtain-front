@@ -19,7 +19,7 @@ RUN rm -rf frontend
 
 RUN mkdir frontend
 
-COPY --from=frontend /home/app/sn-curtain.com/frontend/dist ./frontend
+COPY --from=frontend /home/app/sn-curtain.com/frontend/ ./frontend
 
 RUN yarn install
 

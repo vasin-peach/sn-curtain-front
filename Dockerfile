@@ -23,6 +23,6 @@ COPY --from=frontend /home/app/sn-curtain.com/frontend/ ./frontend
 
 RUN yarn install
 
-EXPOSE 5000
+EXPOSE 3000
 
 CMD [ "yarn", "start" ]

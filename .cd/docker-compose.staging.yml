@@ -5,7 +5,5 @@ services:
     image: registry.gitlab.com/sn-curtain/sn-curtain.com:latest
     container_name: sn-curtain.com-frontend-staging
     restart: always
-    ports:
-      - "3000:5000"
     environment:
       - NODE_ENV=staging

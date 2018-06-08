@@ -16,5 +16,6 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging')
   app.use(express.static('frontend/dist'))
 }
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT)

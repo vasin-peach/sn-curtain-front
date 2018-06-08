@@ -25,10 +25,10 @@ build-image:
   only:
     - master
   script:
-    - "docker build --pull -t $DOCKER_IMAGE_NAME ."
-    - "docker push $DOCKER_IMAGE_NAME"
+    - "docker build --pull -t registry.gitlab.com/sn-curtain/sn-curtain.com ."
+    - "docker push registry.gitlab.com/sn-curtain/sn-curtain.com"
   after_script:
-    - "docker image rm -f $DOCKER_IMAGE_NAME"
+    - "docker image rm -f registry.gitlab.com/sn-curtain/sn-curtain.com"
 
 
 # Deploy Development

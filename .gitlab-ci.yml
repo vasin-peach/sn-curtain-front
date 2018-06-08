@@ -41,8 +41,8 @@ deploy-staging:
   script:
     - "docker-compose -f .cd/docker-compose.staging.yml pull"
     - "docker-compose -f .cd/docker-compose.staging.yml stop"
-    - "docker-compose -f .cd/docker-compose.staging.yml down"
-    - "docker-compose -f .cd/docker-compose.staging.yml up -d"
+    - "docker-compose -f .cd/docker-compose.staging.yml rm --force"
+    - "docker-compose -f .cd/docker-compose.staging.yml up --build -d"
   environment:
     name: staging
     url: "https://dev.sn-curtain.com"
@@ -60,8 +60,8 @@ deploy-production:
   script:
     - "docker-compose -f .cd/docker-compose.prod.yml pull"
     - "docker-compose -f .cd/docker-compose.prod.yml stop"
-    - "docker-compose -f .cd/docker-compose.prod.yml down"
-    - "docker-compose -f .cd/docker-compose.prod.yml up -d"
+    - "docker-compose -f .cd/docker-compose.prod.yml rm --force"
+    - "docker-compose -f .cd/docker-compose.prod.yml up --build -d"
   environment:
     name: production
     url: "https://sn-curtain.com"

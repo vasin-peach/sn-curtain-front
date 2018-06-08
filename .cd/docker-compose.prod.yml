@@ -5,7 +5,7 @@ services:
     image: registry.gitlab.com/sn-curtain/sn-curtain.com:latest
     container_name: sn-curtain.com-frontend-production
     restart: always
-    volumes:
-      - /var/www/html:/home/app/sn-curtain.com/
+    ports:
+      - 6000:5000
     environment:
       - NODE_ENV=production

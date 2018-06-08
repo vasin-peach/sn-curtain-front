@@ -17,5 +17,4 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging')
 }
 
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT)

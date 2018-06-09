@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  sn-curtain.com-frontend-staging:
+  sn-curtain.com-frontend-production:
     image: registry.gitlab.com/sn-curtain/sn-curtain.com:latest
     container_name: sn-curtain.com-frontend-staging
     restart: always

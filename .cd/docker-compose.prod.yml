@@ -6,6 +6,6 @@ services:
     container_name: sn-curtain.com-frontend-production
     restart: always
     ports:
-      - 6000:5000
+      - 5501:5000
     environment:
       - NODE_ENV=production

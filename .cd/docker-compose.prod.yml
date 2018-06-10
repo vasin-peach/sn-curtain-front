@@ -1,5 +1,8 @@
 version: '3'
 
+networks:
+  application-tier:
+
 services:
   sn-curtain.com-frontend-staging:
     image: registry.gitlab.com/sn-curtain/sn-curtain.com:latest
@@ -9,3 +12,6 @@ services:
       - 5501:5000
     environment:
       - NODE_ENV=production
+    networks:
+      - application-tier
+

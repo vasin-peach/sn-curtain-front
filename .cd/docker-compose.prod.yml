@@ -4,7 +4,7 @@ networks:
   application-tier:
 
 services:
-  sn-curtain.com-frontend-staging:
+  sn-curtain.com-frontend-production:
     image: registry.gitlab.com/sn-curtain/sn-curtain.com:latest
     container_name: sn-curtain.com-frontend-production
     restart: always
@@ -12,6 +12,7 @@ services:
       - 5501:5000
     environment:
       - NODE_ENV=production
+      - BACKEND_URI=${BACKEND_URI_PROD}
     networks:
       - application-tier
 

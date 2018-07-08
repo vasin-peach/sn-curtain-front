@@ -3,8 +3,15 @@
 import Vue from 'vue'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
+import BootstrapVue from 'bootstrap-vue';
+import VeeValidae from 'vee-validate';
 import App from './App'
 import router from './router'
+import store from './store/main'
+
+// import Assets
+import '@scss/app.scss';
+
 
 // Sentry.io Setting
 if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging') {
@@ -25,6 +32,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: {
     App
   },

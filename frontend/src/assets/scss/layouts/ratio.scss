@@ -1,0 +1,55 @@
+$ratio: 1.61803399;
+$ratio-full: 100vw;
+$ratio-xl: $ratio-full / $ratio;
+$ratio-lg: $ratio-xl / $ratio;
+$ratio-md: $ratio-lg / $ratio;
+$ratio-sm: $ratio-md / $ratio;
+$ratio-xs: $ratio-sm / $ratio;
+.box {
+  background: #ccc;
+}
+
+// XL
+.w-xl {
+  width: $ratio-xl;
+}
+
+.h-xl {
+  height: $ratio-xl
+}
+
+// LG
+.w-lg {
+  width: $ratio-lg
+}
+
+.h-lg {
+  height: $ratio-lg
+}
+
+// MD
+.w-md {
+  width: $ratio-md
+}
+
+.h-md {
+  height: $ratio-md
+}
+
+// SM
+.w-sm {
+  width: $ratio-sm
+}
+
+.h-sm {
+  height: $ratio-sm
+}
+
+// XS
+.w-xs {
+  width: $ratio-xs
+}
+
+.h-xs {
+  height: $ratio-xs
+}

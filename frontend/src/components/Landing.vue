@@ -1,5 +1,11 @@
 <template>
   <div id="landing">
+    <table>
+      <tr>
+        <td class="w-sm"></td>
+        <td class="w-xl h-xl box"></td>
+      </tr>
+    </table>
     <div class="box w-xl h-xl">1</div>
     <div class="box w-lg h-lg">2</div>
     <div class="box w-md h-md">3</div>

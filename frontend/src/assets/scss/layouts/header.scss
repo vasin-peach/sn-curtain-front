@@ -3,10 +3,6 @@
   text-align: center;
   color: $white1;
   .menu {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    left: $ratio-xs / 4;
     #trigger,
     #burger,
     #burger:before,
@@ -14,7 +10,7 @@
       border-radius: 5px;
       position: absolute;
       top: 25px;
-      left: 25px;
+      right: $ratio-xs;
       background: $white1;
       width: 30px;
       height: 5px;
@@ -68,5 +64,24 @@
       padding: $ratio-xs / 4;
       height: 100%;
     }
+  }
+}
+
+@keyframes checked-anim {
+  50% {
+    width: 3000px;
+    height: 3000px;
+  }
+  100% {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+}
+
+@keyframes not-checked-anim {
+  0% {
+    width: 3000px;
+    height: 3000px;
   }
 }

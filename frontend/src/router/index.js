@@ -3,19 +3,27 @@ import Router from 'vue-router';
 
 const main = () =>
   import ('@component/Main')
-const landing = () =>
+const Header = () =>
+  import ('@component/Header')
+const Body = () =>
+  import ('@component/Body')
+const Landing = () =>
   import ('@component/Landing')
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [{
     path: '/',
-    component: main,
+    components: {
+      header: Header,
+      body: Body
+    },
     children: [{
       path: 'landing',
       alias: '/',
-      component: landing
+      component: Landing
     }]
   }]
 })

@@ -1,14 +1,12 @@
 <template>
-  <div id="landing">
-    <div class="container">
-      Hi
-    </div>
+  <div class="body">
+    <router-view/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Landing'
+  name: 'Body'
 }
 </script>
 

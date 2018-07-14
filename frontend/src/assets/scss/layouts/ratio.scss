@@ -1,3 +1,4 @@
+@import 'media';
 $ratio: 1.61803399;
 $ratio-full: 500px;
 $ratio-xl: $ratio-full / $ratio;
@@ -5,51 +6,49 @@ $ratio-lg: $ratio-xl / $ratio;
 $ratio-md: $ratio-lg / $ratio;
 $ratio-sm: $ratio-md / $ratio;
 $ratio-xs: $ratio-sm / $ratio;
-.box {
-  background: #ccc;
-}
-
-// XL
-.w-xl {
-  width: $ratio-xl;
-}
-
-.h-xl {
-  height: $ratio-xl
-}
-
-// LG
-.w-lg {
-  width: $ratio-lg
-}
-
-.h-lg {
-  height: $ratio-lg
-}
-
-// MD
-.w-md {
-  width: $ratio-md
-}
-
-.h-md {
-  height: $ratio-md
-}
-
-// SM
-.w-sm {
-  width: $ratio-sm
-}
-
-.h-sm {
-  height: $ratio-sm
-}
-
-// XS
-.w-xs {
-  width: $ratio-xs
-}
-
-.h-xs {
-  height: $ratio-xs
+$ratios: "xl" $ratio-xl,
+"lg" $ratio-lg,
+"md" $ratio-md,
+"sm" $ratio-sm,
+"xs" $ratio-xs;
+//
+// Generate Ratio Class
+//
+@each $i in $ratios {
+  .h-#{nth($i, 1)} {
+    height: nth($i, 2) !important;
+  }
+  .w-#{nth($i, 1)} {
+    width: nth($i, 2) !important;
+  }
+  .p-#{nth($i, 1)} {
+    padding: nth($i, 2) !important;
+  }
+  .pt-#{nth($i, 1)} {
+    padding-top: nth($i, 2) !important;
+  }
+  .pb-#{nth($i, 1)} {
+    padding-bottom: nth($i, 2) !important;
+  }
+  .pl-#{nth($i, 1)} {
+    padding-left: nth($i, 2) !important;
+  }
+  .pr-#{nth($i, 1)} {
+    padding-right: nth($i, 2) !important;
+  }
+  .m-#{nth($i, 1)} {
+    margin: nth($i, 2) !important;
+  }
+  .mt-#{nth($i, 1)} {
+    margin-top: nth($i, 2) !important;
+  }
+  .mb-#{nth($i, 1)} {
+    margin-bottom: nth($i, 2) !important;
+  }
+  .ml-#{nth($i, 1)} {
+    margin-left: nth($i, 2) !important;
+  }
+  .mr-#{nth($i, 1)} {
+    margin-right: nth($i, 2) !important;
+  }
 }

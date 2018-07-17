@@ -1,18 +1,30 @@
 <template>
   <div id="landing">
-    <div class="section1 bg-white3">
-      <div class="container bg-orange1">
-        <div class="row">
-          <div class="col col-md-8 preview">
-            Promotion1
+    <div class="section1">
+      <div class="container">
+        <div class="row pt-4 pb-5">
+          <!-- Review -->
+          <div class="col-12 col-md-8 p-2" id="review">
+            <div class="box flex justify-center align-center border-2">
+              <img src="@image/test/01.jpg" class="border-2">
+            </div>
           </div>
-          <div class="col col-md-4 promotion">
-            <div class="row">
-              <div class="col-12">
-                Promotion1
-              </div>
-              <div class="col-12">
-                Promotion2
+          <!-- Promotion -->
+          <div class="col-12 col-md p-2" id="promotion">
+            <div class="box">
+              <div class="row m-0 h-100">
+                <!-- Promotion Box 1 -->
+                <div class="col-6 p-0 col-md-12 mb-2 " id="promotion-1">
+                  <div class="child-box flex justify-center align-center border-2">
+                    <img src="@image/test/02.jpg" class="border-2">
+                  </div>
+                </div>
+                <!-- Promotion Box 2 -->
+                <div class="col-6 p-0 col-md-12 mt-2" id="promotion-2">
+                  <div class="child-box flex justify-center align-center border-2">
+                    <img src="@image/test/02.jpg" class="border-2">
+                  </div>
+                </div>
               </div>
             </div>
           </div>

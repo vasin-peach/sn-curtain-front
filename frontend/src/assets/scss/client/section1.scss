@@ -1,0 +1,74 @@
+.section1 {
+  background-color: $white3;
+  .pt-4,
+  .pb-5 {
+    @include small {
+      padding: 0 !important;
+    }
+  }
+  #review {
+    .box {
+      height: $ratio-lg * 1.7;
+      @include tablet {
+        height: $ratio-lg * 1.5;
+      }
+      @include mobile {
+        height: $ratio-lg * 1.3;
+      }
+      @include desktop {
+        height: $ratio-lg * 1.7;
+      }
+      background-color: $gray3;
+      width: 100%;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+  #promotion {
+    .child-box {
+      @include tablet {
+        height: ($ratio-lg / 1.5) + 8px;
+      }
+      @include mobile {
+        height: ($ratio-lg / 1.7) + 8px;
+      }
+      @include desktop {
+        height: ($ratio-lg / 1.3) + 8px;
+      }
+      height: ($ratio-lg / 1.3)+8px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    @include small {
+      padding-top: 0 !important;
+    }
+    #promotion-1 {
+      @include mobile {
+        margin-bottom: 0px !important;
+        padding-right: 0.5rem !important;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      @include small {
+        padding-right: 0.25rem !important;
+      }
+    }
+    #promotion-2 {
+      @include mobile {
+        margin-top: 0px !important;
+        padding-left: 0.5rem !important;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      @include small {
+        padding-left: 0.25rem !important;
+      }
+    }
+  }
+}

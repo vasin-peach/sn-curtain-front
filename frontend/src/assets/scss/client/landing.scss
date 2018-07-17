@@ -1,9 +1,8 @@
 #landing {
-  min-height: 100vh;
-  .section1 {
-    .preview {
-      background: $red1;
-      border: 1px solid #000;
+  @import 'section1';
+  * {
+    @include small {
+      border-radius: 0;
     }
   }
 }

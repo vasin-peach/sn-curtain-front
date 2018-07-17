@@ -4214,6 +4214,10 @@ jest@^22.0.4:
     import-local "^1.0.0"
     jest-cli "^22.4.4"
 
+jquery@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.5.tgz#e293cd3c7c82f070d700fc7a1ca0a2e69f101f92"
@@ -7551,6 +7555,10 @@ vary@~1.1.2:
 vee-validate@^2.1.0-beta.6:
   version "2.1.0-beta.6"
   resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.1.0-beta.6.tgz#df67af3b87f45f4c82c19783d782a8415cb375ce"
+
+velocity-animate@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/velocity-animate/-/velocity-animate-1.5.1.tgz#606837047bab8fbfb59a636d1d82ecc3f7bd71a6"
 
 vendors@^1.0.0:
   version "1.0.2"

@@ -11,13 +11,16 @@
       border-radius: 5px;
       position: absolute;
       top: 25px;
-      right: $ratio-xs;
+      right: 0.5rem;
       background: $white1;
       width: 30px;
       height: 5px;
       transition: .2s ease;
       cursor: pointer;
       z-index: 1;
+      @include small {
+        right: 2rem;
+      }
     }
     #trigger {
       height: 25px;
@@ -65,7 +68,48 @@
       padding: $ratio-xs / 4;
       height: 100%;
     }
+    @include mobile {
+      text-align: left !important;
+      left: -1rem !important;
+    }
+    @include small {
+      left: -1.2rem !important;
+    }
   }
+}
+
+// Menu 
+.header-menu,
+.header-fade {
+  position: fixed;
+  top: $ratio-sm;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: none;
+}
+
+.header-menu {
+  z-index: 20;
+  ul {
+    padding: 0px;
+    li {
+      margin: (30vh / 4) 0;
+      list-style-type: none;
+      a {
+        font-size: 30px;
+        color: $dark2;
+        font-weight: bold;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.header-fade {
+  background-color: rgba($color: $white1, $alpha: 0.7);
+  background: linear-gradient(rgba($color: $white1, $alpha: 0.7), rgba($color: $white3, $alpha: 1) 80%)
 }
 
 // @keyframes checked-anim {

@@ -98,10 +98,12 @@
       margin: (30vh / 4) 0;
       list-style-type: none;
       a {
+        position: relative;
         font-size: 30px;
         color: $dark2;
         font-weight: bold;
         text-decoration: none;
+        opacity: 0;
       }
     }
   }
@@ -109,7 +111,7 @@
 
 .header-fade {
   background-color: rgba($color: $white1, $alpha: 0.7);
-  background: linear-gradient(rgba($color: $white1, $alpha: 0.7), rgba($color: $white3, $alpha: 1) 80%)
+  background: linear-gradient(135deg, rgba($color: $white1, $alpha: 0.7), rgba($color: $white3, $alpha: 1) 80%)
 }
 
 // @keyframes checked-anim {

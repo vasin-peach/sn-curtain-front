@@ -94,12 +94,20 @@
     li {
       margin: (30vh / 4) 0;
       list-style-type: none;
+      transition: transform 0.3s cubic-bezier(.53, .49, .18, .97);
       a {
         position: relative;
         font-size: 30px;
         color: $dark2;
         text-decoration: none;
         opacity: 0;
+      }
+      &:hover,
+      &:focus {
+        transform: translateY(-5px) scale(1.1);
+      }
+      &:active {
+        transform: translateY(5px) scale(1.1);
       }
     }
   }

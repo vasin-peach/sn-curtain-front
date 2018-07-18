@@ -57,9 +57,9 @@ export default {
         $('.header-fade').velocity("slideDown", { duration: 300 }, [.53,.49,.18,.97]);
         // text animate
         $('#menu-1').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 50, _cacheValues:false}, [.53,.49,.18,.97]);
-        $('#menu-2').velocity({ opacity: "1", top: "40px" }, { duration: 350, delay: 100, _cacheValues:false}, [.53,.49,.18,.97]);
-        $('#menu-3').velocity({ opacity: "1", top: "40px" }, { duration: 400, delay: 150, _cacheValues:false}, [.53,.49,.18,.97]);
-        $('#menu-4').velocity({ opacity: "1", top: "40px" }, { duration: 450, delay: 200, _cacheValues:false}, [.53,.49,.18,.97]);
+        $('#menu-2').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 100, _cacheValues:false}, [.53,.49,.18,.97]);
+        $('#menu-3').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 150, _cacheValues:false}, [.53,.49,.18,.97]);
+        $('#menu-4').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 200, _cacheValues:false}, [.53,.49,.18,.97]);
         
         // disable scroll
         $('html').addClass('stop-scrolling');
@@ -71,11 +71,10 @@ export default {
           _this.menu_state = false;
         }, 450);
         
-
       // Menu Off
       } else {
         $('.header-menu').velocity("slideUp", { duration: 300, delay: 150 }, [.53,.49,.18,.97]);
-        $('.header-fade').velocity("slideUp", { duration: 300, delay: 250 }, [.53,.49,.18,.97]);
+        $('.header-fade').velocity("slideUp", { duration: 300, delay: 200 }, [.53,.49,.18,.97]);
         // text animate
         $('#menu-1').velocity({ opacity: "0", top: "0px" }, { duration: 150}, [.53,.49,.18,.97]);
         $('#menu-2').velocity({ opacity: "0", top: "0px" }, { duration: 200}, [.53,.49,.18,.97]);
@@ -91,6 +90,7 @@ export default {
         setTimeout(function () {
           _this.menu_state = false;
         }, 450);
+
       }
     }
   }

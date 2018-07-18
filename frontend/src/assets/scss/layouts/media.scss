@@ -1,5 +1,5 @@
 $mobile: 576px;
-$tablet: 768px;
+$tablet: 767px;
 $desktop: 992px;
 $extra: 1200px;
 @mixin small {
@@ -15,7 +15,7 @@ $extra: 1200px;
 }
 
 @mixin tablet {
-  @media (min-width: #{$tablet}) and (max-width: #{$desktop}) {
+  @media (min-width: #{$tablet}) and (max-width: #{$desktop}) and (-webkit-min-device-pixel-ratio: 2) {
     @content;
   }
 }

@@ -1,6 +1,15 @@
 .section3 {
   .slider {
     height: 40vh;
+    @include mobile {
+      height: 35vh;
+    }
+    @include small {
+      height: 30vh;
+    }
+    @include extra {
+      height: 40vh;
+    }
     width: 100%;
     .swiper-container {
       width: 100%;

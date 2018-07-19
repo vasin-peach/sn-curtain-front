@@ -1,7 +1,26 @@
 <template>
   <div class="section4">
     <div class="container">
-      Section4 Ja
+      <div class="product-header">
+        สินค้าแนะนำ
+        <hr>
+      </div>
+      <div class="product-container">
+        <div class="row">
+          <div class="col-sm-6 product-item" v-for="(item, index) in product" :key="index">
+            <div class="row m-0">
+              <div class="col-12 col-md-4 product-content">
+                <p class="text">{{item.name}}</p>
+                <p>{{item.price}} บาท</p>
+                <div class="button">Buy</div>
+              </div>
+              <div class="col order-first product-img">
+                <img :src="'/static/images/test/' + item.url">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -9,6 +28,32 @@
 <script>
 export default {
   name: 'Section4',
+  data() {
+    return {
+      product: [
+        {
+          name: 'Curtain1 Your application is running here',
+          url: '01.png',
+          price: 1200
+        },
+        {
+          name: 'Curtain2',
+          url: '02.png',
+          price: 1200
+        },
+        {
+          name: 'Curtain3',
+          url: '03.png',
+          price: 1200
+        },
+        {
+          name: 'Curtain4',
+          url: '04.png',
+          price: 1200
+        }
+      ]
+    }
+  }
 }
 </script>
 

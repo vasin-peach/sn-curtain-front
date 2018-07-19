@@ -1,0 +1,15 @@
+.button {
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 2px solid $dark1;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 400;
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  &:hover {
+    background: $orange2;
+    color: $white1;
+    box-shadow: 0 0 2px 0 $gray2;
+  }
+}

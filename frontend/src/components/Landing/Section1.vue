@@ -40,10 +40,8 @@
 </template>
 
 <script>
-import velocity from 'velocity-animate';
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
-// import img from '../../assets/images/test/01.jpg';
 export default {
   name: 'Section1',
   components: {
@@ -56,30 +54,12 @@ export default {
         autoplay: {
           delay: 5000
         },
-        fadeEffect: {
-          crossFade: true
-        },
         pagination: {
           el: '.swiper-pagination'
         }
       },
       swiperSlides: [1, 2, 3, 4, 5],
     }
-  },
-  methods: {
-  },
-  created() {
-
-    // setInterval(() => {
-    //   if (this.slideMax == this.currentSlider) {
-    //     $('figure').velocity({left: '0%'}, [.53,.49,.18,.97]);
-    //     this.currentSlider = 1
-    //   } else {
-    //     $('figure').velocity({left: '-=100%'}, [.53,.49,.18,.97]);
-    //     this.currentSlider += 1
-    //   }
-    // }, this.slideDelay);
-
   }
 }
 </script>

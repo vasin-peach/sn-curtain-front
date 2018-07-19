@@ -1,12 +1,7 @@
 .section2 {
-  box-shadow: 0 2px 5px 0 $dark2;
+  box-shadow: 0 2px 2px 0 $gray2;
   .category-container {
-    @include mobile {
-      margin: 20px 0;
-    }
-    @include small {
-      margin: 20px 0;
-    }
+    padding: 25px 0;
     .category-box {
       // padding
       padding: 20px;

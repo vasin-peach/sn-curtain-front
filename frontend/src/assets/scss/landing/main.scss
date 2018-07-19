@@ -1,6 +1,7 @@
 #landing {
   @import 'section1';
   @import 'section2';
+  @import 'section3';
   * {
     @include small {
       border-radius: 0;

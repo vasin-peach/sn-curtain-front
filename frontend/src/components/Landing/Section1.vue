@@ -8,8 +8,6 @@
             <swiper :options="swiperOption">
               <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">
                 <img :src="'/static/images/preview/preview_0' + slide + '.png'">
-                <!-- I'm Slide {{ slide }} -->
-
               </swiper-slide>
               <div class="swiper-pagination" slot="pagination"></div>
             </swiper>

@@ -8,7 +8,7 @@ const Header = () =>
 const Body = () =>
   import ('@component/Body')
 const Landing = () =>
-  import ('@component/Landing')
+  import ('@component/Landing/Landing')
 
 Vue.use(Router)
 

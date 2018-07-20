@@ -25,3 +25,13 @@
 .border-2 {
   border-radius: 10px;
 }
+
+.fade {
+  transition: transform 0.4s ease-in, opacity 0.6s ease !important;
+  transform: translateY(15vh) !important;
+  opacity: 0;
+  &.fade-in {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+  }
+}

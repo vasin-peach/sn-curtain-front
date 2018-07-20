@@ -1,4 +1,7 @@
 .section4 {
+  box-shadow: 0 2px 5px 0 $dark2 !important;
+  z-index: 5;
+  position: relative;
   padding-top: 30px;
   .product-header {
     font-size: 20px;
@@ -76,7 +79,7 @@
   }
   .product-footer {
     padding-top: 30px;
-    margin-bottom: 5vh;
+    padding-bottom: 5vh;
     text-align: center;
     .dot {
       display: inline-block;

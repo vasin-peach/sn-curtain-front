@@ -1,13 +1,13 @@
 <template>
   <div class="section4">
     <div class="container">
-      <div class="product-header">
-        สินค้าแนะนำ
+      <div class="product-header fade">
+        <span class="">สินค้าแนะนำ</span>
         <hr>
       </div>
       <div class="product-container">
         <div class="row">
-          <div class="col-sm-6 product-item" v-for="(item, index) in product" :key="index">
+          <div class="col-sm-6 product-item fade" v-for="(item, index) in product" :key="index">
             <a href="#">
               <div class="row m-0">
                 <div class="col-6 col-sm-12 col-md-4 product-content">
@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import ScrollMagic from 'scrollmagic';
+import 'imports-loader?define=>false!scrollmagic/scrollmagic/uncompressed/plugins/debug.addindicators';
 export default {
   name: 'Section4',
   data() {
@@ -63,6 +65,23 @@ export default {
         }
       ]
     }
+  },
+    mounted() {
+    $(function() {
+      // init scrollmagic
+      var controller = new ScrollMagic.Controller();
+
+        // build scene with loop
+        $('.fade').each(function() {
+          var categoryScene = new ScrollMagic.Scene({
+            triggerElement: this,
+            triggerHook: 1,
+            // reverse: false
+          })
+          .setClassToggle(this, 'fade-in')
+          .addTo(controller);
+        })
+    })
   }
 }
 </script>

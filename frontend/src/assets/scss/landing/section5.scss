@@ -1,0 +1,14 @@
+.section5 {
+  min-height: 50vh;
+  .fade-in {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+  .section-break {
+    height: 25vh;
+    background-image: url('~@image/test/03.jpg');
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 20px;
+  }
+}

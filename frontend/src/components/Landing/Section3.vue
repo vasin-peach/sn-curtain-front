@@ -2,8 +2,10 @@
   <div class='section3'>
     <div class="slider">
       <swiper :options="swiperOption">
-        <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">
-          <img :src="'/static/images/service/preview_0' + slide + '.png'">
+        <swiper-slide v-for="(slide, index) in swiperSlides" :key="index" style="display: block">
+          <a href="#">
+            <img :src="'/static/images/service/preview_0' + slide + '.png'">
+          </a>
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
         <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>

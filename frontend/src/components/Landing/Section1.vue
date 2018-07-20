@@ -6,8 +6,10 @@
         <div class="col-12 col-md-8 p-2" id="review">
           <div class="box flex justify-center align-center border-2">
             <swiper :options="swiperOption">
-              <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">
-                <img :src="'/static/images/preview/preview_0' + slide + '.png'">
+              <swiper-slide v-for="(slide, index) in swiperSlides" :key="index" style="display: block">
+                <a href="#">
+                  <img :src="'/static/images/preview/preview_0' + slide + '.png'">
+                </a>
               </swiper-slide>
               <div class="swiper-pagination" slot="pagination"></div>
             </swiper>
@@ -49,12 +51,14 @@ export default {
   data () {
     return {
       swiperOption: {
+        dragable: false,
         autoplay: {
           delay: 5000
         },
         pagination: {
-          el: '.swiper-pagination'
-        }
+          el: '.swiper-pagination',
+          clickable: true,
+        },
       },
       swiperSlides: [1, 2, 3, 4, 5],
     }

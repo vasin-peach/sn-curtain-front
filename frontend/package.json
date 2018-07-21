@@ -17,8 +17,6 @@
     "axios": "^0.18.0",
     "bootstrap-vue": "^2.0.0-rc.11",
     "expose-loader": "^0.7.5",
-    "gsap": "^2.0.1",
-    "imports-loader": "^0.8.0",
     "jquery": "^3.3.1",
     "lodash": "^4.17.10",
     "paroller.js": "^1.4.2",

@@ -1,6 +1,6 @@
 <template>
   <div class='section3'>
-    <div class="slider">
+    <div class="slider fade2">
       <swiper :options="swiperOption">
         <swiper-slide v-for="(slide, index) in swiperSlides" :key="index" style="display: block">
           <a href="#">
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import ScrollMagic from 'scrollmagic';
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 export default {
@@ -41,6 +42,23 @@ export default {
       },
       swiperSlides: [1, 2, 3, 4, 5],
     }
+  },
+  mounted() {
+    $(function() {
+      // init scrollmagic
+      var controller = new ScrollMagic.Controller();
+
+        // build scene with loop
+        $('.fade2').each(function() {
+          var categoryScene = new ScrollMagic.Scene({
+            triggerElement: this,
+            triggerHook: 1,
+            // reverse: false
+          })
+          .setClassToggle(this, 'fade-in')
+          .addTo(controller);
+        })
+    })
   }
 }
 </script>

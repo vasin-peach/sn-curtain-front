@@ -2,7 +2,7 @@
   <div class="section2">
     <div class="container">
       <div class="row category-container">
-        <div class="col-4 col-md-2 category-box" v-for="(item, index) in category" :key="index">
+        <div class="col-4 col-md-2 category-box fade" v-for="(item, index) in category" :key="index">
           <div class="category-content">
             <img :src="'/static/images/category/' + item.name">
           </div>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import ScrollMagic from 'scrollmagic';
 export default {
   name: 'Section2',
   data() {
@@ -48,6 +49,23 @@ export default {
       ]
     }
   },
+  mounted() {
+    $(function() {
+      // init scrollmagic
+      var controller = new ScrollMagic.Controller();
+
+        // build scene with loop
+        $('.fade').each(function() {
+          var categoryScene = new ScrollMagic.Scene({
+            triggerElement: this,
+            triggerHook: 1,
+            // reverse: false
+          })
+          .setClassToggle(this, 'fade-in')
+          .addTo(controller);
+        })
+    })
+  }
 }
 </script>
 

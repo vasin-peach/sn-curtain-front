@@ -30,6 +30,9 @@ module.exports = {
       '@scss': resolve('src/assets/scss'),
       '@image': resolve('src/assets/images'),
       '@font': resolve('src/assets/fonts'),
+      'magicscroll': 'scrollmagic/scrollmagic/minified/scrollmagic.js',
+      'magicscroll-debug': 'scrollmagic/scrollmagic/minified/plugins/debug.addindicators.min.js',
+      'magicscroll-gsap': 'scrollmagic/scrollmagic/minified/plugins/animation.gsap.min.js'
     }
   },
   module: {
@@ -40,8 +43,12 @@ module.exports = {
       },
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+        options: {
+          cacheDirectory: true
+        },
+        // include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

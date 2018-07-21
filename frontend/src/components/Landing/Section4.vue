@@ -37,7 +37,7 @@
 
 <script>
 import ScrollMagic from 'scrollmagic';
-import 'imports-loader?define=>false!scrollmagic/scrollmagic/uncompressed/plugins/debug.addindicators';
+import 'magicscroll-debug';
 export default {
   name: 'Section4',
   data() {

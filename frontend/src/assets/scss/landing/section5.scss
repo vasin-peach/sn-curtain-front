@@ -47,10 +47,10 @@
           object-fit: cover;
           border-radius: 5px;
           box-shadow: 0 1px 5px 0 $gray1;
-          background-position: center;
           background-size: cover;
           background-repeat: no-repeat;
           @include small {
+            height: 200px;
             border-radius: 0;
             box-shadow: none;
           }

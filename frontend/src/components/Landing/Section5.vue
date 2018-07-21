@@ -95,12 +95,12 @@ export default {
           });
         } else {
           $('#content1 .img').paroller({
-            factor: -0.2,
+            factor: 0.1,
             type: 'background',
             direction: 'vertical'
           });
           $('#content2 .img').paroller({
-            factor: -0.2,
+            factor: 0.1,
             type: 'background',
             direction: 'vertical'
           });

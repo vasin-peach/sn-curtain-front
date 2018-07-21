@@ -43,3 +43,13 @@
     opacity: 1 !important;
   }
 }
+
+.text-fade1 {
+  transition: transform 0.3s cubic-bezier(.53, .49, .18, .97), opacity 0.3s cubic-bezier(.53, .49, .18, .97);
+  transform: translateY(30px);
+  opacity: 0;
+  &.active {
+    transform: translateY(-0px) !important;
+    opacity: 1 !important;
+  }
+}

@@ -37,7 +37,6 @@
 
 <script>
 import ScrollMagic from 'scrollmagic';
-import 'magicscroll-debug';
 export default {
   name: 'Section4',
   data() {

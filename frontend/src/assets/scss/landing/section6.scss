@@ -1,0 +1,42 @@
+.section6 {
+  padding: 10vh 0;
+  @include mobile {
+    padding-top: 0vh;
+  }
+  .container {
+    .map-container {
+      position: relative;
+      .map-bars {
+        // position: absolute;
+        background: linear-gradient(90deg, $white1 80%, rgba($color: $white1, $alpha: 0)); // background: rgba($color: $dark, $alpha: 1.0)
+        height: 100%; // left: 0;
+        width: 100%;
+        .map-title {
+          font-size: 30px;
+          font-weight: 400;
+          padding: 30px 0;
+        }
+        li {
+          padding: 5vh 0;
+          font-size: 15px;
+          color: $dark3;
+          @include mobile {
+            padding: 3vh 0;
+          }
+          @include small {
+            padding: 2vh 0;
+          }
+        }
+      }
+      .map-content {
+        text-align: right;
+        iframe {
+          width: 100%;
+          height: 80vh;
+        }
+      }
+    }
+  }
+}
+
+// AIzaSyBGNc2PuCBhZ4GsGIGS8QX5J1mfjvJ7Mc8

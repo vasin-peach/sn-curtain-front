@@ -15,7 +15,6 @@
             <li class="row" id="content1">
               <div class="col-12 col-7 col-sm-7 fade">
                 <div class="img" id="img1"></div>
-                <!-- <img src="/static/images/test/01.png"> -->
               </div>
               <div class="col">
                 <p class="text-fade1">ผ้าม่าน S&N</p>
@@ -34,7 +33,6 @@
               </div>
               <div class="col-12 col-7 col-sm-7 order-1 fade">
                 <div class="img" id="img2"></div>
-                <!-- <img src="/static/images/test/02.png"> -->
               </div>
             </li>
           </ul>

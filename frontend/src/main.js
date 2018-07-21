@@ -15,6 +15,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 
+
 // Sentry.io Setting
 if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging') {
   Raven

@@ -17,8 +17,6 @@
 <script>
 // import velocity from 'velocity-animate';
 import ScrollMagic from 'scrollmagic';
-import 'imports-loader?define=>false!scrollmagic/scrollmagic/uncompressed/plugins/debug.addindicators';
-import 'imports-loader?define=>false!scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap';
 export default {
   name: 'Section5',
   mounted() {

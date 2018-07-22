@@ -17,20 +17,12 @@
       </div>
     </div>
     <div class="header-menu">
-      <ul>
-        <li>
-          <a href="#" id="menu-1">หน้าหลัก</a>
-        </li>
-        <li>
-          <a href="#" id="menu-2">บริการ</a>
-        </li>
-        <li>
-          <a href="#" id="menu-3">สินค้า</a>
-        </li>
-        <li>
-          <a href="#" id="menu-4">ติดต่อ</a>
-        </li>
-      </ul>
+      <div>
+        <a href="#" id="menu-1">หน้าหลัก</a>
+        <a href="#" id="menu-2">บริการ</a>
+        <a href="#" id="menu-3">สินค้า</a>
+        <a href="#" id="menu-4">ติดต่อ</a>
+      </div>
     </div>
     <div class="header-fade">
     </div>
@@ -76,10 +68,10 @@ export default {
         $('.header-menu').velocity("slideUp", { duration: 300, delay: 150 }, [.53,.49,.18,.97]);
         $('.header-fade').velocity("slideUp", { duration: 300, delay: 200 }, [.53,.49,.18,.97]);
         // text animate
-        $('#menu-1').velocity({ opacity: "0", top: "0px" }, { duration: 150}, [.53,.49,.18,.97]);
-        $('#menu-2').velocity({ opacity: "0", top: "0px" }, { duration: 200}, [.53,.49,.18,.97]);
-        $('#menu-3').velocity({ opacity: "0", top: "0px" }, { duration: 250}, [.53,.49,.18,.97]);
-        $('#menu-4').velocity({ opacity: "0", top: "0px" }, { duration: 300}, [.53,.49,.18,.97]);
+        $('#menu-1').velocity({ opacity: "0", top: "0px" }, { duration: 250}, [.53,.49,.18,.97]);
+        $('#menu-2').velocity({ opacity: "0", top: "0px" }, { duration: 300}, [.53,.49,.18,.97]);
+        $('#menu-3').velocity({ opacity: "0", top: "0px" }, { duration: 350}, [.53,.49,.18,.97]);
+        $('#menu-4').velocity({ opacity: "0", top: "0px" }, { duration: 400}, [.53,.49,.18,.97]);
 
         // enable scroll
         $('html').removeClass('stop-scrolling');

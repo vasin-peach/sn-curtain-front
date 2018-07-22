@@ -9,7 +9,7 @@
               <div class="col-2 col-sm-2 col-md-3 col-lg-2">
                 <img src="/static/images/icon/marker.svg">
               </div>
-              <div class="col flex align-center">
+              <div class="col flex align-center font-mitr">
                 18 ถนน หทัยมิตร แขวง ทรายกองดิน เขต คลองสามวา กรุงเทพมหานคร 10510
               </div>
             </li>
@@ -17,7 +17,7 @@
               <div class="col-2 col-sm-2 col-md-3 col-lg-2">
                 <img src="/static/images/icon/mail.svg">
               </div>
-              <div class="col flex align-center">
+              <div class="col flex align-center font-mitr">
                 curtain9@gmail.com
               </div>
             </li>
@@ -25,7 +25,7 @@
               <div class="col-2 col-sm-2 col-md-3 col-lg-2">
                 <img src="/static/images/icon/mobile.svg">
               </div>
-              <div class="col flex align-center">
+              <div class="col flex align-center font-mitr">
                 089 796 3038
               </div>
             </li>

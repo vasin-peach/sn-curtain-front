@@ -9,6 +9,8 @@ const Body = () =>
   import ('@component/Body')
 const Landing = () =>
   import ('@component/Landing/Landing')
+const Footer = () =>
+  import ('@component/Footer')
 
 Vue.use(Router)
 
@@ -18,7 +20,8 @@ export default new Router({
     path: '/',
     components: {
       header: Header,
-      body: Body
+      body: Body,
+      footer: Footer,
     },
     children: [{
       path: 'landing',

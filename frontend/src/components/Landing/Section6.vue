@@ -4,7 +4,7 @@
       <div class="map-container row m-0">
         <div class="map-bars col-md-5 col-lg-4">
           <ul class="p-0">
-            <div class="map-title">S&N CURTAIN</div>
+            <div class="map-title font-bourbon">S&N CURTAIN</div>
             <li class="row m-0">
               <div class="col-2 col-sm-2 col-md-3 col-lg-2">
                 <img src="/static/images/icon/marker.svg">

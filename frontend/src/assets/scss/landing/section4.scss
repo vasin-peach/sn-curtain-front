@@ -100,11 +100,21 @@
       margin-top: -25px;
       font-size: 20px;
       font-weight: 400;
+      transition: color 0.3s ease;
     }
     span {
       margin-top: -10px;
       font-size: 12px;
       font-weight: 200;
+      transition: color 0.3s ease;
+    }
+    a {
+      &:hover {
+        p,
+        span {
+          color: $dark2;
+        }
+      }
     }
   }
 }

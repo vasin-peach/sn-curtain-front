@@ -3,12 +3,14 @@
     <div class="container">
       <div class="row category-container">
         <div class="col-4 col-md-2 category-box fade" v-for="(item, index) in category" :key="index">
-          <div class="category-content">
-            <img :src="'/static/images/category/' + item.name">
-          </div>
-          <div class="category-title">
-            {{ item.title }}
-          </div>
+          <a href="#">
+            <div class="category-content">
+              <img :src="'/static/images/category/' + item.name">
+            </div>
+            <div class="category-title">
+              {{ item.title }}
+            </div>
+          </a>
         </div>
       </div>
     </div>

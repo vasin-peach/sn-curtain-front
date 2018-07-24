@@ -3,9 +3,9 @@
     <div class="slider fade2">
       <swiper :options="swiperOption">
         <swiper-slide v-for="(slide, index) in swiperSlides" :key="index" style="display: block">
-          <a href="#">
+          <router-link :to="{ name: 'Service' }">
             <img :src="'/static/images/service/preview_0' + slide + '.png'">
-          </a>
+          </router-link>
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
         <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>

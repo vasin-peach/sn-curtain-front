@@ -6,7 +6,9 @@
           <div class="col-0 col-md-4">
           </div>
           <div class="col-6 col-md-4 brand">
-            <img src="@image/brand.svg">
+            <router-link :to="{ name: 'Landing'}">
+              <img src="@image/brand.svg">
+            </router-link>
           </div>
           <div class="col-6 col-md-4 menu">
             <input type="checkbox" id="menu-toggle" v-model="menu_toggle" :disabled="menu_state">
@@ -17,11 +19,11 @@
       </div>
     </div>
     <div class="header-menu">
-      <div>
-        <a href="#" id="menu-1">หน้าหลัก</a>
-        <a href="#" id="menu-2">บริการ</a>
-        <a href="#" id="menu-3">สินค้า</a>
-        <a href="#" id="menu-4">ติดต่อ</a>
+      <div @click="menu_off()">
+        <router-link :to="{ name: 'Landing' }" id="menu-1">หน้าหลัก</router-link>
+        <router-link :to="{ name: 'Store' }" id="menu-2">สินค้า</router-link>
+        <router-link :to="{ name: 'Service' }" id="menu-3">บริการ</router-link>
+        <router-link :to="{ name: 'Landing' }" id="menu-4">ติดต่อ</router-link>
       </div>
     </div>
     <div class="header-fade">
@@ -41,10 +43,15 @@ export default {
   },
   watch: {
     menu_toggle: function(status) {
-      var _this = this;
+      status ? this.menu_on() : this.menu_off();
+    }
+  },
+  methods: {
+    menu_on() {
 
-      // Menu On
-      if (status) {
+        var _this = this;
+        this.menu_toggle = true;
+
         $('.header-menu').velocity("slideDown", { duration: 300 }, [.53,.49,.18,.97]);
         $('.header-fade').velocity("slideDown", { duration: 300 }, [.53,.49,.18,.97]);
         // text animate
@@ -62,9 +69,13 @@ export default {
         setTimeout(function () {
           _this.menu_state = false;
         }, 450);
-        
-      // Menu Off
-      } else {
+
+    },
+    menu_off() {
+      
+        var _this = this;
+        this.menu_toggle = false;
+
         $('.header-menu').velocity("slideUp", { duration: 300, delay: 150 }, [.53,.49,.18,.97]);
         $('.header-fade').velocity("slideUp", { duration: 300, delay: 200 }, [.53,.49,.18,.97]);
         // text animate
@@ -83,7 +94,6 @@ export default {
           _this.menu_state = false;
         }, 450);
 
-      }
     }
   }
 }

@@ -8,7 +8,7 @@
       <div class="product-container">
         <div class="row">
           <div class="col-sm-6 product-item fade" v-for="(item, index) in product" :key="index">
-            <a href="#">
+            <router-link :to="{ name: 'Product' }">
               <div class="row m-0">
                 <div class="col-6 col-sm-12 col-md-4 product-content">
                   <p class="text">{{item.name}}</p>
@@ -19,17 +19,17 @@
                   <img :src="'/static/images/test/' + item.url">
                 </div>
               </div>
-            </a>
+            </router-link>
           </div>
         </div>
       </div>
       <div class="product-footer">
         <hr class="bg-dark1">
-        <a href="#">
+        <router-link :to="{ name: 'Store' }">
           <div class="dot"></div>
           <p>MORE</p>
           <span>สินค้าเพิ่มเติม</span>
-        </a>
+        </router-link>
       </div>
     </div>
   </div>

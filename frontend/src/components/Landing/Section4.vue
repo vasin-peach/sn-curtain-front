@@ -61,6 +61,16 @@ export default {
           name: 'Curtain4',
           url: '04.png',
           price: 1200
+        },
+        {
+          name: 'Curtain5',
+          url: '01.png',
+          price: 1500
+        },
+        {
+          name: 'Curtain6',
+          url: '02.png',
+          price: 1600
         }
       ]
     }

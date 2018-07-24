@@ -5,10 +5,11 @@
   }
   .container {
     .map-container {
+      // background-color: $white1;
       position: relative;
       .map-bars {
         // position: absolute;
-        background: linear-gradient(90deg, $white1 80%, rgba($color: $white1, $alpha: 0)); // background: rgba($color: $dark, $alpha: 1.0)
+        // background: linear-gradient(90deg, $white1 80%, rgba($color: $white1, $alpha: 0)); // background: rgba($color: $dark, $alpha: 1.0)
         height: 100%; // left: 0;
         width: 100%;
         .map-title {

@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import velocity from 'velocity-animate';
-import {TweenMax, ScrollToPlugin} from 'gsap/all'
+import TweenMax from 'gsap/TweenMax';
+import ScrollToPlugin from 'gsap/ScrollToPlugin';
 export default {
   name: 'App',
   mounted() {

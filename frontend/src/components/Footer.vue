@@ -1,5 +1,10 @@
 <template>
   <div class="footer">
+    <div class="scrolltop-container">
+      <div class="scrolltop" @click="scrollTop()">
+        <img src="/static/images/icon/arrow-up.svg">
+      </div>
+    </div>
     <div class="container">
       <div class="row">
         <div class="col-12 col-sm-8" id="webcredit">
@@ -23,8 +28,19 @@
 </template>
 
 <script>
+import {TweenMax, ScrollToPlugin} from 'gsap/all'
 export default {
-  name: 'Footer'
+  name: 'Footer',
+  methods: {
+    scrollTop() {
+        TweenMax.to($(window), 2, {
+          scrollTo : { y: 0, autoKill:true },
+            ease: Power3.easeInOut,	
+            autoKill: true,
+            overwrite: 5							
+          });
+    }
+  }
 }
 </script>
 

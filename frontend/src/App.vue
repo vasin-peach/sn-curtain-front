@@ -16,8 +16,8 @@ export default {
 	
       var $window = $(window);		//Window object
       
-      var scrollTime = 1;			//Scroll time
-      var scrollDistance = 250;		//Distance. Use smaller value for shorter scroll and greater value for longer scroll
+      var scrollTime = 0.8;			//Scroll time
+      var scrollDistance = 270;		//Distance. Use smaller value for shorter scroll and greater value for longer scroll
         
       $window.on("mousewheel DOMMouseScroll", function(event){
         

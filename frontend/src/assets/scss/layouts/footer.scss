@@ -1,4 +1,5 @@
 .footer {
+  margin-top: 10vh;
   text-align: center;
   color: $white3;
   background-color: $dark1;
@@ -36,6 +37,34 @@
           &:hover {
             filter: brightness(0.8);
           }
+        }
+      }
+    }
+  }
+  .scrolltop-container {
+    position: relative;
+    .scrolltop {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -60px;
+      display: flex;
+      justify-content: center;
+      @include small {
+        top: -70px;
+      }
+      img {
+        cursor: pointer;
+        padding: 10px;
+        width: 60px;
+        height: 60px;
+        transition: transform 0.3s ease-out;
+        @include small {
+          width: 70px;
+          height: 70px
+        }
+        &:hover {
+          transform: translateY(-5px);
         }
       }
     }

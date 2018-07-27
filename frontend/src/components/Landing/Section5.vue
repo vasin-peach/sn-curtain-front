@@ -97,16 +97,16 @@ export default {
             direction: 'horizontal'
           });
         } else {
-          $('#content1 .img').paroller({
-            factor: 0.1,
-            type: 'background',
-            direction: 'vertical'
-          });
-          $('#content2 .img').paroller({
-            factor: 0.1,
-            type: 'background',
-            direction: 'vertical'
-          });
+          // $('#content1 .img').paroller({
+          //   factor: 0,
+          //   type: 'background',
+          //   direction: 'vertical'
+          // });
+          // $('#content2 .img').paroller({
+          //   factor: 0,
+          //   type: 'background',
+          //   direction: 'vertical'
+          // });
         }
 
     })

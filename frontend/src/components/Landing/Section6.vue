@@ -32,7 +32,7 @@
           </ul>
         </div>
         <div class="map-content col fade">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3873.65377662837!2d100.72865131439063!3d13.85980919851661!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d64b5b43c2f63%3A0xad39a89da2f8b3c7!2z4Lic4LmJ4Liy4Lih4LmI4Liy4LiZIFMmTg!5e0!3m2!1sth!2sth!4v1532175295486" style="border:0" allowfullscreen></iframe>
+          <iframe title="googlemap" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3873.65377662837!2d100.72865131439063!3d13.85980919851661!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d64b5b43c2f63%3A0xad39a89da2f8b3c7!2z4Lic4LmJ4Liy4Lih4LmI4Liy4LiZIFMmTg!5e0!3m2!1sth!2sth!4v1532175295486" style="border:0" allowfullscreen></iframe>
         </div>
       </div>
     </div>

@@ -12,14 +12,15 @@ import ScrollToPlugin from 'gsap/ScrollToPlugin';
 export default {
   name: 'App',
   mounted() {
+    document.addEventListener('touchstart', onTouchStart, {passive: true});
     $(function(){
-	
+
       var $window = $(window);		//Window object
       
       var scrollTime = 0.8;			//Scroll time
       var scrollDistance = 270;		//Distance. Use smaller value for shorter scroll and greater value for longer scroll
         
-      $window.on("mousewheel DOMMouseScroll", function(event){
+      $window.on("mousewheel DOMMouseScroll", {passive: true}, function(event){
         
         event.preventDefault();	
                         

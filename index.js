@@ -4,12 +4,14 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
 const router = express.Router();
+const compression = require('compression');
 
 // Using
 app.use(helmet())
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(compression());
 
 
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {

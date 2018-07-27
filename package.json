@@ -12,6 +12,7 @@
     "dev": "concurrently \"yarn frontend\""
   },
   "dependencies": {
+    "compression": "^1.7.3",
     "express": "^4.16.3",
     "helmet": "^3.12.1",
     "nodemon": "^1.17.5",

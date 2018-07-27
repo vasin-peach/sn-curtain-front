@@ -44,32 +44,32 @@ export default {
       product: [
         {
           name: 'Curtain1 Your application is running here',
-          url: '01.png',
+          url: 'test_01.jpg',
           price: 1200
         },
         {
           name: 'Curtain2',
-          url: '02.png',
+          url: 'test_02.jpg',
           price: 1200
         },
         {
           name: 'Curtain3',
-          url: '03.png',
+          url: 'test_03.jpg',
           price: 1200
         },
         {
           name: 'Curtain4',
-          url: '04.png',
+          url: 'test_04.jpg',
           price: 1200
         },
         {
           name: 'Curtain5',
-          url: '01.png',
+          url: 'test_01.jpg',
           price: 1500
         },
         {
           name: 'Curtain6',
-          url: '02.png',
+          url: 'test_02.jpg',
           price: 1600
         }
       ]

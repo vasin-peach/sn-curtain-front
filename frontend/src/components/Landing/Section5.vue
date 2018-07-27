@@ -8,7 +8,7 @@
             เราเป็นโรงงานผ้าม่าน ที่ทำเอง มีผ้าและอุปกรณ์เป็นของตัว <br> มีความเป็นมาตราฐานในการตัดเย็บ <br> ประสบการณ์มากกว่า 20ปี
           </div>
           <div class="about-title-img">
-            <img v-lazy="'/static/images/icon/checked.svg'">
+            <!-- <img v-lazy="'/static/images/icon/checked.svg'"> -->
           </div>
         </div>
         <div class="about-content">

@@ -24,7 +24,7 @@
       font-size: 30px;
       text-align: center;
       font-weight: 400;
-      color: $dark2;
+      color: $dark3;
       @include tablet {
         font-size: 25px;
       }
@@ -64,10 +64,10 @@
           }
         }
         #img1 {
-          background-image: url('/static/images/test/01.png');
+          background-image: url('/static/images/test/test_01.jpg');
         }
         #img2 {
-          background-image: url('/static/images/test/02.png');
+          background-image: url('/static/images/test/test_02.jpg');
         }
         p {
           color: $orange1;

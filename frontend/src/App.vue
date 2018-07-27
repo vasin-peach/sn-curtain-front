@@ -18,9 +18,9 @@ export default {
       
       var scrollTime = 0.8;			//Scroll time
       var scrollDistance = 270;		//Distance. Use smaller value for shorter scroll and greater value for longer scroll
+      $window.bind("mousewheel DOMMouseScroll", function(event){
         
-      $window.on("mousewheel DOMMouseScroll", {passive: true}, function(event){
-        
+        console.log('hi')
         event.preventDefault();	
                         
         var delta = event.originalEvent.wheelDelta/120 || -event.originalEvent.detail/3;

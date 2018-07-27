@@ -7,7 +7,7 @@
             <div class="map-title font-bourbon fade">S&N CURTAIN</div>
             <li class="row m-0 fade">
               <div class="col-2 col-sm-2 col-md-3 col-lg-2">
-                <img src="/static/images/icon/marker.svg">
+                <img v-lazy="'/static/images/icon/marker.svg'">
               </div>
               <div class="col flex align-center font-mitr">
                 18 ถนน หทัยมิตร แขวง ทรายกองดิน เขต คลองสามวา กรุงเทพมหานคร 10510
@@ -15,7 +15,7 @@
             </li>
             <li class="row m-0 fade">
               <div class="col-2 col-sm-2 col-md-3 col-lg-2">
-                <img src="/static/images/icon/mail.svg">
+                <img v-lazy="'/static/images/icon/mail.svg'">
               </div>
               <div class="col flex align-center font-mitr">
                 curtain9@gmail.com
@@ -23,7 +23,7 @@
             </li>
             <li class="row m-0 fade">
               <div class="col-2 col-sm-2 col-md-3 col-lg-2">
-                <img src="/static/images/icon/mobile.svg">
+                <img v-lazy="'/static/images/icon/mobile.svg'">
               </div>
               <div class="col flex align-center font-mitr">
                 089 796 3038

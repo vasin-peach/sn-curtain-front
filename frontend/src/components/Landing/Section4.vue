@@ -16,7 +16,7 @@
                   <div class="button">Buy</div>
                 </div>
                 <div class="col order-first product-img">
-                  <img :src="'/static/images/test/' + item.url">
+                  <img v-lazy="'/static/images/test/' + item.url">
                 </div>
               </div>
             </router-link>

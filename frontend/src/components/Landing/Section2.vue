@@ -5,7 +5,7 @@
         <div class="col-4 col-md-2 category-box fade" v-for="(item, index) in category" :key="index">
           <router-link :to="{ name: 'Store' }">
             <div class="category-content">
-              <img :src="'/static/images/category/' + item.name">
+              <img v-lazy="'/static/images/category/' + item.name">
             </div>
             <div class="category-title">
               {{ item.title }}

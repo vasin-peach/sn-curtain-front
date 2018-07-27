@@ -1,18 +1,27 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import Raven from 'raven-js'
-import RavenVue from 'raven-js/plugins/vue'
+import Vue from 'vue';
+import Raven from 'raven-js';
+import RavenVue from 'raven-js/plugins/vue';
 import BootstrapVue from 'bootstrap-vue';
 import VeeValidae from 'vee-validate';
-import App from './App'
-import router from './router'
-import store from './store/main'
+import App from './App';
+import router from './router';
+import store from './store/main';
+import VueLazyLoad from 'vue-lazyload';
 
 // import Assets
 import '@scss/app.scss';
 import 'bootstrap/dist/css/bootstrap.css'
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+Vue.use(VueLazyLoad, {
+  preLoad: 1.3,
+  // error: '../static/images/lazy/fail.svg',
+  // loading: '../static/images/lazy/loading.svg',
+  loading: '../static/images/lazy/lazyload.svg',
+  attempt: 1
+})
 
 
 
@@ -30,6 +39,7 @@ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging'
 }
 
 Vue.config.productionTip = false
+
 
 /* eslint-disable no-new */
 new Vue({

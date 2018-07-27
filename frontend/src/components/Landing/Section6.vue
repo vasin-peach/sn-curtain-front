@@ -50,7 +50,7 @@ export default {
           var categoryScene = new ScrollMagic.Scene({
             triggerElement: this,
             triggerHook: 1,
-            // reverse: false
+            reverse: false
           })
           .setClassToggle(this, 'fade-in')
           .addTo(controller);

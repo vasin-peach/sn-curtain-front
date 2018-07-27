@@ -28,7 +28,7 @@
 }
 
 .fade {
-  transition: transform 0.4s ease-in, opacity 0.6s ease !important;
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out !important;
   transform: translateY(30px) !important;
   opacity: 0;
   &.fade-in {
@@ -38,7 +38,7 @@
 }
 
 .fade2 {
-  transition: opacity 0.4s ease !important;
+  transition: opacity 0.4s ease-out !important;
   opacity: 0;
   &.fade-in {
     opacity: 1 !important;
@@ -46,8 +46,7 @@
 }
 
 .text-fade1 {
-  transition: transform 0.4s cubic-bezier(0.53, 0.49, 0.18, 0.97),
-    opacity 0.6s cubic-bezier(0.53, 0.49, 0.18, 0.97);
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
   transform: translateY(30px);
   opacity: 0;
   &.active {

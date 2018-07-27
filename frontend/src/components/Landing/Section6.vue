@@ -40,7 +40,7 @@
 </template>
 
 <script>
-
+import ScrollMagic from 'scrollmagic';
 export default {
   name: 'Section6',
   mounted() {

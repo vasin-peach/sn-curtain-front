@@ -1,6 +1,7 @@
 @font-face {
   font-family: 'Bourbon';
-  src: url('~@font/BourbonGrotesque.otf');
+  font-display: block;
+  src: local('sans-serif'), url('~@font/BourbonGrotesque.otf');
 }
 
 .font-bourbon {

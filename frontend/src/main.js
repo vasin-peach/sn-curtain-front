@@ -12,7 +12,7 @@ import store from './store/main'
 // import Assets
 import '@scss/app.scss';
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+// import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 
 

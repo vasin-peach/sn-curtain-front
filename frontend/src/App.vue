@@ -12,7 +12,6 @@ import ScrollToPlugin from 'gsap/ScrollToPlugin';
 export default {
   name: 'App',
   mounted() {
-    document.addEventListener('touchstart', onTouchStart, {passive: true});
     $(function(){
 
       var $window = $(window);		//Window object

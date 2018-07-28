@@ -11,6 +11,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
 
 const env = process.env.NODE_ENV === 'testing' ?
   require('../config/test.env') :
@@ -133,6 +134,16 @@ const webpackConfig = merge(baseWebpackConfig, {
       collections: true,
       paths: true,
     }),
+    new PreloadWebpackPlugin({
+      rel: 'preload',
+      include: 'allAssets',
+      as(entry) {
+        if (/\.css$/.test(entry)) return 'style';
+        if (/\.woff$/.test(entry)) return 'font';
+        if (/\.png$/.test(entry)) return 'image';
+        return 'script';
+      }
+    })
   ]
 })
 
@@ -141,6 +152,7 @@ if (config.build.productionGzip) {
 
   webpackConfig.plugins.push(
     new CompressionWebpackPlugin({
+      excludeHtmlNames: ['index.html'],
       asset: '[path].gz[query]',
       algorithm: 'gzip',
       test: new RegExp(

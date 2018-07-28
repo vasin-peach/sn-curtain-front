@@ -46,6 +46,7 @@ export default {
     }
   },
   mounted() {
+    console.log(keys);
     this.getPopular();
 
     // Init scrollmagic

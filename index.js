@@ -6,9 +6,6 @@ const app = express();
 const router = express.Router();
 const compression = require('compression');
 
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
-  app.use(express.static('frontend/dist'))
-}
 
 // Using
 app.use(helmet())
@@ -16,6 +13,10 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(compression());
+
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+  app.use(express.static('frontend/dist'))
+}
 
 
 

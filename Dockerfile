@@ -5,6 +5,8 @@ WORKDIR /home/app/sn-curtain.com
 COPY . ./
 WORKDIR /home/app/sn-curtain.com/frontend
 
+RUN sudo apt-get update
+RUN sudo apt-get install -y git
 RUN yarn install
 RUN yarn build
 

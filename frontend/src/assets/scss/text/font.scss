@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'Bourbon';
   font-display: auto;
-  src: local('sans-serif'), url('~@font/BourbonGrotesque.otf') format('opentype');
+  src: local('sans-serif'), url('~@font/BourbonGrotesque.otf');
 }
 
 .font-bourbon {
@@ -15,34 +15,34 @@
 @font-face {
   font-family: 'Mitr';
   font-display: auto;
-  src: local('sans-serif'), url('~@font/Mitr-Light.ttf') format('treetype');
+  src: local('sans-serif'), url('~@font/Mitr-Light.ttf');
   font-weight: 200;
 }
 
 @font-face {
   font-family: 'Mitr';
   font-display: auto;
-  src: local('sans-serif'), url('~@font/Mitr-Regular.ttf') format('treetype');
+  src: local('sans-serif'), url('~@font/Mitr-Regular.ttf');
   font-weight: 300;
 }
 
 @font-face {
   font-family: 'Mitr';
   font-display: auto;
-  src: local('sans-serif'), url('~@font/Mitr-Medium.ttf') format('treetype');
+  src: local('sans-serif'), url('~@font/Mitr-Medium.ttf');
   font-weight: 400;
 }
 
 @font-face {
   font-family: 'Mitr';
   font-display: auto;
-  src: local('sans-serif'), url('~@font/Mitr-SemiBold.ttf') format('treetype');
+  src: local('sans-serif'), url('~@font/Mitr-SemiBold.ttf');
   font-weight: 500;
 }
 
 @font-face {
   font-family: 'Mitr';
   font-display: auto;
-  src: local('sans-serif'), url('~@font/Mitr-Bold.ttf') format('treetype');
+  src: local('sans-serif'), url('~@font/Mitr-Bold.ttf');
   font-weight: 600;
 }

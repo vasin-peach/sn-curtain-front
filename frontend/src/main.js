@@ -9,6 +9,7 @@ import App from './App';
 import router from './router';
 import store from './store/main';
 import VueLazyLoad from 'vue-lazyload';
+import VueResource from 'vue-resource';
 
 // import Assets
 import '@scss/app.scss';
@@ -22,6 +23,7 @@ Vue.use(VueLazyLoad, {
   loading: '../static/images/lazy/lazyload.svg',
   attempt: 1
 })
+Vue.use(VueResource);
 
 
 

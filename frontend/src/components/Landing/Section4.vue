@@ -11,12 +11,12 @@
             <router-link :to="{ name: 'Product' }">
               <div class="row m-0">
                 <div class="col-6 col-sm-12 col-md-4 product-content">
-                  <p class="text">{{item.name}}</p>
+                  <p class="text">{{item.name[0].val}}</p>
                   <p>{{item.price}} บาท</p>
                   <div class="button">Buy</div>
                 </div>
                 <div class="col order-first product-img">
-                  <img v-lazy="'/static/images/test/' + item.url">
+                  <img v-lazy="item.brand.src">
                 </div>
               </div>
             </router-link>
@@ -37,47 +37,20 @@
 
 <script>
 import ScrollMagic from 'scrollmagic';
+import keys from '../../../keys/keys.js';
 export default {
   name: 'Section4',
   data() {
     return {
-      product: [
-        {
-          name: 'Curtain1 Your application is running here',
-          url: 'test_01.jpg',
-          price: 1200
-        },
-        {
-          name: 'Curtain2',
-          url: 'test_02.jpg',
-          price: 1200
-        },
-        {
-          name: 'Curtain3',
-          url: 'test_03.jpg',
-          price: 1200
-        },
-        {
-          name: 'Curtain4',
-          url: 'test_04.jpg',
-          price: 1200
-        },
-        {
-          name: 'Curtain5',
-          url: 'test_01.jpg',
-          price: 1500
-        },
-        {
-          name: 'Curtain6',
-          url: 'test_02.jpg',
-          price: 1600
-        }
-      ]
+      product: ['0', '1', '2', '3', '4', '5', '6']
     }
   },
-    mounted() {
+  mounted() {
+
+    this.getPopular();
+
+    // Init scrollmagic
     $(function() {
-      // init scrollmagic
       var controller = new ScrollMagic.Controller();
 
         // build scene with loop
@@ -91,6 +64,31 @@ export default {
           .addTo(controller);
         })
     })
+  },
+  methods: {
+    getPopular() {
+      var config = {
+        url: keys.BACKEND_URI + '/product/popular',
+        timeout: 1000
+      }
+      this.$http.get(keys.BACKEND_URI + '/product/popular').then(response => {
+        this.product = response.body.data;
+      }).catch(err => {
+        this.product = new Array();
+
+        for (let i=0; i<6; i++) {
+          this.product[i] = {
+            brand: {
+              src: '/static/images/lazy/lazyload.svg'
+            },
+            name: [
+              { val: 'ไม่พบสินค้า' }
+            ],
+            price: 'X',
+          }
+        }
+      })
+    }
   }
 }
 </script>

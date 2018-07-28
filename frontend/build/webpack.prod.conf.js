@@ -16,8 +16,7 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 const env = process.env.NODE_ENV === 'testing' ?
-  require('../config/test.env') :
-  require('../config/prod.env')
+  require('../config/test.env') : require('../config/prod.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -72,7 +71,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: process.env.NODE_ENV === 'testing' ?
+      filename: process.env.NODE_ENV === 'development' ?
         'index.html' : config.build.index,
       template: 'index.html',
       inject: true,

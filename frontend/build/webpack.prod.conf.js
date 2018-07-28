@@ -15,8 +15,8 @@ const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 
-// const env = process.env.NODE_ENV === 'testing' ?
-//   require('../config/test.env') : require('../config/prod.env')
+const env = process.env.NODE_ENV === 'testing' ?
+  require('../config/test.env') : require('../config/prod.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {

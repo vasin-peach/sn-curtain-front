@@ -42,7 +42,7 @@ export default {
   name: 'Section4',
   data() {
     return {
-      product: ['0', '1', '2', '3', '4', '5', '6']
+      product: null
     }
   },
   mounted() {
@@ -67,26 +67,24 @@ export default {
   },
   methods: {
     getPopular() {
+      this.product = new Array();
+      for (let i=0; i<6; i++) {
+        this.product[i] = {
+          brand: {
+            src: '/static/images/lazy/lazyload.svg'
+          },
+          name: [
+            { val: 'ชื่อสินค้า' }
+          ],
+          price: '0',
+        }
+      }
       var config = {
         url: keys.BACKEND_URI + '/product/popular',
         timeout: 1000
       }
       this.$http.get(keys.BACKEND_URI + '/product/popular').then(response => {
         this.product = response.body.data;
-      }).catch(err => {
-        this.product = new Array();
-
-        for (let i=0; i<6; i++) {
-          this.product[i] = {
-            brand: {
-              src: '/static/images/lazy/lazyload.svg'
-            },
-            name: [
-              { val: 'ไม่พบสินค้า' }
-            ],
-            price: 'X',
-          }
-        }
       })
     }
   }

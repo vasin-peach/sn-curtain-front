@@ -12,6 +12,7 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
+const ImageminPlugin = require('imagemin-webpack-plugin').default
 
 const env = process.env.NODE_ENV === 'testing' ?
   require('../config/test.env') :
@@ -143,6 +144,9 @@ const webpackConfig = merge(baseWebpackConfig, {
         if (/\.png$/.test(entry)) return 'image';
         return 'script';
       }
+    }),
+    new ImageminPlugin({
+      test: /\.(jpe?g|png|gif|svg)$/i
     })
   ]
 })

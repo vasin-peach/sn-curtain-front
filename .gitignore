@@ -9,7 +9,7 @@ selenium-debug.log
 
 
 ./frontend/.DS_Store
-./frontend/dist/*
+./frontend/dist/
 ./frontend/node_modules/
 ./frontend/test/e2e/reports/
 ./frontend/yarn-debug.log*

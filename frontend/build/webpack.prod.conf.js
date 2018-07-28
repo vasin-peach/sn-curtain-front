@@ -138,7 +138,8 @@ const webpackConfig = merge(baseWebpackConfig, {
       src: 'index.html',
       inline: true,
       minify: true,
-      dest: 'index.html'
+      dest: 'index.html',
+      ignore: ['font-face']
     })
   ]
 })

@@ -5,7 +5,7 @@ WORKDIR /home/app/sn-curtain.com
 COPY . ./
 WORKDIR /home/app/sn-curtain.com/frontend
 
-RUN apk update && apk add -y git
+RUN apk update && apk add git
 RUN yarn install
 RUN yarn build
 

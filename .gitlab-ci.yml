@@ -21,7 +21,7 @@ build-image:
   stage: build
   image: docker:stable
   tags:
-    - docker
+    - deploy
   services:
     - docker:dind
   only:

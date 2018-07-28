@@ -71,7 +71,7 @@ export default {
         url: keys.BACKEND_URI + '/product/popular',
         timeout: 1000
       }
-      this.$http.get(keys.BACKEND_URI + '/product/popular').then(response => {
+      this.$http.get(process.env.BACKEND_URI + '/product/popular').then(response => {
         this.product = response.body.data;
       }).catch(err => {
         this.product = new Array();

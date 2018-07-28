@@ -141,6 +141,8 @@ const webpackConfig = merge(baseWebpackConfig, {
         if (/\.css$/.test(entry)) return 'style';
         if (/\.woff$/.test(entry)) return 'font';
         if (/\.png$/.test(entry)) return 'image';
+        if (/\.jpg$/.test(entry)) return 'image';
+        if (/\.js$/.test(entry)) return 'script';
         return 'script';
       }
     }),

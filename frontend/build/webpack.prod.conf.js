@@ -11,7 +11,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-// const CriticalPlugin = require('webpack-plugin-critical').CriticalPlugin;
+const CriticalPlugin = require('webpack-plugin-critical').CriticalPlugin;
 
 const env = process.env.NODE_ENV === 'testing' ?
   require('../config/test.env') :
@@ -134,13 +134,13 @@ const webpackConfig = merge(baseWebpackConfig, {
       collections: true,
       paths: true,
     }),
-    // new CriticalPlugin({
-    //   src: 'index.html',
-    //   inline: true,
-    //   minify: true,
-    //   dest: 'index.html',
-    //   ignore: ['font-face']
-    // })
+    new CriticalPlugin({
+      src: 'index.html',
+      inline: true,
+      minify: true,
+      dest: 'index.html',
+      ignore: ['font-face']
+    })
   ]
 })
 

@@ -12,6 +12,8 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 const env = process.env.NODE_ENV === 'testing' ?
   require('../config/test.env') :
@@ -145,7 +147,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         if (/\.js$/.test(entry)) return 'script';
         return 'script';
       }
-    }),
+    })
   ]
 })
 

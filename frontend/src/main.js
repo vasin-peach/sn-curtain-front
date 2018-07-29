@@ -38,7 +38,7 @@ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging'
     .install();
 }
 
-// Vue.config.productionTip = false
+Vue.config.productionTip = false
 
 
 /* eslint-disable no-new */

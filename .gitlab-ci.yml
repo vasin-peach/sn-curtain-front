@@ -48,15 +48,14 @@ deploy-staging:
     - echo "${SSH_HOST_KEY}" > "${HOME}/.ssh/known_hosts"
     - echo "${SSH_PRIVATE_KEY}" > "${HOME}/.ssh/id_rsa"
     - chmod 700 "${HOME}/.ssh/id_rsa"
-    - echo "${HOME} \n ${LINUX_USERNAME} \n ${SSH_HOST_KEY} \n ${SSH_PRIVATE_KEY}"
     - rsync -hrvz --delete --exclude=_ -e "ssh -i ${HOME}/.ssh/id_rsa" dist "${LINUX_USERNAME}@${HOST_IP}:/home/${LINUX_USERNAME}/html/dev.sn-curtain.com"
-  script:
-    - "docker-compose -f .cd/docker-compose.staging.yml pull"
-    - "docker-compose -f .cd/docker-compose.staging.yml stop"
-    - "docker-compose -f .cd/docker-compose.staging.yml rm --force"
-    - "docker-compose -f .cd/docker-compose.staging.yml up -d"
-  after_script:
-    - "docker rmi $(docker images -qa -f 'dangling=true')"
+  # script:
+  #   - "docker-compose -f .cd/docker-compose.staging.yml pull"
+  #   - "docker-compose -f .cd/docker-compose.staging.yml stop"
+  #   - "docker-compose -f .cd/docker-compose.staging.yml rm --force"
+  #   - "docker-compose -f .cd/docker-compose.staging.yml up -d"
+  # after_script:
+  #   - "docker rmi $(docker images -qa -f 'dangling=true')"
   environment:
     name: staging
     url: "http://dev.sn-curtain.com"

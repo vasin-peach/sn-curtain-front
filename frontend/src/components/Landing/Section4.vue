@@ -11,12 +11,12 @@
             <router-link :to="{ name: 'Product' }">
               <div class="row m-0">
                 <div class="col-6 col-sm-12 col-md-4 product-content">
-                  <p class="text">{{item.name}}</p>
+                  <p class="text">{{item.name[0].val}}</p>
                   <p>{{item.price}} บาท</p>
                   <div class="button">Buy</div>
                 </div>
                 <div class="col order-first product-img">
-                  <img v-lazy="'/static/images/test/' + item.url">
+                  <img v-lazy="item.brand.src">
                 </div>
               </div>
             </router-link>
@@ -49,7 +49,7 @@ export default {
   mounted() {
 
     this.config = process.env.NODE_ENV === 'development' ? require('../../../config/dev.env') : require('../../../config/prod.env')
-    console.log(this.config);
+    console.log(process.env);
     this.getPopular();
 
 
@@ -80,15 +80,11 @@ export default {
             src: '/static/images/lazy/lazyload.svg'
           },
           name: [
-            { val: 'ชื่อสินค้า' }
+            { val: 'ไม่พบสินค้า' }
           ],
           price: '0',
         }
       }
-      // var config = {
-      //   url: keys.BACKEND_URI + '/product/popular',
-      //   timeout: 1000
-      // }
       this.$http.get(this.config.BACKEND_URI + '/product/popular').then(response => {
         this.product = response.body.data;
       })

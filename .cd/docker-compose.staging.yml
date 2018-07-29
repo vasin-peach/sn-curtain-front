@@ -14,5 +14,8 @@ services:
       - NODE_ENV=production
       - BACKEND_URI=${BACKEND_URI_DEV}
       - TEST=hi
+    args:
+      - NODE_ENV=production
+      - BACKEND_URI=${BACKEND_URI_PROD}
     networks:
       - application-tier

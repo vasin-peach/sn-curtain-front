@@ -37,16 +37,21 @@
 
 <script>
 import ScrollMagic from 'scrollmagic';
+import keys from '../../../config/dev.env.js'
 export default {
   name: 'Section4',
   data() {
     return {
-      product: null
+      product: null,
+      config: null
     }
   },
   mounted() {
-    console.log(keys);
+
+    this.config = process.env.NODE_ENV === 'development' ? require('../../../config/dev.env') : require('../../../config/prod.env')
+    console.log(this.config);
     this.getPopular();
+
 
     // Init scrollmagic
     $(function() {
@@ -63,7 +68,8 @@ export default {
           .setClassToggle(this, 'fade-in')
           .addTo(controller);
         })
-    })
+    });
+
   },
   methods: {
     getPopular() {
@@ -79,11 +85,11 @@ export default {
           price: '0',
         }
       }
-      var config = {
-        url: keys.BACKEND_URI + '/product/popular',
-        timeout: 1000
-      }
-      this.$http.get(keys.BACKEND_URI + '/product/popular').then(response => {
+      // var config = {
+      //   url: keys.BACKEND_URI + '/product/popular',
+      //   timeout: 1000
+      // }
+      this.$http.get(this.config.BACKEND_URI + '/product/popular').then(response => {
         this.product = response.body.data;
       })
     }

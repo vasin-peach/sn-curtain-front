@@ -12,6 +12,6 @@ services:
       - 5502:5000
     environment:
       - NODE_ENV=production
-      - BACKEND_URI_DEV=${BACKEND_URI_DEV}
+      - BACKEND_URI=${BACKEND_URI_DEV}
     networks:
       - application-tier

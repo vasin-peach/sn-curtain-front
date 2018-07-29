@@ -36,7 +36,8 @@ const webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
-      'process.env': require('../config/prod.env')
+      'process.env': require('../config/prod.env'),
+      'process.env.test': JSON.stringify(process.env.BACKEND_URI)
       // 'process.env': JSON.stringify(process.env.NODE_ENV),
       // 'BACKEND_URI': process.env.BACKEND_URI
     }),
@@ -140,7 +141,6 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
     new PreloadWebpackPlugin({
       rel: 'preload',
-      include: 'allAssets',
       as(entry) {
         if (/\.css$/.test(entry)) return 'style';
         if (/\.woff$/.test(entry)) return 'font';

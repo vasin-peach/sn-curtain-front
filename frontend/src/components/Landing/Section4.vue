@@ -41,7 +41,6 @@ export default {
   name: 'Section4',
   data() {
     return {
-<<<<<<< HEAD
       product: null
     }
   },
@@ -50,43 +49,6 @@ export default {
     this.getPopular();
 
     // Init scrollmagic
-=======
-      product: [
-        {
-          name: 'Curtain1 Your application is running here',
-          url: 'test_01.jpg',
-          price: 1200
-        },
-        {
-          name: 'Curtain2',
-          url: 'test_02.jpg',
-          price: 1200
-        },
-        {
-          name: 'Curtain3',
-          url: 'test_03.jpg',
-          price: 1200
-        },
-        {
-          name: 'Curtain4',
-          url: 'test_04.jpg',
-          price: 1200
-        },
-        {
-          name: 'Curtain5',
-          url: 'test_01.jpg',
-          price: 1500
-        },
-        {
-          name: 'Curtain6',
-          url: 'test_02.jpg',
-          price: 1600
-        }
-      ]
-    }
-  },
-    mounted() {
->>>>>>> parent of 5bdc229... :art: create keys environment and add dynamic product in section4.
     $(function() {
       // init scrollmagic
       var controller = new ScrollMagic.Controller();
@@ -102,7 +64,6 @@ export default {
           .addTo(controller);
         })
     })
-<<<<<<< HEAD
   },
   methods: {
     getPopular() {
@@ -126,8 +87,6 @@ export default {
         this.product = response.body.data;
       })
     }
-=======
->>>>>>> parent of 5bdc229... :art: create keys environment and add dynamic product in section4.
   }
 }
 </script>

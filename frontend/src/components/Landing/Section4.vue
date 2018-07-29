@@ -11,12 +11,12 @@
             <router-link :to="{ name: 'Product' }">
               <div class="row m-0">
                 <div class="col-6 col-sm-12 col-md-4 product-content">
-                  <p class="text">{{item.name[0].val}}</p>
+                  <p class="text">{{item.name}}</p>
                   <p>{{item.price}} บาท</p>
                   <div class="button">Buy</div>
                 </div>
                 <div class="col order-first product-img">
-                  <img v-lazy="item.brand.src">
+                  <img v-lazy="'/static/images/test/' + item.url">
                 </div>
               </div>
             </router-link>
@@ -37,11 +37,11 @@
 
 <script>
 import ScrollMagic from 'scrollmagic';
-import keys from '../../../keys/keys.js';
 export default {
   name: 'Section4',
   data() {
     return {
+<<<<<<< HEAD
       product: null
     }
   },
@@ -50,7 +50,45 @@ export default {
     this.getPopular();
 
     // Init scrollmagic
+=======
+      product: [
+        {
+          name: 'Curtain1 Your application is running here',
+          url: 'test_01.jpg',
+          price: 1200
+        },
+        {
+          name: 'Curtain2',
+          url: 'test_02.jpg',
+          price: 1200
+        },
+        {
+          name: 'Curtain3',
+          url: 'test_03.jpg',
+          price: 1200
+        },
+        {
+          name: 'Curtain4',
+          url: 'test_04.jpg',
+          price: 1200
+        },
+        {
+          name: 'Curtain5',
+          url: 'test_01.jpg',
+          price: 1500
+        },
+        {
+          name: 'Curtain6',
+          url: 'test_02.jpg',
+          price: 1600
+        }
+      ]
+    }
+  },
+    mounted() {
+>>>>>>> parent of 5bdc229... :art: create keys environment and add dynamic product in section4.
     $(function() {
+      // init scrollmagic
       var controller = new ScrollMagic.Controller();
 
         // build scene with loop
@@ -64,6 +102,7 @@ export default {
           .addTo(controller);
         })
     })
+<<<<<<< HEAD
   },
   methods: {
     getPopular() {
@@ -87,6 +126,8 @@ export default {
         this.product = response.body.data;
       })
     }
+=======
+>>>>>>> parent of 5bdc229... :art: create keys environment and add dynamic product in section4.
   }
 }
 </script>

@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><defs><style>.cls-1{fill:#ddd;}.cls-2{font-size:3px;fill:#c9c9c9;font-family:BourbonGrotesque-Regular, Bourbon Grotesque;}</style></defs><title>Artboard 1</title><rect class="cls-1" width="10" height="10" rx="0.5" ry="0.5"/><text class="cls-2" transform="translate(1.67 5.85)">S&amp;N</text></svg>
+=======
+<svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect width="10" height="10" rx=".5" ry=".5" fill="#ddd"/><text transform="translate(1.67 5.85)" font-size="3" fill="#c9c9c9" font-family="BourbonGrotesque-Regular,Bourbon Grotesque">S&amp;N</text></svg>
+>>>>>>> parent of 5bdc229... :art: create keys environment and add dynamic product in section4.

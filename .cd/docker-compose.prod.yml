@@ -13,9 +13,6 @@ services:
     environment:
       - NODE_ENV=production
       - BACKEND_URI=${BACKEND_URI_PROD}
-    args:
-      - NODE_ENV=production
-      - BACKEND_URI=${BACKEND_URI_PROD}
     networks:
       - application-tier
 

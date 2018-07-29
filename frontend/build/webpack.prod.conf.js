@@ -148,7 +148,8 @@ const webpackConfig = merge(baseWebpackConfig, {
         if (/\.js$/.test(entry)) return 'script';
         return 'script';
       }
-    })
+    }),
+    new webpack.EnvironmentPlugin(['NODE_ENV', 'BACKEND_URI'])
   ]
 })
 

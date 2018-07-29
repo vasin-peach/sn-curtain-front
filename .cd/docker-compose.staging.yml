@@ -8,9 +8,9 @@ services:
     image: registry.gitlab.com/sn-curtain/sn-curtain.com:latest
     container_name: sn-curtain.com-frontend-staging
     restart: always
-    ports:
-      - 80:80
-      - 443:443
+    # ports:
+    #   - 80:80
+    #   - 443:443
     environment:
       - NODE_ENV=production
       - BACKEND_URI=${BACKEND_URI_DEV}

@@ -69,16 +69,18 @@ deploy-production:
   tags:
     - deploy
   before_script:
-    - "apk add --no-cache py-pip"
-    - "pip install docker-compose"
-    - "docker-compose version"
-  script:
-    - "docker-compose -f .cd/docker-compose.prod.yml pull"
-    - "docker-compose -f .cd/docker-compose.prod.yml stop"
-    - "docker-compose -f .cd/docker-compose.prod.yml rm --force"
-    - "docker-compose -f .cd/docker-compose.prod.yml up -d"
-  after_script:
-    - "docker rmi $(docker images -qa -f 'dangling=true')"
+    - "apk update"
+    - "apk add --no-cache py-pip rsync git openssh"
+    - "pip install --no-cache-dir docker-compose"
+    - "git submodule update --init --recursive"
+    - mkdir "${HOME}/.ssh"
+    - echo "${SSH_HOST_KEY}" > "${HOME}/.ssh/known_hosts"
+    - echo "${SSH_PRIVATE_KEY}" > "${HOME}/.ssh/id_rsa"
+    - chmod 700 "${HOME}/.ssh/id_rsa"
+script:
+    - rsync -hrvz --delete --exclude=_ -e "ssh -i ${HOME}/.ssh/id_rsa" dist "${LINUX_USERNAME}@${HOST_IP}:/home/${LINUX_USERNAME}/html/sn-curtain.com"
+  # after_script:
+  #   - "docker rmi $(docker images -qa -f 'dangling=true')"
   environment:
     name: production
     url: "https://sn-curtain.com"

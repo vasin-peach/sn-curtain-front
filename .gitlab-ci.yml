@@ -77,7 +77,7 @@ deploy-production:
     - echo "${SSH_HOST_KEY}" > "${HOME}/.ssh/known_hosts"
     - echo "${SSH_PRIVATE_KEY}" > "${HOME}/.ssh/id_rsa"
     - chmod 700 "${HOME}/.ssh/id_rsa"
-script:
+  script:
     - rsync -hrvz --delete --exclude=_ -e "ssh -i ${HOME}/.ssh/id_rsa" dist "${LINUX_USERNAME}@${HOST_IP}:/home/${LINUX_USERNAME}/html/sn-curtain.com"
   # after_script:
   #   - "docker rmi $(docker images -qa -f 'dangling=true')"

@@ -8,11 +8,11 @@ services:
     image: registry.gitlab.com/sn-curtain/sn-curtain.com:latest
     container_name: sn-curtain.com-frontend-production
     restart: always
-    # ports:
-    #   - 5501:5000
-    # environment:
-    #   - NODE_ENV=production
-    #   - BACKEND_URI=${BACKEND_URI_PROD}
-    # networks:
-    #   - application-tier
+    ports:
+      - 5501:5000
+    environment:
+      - NODE_ENV=production
+      - BACKEND_URI=${BACKEND_URI_PROD}
+    networks:
+      - application-tier
 

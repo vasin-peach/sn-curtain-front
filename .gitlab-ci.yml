@@ -64,8 +64,8 @@ deploy-staging:
 
 # Deploy Production
 deploy-production:
-  stage: deploy
   image: docker:stable
+  stage: deploy
   tags:
     - deploy
   before_script:

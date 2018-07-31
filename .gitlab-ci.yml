@@ -30,64 +30,64 @@ build-image:
     - echo $BACKEND_URI_DEV
     - docker build --pull --no-cache --build-arg BACKEND_URI=${BACKEND_URI_DEV} -t $DOCKER_IMAGE_NAME .
     - docker push $DOCKER_IMAGE_NAME
-  after_script:
-    - "docker rmi $(docker images -qa -f 'dangling=true')"
-
-
-# Deploy Development
-deploy-staging:
-  image: registry.gitlab.com/sn-curtain/sn-curtain.com:latest
-  stage: deploy
-  tags:
-    - deploy
-  before_script:
-    - "apk update"
-    - "apk add --no-cache py-pip rsync git openssh"
-    - "pip install --no-cache-dir docker-compose"
-    - "git submodule update --init --recursive"
-    - mkdir "${HOME}/.ssh"
-    - echo "${SSH_HOST_KEY}" > "${HOME}/.ssh/known_hosts"
-    - echo "${SSH_PRIVATE_KEY}" > "${HOME}/.ssh/id_rsa"
-    - chmod 700 "${HOME}/.ssh/id_rsa"
-    - echo "${SSH_HOST_KEY}" > "${HOME}/.ssh/known_hosts"
-    - echo "${SSH_PRIVATE_KEY}" > "${HOME}/.ssh/id_rsa"
-    - chmod 700 "${HOME}/.ssh/id_rsa"
-  script:
-    - rsync -hrvz --delete --exclude=_ -e "ssh -i ${HOME}/.ssh/id_rsa" dist "${LINUX_USERNAME}@${HOST_IP}:/home/${LINUX_USERNAME}/html/dev.sn-curtain.com"
-    # - "docker-compose -f .cd/docker-compose.staging.yml pull"
-    # - "docker-compose -f .cd/docker-compose.staging.yml stop"
-    # - "docker-compose -f .cd/docker-compose.staging.yml rm --force"
-    # - "docker-compose -f .cd/docker-compose.staging.yml up -d"
   # after_script:
     # - "docker rmi $(docker images -qa -f 'dangling=true')"
-  environment:
-    name: staging
-    url: "http://dev.sn-curtain.com"
-  only:
-    - master
 
-# Deploy Production
-deploy-production:
-  image: docker:stable
-  stage: deploy
-  tags:
-    - deploy
-  before_script:
-    - "apk update"
-    - "apk add --no-cache py-pip rsync git openssh"
-    - "pip install --no-cache-dir docker-compose"
-    - "git submodule update --init --recursive"
-    - mkdir "${HOME}/.ssh"
-    - echo "${SSH_HOST_KEY}" > "${HOME}/.ssh/known_hosts"
-    - echo "${SSH_PRIVATE_KEY}" > "${HOME}/.ssh/id_rsa"
-    - chmod 700 "${HOME}/.ssh/id_rsa"
-  script:
-    - rsync -hrvz --delete --exclude=_ -e "ssh -i ${HOME}/.ssh/id_rsa" dist "${LINUX_USERNAME}@${HOST_IP}:/home/${LINUX_USERNAME}/html/sn-curtain.com"
-  # after_script:
-  #   - "docker rmi $(docker images -qa -f 'dangling=true')"
-  environment:
-    name: production
-    url: "https://sn-curtain.com"
-  only:
-    - master
-  when: manual
+
+# # Deploy Development
+# deploy-staging:
+#   image: registry.gitlab.com/sn-curtain/sn-curtain.com:latest
+#   stage: deploy
+#   tags:
+#     - deploy
+#   before_script:
+#     - "apk update"
+#     - "apk add --no-cache py-pip rsync git openssh"
+#     - "pip install --no-cache-dir docker-compose"
+#     - "git submodule update --init --recursive"
+#     - mkdir "${HOME}/.ssh"
+#     - echo "${SSH_HOST_KEY}" > "${HOME}/.ssh/known_hosts"
+#     - echo "${SSH_PRIVATE_KEY}" > "${HOME}/.ssh/id_rsa"
+#     - chmod 700 "${HOME}/.ssh/id_rsa"
+#     - echo "${SSH_HOST_KEY}" > "${HOME}/.ssh/known_hosts"
+#     - echo "${SSH_PRIVATE_KEY}" > "${HOME}/.ssh/id_rsa"
+#     - chmod 700 "${HOME}/.ssh/id_rsa"
+#   script:
+#     - rsync -hrvz --delete --exclude=_ -e "ssh -i ${HOME}/.ssh/id_rsa" dist "${LINUX_USERNAME}@${HOST_IP}:/home/${LINUX_USERNAME}/html/dev.sn-curtain.com"
+#     # - "docker-compose -f .cd/docker-compose.staging.yml pull"
+#     # - "docker-compose -f .cd/docker-compose.staging.yml stop"
+#     # - "docker-compose -f .cd/docker-compose.staging.yml rm --force"
+#     # - "docker-compose -f .cd/docker-compose.staging.yml up -d"
+#   # after_script:
+#     # - "docker rmi $(docker images -qa -f 'dangling=true')"
+#   environment:
+#     name: staging
+#     url: "http://dev.sn-curtain.com"
+#   only:
+#     - master
+
+# # Deploy Production
+# deploy-production:
+#   image: docker:stable
+#   stage: deploy
+#   tags:
+#     - deploy
+#   before_script:
+#     - "apk update"
+#     - "apk add --no-cache py-pip rsync git openssh"
+#     - "pip install --no-cache-dir docker-compose"
+#     - "git submodule update --init --recursive"
+#     - mkdir "${HOME}/.ssh"
+#     - echo "${SSH_HOST_KEY}" > "${HOME}/.ssh/known_hosts"
+#     - echo "${SSH_PRIVATE_KEY}" > "${HOME}/.ssh/id_rsa"
+#     - chmod 700 "${HOME}/.ssh/id_rsa"
+#   script:
+#     - rsync -hrvz --delete --exclude=_ -e "ssh -i ${HOME}/.ssh/id_rsa" dist "${LINUX_USERNAME}@${HOST_IP}:/home/${LINUX_USERNAME}/html/sn-curtain.com"
+#   # after_script:
+#   #   - "docker rmi $(docker images -qa -f 'dangling=true')"
+#   environment:
+#     name: production
+#     url: "https://sn-curtain.com"
+#   only:
+#     - master
+#   when: manual

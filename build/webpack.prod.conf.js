@@ -15,9 +15,9 @@ const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 
-// const env = process.env.NODE_ENV === 'testing' ?
-//   require('../config/test.env') :
-//   require('../config/prod.env')
+const env = process.env.NODE_ENV === 'testing' ?
+  require('../config/test.env') :
+  require('../config/prod.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -36,15 +36,15 @@ const webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || JSON.stringify('production')),
-      'process.env.BACKEND_URI': JSON.stringify(process.env.BACKEND_URI || JSON.stringify('development')),
-      // 'process.env': require('../config/prod.env')
+      'process.env': require('../config/prod.env')
+      // 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || JSON.stringify('production')),
+      // 'process.env.BACKEND_URI': JSON.stringify(process.env.BACKEND_URI || JSON.stringify('development')),
       // "process.env.TEST": JSON.stringify('Test')
       // 'process.env': require('../config/prod.env'),
       // 'process.env': JSON.stringify(process.env.NODE_ENV),
       // 'BACKEND_URI': process.env.BACKEND_URI
     }),
-    new webpack.EnvironmentPlugin(['NODE_ENV', 'BACKEND_URI']),
+    // new webpack.EnvironmentPlugin(['NODE_ENV', 'BACKEND_URI']),
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {

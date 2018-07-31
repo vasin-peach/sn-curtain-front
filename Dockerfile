@@ -7,6 +7,7 @@ COPY . ./
 RUN apk update && apk add git
 RUN yarn install
 RUN yarn build
+RUN echo "${BACKEND_URI}"
 
 ARG BACKEND_URI=${BACKEND_URI}
 

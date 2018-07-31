@@ -15,9 +15,9 @@ import '@scss/app.scss';
 import 'bootstrap/dist/css/bootstrap.css'
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-console.log(process.env.NODE_ENV);
-console.log(process.env.BACKEND_URI);
-console.log(process.env.TEST);
+// console.log(process.env.NODE_ENV);
+// console.log(process.env.BACKEND_URI);
+// console.log(process.env.TEST);
 
 Vue.use(VueLazyLoad, {
   preLoad: 1.3,

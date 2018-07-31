@@ -37,17 +37,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': require('../config/prod.env')
-      // 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV) || '"production"',
-      // 'process.env.BACKEND_URI': JSON.stringify(process.env.BACKEND_URI) || '"TEST"',
-      // 'process.env.TEST': JSON.stringify('Test')
-      // 'process.env': require('../config/prod.env'),
-      // 'process.env': JSON.stringify(process.env.NODE_ENV),
-      // 'BACKEND_URI': process.env.BACKEND_URI
     }),
-    // new webpack.EnvironmentPlugin({
-    //   NODE_ENV: process.env.NODE_ENV || 'production',
-    //   BACKEND_URI: process.env.BACKEND_URI || 'test',
-    // }),
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {
@@ -146,17 +136,17 @@ const webpackConfig = merge(baseWebpackConfig, {
       collections: true,
       paths: true,
     }),
-    new PreloadWebpackPlugin({
-      rel: 'preload',
-      as(entry) {
-        if (/\.css$/.test(entry)) return 'style';
-        if (/\.woff$/.test(entry)) return 'font';
-        if (/\.png$/.test(entry)) return 'image';
-        if (/\.jpg$/.test(entry)) return 'image';
-        if (/\.js$/.test(entry)) return 'script';
-        return 'script';
-      }
-    }),
+    // new PreloadWebpackPlugin({
+    //   rel: 'preload',
+    //   as(entry) {
+    //     if (/\.css$/.test(entry)) return 'style';
+    //     if (/\.woff$/.test(entry)) return 'font';
+    //     if (/\.png$/.test(entry)) return 'image';
+    //     if (/\.jpg$/.test(entry)) return 'image';
+    //     if (/\.js$/.test(entry)) return 'script';
+    //     return 'script';
+    //   }
+    // }),
   ]
 })
 

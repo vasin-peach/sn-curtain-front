@@ -16,22 +16,23 @@ services:
 
 version: "3"
 
-services:
-  nginx-stag:
-    image: jwilder/nginx-proxy
-    container_name: nginx-stag
-    ports:
-      - "80:80"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-  
-  frontend-stag:
-    image: nginx:stable-alpine
-    container_name: frontend-stag
-    ports:
-      - "80:80"
-
 networks:
   application-tier:
+# services:
+#   nginx-stag:
+#     image: jwilder/nginx-proxy
+#     container_name: nginx-stag
+#     ports:
+#       - "80:80"
+#     volumes:
+#       - /var/run/docker.sock:/tmp/docker.sock:ro
+  
+#   frontend-stag:
+#     image: nginx:stable-alpine
+#     container_name: frontend-stag
+#     ports:
+#       - "80:80"
+    
+
 
   

@@ -79,6 +79,7 @@ deploy-production:
       url: "http://sn-curtain.com"
     only:
     - master
+    when: manual
 
 
 

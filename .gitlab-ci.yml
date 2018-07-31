@@ -27,9 +27,9 @@ build-image:
   only:
     - master
   script:
-    - "echo $BACKEND_URI_DEV"
-    - "docker build --pull --no-cache -t $DOCKER_IMAGE_NAME ."
-    - "docker push $DOCKER_IMAGE_NAME"
+    - echo $BACKEND_URI_DEV
+    - docker build --pull --no-cache --build-arg BACKEND_URI=${BACKEND_URI_DEV} -t $DOCKER_IMAGE_NAME .
+    - docker push $DOCKER_IMAGE_NAME
   after_script:
     - "docker rmi $(docker images -qa -f 'dangling=true')"
 

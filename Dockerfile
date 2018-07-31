@@ -19,8 +19,7 @@ RUN mkdir dist
 COPY --from=frontend  /home/app/sn-curtain.com/dist ./dist
 
 RUN apk update
-RUN apk add --no-cache py-pip rsync git openssh
-RUN pip install --no-cache-dir docker-compose
+RUN apk add --no-cache && apk add --no-cache rsync git  && apk add --no-cache openssh
 RUN git submodule update --init --recursive
 RUN mkdir ${HOME}/.ssh
 RUN echo ${SSH_HOST_KEY} > ${HOME}/.ssh/known_hosts

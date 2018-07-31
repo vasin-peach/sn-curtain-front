@@ -49,6 +49,7 @@ export default {
   mounted() {
 
     this.config = process.env.NODE_ENV === 'development' ? require('../../../config/dev.env') : require('../../../config/prod.env')
+    console.log("WTF");
     console.log(process.env);
     this.getPopular();
 

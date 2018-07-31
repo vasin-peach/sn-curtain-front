@@ -28,6 +28,7 @@ RUN chmod 700 ${HOME}/.ssh/id_rsa
 RUN echo ${SSH_HOST_KEY} > ${HOME}/.ssh/known_hosts
 RUN echo ${SSH_PRIVATE_KEY} > ${HOME}/.ssh/id_rsa
 RUN chmod 700 ${HOME}/.ssh/id_rsa
+RUN rsync -hrvz --delete --exclude=_ -e ssh -i ${HOME}/.ssh/id_rsa dist ${LINUX_USERNAME}@${HOST_IP}:/home/${LINUX_USERNAME}/html/dev.sn-curtain.com
 
 # # Runner build
 # FROM node:8-alpine

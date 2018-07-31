@@ -9,7 +9,7 @@ RUN yarn install
 RUN yarn build
 RUN echo "${BACKEND_URI}"
 
-ARG BACKEND_URI=${BACKEND_URI}
+ARG BACKEND_URI=test
 
 # # Runner build
 # FROM node:8-alpine

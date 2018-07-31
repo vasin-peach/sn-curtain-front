@@ -4,12 +4,15 @@ FROM node:8-alpine as frontend
 WORKDIR /home/app/sn-curtain.com
 COPY . ./
 
+
+ARG BACKEND_URI
+RUN echo $BACKEND_URI
+
 RUN apk update && apk add git
 RUN yarn install
 RUN yarn build
 
-ARG BACKEND_URI=test
-ENV BACKEND_URI=WTF
+
 
 # # Runner build
 # FROM node:8-alpine

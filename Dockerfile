@@ -1,7 +1,9 @@
-# Frontend build
-FROM node:8-alpine as frontend
 
-WORKDIR /home/app/sn-curtain.com
+
+# Frontend build
+FROM node:8-alpine as static
+
+WORKDIR /home/${LINUX_USERNAME}/sn-curtain.com
 COPY . ./
 
 
@@ -11,25 +13,17 @@ RUN apk update && apk add git
 RUN yarn install
 RUN yarn build
 
-# Deploy static
-FROM node:8-alpine
 
-WORKDIR /home/app/sn-curtain.com
-RUN mkdir dist
-COPY --from=frontend  /home/app/sn-curtain.com/dist ./dist
+# Nginx
+FROM nginx:stable-alpine
 
-RUN apk update
-RUN apk add --no-cache && apk add --no-cache rsync git  && apk add --no-cache openssh
-# RUN git submodule update --init --recursive
-RUN mkdir ${HOME}/.ssh
-RUN echo ${SSH_HOST_KEY} > ${HOME}/.ssh/known_hosts
-RUN echo ${SSH_PRIVATE_KEY} > ${HOME}/.ssh/id_rsa
-RUN chmod 700 ${HOME}/.ssh/id_rsa
-RUN echo ${SSH_HOST_KEY} > ${HOME}/.ssh/known_hosts
-RUN echo ${SSH_PRIVATE_KEY} > ${HOME}/.ssh/id_rsa
-RUN chmod 700 ${HOME}/.ssh/id_rsa
-RUN rsync -hrvz --delete --exclude=_ -e ssh -i ${HOME}/.ssh/id_rsa dist ${LINUX_USERNAME}@${HOST_IP}:/home/${LINUX_USERNAME}/html/dev.sn-curtain.com
+COPY --from=static /${LINUX_USERNAME}/sn-curtain.com/frontend/dist /usr/share/nginx/html/
 
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
+
+# VOLUME /home/${LINUX_USERNAME}/html/dev.sn-curtain.com/dist/ /var/www/dev.sn-curtain.com/html
 # # Runner build
 # FROM node:8-alpine
 

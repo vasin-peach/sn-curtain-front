@@ -8,11 +8,33 @@ services:
     image: registry.gitlab.com/sn-curtain/sn-curtain.com:latest
     container_name: sn-curtain.com-frontend-staging
     restart: always
-    # ports:
-    #   - 5502:5000
-    # environment:
-    #   - NODE_ENV=production
-    #   - BACKEND_URI=${BACKEND_URI_DEV}
-    #   - TEST=hi
+    ports:
+      - 5502:80
+    environment:
+      - NODE_ENV=production
+      - BACKEND_URI=${BACKEND_URI_DEV}
     networks:
       - application-tier
+
+version: "3"
+
+services:
+  nginx-stag:
+    image: jwilder/nginx-proxy
+    container_name: nginx-stag
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+  
+  frontend-stag:
+    image: nginx:stable-alpine
+    container_name: frontend-stag
+    ports:
+      - "80:80"
+networks:
+  default:
+    external:
+      name: nginx-proxy
+
+  

@@ -27,6 +27,7 @@ build-image:
   only:
     - master
   script:
+    - "echo $BACKEND_URI_DEV"
     - "docker build --pull --no-cache -t $DOCKER_IMAGE_NAME ."
     - "docker push $DOCKER_IMAGE_NAME"
   after_script:

@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  frontend-production:
+    image: registry.gitlab.com/sn-curtain/sn-curtain.com:latest
+    container_name: frontend-production
+    restart: always
+    ports:
+      - 5501:80
+    environment:
+      - NODE_ENV=production
+      - BACKEND_URI=${BACKEND_URI_PROD}
+    networks:
+      - application-tier
+
+version: "3"
+
+networks:
+  application-tier:

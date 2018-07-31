@@ -6,7 +6,6 @@ FROM node:8-alpine as static
 WORKDIR /home/${LINUX_USERNAME}/sn-curtain.com
 COPY . ./
 
-
 ARG BACKEND_URI
 
 RUN apk update && apk add git

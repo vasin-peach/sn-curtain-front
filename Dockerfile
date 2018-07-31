@@ -20,7 +20,7 @@ COPY --from=frontend  /home/app/sn-curtain.com/dist ./dist
 
 RUN apk update
 RUN apk add --no-cache && apk add --no-cache rsync git  && apk add --no-cache openssh
-RUN git submodule update --init --recursive
+# RUN git submodule update --init --recursive
 RUN mkdir ${HOME}/.ssh
 RUN echo ${SSH_HOST_KEY} > ${HOME}/.ssh/known_hosts
 RUN echo ${SSH_PRIVATE_KEY} > ${HOME}/.ssh/id_rsa

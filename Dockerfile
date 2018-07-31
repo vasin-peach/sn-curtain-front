@@ -9,6 +9,7 @@ RUN yarn install
 RUN yarn build
 
 ARG BACKEND_URI=test
+ENV BACKEND_URI=WTF
 
 # # Runner build
 # FROM node:8-alpine

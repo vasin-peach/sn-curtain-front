@@ -36,7 +36,7 @@ build-image:
 
 # Deploy Development
 deploy-staging:
-  image: docker:stable
+  image: registry.gitlab.com/sn-curtain/sn-curtain.com:latest
   stage: deploy
   tags:
     - deploy
@@ -46,6 +46,9 @@ deploy-staging:
     - "pip install --no-cache-dir docker-compose"
     - "git submodule update --init --recursive"
     - mkdir "${HOME}/.ssh"
+    - echo "${SSH_HOST_KEY}" > "${HOME}/.ssh/known_hosts"
+    - echo "${SSH_PRIVATE_KEY}" > "${HOME}/.ssh/id_rsa"
+    - chmod 700 "${HOME}/.ssh/id_rsa"
     - echo "${SSH_HOST_KEY}" > "${HOME}/.ssh/known_hosts"
     - echo "${SSH_PRIVATE_KEY}" > "${HOME}/.ssh/id_rsa"
     - chmod 700 "${HOME}/.ssh/id_rsa"

@@ -17,8 +17,8 @@ before_script:
   - "docker login -u $GITLAB_USERNAME -p $GITLAB_TOKEN registry.gitlab.com"
 
 
-# Build Image
-build-image:
+# Build Staging Image
+build-staging-image:
   stage: build
   image: docker:stable
   tags:
@@ -28,11 +28,29 @@ build-image:
   only:
     - master
   script:
-    # - docker build --pull --no-cache --build-arg BACKEND_URI=${BACKEND_URI_DEV} -t $DOCKER_IMAGE_NAME .
-    - docker build --pull --no-cache -t $DOCKER_IMAGE_NAME .
-    - docker push $DOCKER_IMAGE_NAME
+    # - docker build --pull --no-cache --build-arg BACKEND_URI=${BACKEND_URI_DEV} -t $DOCKER_IMAGE_NAME .docker/stag.Dockerfile
+    - docker build --pull --no-cache -t $DOCKER_IMAGE_NAME/staging .docker/stag.Dockerfile
+    - docker push $DOCKER_IMAGE_NAME/staging
   after_script:
     - docker rmi $(docker images -qa -f 'dangling=true')
+
+# Build Production Image
+build-production-image:
+  stage: build
+  image: docker:stable
+  tags:
+    - docker
+  services:
+    - docker:dind
+  only:
+    - master
+  script:
+    - docker build --pull --no-cache -t $DOCKER_IMAGE_NAME/production .docker/stag.Dockerfile
+    - docker push $DOCKER_IMAGE_NAME/production
+  after_script:
+    - docker rmi $(docker images -qa -f 'dangling=true')
+
+
 
 # Deploy Staging
 deploy-staging:

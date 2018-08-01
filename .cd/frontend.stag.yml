@@ -6,12 +6,13 @@ services:
     container_name: frontend-staging
     restart: always
     ports:
-      - 5502:80
+      - 80
     volumes:
-      - /home/${LINUX_USERNAME}/fontend-log/dev.sn-curtain.com:/var/log/nginx
+      - /home/${LINUX_USERNAME}/frontend-log/dev.sn-curtain.com:/var/log/nginx
     environment:
       - NODE_ENV=production
       - BACKEND_URI=${BACKEND_URI_DEV}
+      - VIRTUAL_HOST= dev.sn-curtain.com
     networks:
       - application-tier
 
@@ -19,22 +20,4 @@ version: "3"
 
 networks:
   application-tier:
-
-# services:
-#   nginx-stag:
-#     image: jwilder/nginx-proxy
-#     container_name: nginx-stag
-#     ports:
-#       - "80:80"
-#     volumes:
-#       - /var/run/docker.sock:/tmp/docker.sock:ro
-  
-#   frontend-stag:
-#     image: nginx:stable-alpine
-#     container_name: frontend-stag
-#     ports:
-#       - "80:80"
-    
-
-
   

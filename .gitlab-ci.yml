@@ -27,6 +27,8 @@ build-staging-image:
     - docker:dind
   only:
     - master
+  environment:
+    NAME: test
   script: 
     - docker build --pull --no-cache --build-arg BACKEND_URI=${BACKEND_URI_DEV} -t $DOCKER_IMAGE_NAME/staging -f .docker/stag.Dockerfile .
     - docker push $DOCKER_IMAGE_NAME/staging

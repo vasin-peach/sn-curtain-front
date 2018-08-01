@@ -7,6 +7,7 @@ WORKDIR /home/${LINUX_USERNAME}/dev.sn-curtain.com
 COPY . ./
 
 ARG BACKEND_URI
+ARG NAME
 
 RUN apk update && apk add git
 RUN yarn install

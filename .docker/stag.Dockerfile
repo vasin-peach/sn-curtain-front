@@ -3,7 +3,7 @@
 # Frontend build
 FROM node:8-alpine as static
 
-WORKDIR /home/${LINUX_USERNAME}/dev.sn-curtain.com
+WORKDIR /home/app/dev.sn-curtain.com
 COPY . ./
 
 ARG BACKEND_URI
@@ -17,7 +17,7 @@ RUN yarn build
 # Nginx
 FROM nginx:stable-alpine
 
-COPY --from=static /home/${LINUX_USERNAME}/dev.sn-curtain.com/dist /usr/share/nginx/html/
+COPY --from=static /home/app/dev.sn-curtain.com/dist /usr/share/nginx/html/
 
 EXPOSE 80
 

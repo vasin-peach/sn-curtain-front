@@ -2,7 +2,7 @@ version: '3'
 
 services:
   frontend-production:
-    image: registry.gitlab.com/sn-curtain/sn-curtain.com:latest
+    image: registry.gitlab.com/sn-curtain/sn-curtain.com/production:latest
     container_name: frontend-production
     restart: always
     ports:

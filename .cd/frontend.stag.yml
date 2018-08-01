@@ -2,7 +2,7 @@ version: '3'
 
 services:
   frontend-staging:
-    image: registry.gitlab.com/sn-curtain/sn-curtain.com:latest
+    image: registry.gitlab.com/sn-curtain/sn-curtain.com/staging:latest
     container_name: frontend-staging
     restart: always
     ports:

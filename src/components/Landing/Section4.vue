@@ -49,9 +49,8 @@ export default {
   mounted() {
 
     this.config = process.env.NODE_ENV === 'development' ? require('../../../config/dev.env') : require('../../../config/prod.env')
-    console.log("WTF");
-    console.log(process.env);
-    this.getPopular();
+    this.initProdEmpty();
+    this.getProdPopular();
 
 
     // Init scrollmagic
@@ -73,7 +72,7 @@ export default {
 
   },
   methods: {
-    getPopular() {
+    initProdEmpty() {
       this.product = new Array();
       for (let i=0; i<6; i++) {
         this.product[i] = {
@@ -86,7 +85,9 @@ export default {
           price: '0',
         }
       }
-      this.$http.get(this.config.BACKEND_URI + '/product/popular').then(response => {
+    },
+    getProdPopular() {
+      this.$http.get(process.env.BACKEND_URI + '/product/popular').then(response => {
         this.product = response.body.data;
       })
     }

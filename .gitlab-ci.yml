@@ -54,7 +54,7 @@ build-production-image:
 
 # Deploy Staging
 deploy-staging:
-    image: $DOCKER_IMAGE_NAME/staging:latest
+    image: $DOCKER_IMAGE_NAME/sn-curtain.com/staging:latest
     stage: deploy
     tags:
       - deploy
@@ -77,7 +77,7 @@ deploy-staging:
 
 # Deploy Production
 deploy-production:
-    image: $DOCKER_IMAGE_NAME/production:latest
+    image: $DOCKER_IMAGE_NAME/sn-curtain.com/production:latest
     stage: deploy
     tags:
       - deploy

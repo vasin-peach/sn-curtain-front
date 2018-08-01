@@ -8,7 +8,7 @@ services:
     ports:
       - 5502:80
     volumes:
-      - /home/${LINUX_USERNAME}/nginx-log/dev.sn-curtain.com:/var/log/nginx
+      - /home/${LINUX_USERNAME}/fontend-log/dev.sn-curtain.com:/var/log/nginx
     environment:
       - NODE_ENV=production
       - BACKEND_URI=${BACKEND_URI_DEV}

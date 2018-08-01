@@ -8,7 +8,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12 col-sm-8" id="webcredit">
-          <span class="font-bourbon">Copyright &copy; 2018 S&N Curtain. Vasin Sermsampan Test</span>
+          <span class="font-bourbon">Copyright &copy; 2018 S&N Curtain.</span>
         </div>
         <div class="col-12 col-sm" id="otherweb">
           <div>

@@ -28,7 +28,7 @@ build-staging-image:
   only:
     - master
   script: 
-    - docker build --pull --no-cache --build-arg BACKEND_URI=${BACKEND_URI_DEV} -t $DOCKER_IMAGE_NAME/staging -f .docker/stag.Dockerfile .
+    - docker build --pull --no-cache --build-arg BACKEND_URI=${BACKEND_URI_DEV} --build-arg TEST_URI=test -t $DOCKER_IMAGE_NAME/staging -f .docker/stag.Dockerfile .
     - docker push $DOCKER_IMAGE_NAME/staging
   after_script:
     - docker rmi $(docker images -qa -f 'dangling=true')

@@ -6,7 +6,7 @@ FROM node:8-alpine as static
 WORKDIR /home/${LINUX_USERNAME}/dev.sn-curtain.com
 COPY . ./
 
-ARG BACKEND_URI=${BACKEND_URI_DEV}
+ARG BACKEND_URI
 
 RUN apk update && apk add git
 RUN yarn install

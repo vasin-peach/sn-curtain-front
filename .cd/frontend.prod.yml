@@ -6,7 +6,7 @@ services:
     container_name: frontend-production
     restart: always
     ports:
-      - 5501:80
+      - 80
     volumes:
       - /home/${LINUX_USERNAME}/frontend-log/dev.sn-curtain.com:/var/log/nginx
     environment:

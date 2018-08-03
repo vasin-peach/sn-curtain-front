@@ -19,7 +19,7 @@ http {
     #keepalive_timeout  0;
     keepalive_timeout  65;
 
-    gzip_vary on;
+    gzip on;
     gzip_static on;
     gzip_proxied any;
     gzip_comp_level 6;

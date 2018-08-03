@@ -6,12 +6,12 @@ services:
     container_name: frontend-staging
     restart: always
     ports:
-      - 5502:80
+      - 80
     volumes:
       - /home/${LINUX_USERNAME}/frontend-log/dev.sn-curtain.com:/var/log/nginx
     environment:
-      - VIRTUAL_HOST= dev.sn-curtain.com
-      - VIRTUAL_PORT=5502
+      - VIRTUAL_HOST=dev.sn-curtain.com
+      - VIRTUAL_PORT=80
       - NODE_ENV=production
       - BACKEND_URI=${BACKEND_URI_DEV}
     networks:

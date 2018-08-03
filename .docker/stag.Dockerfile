@@ -17,6 +17,7 @@ RUN yarn build
 FROM nginx:stable-alpine
 
 COPY --from=static /home/${LINUX_USERNAME}/dev.sn-curtain.com/dist /usr/share/nginx/html/
+COPY .nginx /etc/nginx
 
 EXPOSE 80
 

@@ -4,7 +4,7 @@
       <swiper :options="swiperOption">
         <swiper-slide v-for="(slide, index) in swiperSlides" :key="index" style="display: block">
           <router-link :to="{ name: 'Service' }">
-            <img v-lazy="'/static/images/service/service_0' + slide + '.jpg'">
+            <img v-lazy="'/static/images/service/service_0' + slide + '.jpg'" :alt="slide">
           </router-link>
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>

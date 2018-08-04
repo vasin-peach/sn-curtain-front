@@ -8,7 +8,7 @@
             <swiper :options="swiperOption">
               <swiper-slide v-for="(slide, index) in swiperSlides" :key="index" style="display: block">
                 <a href="#">
-                  <img v-lazy="'/static/images/preview/preview_0' + slide + '.jpg'">
+                  <img v-lazy="'/static/images/preview/preview_0' + slide + '.jpg'" :alt="slide">
                 </a>
               </swiper-slide>
               <div class="swiper-pagination" slot="pagination"></div>
@@ -22,13 +22,13 @@
               <!-- Promotion Box 1 -->
               <div class="col-6 p-0 col-md-12 mb-2 " id="promotion-1">
                 <div class="child-box flex justify-center align-center border-2">
-                  <img v-lazy="'/static/images/promotion/promotion_01.jpg'" class="border-2">
+                  <img v-lazy="'/static/images/promotion/promotion_01.jpg'" class="border-2" :alt="'promotion1'">
                 </div>
               </div>
               <!-- Promotion Box 2 -->
               <div class="col-6 p-0 col-md-12 mt-2" id="promotion-2">
                 <div class="child-box flex justify-center align-center border-2">
-                  <img v-lazy="'/static/images/promotion/promotion_02.jpg'" class="border-2">
+                  <img v-lazy="'/static/images/promotion/promotion_02.jpg'" class="border-2" :alt="'promotion2'">
                 </div>
               </div>
             </div>

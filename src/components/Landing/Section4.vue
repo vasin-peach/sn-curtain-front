@@ -16,7 +16,7 @@
                   <div class="button">Buy</div>
                 </div>
                 <div class="col order-first product-img">
-                  <img v-lazy="item.brand.src">
+                  <img v-lazy="item.brand.src" :alt="item.name[0].val">
                 </div>
               </div>
             </router-link>

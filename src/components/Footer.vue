@@ -2,7 +2,7 @@
   <div class="footer">
     <div class="scrolltop-container">
       <div class="scrolltop" @click="scrollTop()">
-        <img src="/static/images/icon/arrow-up.svg">
+        <img v-lazy="'/static/images/icon/arrow-up.svg'" alt="arrow-up">
       </div>
     </div>
     <div class="container">
@@ -13,12 +13,12 @@
         <div class="col-12 col-sm" id="otherweb">
           <div>
             <a href="https://www.facebook.com/sekandnat/" target="_blank" rel="noopener">
-              <img src="/static/images/icon/facebook.svg">
+              <img v-lazy="'/static/images/icon/facebook.svg'" alt="facebook">
             </a>
           </div>
           <div>
             <a href="http://line.me/ti/p/%40shinasaki" target="_blank" rel="noopener">
-              <img src="/static/images/icon/line.svg">
+              <img v-lazy="'/static/images/icon/line.svg'" alt="line">
             </a>
           </div>
         </div>

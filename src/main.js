@@ -20,8 +20,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 Vue.use(VueResource);
 Vue.use(VueLazyLoad, {
   preLoad: 1.3,
-  // error: '../static/images/lazy/fail.svg',
-  // loading: '../static/images/lazy/loading.svg',
   loading: '../static/images/lazy/lazyload.svg',
   attempt: 1
 });

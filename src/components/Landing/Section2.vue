@@ -1,7 +1,7 @@
 <template>
   <div class="section2">
     <div class="container">
-      <div class="row category-container">
+      <div class="row category-container d-flex justify-content-between">
         <div class="col-4 col-md-2 category-box fade" v-for="(item, index) in category" :key="index">
           <router-link :to="{ name: 'Store' }">
             <div class="category-content">

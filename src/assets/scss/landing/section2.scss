@@ -25,6 +25,7 @@
         }
         @include small {
           border-color: $white1;
+          border-radius: 0px;
         }
       }
       .category-title {

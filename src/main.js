@@ -14,7 +14,15 @@ import VueLazyLoad from 'vue-lazyload';
 // import Assets
 import '@scss/app.scss';
 import 'bootstrap/dist/css/bootstrap.css'
-// import 'bootstrap-vue/dist/bootstrap-vue.css'
+import {
+  library
+} from '@fortawesome/fontawesome-svg-core'
+import {
+  faSearch
+} from '@fortawesome/free-solid-svg-icons'
+import {
+  FontAwesomeIcon
+} from '@fortawesome/vue-fontawesome'
 
 
 Vue.use(VueResource);
@@ -23,6 +31,9 @@ Vue.use(VueLazyLoad, {
   loading: '../static/images/lazy/lazyload.svg',
   attempt: 1
 });
+
+library.add(faSearch)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 
 

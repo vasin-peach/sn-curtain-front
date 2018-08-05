@@ -1,0 +1,19 @@
+.bar-container {
+  background-color: $white3;
+  .bar-search {
+    padding: 30px 0;
+    #search {
+      border: 1px solid $dark3;
+      border-top-right-radius: 30px;
+      border-bottom-right-radius: 30px;
+      &:focus {
+        box-shadow: none !important;
+      }
+    }
+    .input-group-text {
+      background-color: $white1;
+      border-top-left-radius: 30px !important;
+      border-bottom-left-radius: 30px !important;
+    }
+  }
+}

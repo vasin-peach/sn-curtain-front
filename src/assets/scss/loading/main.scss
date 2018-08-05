@@ -26,6 +26,14 @@
   position: relative;
 }
 
+.fingerprint-spinner {
+  &.fail {
+    .spinner-ring {
+      border-top-color: $red1;
+    }
+  }
+}
+
 .fingerprint-spinner .spinner-ring {
   position: absolute;
   border-radius: 50%;

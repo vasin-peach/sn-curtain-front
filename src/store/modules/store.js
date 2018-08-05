@@ -63,7 +63,7 @@ const actions = {
       }, error => {
         commit('loadingUpdate', {
           type: 'store',
-          value: false
+          value: 'fail',
         })
         return reject(error);
       })

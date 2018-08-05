@@ -1,6 +1,6 @@
 <template>
   <div class="loading-warpper container">
-    <div class="fingerprint-spinner">
+    <div class="fingerprint-spinner" :class="{'fail': loadingData().store == 'fail'}">
       <div class="spinner-ring"></div>
       <div class="spinner-ring"></div>
       <div class="spinner-ring"></div>
@@ -11,15 +11,31 @@
       <div class="spinner-ring"></div>
       <div class="spinner-ring"></div>
     </div>
-    <div class="title">LOADING</div>
+    <transition name="fade" mode="out-in">
+      <div class="title color-red1" v-if="loadingData().store == 'fail'">ไม่สามารถเชื่อมต่อได้</div>
+      <div class="title" v-else>LOADING</div>
+    </transition>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 export default {
-  name: 'loading'
+  name: 'loading',
+  methods: {
+    ...mapGetters(['loadingData'])
+  }
 }
 </script>
 
 <style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease-in;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>

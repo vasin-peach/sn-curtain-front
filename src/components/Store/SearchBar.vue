@@ -101,9 +101,9 @@ export default {
   // Mounted
   ///
   mounted() {
-    this.storeGet({
-      page: 1
-    });
+      this.storeGet({
+        page: 1
+      })
   },
 
   ///

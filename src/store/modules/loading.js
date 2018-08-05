@@ -26,12 +26,11 @@ const getters = {
 const mutations = {
   loadingUpdate(state, data) {
     switch (data.type) {
-
       case 'page': // Page
         if (state.loading.page) {
           setTimeout(() => {
             state.loading.page = data.value;
-          }, 500);
+          }, 1000);
         } else {
           state.loading.page = data.value;
         }
@@ -51,7 +50,7 @@ const mutations = {
         if (state.loading.page) {
           setTimeout(() => {
             state.loading.page = data.value;
-          }, 500);
+          }, 1000);
         } else {
           state.loading.full = data.value;
         }

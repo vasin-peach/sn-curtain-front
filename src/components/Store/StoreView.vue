@@ -1,10 +1,10 @@
 <template>
   <div id="storeview">
-    <transition name="loadfade" mode="out-in">
-      <div class="loading-container loading-store position-relative" v-if="!storeData() || loadingData().store">
+    <transition name="fade" mode="out-in">
+      <div v-if="!storeData() || loadingData().store">
         <loading></loading>
       </div>
-      <div class="store-container container" v-else>
+      <div class="store-container container" v-else key="content">
         <div v-for="(item, count) in storeData()" :key="count">
           {{ item }}
         </div>
@@ -56,13 +56,13 @@ export default {
 </script>
 
 <style>
-.loadfade-enter-active,
-.loadfade-leave-active {
-  transition: opacity 2s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease-in;
 }
 
-.loadfade-enter,
-.loadfade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>

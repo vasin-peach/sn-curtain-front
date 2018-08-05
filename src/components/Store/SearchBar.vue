@@ -14,24 +14,37 @@
             </div>
           </div>
         </div>
-        <div class="bar-filter row m-0">
-          <div class="col">
-            <div class="title">
-              ประเภทผ้าม่าน
+
+        <div class="trigger-filter" @click="triggerFilter()">
+          <img src="static/images/icon/arrow-up.svg">
+        </div>
+
+        <div id="bar-filter" class="bar-filter row m-0 no-gutters">
+          <div class="col-sm-12 col-md-4 bar-filter-select">
+            <div class="mr-2">
+              <div class="title">
+                ประเภทผ้าม่าน
+              </div>
+              <b-form-select v-model="filter1" :options="options.filter1"></b-form-select>
             </div>
-            <input type="select" v-model="filter1" id="filter1">
           </div>
-          <div class="col">
-            <div class="title">
-              ชนิดของผ้า
+
+          <div class="col-sm-12 col-md-4 bar-filter-select">
+            <div class="ml-2 mr-2">
+              <div class="title">
+                ชนิดของผ้า
+              </div>
+              <b-form-select v-model="filter2" :options="options.filter2"></b-form-select>
             </div>
-            <input type="select" v-model="filter2" id="filter2">
           </div>
-          <div class="col">
-            <div class="title">
-              สี
+
+          <div class="col-sm-12 col-md-4 bar-filter-select">
+            <div class="ml-2 mr-2">
+              <div class="title">
+                สีของผ้า
+              </div>
+              <b-form-select v-model="filter3" :options="options.filter3"></b-form-select>
             </div>
-            <input type="select" v-model="filter3" id="filter3">
           </div>
         </div>
       </div>
@@ -40,6 +53,7 @@
 </template>
 
 <script>
+import { TweenMax, TimelineMax, Power0 } from 'gsap'
 export default {
   ///
   // Name
@@ -54,7 +68,30 @@ export default {
       search: null,
       filter1: null,
       filter2: null,
-      filter3: null
+      filter3: null,
+      options: {
+        filter1: [
+          { value: null, text: '-- เลือกประเภทของผ้าม่าน --'},
+          { value: 'value1', text: 'ผ้าชนิด 1' },
+          { value: 'value2', text: 'ผ้าชนิด 2' },
+          { value: 'value3', text: 'ผ้าชนิด 3' }
+        ],
+         filter2: [
+          { value: null, text: '-- เลือกชนิดของผ้าม่าน --'},
+          { value: 'value1', text: 'ผ้าชนิด 1' },
+          { value: 'value2', text: 'ผ้าชนิด 2' },
+          { value: 'value3', text: 'ผ้าชนิด 3' }
+        ],
+        filter3: [
+          { value: null, text: '-- เลือกสีของผ้าม่าน --'},
+          { value: 'value1', text: 'ผ้าชนิด 1' },
+          { value: 'value2', text: 'ผ้าชนิด 2' },
+          { value: 'value3', text: 'ผ้าชนิด 3' }
+        ]
+      },
+      animate: {
+        trigger: 0
+      }
     }
   },
 
@@ -66,7 +103,25 @@ export default {
   ///
   // Methods
   ///
-  methods: {}
+  methods: {
+    triggerFilter() {
+      if (this.animate.trigger) {
+        // Slideup
+        TweenLite.to(".bar-container", 0.3, { ease: Power2.easeOut, height: '100px'})
+        TweenLite.to(".trigger-filter", 0.2, { ease: Power2.easeOut, rotation: 0})
+        TweenLite.to(".bar-filter", 0.1, { autoAlpha: 0})
+        this.animate.trigger = 0;
+      } else {
+        // Slidedown
+        TweenLite.set(".bar-container", { ease: Power2.easeOut, height: "auto"});
+        TweenLite.from(".bar-container", 0.3, { ease: Power2.easeOut, height: '100px'})
+        TweenLite.to(".trigger-filter", 0.2, {ease: Power2.easeOut, rotation: 180})
+        TweenLite.to(".bar-filter", 0.4, { autoAlpha: 1})
+        this.animate.trigger = 1;
+      
+      }
+    }
+  }
 }
 </script>
 

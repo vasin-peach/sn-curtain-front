@@ -25,6 +25,7 @@ import {
 } from '@fortawesome/vue-fontawesome'
 
 
+Vue.use(BootstrapVue);
 Vue.use(VueResource);
 Vue.use(VueLazyLoad, {
   preLoad: 1.3,

@@ -1,6 +1,5 @@
 <template>
   <div id="storeview">
-    Store View
   </div>
 </template>
 

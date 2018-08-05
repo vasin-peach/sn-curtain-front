@@ -2,6 +2,7 @@
   <div class="store">
     <SearchBar></SearchBar>
     <StoreView></StoreView>
+    <div class="container"><hr></div>
     <Section2></Section2>
     <Section6></Section6>
   </div>
@@ -32,7 +33,9 @@ export default {
   ///
   // Mounted
   ///
-  mounted() {},
+  mounted() {
+  },
+  
 
   ///
   // Methods

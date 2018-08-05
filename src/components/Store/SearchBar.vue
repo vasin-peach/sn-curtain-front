@@ -39,7 +39,7 @@
           </div>
 
           <div class="col-sm-12 col-md-4 bar-filter-select">
-            <div class="ml-2 mr-2">
+            <div class="ml-2">
               <div class="title">
                 สีของผ้า
               </div>
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions, mapMutations } from "vuex"
 import { TweenMax, TimelineMax, Power0 } from 'gsap'
 export default {
   ///
@@ -71,19 +72,19 @@ export default {
       filter3: null,
       options: {
         filter1: [
-          { value: null, text: '-- เลือกประเภทของผ้าม่าน --'},
+          { value: null, text: 'เลือกประเภทของผ้าม่าน'},
           { value: 'value1', text: 'ผ้าชนิด 1' },
           { value: 'value2', text: 'ผ้าชนิด 2' },
           { value: 'value3', text: 'ผ้าชนิด 3' }
         ],
          filter2: [
-          { value: null, text: '-- เลือกชนิดของผ้าม่าน --'},
+          { value: null, text: 'เลือกชนิดของผ้าม่าน'},
           { value: 'value1', text: 'ผ้าชนิด 1' },
           { value: 'value2', text: 'ผ้าชนิด 2' },
           { value: 'value3', text: 'ผ้าชนิด 3' }
         ],
         filter3: [
-          { value: null, text: '-- เลือกสีของผ้าม่าน --'},
+          { value: null, text: 'เลือกสีของผ้าม่าน'},
           { value: 'value1', text: 'ผ้าชนิด 1' },
           { value: 'value2', text: 'ผ้าชนิด 2' },
           { value: 'value3', text: 'ผ้าชนิด 3' }
@@ -91,34 +92,41 @@ export default {
       },
       animate: {
         trigger: 0
-      }
+      },
+      store: this.storeData()
     }
   },
 
   ///
   // Mounted
   ///
-  mounted() {},
+  mounted() {
+    this.storeGet({
+      page: 1
+    });
+  },
 
   ///
   // Methods
   ///
   methods: {
+    ...mapGetters(["storeData"]),
+    ...mapActions(["storeGet"]),
     triggerFilter() {
       if (this.animate.trigger) {
         // Slideup
         TweenLite.to(".bar-container", 0.3, { ease: Power2.easeOut, height: '100px'})
         TweenLite.to(".trigger-filter", 0.2, { ease: Power2.easeOut, rotation: 0})
-        TweenLite.to(".bar-filter", 0.1, { autoAlpha: 0})
+        TweenLite.to(".bar-filter", 0.1, { autoAlpha: 0, display: 'none' })
         this.animate.trigger = 0;
       } else {
         // Slidedown
+        TweenLite.set(".bar-filter", { display: 'flex'} )
         TweenLite.set(".bar-container", { ease: Power2.easeOut, height: "auto"});
         TweenLite.from(".bar-container", 0.3, { ease: Power2.easeOut, height: '100px'})
         TweenLite.to(".trigger-filter", 0.2, {ease: Power2.easeOut, rotation: 180})
         TweenLite.to(".bar-filter", 0.4, { autoAlpha: 1})
         this.animate.trigger = 1;
-      
       }
     }
   }

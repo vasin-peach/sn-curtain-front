@@ -50,31 +50,42 @@
   .bar-filter {
     opacity: 0;
     visibility: hidden;
+    display: none;
     padding-bottom: 40px;
     width: 100%;
     .bar-filter-select {
+      @include mobile {
+        &:first-child div:not(.title) {
+          margin-left: 0.5em;
+        }
+        &:last-child div {
+          margin-right: 0.5em;
+        }
+      }
       padding-bottom: 10px;
       .title {
-        color: $dark1;
-        font-weight: 400;
+        font-weight: 500;
         padding-bottom: 5px;
+        padding-left: 7px;
         color: $orange1;
       }
       select {
-        border-radius: 0 !important;
         border: none;
         border-bottom: 1px solid $gray2;
-        background-color: $white3;
-        color: $gray1;
-        padding: 0;
+        background-color: $white1;
+        color: $dark3;
+        padding: 0 7px;
+        font-weight: 200;
         &:focus {
           box-shadow: none;
         }
         option {
+          background-color: $white1;
           color: $dark3;
           font-size: 15px;
+          text-indent: 10px;
           &:first-child {
-            color: $gray1;
+            color: $gray2;
           }
         }
       }

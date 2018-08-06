@@ -14,13 +14,16 @@ export default {
   mounted() {
     $(function(){
 
-      var $window = $(window);		//Window object
+      var onMouseWheel = function(e) {
+
+      }
+
+      var $window = $('html');		//Window object
       
       var scrollTime = 0.8;			//Scroll time
       var scrollDistance = 270;		//Distance. Use smaller value for shorter scroll and greater value for longer scroll
       $window.bind("mousewheel DOMMouseScroll", function(event){
         
-        console.log('hi')
         event.preventDefault();	
                         
         var delta = event.originalEvent.wheelDelta/120 || -event.originalEvent.detail/3;

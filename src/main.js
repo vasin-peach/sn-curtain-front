@@ -40,7 +40,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 
 // Sentry.io Setting
-if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging') {
+if (process.env.NODE_ENV === 'staging') {
   Raven
     .config('https://a9d132b4af984b62ab3c70112969d1c1@sentry.io/1224054')
     .addPlugin(RavenVue, Vue)

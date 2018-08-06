@@ -44,6 +44,7 @@ const actions = {
     commit
   }, payload) {
     return new Promise((resolve, reject) => {
+
       // check payload 
       if (!payload) return reject('payload empty');
 
@@ -52,12 +53,12 @@ const actions = {
         type: 'store',
         value: true
       });
-
+      var search = payload.search || " "
       var page = payload.page || 1
       var tag = payload.tag || null
       var color = payload.color || null
       var type = payload.type || null
-      var uriRequest = "/product/get/" + page + (tag ? "/" + tag + (color ? "/" + color + (type ? "/" + type : "") : "") : "")
+      var uriRequest = "/product/get/" + search + "/" + page + (tag ? "/" + tag + (color ? "/" + color + (type ? "/" + type : "") : "") : "")
 
       // request
       Vue.http.get(process.env.BACKEND_URI + uriRequest).then(response => {
@@ -68,11 +69,20 @@ const actions = {
         })
         return resolve(response.data);
       }, error => {
-        commit('loadingUpdate', {
-          type: 'store',
-          value: 'fail',
-        })
-        return reject(error);
+        switch (error.status) {
+          case 0:
+            commit('loadingUpdate', {
+              type: 'store',
+              value: 'fail',
+            })
+            break;
+          case 404:
+            commit('loadingUpdate', {
+              type: 'store',
+              value: 'notfound',
+            })
+        }
+        // return reject(error);
       })
     })
   },
@@ -96,11 +106,20 @@ const actions = {
         })
         return resolve(response.data);
       }, error => {
-        commit('loadingUpdate', {
-          type: 'storePopular',
-          value: 'fail',
-        })
-        return reject(error);
+        switch (error.status) {
+          case 0:
+            commit('loadingUpdate', {
+              type: 'store',
+              value: 'fail',
+            })
+            break;
+          case 404:
+            commit('loadingUpdate', {
+              type: 'store',
+              value: 'notfound',
+            })
+        }
+        // return reject(error);
       })
     })
   },

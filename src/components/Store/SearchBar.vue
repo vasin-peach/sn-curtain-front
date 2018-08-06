@@ -10,7 +10,7 @@
                   <font-awesome-icon icon="search" aria-hidden="true" />
                 </div>
               </span>
-              <input class="form-control py-2 border-left-0 border" type="search" placeholder="ค้นหา" id="search">
+              <input class="form-control py-2 border-left-0 border" type="search" placeholder="ค้นหา" id="search" v-model="search">
             </div>
           </div>
         </div>
@@ -70,6 +70,8 @@ export default {
       filter1: null,
       filter2: null,
       filter3: null,
+      timeout: null,
+      page: 1,
       options: {
         filter1: [
           { value: null, text: 'เลือกประเภทของผ้าม่าน'},
@@ -95,6 +97,19 @@ export default {
       },
       store: this.storeData()
     }
+  },
+
+  ///
+  // Watch
+  ///
+  watch: {
+    search: function(name) {
+      var _this = this;
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(function() {
+        _this.triggerSearch()
+      }, 500);
+    },
   },
 
   ///
@@ -130,6 +145,12 @@ export default {
         TweenLite.to(".bar-filter", 0.4, { autoAlpha: 1})
         this.animate.trigger = 1;
       }
+    },
+    triggerSearch() {
+      this.storeGet({
+        search: this.search,
+        page: this.page
+      });
     }
   }
 }

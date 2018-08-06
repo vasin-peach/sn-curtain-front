@@ -10,10 +10,10 @@
             <router-link :to="{ name: 'Product' }">
               <div class="card-container">
                 <div class="card-head">
-                  <img v-lazy="item.brand.src" :alt="item.name[0].val || 'ชื่อสินค้า'">
+                  <img v-lazy="item.brand.src" :alt="item.name || 'ชื่อสินค้า'">
                 </div>
                 <div class="card-content">
-                  <p class="title">{{item.name[0].val || 'ชื่อสินค้า' }}</p>
+                  <p class="title">{{item.name || 'ชื่อสินค้า' }}</p>
                   <p class="price">{{item.price || 'ไม่ระบุ' }} บาท</p>
                   <hr>
                   <div class="detail row m-0">

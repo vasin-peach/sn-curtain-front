@@ -4,6 +4,13 @@
   .store-container {
     .store-item {
       margin-bottom: 30px;
+      padding: 20px 30px;
+      @include mobile {
+        padding: 10px 20px;
+      }
+      @include small {
+        padding: 5px 15px;
+      }
       .card-container {
         border-radius: 15px !important;
         background-color: $white1;
@@ -14,8 +21,8 @@
             object-fit: cover;
             border-top-left-radius: 15px;
             border-top-right-radius: 15px;
-            border-bottom-left-radius: 50%;
-            border-bottom-right-radius: 50%;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
           }
         }
         .card-content {

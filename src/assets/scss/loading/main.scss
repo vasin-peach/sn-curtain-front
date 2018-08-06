@@ -10,6 +10,9 @@
     margin-top: 50px;
     animation: fade 2.5s ease-out 0s infinite;
     font-weight: 400;
+    &.no-animate {
+      animation-iteration-count: 1;
+    }
   }
 }
 
@@ -30,6 +33,11 @@
   &.fail {
     .spinner-ring {
       border-top-color: $red1;
+    }
+  }
+  &.notfound {
+    .spinner-ring {
+      border-top-color: $red2;
     }
   }
 }

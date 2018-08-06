@@ -60,9 +60,9 @@ export default {
         $('#menu-3').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 150, _cacheValues:false}, [.53,.49,.18,.97]);
         $('#menu-4').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 200, _cacheValues:false}, [.53,.49,.18,.97]);
         
-        // disable scroll
-        $('html').addClass('stop-scrolling');
-        $('html').bind('touchmove', function(e) {e.preventDefault()});
+        // // disable scroll
+        // $('html').addClass('stop-scrolling');
+        // $('html').bind('touchmove', function(e) {e.preventDefault()});
 
         // disable button
         this.menu_state = true;
@@ -84,9 +84,9 @@ export default {
         $('#menu-3').velocity({ opacity: "0", top: "0px" }, { duration: 350}, [.53,.49,.18,.97]);
         $('#menu-4').velocity({ opacity: "0", top: "0px" }, { duration: 400}, [.53,.49,.18,.97]);
 
-        // enable scroll
-        $('html').removeClass('stop-scrolling');
-        $('html').unbind('touchmove');
+        // // enable scroll
+        // $('html').removeClass('stop-scrolling');
+        // $('html').unbind('touchmove');
 
         // disable button
         this.menu_state = true;

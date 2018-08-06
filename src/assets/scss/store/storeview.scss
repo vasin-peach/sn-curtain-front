@@ -1,4 +1,100 @@
 #storeview {
   padding-top: 50px;
   padding-bottom: 30px;
+  .store-container {
+    .store-item {
+      margin-bottom: 30px;
+      .card-container {
+        border-radius: 15px !important;
+        background-color: $white1;
+        box-shadow: 0 1px 2px 0 $gray2;
+        .card-head {
+          img {
+            width: 100%;
+            object-fit: cover;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            border-bottom-left-radius: 50%;
+            border-bottom-right-radius: 50%;
+          }
+        }
+        .card-content {
+          padding: 0.25rem 1.25rem;
+          .title {
+            padding-top: 10px;
+            margin: 0;
+            font-size: 20px;
+            font-weight: 400;
+            max-height: 3em;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            @include small {
+              font-size: 15px;
+            }
+          }
+          .price {
+            font-size: 22px;
+            color: $orange1 !important;
+            display: flex;
+            font-weight: 500;
+            justify-content: center;
+            @include small {
+              font-size: 17px;
+            }
+          }
+          .detail {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 8px;
+            @include small {
+              display: none;
+            }
+            &>div {
+              padding: 0;
+              &:first-child {
+                padding-bottom: 5px;
+                text-align: center;
+                @include small {
+                  text-align: left !important;
+                }
+              }
+              &:last-child {
+                text-align: center;
+                @include small {
+                  text-align: left !important;
+                }
+              }
+            }
+            .fabric-title {}
+            .fabric-content {
+              font-weight: 400;
+            }
+            .color-box {
+              width: 20px;
+              height: 20px;
+              display: inline-block;
+              border-radius: 50%;
+              vertical-align: top;
+              @include small {
+                margin-left: 8px;
+              }
+            }
+          }
+        }
+        .card-footer {
+          .button {
+            border-color: $dark3;
+            width: 100%;
+          }
+        }
+        hr {
+          background-color: $dark3;
+          height: 1px;
+          width: 100%;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
 }

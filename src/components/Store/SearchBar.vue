@@ -101,9 +101,11 @@ export default {
   // Mounted
   ///
   mounted() {
+    if(!this.storeData()) {
       this.storeGet({
         page: 1
       })
+    }
   },
 
   ///

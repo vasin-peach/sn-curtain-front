@@ -6,6 +6,7 @@ const state = {
   loading: {
     page: false,
     store: false,
+    storePopular: false
   }
 }
 
@@ -16,7 +17,7 @@ const state = {
 const getters = {
   loadingData: state => {
     return state.loading
-  }
+  },
 }
 
 
@@ -25,6 +26,7 @@ const getters = {
 ///
 const mutations = {
   loadingUpdate(state, data) {
+    console.log(state.loading);
     switch (data.type) {
       case 'page': // Page
         if (state.loading.page) {
@@ -43,6 +45,16 @@ const mutations = {
           }, 1000);
         } else {
           state.loading.store = data.value;
+        }
+        break;
+
+      case 'storePopular': // Store
+        if (state.loading.store) {
+          setTimeout(() => {
+            state.loading.storePopular = data.value;
+          }, 1000);
+        } else {
+          state.loading.storePopular = data.value;
         }
         break;
 

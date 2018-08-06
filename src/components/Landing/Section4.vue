@@ -6,22 +6,28 @@
         <hr>
       </div>
       <div class="product-container">
-        <div class="row">
-          <div class="col-sm-6 product-item fade" v-for="(item, index) in product" :key="index">
-            <router-link :to="{ name: 'Product' }">
-              <div class="row m-0">
-                <div class="col-6 col-sm-12 col-md-4 product-content">
-                  <p class="text">{{item.name[0].val}}</p>
-                  <p>{{item.price}} บาท</p>
-                  <div class="button">Buy</div>
-                </div>
-                <div class="col order-first product-img">
-                  <img v-lazy="item.brand.src" :alt="item.name[0].val">
-                </div>
-              </div>
-            </router-link>
+        {{ storePopularData() }}
+        <transition name="fade" mode="out-in">
+          <div v-if="!storePopularData() || loadingData().storePopular">
+            <loading></loading>
           </div>
-        </div>
+          <div class="row" v-else key="content">
+            <div class="col-sm-6 product-item fade" v-for="(item, index) in storePopularData()" :key="index">
+              <router-link :to="{ name: 'Product' }">
+                <div class="row m-0">
+                  <div class="col-6 col-sm-12 col-md-4 product-content">
+                    <p class="text">{{item.name[0].val}}</p>
+                    <p>{{item.price}} บาท</p>
+                    <div class="button">Buy</div>
+                  </div>
+                  <div class="col order-first product-img">
+                    <img v-lazy="item.brand.src" :alt="item.name[0].val">
+                  </div>
+                </div>
+              </router-link>
+            </div>
+          </div>
+        </transition>
       </div>
       <div class="product-footer">
         <hr class="bg-dark1">
@@ -36,8 +42,10 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex"
 import ScrollMagic from 'scrollmagic';
 import keys from '../../../config/dev.env.js'
+import Loading from '../Loading'
 export default {
   name: 'Section4',
   data() {
@@ -48,9 +56,16 @@ export default {
   },
   mounted() {
 
+    this.storePopularGet();
+
     this.config = process.env.NODE_ENV === 'development' ? require('../../../config/dev.env') : require('../../../config/prod.env')
-    this.initProdEmpty();
-    this.getProdPopular();
+
+    // Init Popular product
+    // if (!this.storePopularData()) {
+    //   this.storePopularGet();
+    // }
+    // this.initProdEmpty();
+    // this.getProdPopular();
 
 
     // Init scrollmagic
@@ -70,30 +85,45 @@ export default {
         })
     });
 
+
   },
   methods: {
-    initProdEmpty() {
-      this.product = new Array();
-      for (let i=0; i<6; i++) {
-        this.product[i] = {
-          brand: {
-            src: '/static/images/lazy/lazyload.svg'
-          },
-          name: [
-            { val: 'ไม่พบสินค้า' }
-          ],
-          price: '0',
-        }
-      }
-    },
-    getProdPopular() {
-      this.$http.get(process.env.BACKEND_URI + '/product/popular').then(response => {
-        this.product = response.body.data;
-      })
-    }
+    ...mapActions(['storePopularGet']),
+    ...mapGetters(['storePopularData', 'loadingData']),
+    // initProdEmpty() {
+    //   this.product = new Array();
+    //   for (let i=0; i<6; i++) {
+    //     this.product[i] = {
+    //       brand: {
+    //         src: '/static/images/lazy/lazyload.svg'
+    //       },
+    //       name: [
+    //         { val: 'ไม่พบสินค้า' }
+    //       ],
+    //       price: '0',
+    //     }
+    //   }
+    // },
+    // getProdPopular() {
+    //   this.$http.get(process.env.BACKEND_URI + '/product/popular').then(response => {
+    //     this.product = response.body.data;
+    //   })
+    // }
+  },
+  components: {
+    Loading
   }
 }
 </script>
 
 <style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease-in;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>

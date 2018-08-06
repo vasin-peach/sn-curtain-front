@@ -5,7 +5,8 @@ import Vue from 'vue';
 ///
 
 const state = {
-  store: null
+  store: null,
+  storePopular: null
 }
 
 
@@ -15,6 +16,9 @@ const state = {
 const getters = {
   storeData: (state) => {
     return state.store
+  },
+  storePopularData: (state) => {
+    return state.storePopular
   }
 }
 
@@ -25,6 +29,9 @@ const getters = {
 const mutations = {
   storeUpdate(state, data) {
     data ? state.store = data : false;
+  },
+  storePopularUpdate(state, data) {
+    data ? state.storePopular = data : false;
   }
 }
 
@@ -68,7 +75,37 @@ const actions = {
         return reject(error);
       })
     })
-  }
+  },
+
+  storePopularGet({
+    commit
+  }) {
+    return new Promise((resolve, reject) => {
+      // store loading
+      commit('loadingUpdate', {
+        type: 'storePopular',
+        value: true
+      });
+
+      // request
+      Vue.http.get(process.env.BACKEND_URI + '/product/popular').then(response => {
+        commit('storePopularUpdate', response.data.data);
+        commit('loadingUpdate', {
+          type: 'storePopular',
+          value: false
+        })
+        console.log(response);
+        return resolve(response.data);
+      }, error => {
+        commit('loadingUpdate', {
+          type: 'storePopular',
+          value: 'fail',
+        })
+        return reject(error);
+      })
+    })
+  },
+
 }
 
 export default {

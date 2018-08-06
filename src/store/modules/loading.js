@@ -31,7 +31,7 @@ const mutations = {
         if (state.loading.page) {
           setTimeout(() => {
             state.loading.page = data.value;
-          }, 500);
+          }, 800);
         } else {
           state.loading.page = data.value;
         }
@@ -41,7 +41,7 @@ const mutations = {
         if (state.loading.store) {
           setTimeout(() => {
             state.loading.store = data.value;
-          }, 500);
+          }, 800);
         } else {
           state.loading.store = data.value;
         }
@@ -51,7 +51,7 @@ const mutations = {
         if (state.loading.storePopular) {
           setTimeout(() => {
             state.loading.storePopular = data.value;
-          }, 500);
+          }, 800);
         } else {
           state.loading.storePopular = data.value;
         }
@@ -61,7 +61,7 @@ const mutations = {
         if (state.loading.page) {
           setTimeout(() => {
             state.loading.page = data.value;
-          }, 500);
+          }, 800);
         } else {
           state.loading.full = data.value;
         }

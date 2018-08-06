@@ -21,7 +21,7 @@ const Product = () =>
 Vue.use(Router)
 
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [{
     path: '/',
@@ -52,5 +52,17 @@ export default new Router({
         name: 'Product'
       }
     ]
-  }]
+  }],
+  scrollBehavior(to, from, savedPosition) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          x: 0,
+          y: 0
+        })
+      }, 400)
+    })
+  }
 })
+
+export default router

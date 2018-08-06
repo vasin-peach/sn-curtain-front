@@ -6,13 +6,13 @@
         <hr>
       </div>
       <div class="product-container">
-        {{ storePopularData() }}
+
         <transition name="fade" mode="out-in">
           <div v-if="!storePopularData() || loadingData().storePopular">
             <loading></loading>
           </div>
           <div class="row" v-else key="content">
-            <div class="col-sm-6 product-item fade" v-for="(item, index) in storePopularData()" :key="index">
+            <div class="col-sm-6 product-item" v-for="(item, index) in storePopularData()" :key="index">
               <router-link :to="{ name: 'Product' }">
                 <div class="row m-0">
                   <div class="col-6 col-sm-12 col-md-4 product-content">
@@ -42,31 +42,23 @@
 </template>
 
 <script>
+import Loading from '../Loading'
 import { mapGetters, mapActions } from "vuex"
 import ScrollMagic from 'scrollmagic';
 import keys from '../../../config/dev.env.js'
-import Loading from '../Loading'
 export default {
   name: 'Section4',
   data() {
     return {
-      product: null,
       config: null
     }
   },
   mounted() {
 
-    this.storePopularGet();
-
-    this.config = process.env.NODE_ENV === 'development' ? require('../../../config/dev.env') : require('../../../config/prod.env')
-
     // Init Popular product
-    // if (!this.storePopularData()) {
-    //   this.storePopularGet();
-    // }
-    // this.initProdEmpty();
-    // this.getProdPopular();
-
+    if (!this.storePopularData()) {
+      this.storePopularGet();
+    }
 
     // Init scrollmagic
     $(function() {
@@ -84,31 +76,10 @@ export default {
           .addTo(controller);
         })
     });
-
-
   },
   methods: {
     ...mapActions(['storePopularGet']),
     ...mapGetters(['storePopularData', 'loadingData']),
-    // initProdEmpty() {
-    //   this.product = new Array();
-    //   for (let i=0; i<6; i++) {
-    //     this.product[i] = {
-    //       brand: {
-    //         src: '/static/images/lazy/lazyload.svg'
-    //       },
-    //       name: [
-    //         { val: 'ไม่พบสินค้า' }
-    //       ],
-    //       price: '0',
-    //     }
-    //   }
-    // },
-    // getProdPopular() {
-    //   this.$http.get(process.env.BACKEND_URI + '/product/popular').then(response => {
-    //     this.product = response.body.data;
-    //   })
-    // }
   },
   components: {
     Loading

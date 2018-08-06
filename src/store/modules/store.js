@@ -94,7 +94,6 @@ const actions = {
           type: 'storePopular',
           value: false
         })
-        console.log(response);
         return resolve(response.data);
       }, error => {
         commit('loadingUpdate', {

@@ -14,10 +14,6 @@ export default {
   mounted() {
     $(function(){
 
-      var onMouseWheel = function(e) {
-
-      }
-
       var $window = $('html');		//Window object
       
       var scrollTime = 0.8;			//Scroll time
@@ -33,7 +29,6 @@ export default {
         TweenMax.to($window, scrollTime, {
           scrollTo : { y: finalScroll, autoKill:true },
             ease: Power1.easeOut,	//For more easing functions see https://api.greensock.com/js/com/greensock/easing/package-detail.html
-            autoKill: true,
             overwrite: 5							
           });
               

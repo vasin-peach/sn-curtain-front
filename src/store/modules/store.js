@@ -55,10 +55,17 @@ const actions = {
       });
       var search = payload.search || " "
       var page = payload.page || 1
-      var tag = payload.tag || null
+      var fabric = payload.fabric || null
       var color = payload.color || null
       var type = payload.type || null
-      var uriRequest = "/product/get/" + search + "/" + page + (tag ? "/" + tag + (color ? "/" + color + (type ? "/" + type : "") : "") : "")
+
+      // var uriRequest = "/product/get/" + search + "/" + page + (fabric ? "/" + fabric + (color ? "/" + color + (type ? "/" + type : "") : "") : "")
+      var uriRequest = "/product/get/" +
+        (search ? search + "/" : " /") +
+        (page ? page + "/" : " /") +
+        (fabric ? fabric + "/" : " /") +
+        (color ? color + "/" : " /") +
+        (type ? type : " ")
 
       // request
       Vue.http.get(process.env.BACKEND_URI + uriRequest).then(response => {

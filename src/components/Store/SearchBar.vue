@@ -25,7 +25,7 @@
               <div class="title">
                 ประเภทผ้าม่าน
               </div>
-              <b-form-select v-model="filter1" :options="options.filter1"></b-form-select>
+              <b-form-select v-model="type" :options="options.type"></b-form-select>
             </div>
           </div>
 
@@ -34,7 +34,7 @@
               <div class="title">
                 ชนิดของผ้า
               </div>
-              <b-form-select v-model="filter2" :options="options.filter2"></b-form-select>
+              <b-form-select v-model="fabric" :options="options.fabric"></b-form-select>
             </div>
           </div>
 
@@ -43,7 +43,7 @@
               <div class="title">
                 สีของผ้า
               </div>
-              <b-form-select v-model="filter3" :options="options.filter3"></b-form-select>
+              <b-form-select v-model="color" :options="options.color"></b-form-select>
             </div>
           </div>
         </div>
@@ -53,8 +53,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex"
-import { TweenMax, TimelineMax, Power0 } from 'gsap'
+import { mapGetters, mapActions, mapMutations } from "vuex";
+import { TweenMax, TimelineMax, Power0 } from "gsap";
 export default {
   ///
   // Name
@@ -67,36 +67,36 @@ export default {
   data() {
     return {
       search: null,
-      filter1: null,
-      filter2: null,
-      filter3: null,
+      type: null,
+      fabric: null,
+      color: null,
       timeout: null,
       page: 1,
       options: {
-        filter1: [
-          { value: null, text: 'เลือกประเภทของผ้าม่าน'},
-          { value: 'value1', text: 'ผ้าชนิด 1' },
-          { value: 'value2', text: 'ผ้าชนิด 2' },
-          { value: 'value3', text: 'ผ้าชนิด 3' }
+        type: [
+          { value: null, text: "เลือกชนิดของผ้าม่าน" },
+          { value: "ม่านตาไก่", text: "ม่านตาไก่" },
+          { value: "ม่านคอกระเช้า", text: "ม่านคอกระเช้า" },
+          { value: "value3", text: "ผ้าชนิด 3" }
         ],
-         filter2: [
-          { value: null, text: 'เลือกชนิดของผ้าม่าน'},
-          { value: 'value1', text: 'ผ้าชนิด 1' },
-          { value: 'value2', text: 'ผ้าชนิด 2' },
-          { value: 'value3', text: 'ผ้าชนิด 3' }
+        fabric: [
+          { value: null, text: "เลือกคุณภาพของผ้า" },
+          { value: "มาตรฐาน", text: "มาตรฐาน" },
+          { value: "ประหยัด", text: "ประหยัด" },
+          { value: "หรูหรา", text: "หรูหรา" }
         ],
-        filter3: [
-          { value: null, text: 'เลือกสีของผ้าม่าน'},
-          { value: 'value1', text: 'ผ้าชนิด 1' },
-          { value: 'value2', text: 'ผ้าชนิด 2' },
-          { value: 'value3', text: 'ผ้าชนิด 3' }
+        color: [
+          { value: null, text: "เลือกสีของผ้าม่าน" },
+          { value: "แดง", text: "แดง" },
+          { value: "น้ำตาล", text: "น้ำตาล" },
+          { value: "value3", text: "ผ้าชนิด 3" }
         ]
       },
       animate: {
         trigger: 0
       },
       store: this.storeData()
-    }
+    };
   },
 
   ///
@@ -107,19 +107,28 @@ export default {
       var _this = this;
       clearTimeout(this.timeout);
       this.timeout = setTimeout(function() {
-        _this.triggerSearch()
+        _this.triggerSearch();
       }, 500);
     },
+    type: function(name) {
+      this.triggerSearch();
+    },
+    fabric: function(name) {
+      this.triggerSearch();
+    },
+    color: function(name) {
+      this.triggerSearch();
+    }
   },
 
   ///
   // Mounted
   ///
   mounted() {
-    if(!this.storeData()) {
+    if (!this.storeData()) {
       this.storeGet({
         page: 1
-      })
+      });
     }
   },
 
@@ -132,28 +141,46 @@ export default {
     triggerFilter() {
       if (this.animate.trigger) {
         // Slideup
-        TweenLite.to(".bar-container", 0.3, { ease: Power2.easeOut, height: '100px'})
-        TweenLite.to(".trigger-filter", 0.2, { ease: Power2.easeOut, rotation: 0})
-        TweenLite.to(".bar-filter", 0.1, { autoAlpha: 0, display: 'none' })
+        TweenLite.to(".bar-container", 0.3, {
+          ease: Power2.easeOut,
+          height: "100px"
+        });
+        TweenLite.to(".trigger-filter", 0.2, {
+          ease: Power2.easeOut,
+          rotation: 0
+        });
+        TweenLite.to(".bar-filter", 0.1, { autoAlpha: 0, display: "none" });
         this.animate.trigger = 0;
       } else {
         // Slidedown
-        TweenLite.set(".bar-filter", { display: 'flex'} )
-        TweenLite.set(".bar-container", { ease: Power2.easeOut, height: "auto"});
-        TweenLite.from(".bar-container", 0.3, { ease: Power2.easeOut, height: '100px'})
-        TweenLite.to(".trigger-filter", 0.2, {ease: Power2.easeOut, rotation: 180})
-        TweenLite.to(".bar-filter", 0.4, { autoAlpha: 1})
+        TweenLite.set(".bar-filter", { display: "flex" });
+        TweenLite.set(".bar-container", {
+          ease: Power2.easeOut,
+          height: "auto"
+        });
+        TweenLite.from(".bar-container", 0.3, {
+          ease: Power2.easeOut,
+          height: "100px"
+        });
+        TweenLite.to(".trigger-filter", 0.2, {
+          ease: Power2.easeOut,
+          rotation: 180
+        });
+        TweenLite.to(".bar-filter", 0.4, { autoAlpha: 1 });
         this.animate.trigger = 1;
       }
     },
     triggerSearch() {
       this.storeGet({
         search: this.search,
-        page: this.page
+        page: this.page,
+        color: this.color,
+        type: this.type,
+        fabric: this.fabric
       });
     }
   }
-}
+};
 </script>
 
 <style>

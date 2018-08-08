@@ -16,7 +16,7 @@
         </div>
 
         <div class="trigger-filter" @click="triggerFilter()">
-          <img src="static/images/icon/arrow-up.svg">
+          <img src="/static/images/icon/arrow-up.svg">
         </div>
 
         <div id="bar-filter" class="bar-filter row m-0 no-gutters">
@@ -103,6 +103,9 @@ export default {
   // Watch
   ///
   watch: {
+    $route: function(type) {
+      this.type = this.$route.params.type
+    },
     search: function(name) {
       var _this = this;
       clearTimeout(this.timeout);
@@ -129,6 +132,11 @@ export default {
       this.storeGet({
         page: 1
       });
+    }
+
+    if (this.$route.params.type) {
+      this.type = this.$route.params.type;
+      this.triggerFilter();
     }
   },
 

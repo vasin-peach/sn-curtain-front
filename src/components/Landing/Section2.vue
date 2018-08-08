@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row category-container d-flex justify-content-between">
         <div class="col-4 col-md-2 category-box fade" v-for="(item, index) in category" :key="index">
-          <router-link :to="{ name: 'Store' }">
+          <router-link :to="{ name: 'Store-Filter', params: { type: item. title} }">
             <div class="category-content">
               <img v-lazy="'/static/images/category/' + item.name" :alt="item.name">
             </div>
@@ -26,15 +26,15 @@ export default {
       category: [
         {
         name: 'category-01.png',
-        title: 'ม่านตาไก่'
+        title: 'ม่านเลื่อน'
         },
         {
         name: 'category-02.png',
-        title: 'ม่านตาไก่'
+        title: 'ม่านพับ'
         },
         {
         name: 'category-03.png',
-        title: 'ม่านตาไก่'
+        title: 'ม่านคอกระเช้า'
         },
         {
         name: 'category-04.png',

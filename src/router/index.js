@@ -37,6 +37,11 @@ const router = new Router({
         name: 'Landing'
       },
       {
+        path: 'store/:type',
+        component: Store,
+        name: 'Store-Filter'
+      },
+      {
         path: 'store',
         component: Store,
         name: 'Store'
@@ -62,7 +67,7 @@ const router = new Router({
         })
       }, 400)
     })
-  }
+  },
 })
 
 export default router

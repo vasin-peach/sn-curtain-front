@@ -25,7 +25,7 @@
               <div class="title">
                 ประเภทผ้าม่าน
               </div>
-              <b-form-select v-model="type" :options="options.type"></b-form-select>
+              <b-form-select v-model="type" :options="storeFilterData() ? storeFilterData().type : {text: 'S&N CURTAIN'}"></b-form-select>
             </div>
           </div>
 
@@ -34,7 +34,7 @@
               <div class="title">
                 ชนิดของผ้า
               </div>
-              <b-form-select v-model="fabric" :options="options.fabric"></b-form-select>
+              <b-form-select v-model="fabric" :options="storeFilterData() ? storeFilterData().fabric : {text: 'S&N CURTAIN'}"></b-form-select>
             </div>
           </div>
 
@@ -43,7 +43,7 @@
               <div class="title">
                 สีของผ้า
               </div>
-              <b-form-select v-model="color" :options="options.color"></b-form-select>
+              <b-form-select v-model="color" :options="storeFilterData() ? storeFilterData().color : {text: 'S&N CURTAIN'}"></b-form-select>
             </div>
           </div>
         </div>
@@ -121,7 +121,7 @@ export default {
     },
     color: function(name) {
       this.triggerSearch();
-    }
+    },
   },
 
   ///
@@ -134,6 +134,12 @@ export default {
       });
     }
 
+    // if (!this.storeFilterData()) {
+    this.storeFilterGet()    
+    this.options = this.storeFilterData()
+    // }
+
+
     if (this.$route.params.type) {
       this.type = this.$route.params.type;
       this.triggerFilter();
@@ -144,8 +150,8 @@ export default {
   // Methods
   ///
   methods: {
-    ...mapGetters(["storeData"]),
-    ...mapActions(["storeGet"]),
+    ...mapGetters(["storeData", "storeFilterData"]),
+    ...mapActions(["storeGet", "storeFilterGet"]),
     triggerFilter() {
       if (this.animate.trigger) {
         // Slideup

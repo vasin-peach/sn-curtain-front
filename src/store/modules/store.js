@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import _ from 'lodash'
 
 ///
 // State
@@ -6,7 +7,8 @@ import Vue from 'vue';
 
 const state = {
   store: null,
-  storePopular: null
+  storePopular: null,
+  storeFilter: null
 }
 
 
@@ -19,6 +21,9 @@ const getters = {
   },
   storePopularData: (state) => {
     return state.storePopular
+  },
+  storeFilterData: (state) => {
+    return state.storeFilter
   }
 }
 
@@ -32,6 +37,9 @@ const mutations = {
   },
   storePopularUpdate(state, data) {
     data ? state.storePopular = data : false;
+  },
+  storeFilterUpdate(state, data) {
+    state.storeFilter = data;
   }
 }
 
@@ -59,7 +67,6 @@ const actions = {
       var color = payload.color || null
       var type = payload.type || null
 
-      // var uriRequest = "/product/get/" + search + "/" + page + (fabric ? "/" + fabric + (color ? "/" + color + (type ? "/" + type : "") : "") : "")
       var uriRequest = "/product/get/" +
         (search ? search + "/" : " /") +
         (page ? page + "/" : " /") +
@@ -90,6 +97,43 @@ const actions = {
             })
         }
         // return reject(error);
+      })
+    })
+  },
+  storeFilterGet({
+    commit
+  }) {
+    return new Promise((resolve, reject) => {
+
+      // store loading
+      commit('loadingUpdate', {
+        type: 'storePopular',
+        value: true
+      });
+
+      // request
+      Vue.http.get(process.env.BACKEND_URI + '/product/category').then(response => {
+
+
+        // create new object format for select options
+        response.data.data.type.unshift({
+          value: null,
+          text: 'กรุณาเลือกประเภทผ้าม่าน'
+        });
+        response.data.data.fabric.unshift({
+          value: null,
+          text: 'กรุณาเลือกคุณภาพของผ้า'
+        });
+        response.data.data.color.unshift({
+          value: null,
+          text: 'กรุณาเลือกสีของผ้าม่าน'
+        });
+
+        commit('storeFilterUpdate', response.data.data)
+        commit('loadingUpdate', {
+          type: 'storePopular',
+          value: false
+        })
       })
     })
   },

@@ -112,15 +112,19 @@ export default {
       this.timeout = setTimeout(function() {
         _this.triggerSearch();
       }, 500);
+      this.storeTempUpdate({ type: 'search', data: name})
     },
     type: function(name) {
       this.triggerSearch();
+      this.storeTempUpdate({ type: 'type', data: name})
     },
     fabric: function(name) {
       this.triggerSearch();
+      this.storeTempUpdate({ type: 'fabric', data: name})
     },
     color: function(name) {
       this.triggerSearch();
+      this.storeTempUpdate({ type: 'color', data: name})
     },
   },
 
@@ -150,6 +154,7 @@ export default {
   // Methods
   ///
   methods: {
+    ...mapMutations(["storeTempUpdate"]),
     ...mapGetters(["storeData", "storeFilterData"]),
     ...mapActions(["storeGet", "storeFilterGet"]),
     triggerFilter() {
@@ -193,6 +198,12 @@ export default {
         fabric: this.fabric
       });
     }
+  },
+  ///
+  // Props
+  ///
+  props: {
+    
   }
 };
 </script>

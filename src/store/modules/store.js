@@ -8,7 +8,8 @@ import _ from 'lodash'
 const state = {
   store: null,
   storePopular: null,
-  storeFilter: null
+  storeFilter: null,
+  storeTemp: {}
 }
 
 
@@ -24,6 +25,9 @@ const getters = {
   },
   storeFilterData: (state) => {
     return state.storeFilter
+  },
+  storeTempData: (state) => {
+    return state.storeTemp
   }
 }
 
@@ -39,10 +43,31 @@ const mutations = {
     data ? state.storePopular = data : false;
   },
   storeFilterUpdate(state, data) {
-    state.storeFilter = data;
+    data ? state.storeFilter = data : false;
+  },
+  storeCountUpdate(state, data) {
+    data ? state.storeCount = data : false;
+  },
+  storeTempUpdate(state, data) {
+    switch (data.type) {
+      case 'search':
+        state.storeTemp.search = data.data
+        break;
+      case 'page':
+        state.storeTemp.page = data.data
+        break;
+      case 'color':
+        state.storeTemp.color = data.data
+        break;
+      case 'type':
+        state.storeTemp.type = data.data
+        break;
+      case 'fabric':
+        state.storeTemp.fabric = data.data
+        break;
+    }
   }
 }
-
 
 ///
 // Actions
@@ -137,7 +162,6 @@ const actions = {
       })
     })
   },
-
   storePopularGet({
     commit
   }) {
@@ -170,10 +194,9 @@ const actions = {
               value: 'notfound',
             })
         }
-        // return reject(error);
       })
     })
-  },
+  }
 
 }
 

@@ -6,7 +6,7 @@
           <loading></loading>
         </div>
         <div class="row store-container" v-else key="content">
-          <div class="col-6 col-sm-6 col-lg-4 col-xl-3 store-item" v-for="(item, count) in storeData()" :key="count">
+          <div class="col-6 col-sm-6 col-lg-4 col-xl-3 store-item" v-for="(item, count) in storeData().data" :key="count">
             <router-link :to="{ name: 'Product' }">
               <div class="card-container">
                 <div class="card-head">
@@ -36,6 +36,11 @@
           </div>
         </div>
       </transition>
+      <div class="pagination-container" v-if="storeData()">
+        <div class="pagination-wrapper">
+          <b-pagination align="center" :total-rows="storeData().count" v-model="currentPage" :per-page="12"></b-pagination>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -54,23 +59,38 @@ export default {
   ///
   data() {
     return {
+      currentPage: 1
     }
   },
 
   ///
   // Watch
   ///
+  watch: {
+    currentPage: function(page) {
+      this.storeGet({
+        search: this.storeTempData().search,
+        page: this.currentPage,
+        color: this.storeTempData().color,
+        type: this.storeTempData().type,
+        fabric: this.storeTempData().fabric
+      });
+    }
+  },
+
 
   ///
   // Mounted
   ///
-  mounted() {},
+  mounted() {
+  },
 
   ///
   // Methods
   ///
   methods: {
-    ...mapGetters(["storeData", "loadingData"])
+    ...mapGetters(["storeData", "loadingData", "storeTempData"]),
+    ...mapActions(["storeGet"])
   },
 
   ///

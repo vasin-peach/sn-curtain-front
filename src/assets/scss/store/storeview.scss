@@ -105,3 +105,13 @@
     }
   }
 }
+
+.page-item.active .page-link {
+  background-color: $dark1 !important;
+  border-color: $dark1 !important;
+  color: $white1 !important;
+  &.focus {
+    box-shadow: none !important;
+    border: none !important;
+  }
+}

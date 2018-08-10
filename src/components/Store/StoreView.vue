@@ -75,6 +75,12 @@ export default {
         type: this.storeTempData().type,
         fabric: this.storeTempData().fabric
       });
+      TweenMax.to($(window), 0.7, {
+          scrollTo : { y: $('.bar-container').height() - 50, autoKill:true },
+            ease: Power3.easeInOut,	
+            autoKill: true,
+            overwrite: 5							
+        });
     }
   },
 

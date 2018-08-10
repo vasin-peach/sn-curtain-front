@@ -38,7 +38,7 @@ export default {
             ease: Power3.easeInOut,	
             autoKill: true,
             overwrite: 5							
-          });
+        });
     }
   }
 }

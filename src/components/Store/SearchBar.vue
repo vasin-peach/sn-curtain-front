@@ -105,6 +105,10 @@ export default {
   watch: {
     $route: function(type) {
       this.type = this.$route.params.type
+      this.search =  null
+      this.fabric =  null
+      this.color =  null
+      this.timeout =  null
     },
     search: function(name) {
       var _this = this;

@@ -32,6 +32,7 @@ export default {
         autoplay: {
           delay: 7000
         },
+        slidesPerView:'auto',
         pagination: {
           el: '.swiper-pagination'
         },

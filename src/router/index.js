@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from '../store/main';
 
 const main = () =>
   import ('@component/Main')
@@ -65,9 +66,14 @@ const router = new Router({
           x: 0,
           y: 0
         })
-      }, 400)
+      }, 0)
     })
   },
+})
+
+router.beforeEach((to, from, next) => {
+  if (from.name == 'Store-Filter') store.commit('storeUpdate', null);
+  next();
 })
 
 export default router

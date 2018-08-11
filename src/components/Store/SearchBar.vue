@@ -15,7 +15,7 @@
           </div>
         </div>
 
-        <div class="trigger-filter" @click="triggerFilter()">
+        <div class="trigger-filter" @click="triggerFilter">
           <img src="/static/images/icon/arrow-up.svg">
         </div>
 
@@ -25,7 +25,7 @@
               <div class="title">
                 ประเภทผ้าม่าน
               </div>
-              <b-form-select v-model="type" :options="storeFilterData() ? storeFilterData().type : {text: 'S&N CURTAIN'}"></b-form-select>
+              <b-form-select v-model="type" :options="storeFilterData ? storeFilterData.type : {text: 'S&N CURTAIN'}"></b-form-select>
             </div>
           </div>
 
@@ -34,7 +34,7 @@
               <div class="title">
                 ชนิดของผ้า
               </div>
-              <b-form-select v-model="fabric" :options="storeFilterData() ? storeFilterData().fabric : {text: 'S&N CURTAIN'}"></b-form-select>
+              <b-form-select v-model="fabric" :options="storeFilterData ? storeFilterData.fabric : {text: 'S&N CURTAIN'}"></b-form-select>
             </div>
           </div>
 
@@ -43,7 +43,7 @@
               <div class="title">
                 สีของผ้า
               </div>
-              <b-form-select v-model="color" :options="storeFilterData() ? storeFilterData().color : {text: 'S&N CURTAIN'}"></b-form-select>
+              <b-form-select v-model="color" :options="storeFilterData ? storeFilterData.color : {text: 'S&N CURTAIN'}"></b-form-select>
             </div>
           </div>
         </div>
@@ -95,7 +95,7 @@ export default {
       animate: {
         trigger: 0
       },
-      store: this.storeData()
+      store: this.storeData
     };
   },
 
@@ -136,30 +136,27 @@ export default {
   // Mounted
   ///
   mounted() {
-    if (!this.storeData()) {
+
+    if (!this.storeData) {
       this.storeGet({
         page: 1
       });
     }
 
-    // if (!this.storeFilterData()) {
-    this.storeFilterGet()    
-    this.options = this.storeFilterData()
-    // }
-
-
     if (this.$route.params.type) {
       this.type = this.$route.params.type;
       this.triggerFilter();
     }
+    
+    this.storeFilterGet()    
+    this.options = this.storeFilterData
   },
 
   ///
   // Methods
   ///
   methods: {
-    ...mapMutations(["storeTempUpdate"]),
-    ...mapGetters(["storeData", "storeFilterData"]),
+    ...mapMutations(["storeTempUpdate", "storeUpdate"]),
     ...mapActions(["storeGet", "storeFilterGet"]),
     triggerFilter() {
       if (this.animate.trigger) {
@@ -203,12 +200,13 @@ export default {
       });
     }
   },
+
   ///
-  // Props
+  // Computed
   ///
-  props: {
-    
-  }
+  computed: {
+    ...mapGetters(["storeData", "storeFilterData"]),
+  },
 };
 </script>
 

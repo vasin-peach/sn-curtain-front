@@ -2,11 +2,11 @@
   <div id="storeview">
     <div class="container">
       <transition name="fade" mode="out-in">
-        <div v-if="!storeData() || loadingData().store">
+        <div v-if="!storeData || loadingData.store">
           <loading></loading>
         </div>
         <div class="row store-container" v-else key="content">
-          <div class="col-6 col-sm-6 col-lg-4 col-xl-3 store-item" v-for="(item, count) in storeData().data" :key="count">
+          <div class="col-6 col-sm-6 col-lg-4 col-xl-3 store-item" v-for="(item, count) in storeData.data" :key="count">
             <router-link :to="{ name: 'Product', params: { id: item._id } }">
               <div class="card-container">
                 <div class="card-head">
@@ -36,9 +36,9 @@
           </div>
         </div>
       </transition>
-      <div class="pagination-container" v-if="storeData()">
+      <div class="pagination-container" v-if="storeData">
         <div class="pagination-wrapper">
-          <b-pagination align="center" :total-rows="storeData().count" v-model="currentPage" :per-page="12"></b-pagination>
+          <b-pagination align="center" :total-rows="storeData.count" v-model="currentPage" :per-page="12"></b-pagination>
         </div>
       </div>
     </div>
@@ -69,18 +69,18 @@ export default {
   watch: {
     currentPage: function(page) {
       this.storeGet({
-        search: this.storeTempData().search,
+        search: this.storeTempData.search,
         page: this.currentPage,
-        color: this.storeTempData().color,
-        type: this.storeTempData().type,
-        fabric: this.storeTempData().fabric
+        color: this.storeTempData.color,
+        type: this.storeTempData.type,
+        fabric: this.storeTempData.fabric
       });
       TweenMax.to($(window), 0.7, {
-          scrollTo : { y: $('.bar-container').height() - 50, autoKill:true },
-            ease: Power3.easeInOut,	
-            autoKill: true,
-            overwrite: 5							
-        });
+        scrollTo : { y: $('.bar-container').height() - 50, autoKill:true },
+          ease: Power3.easeInOut,	
+          autoKill: true,
+          overwrite: 5							
+      });
     }
   },
 
@@ -95,8 +95,14 @@ export default {
   // Methods
   ///
   methods: {
+    ...mapActions(["storeGet"]),
+  },
+  
+  ///
+  // Computed
+  ///
+  computed: {
     ...mapGetters(["storeData", "loadingData", "storeTempData"]),
-    ...mapActions(["storeGet"])
   },
 
   ///
@@ -111,7 +117,7 @@ export default {
 <style>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.4s ease-in;
+  transition: opacity 0.2s ease-in;
 }
 
 .fade-enter,

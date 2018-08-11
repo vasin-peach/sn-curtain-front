@@ -6,14 +6,14 @@
           <div style="height: 60vh">
             <!-- swiper1 -->
             <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop">
-              <swiper-slide v-if="item.src" v-for="(item, index) in productData[0].assets" :key="index" :style="{'background-image' : 'url('+ item.src +')'}"></swiper-slide>
+              <swiper-slide v-if="item.src" v-for="(item, index) in productData[0].assets" :key="index" :style="{'background-image' : 'url('+ item.src +')'}" style="display: block"></swiper-slide>
               <swiper-slide v-else v-for="(item) in [1,2,3,4,5]" :key="item" style="background-image: url('/static/images/lazy/lazyload.svg')"></swiper-slide>
               <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
               <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
             </swiper>
             <!-- swiper2 Thumbs -->
             <swiper :options="swiperOptionThumbs" class="gallery-thumbs" ref="swiperThumbs">
-              <swiper-slide v-if="item.src" v-for="(item, index) in productData[0].assets" :key="index" :style="{'background-image' : 'url('+ item.src +')'}"></swiper-slide>
+              <swiper-slide v-if="item.src" v-for="(item, index) in productData[0].assets" :key="index" :style="{'background-image' : 'url('+ item.src +')'}" style="display: block"></swiper-slide>
               <swiper-slide v-else v-for="(item) in [1,2,3,4,5]" :key="item" style="background-image: url('/static/images/lazy/lazyload.svg')"></swiper-slide>
             </swiper>
           </div>

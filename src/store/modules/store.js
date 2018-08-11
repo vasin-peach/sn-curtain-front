@@ -37,7 +37,7 @@ const getters = {
 ///
 const mutations = {
   storeUpdate(state, data) {
-    data ? state.store = data : false;
+    state.store = data;
   },
   storePopularUpdate(state, data) {
     data ? state.storePopular = data : false;

@@ -47,15 +47,15 @@ const router = new Router({
         name: 'Store'
       },
       {
+        path: 'product/:id',
+        component: Product,
+        name: 'Product'
+      },
+      {
         path: 'service',
         component: Service,
         name: 'Service'
       },
-      {
-        path: 'product',
-        component: Product,
-        name: 'Product'
-      }
     ]
   }],
   scrollBehavior(to, from, savedPosition) {

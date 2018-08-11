@@ -1,7 +1,7 @@
 <template>
   <div class="section4">
     <div class="container">
-      <div class="product-header fade">
+      <div class="product-header">
         <span class="">สินค้าแนะนำ</span>
         <hr>
       </div>
@@ -13,7 +13,7 @@
           </div>
           <div class="row" v-else key="content">
             <div class="col-sm-6 product-item" v-for="(item, index) in storePopularData()" :key="index">
-              <router-link :to="{ name: 'Product' }">
+              <router-link :to="{ name: 'Product', params: { id: item._id } }">
                 <div class="row m-0">
                   <div class="col-6 col-sm-12 col-md-4 product-content">
                     <p class="text">{{item.name}}</p>

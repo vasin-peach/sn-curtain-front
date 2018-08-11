@@ -7,7 +7,7 @@
         </div>
         <div class="row store-container" v-else key="content">
           <div class="col-6 col-sm-6 col-lg-4 col-xl-3 store-item" v-for="(item, count) in storeData().data" :key="count">
-            <router-link :to="{ name: 'Product' }">
+            <router-link :to="{ name: 'Product', params: { id: item._id } }">
               <div class="card-container">
                 <div class="card-head">
                   <img v-lazy="item.brand.src" :alt="item.name || 'ชื่อสินค้า'">

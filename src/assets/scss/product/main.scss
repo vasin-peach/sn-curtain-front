@@ -1,0 +1,16 @@
+@import 'productview';
+.product {
+  .section4 {
+    // disable box shadow in section4
+    box-shadow: none !important;
+    margin-bottom: 10vh;
+    .product-item:nth-child(1n+3) {
+      // hidden product after 2 nth item
+      display: none;
+    }
+    .loading-warpper {
+      // make loading height equal to item height
+      min-height: 31vh !important;
+    }
+  }
+}

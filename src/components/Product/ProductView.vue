@@ -33,13 +33,13 @@
             <div class="amount">
               <div class="amount-wrapper">
                 <div class="">
-                  <div class="minus">
+                  <div class="minus" @click="amount > 1 ? amount -= 1 : amount">
                     -
                   </div>
                   <div class="num">
-                    1
+                    {{ amount }}
                   </div>
-                  <div class="plus">
+                  <div class="plus" @click="amount < productData[0].quantity ? amount += 1 : amount">
                     +
                   </div>
                 </div>
@@ -97,6 +97,7 @@ export default {
   data () {
     return {
       id: null,
+      amount: 1,
       swiperOptionTop: {
         spaceBetween: 10,
         loop: true,

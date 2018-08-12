@@ -3,6 +3,7 @@
     <router-view name="header" />
     <router-view name="body" />
     <router-view name="footer" />
+    <router-view name="floatbar" />
   </div>
 </template>
 

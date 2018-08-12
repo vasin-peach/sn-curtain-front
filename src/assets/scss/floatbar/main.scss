@@ -1,0 +1,10 @@
+.floatbar {
+  z-index: 20;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  .floatbar-wrapper {
+    @import 'basket';
+    position: relative;
+  }
+}

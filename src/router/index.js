@@ -18,6 +18,8 @@ const Service = () =>
   import ('@component/Service/Service')
 const Product = () =>
   import ('@component/Product/Product')
+const FloatBar = () =>
+  import ('@component/FloatBar/FloatBar')
 
 Vue.use(Router)
 
@@ -30,6 +32,7 @@ const router = new Router({
       header: Header,
       body: Body,
       footer: Footer,
+      floatbar: FloatBar
     },
     children: [{
         path: 'landing',

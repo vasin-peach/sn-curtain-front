@@ -48,7 +48,7 @@
                 </div>
               </div>
             </div>
-            <div class="button buy font-bourbon">BUY</div>
+            <div class="button buy font-bourbon" @click="productToBasket()">BUY</div>
             <div class="other">
               <div class="other-container">
                 <div class="other-box">
@@ -88,7 +88,7 @@
 <script>
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 export default {
   name: 'ProductView',
   ///
@@ -136,8 +136,6 @@ export default {
   // Watch
   ///
   watch: {
-    productData: (data) => {
-    }
   },
 
   ///
@@ -145,6 +143,7 @@ export default {
   ///
   computed: {
     ...mapGetters(['productData']),
+  
   },
 
   /// 
@@ -152,12 +151,20 @@ export default {
   ///
   methods: {
     ...mapActions(['productGet']),
+    ...mapMutations(['basketPush']),
     initSwiper() {
       this.$nextTick(() => {
         const swiperTop = this.$refs.swiperTop.swiper
         const swiperThumbs = this.$refs.swiperThumbs.swiper
         swiperTop.controller.control = swiperThumbs
         swiperThumbs.controller.control = swiperTop
+      })
+    },
+    productToBasket() {
+      this.basketPush({
+        id: this.productData[0]._id,
+        amount: this.amount,
+        data: this.productData[0]
       })
     }
   },

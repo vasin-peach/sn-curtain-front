@@ -19,7 +19,8 @@ import {
 } from '@fortawesome/fontawesome-svg-core'
 import {
   faSearch,
-  faClone
+  faClone,
+  faShoppingBag
 } from '@fortawesome/free-solid-svg-icons'
 import {
   FontAwesomeIcon
@@ -34,7 +35,7 @@ Vue.use(VueLazyLoad, {
   attempt: 1
 });
 
-library.add(faSearch, faClone)
+library.add(faSearch, faClone, faShoppingBag)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 

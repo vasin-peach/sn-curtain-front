@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row product-container" v-if="productData">
         <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 product-show">
-          <div style="height: 60vh">
+          <div style="height: 70vh">
             <!-- swiper1 -->
             <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop">
               <swiper-slide v-if="item.src" v-for="(item, index) in productData[0].assets" :key="index" :style="{'background-image' : 'url('+ item.src +')'}" style="display: block"></swiper-slide>
@@ -29,6 +29,54 @@
             </div>
             <div class="detail">
               {{ productData[0].desc[0].val }}
+            </div>
+            <div class="amount">
+              <div class="amount-wrapper">
+                <div class="">
+                  <div class="minus">
+                    -
+                  </div>
+                  <div class="num">
+                    1
+                  </div>
+                  <div class="plus">
+                    +
+                  </div>
+                </div>
+                <div class="">
+                  จำนวน
+                </div>
+              </div>
+            </div>
+            <div class="button buy font-bourbon">BUY</div>
+            <div class="other">
+              <div class="other-container">
+                <div class="other-box">
+                  <div>
+                    สี:
+                  </div>
+                  <div class="color">
+                    <!-- <div>{{productData[0].category.color.val}}</div> -->
+                    <div class="color-box" :style="{background: productData[0].category.color.hex || '#ccc'}"></div>
+                  </div>
+                </div>
+                <div class="other-box">
+                  <div>
+                    ชนิดของผ้า:
+                  </div>
+                  <div>
+                    {{productData[0].fabric}}
+                  </div>
+                </div>
+                <div class="other-box">
+                  <div>
+                    ชนิดของผ้าม่าน:
+                  </div>
+                  <div>
+                    {{productData[0].category.type}}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

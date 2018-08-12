@@ -20,6 +20,7 @@
       }
     }
     .product-detail {
+      margin-top: 10px;
       .title {
         font-size: 25px;
         font-weight: 400;
@@ -31,10 +32,93 @@
         font-weight: 500;
       }
       .detail {
-        height: 8vh;
+        min-height: 8vh;
         padding-top: 2vh;
         font-size: 15px;
         font-weight: 200;
+      }
+      .amount {
+        .amount-wrapper {
+          margin: 5vh 0;
+          display: flex;
+          direction: column;
+          font-size: 20px;
+          width: 100%;
+          >div {
+            padding: 10px 0;
+            width: 50%;
+            border: 1px solid $gray2;
+            border-left-style: none;
+            border-right-style: none;
+            display: flex;
+            direction: column;
+            justify-content: space-around;
+            align-items: center;
+            &:last-child {
+              border-left-style: solid;
+              justify-content: center;
+            }
+            >div {
+              &:not(:nth-child(2)) {
+                cursor: pointer;
+                color: $orange1;
+                font-size: 30px;
+                font-weight: 400;
+                transition: color 0.3s ease;
+                &:hover {
+                  color: $orange2;
+                }
+              }
+            }
+          }
+        }
+      }
+      .buy {
+        border-color: $dark1;
+        color: $dark1;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-size: 25px;
+        font-weight: 300;
+        border-radius: 5px;
+        transition: background 0.3s ease-out, color 0.3s ease-out;
+        margin-bottom: 5vh;
+        &:hover {
+          background: $dark1;
+          color: $white1;
+        }
+      }
+      .other {
+        .other-container {
+          display: flex;
+          flex-direction: column;
+          >div {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid $dark3;
+            padding: 10px 5px;
+            border-left-style: none;
+            border-right-style: none;
+            &:nth-child(2) {
+              border: none;
+            }
+            >div {
+              &:last-child {
+                font-weight: 200 !important;
+                display: flex;
+                text-align: right;
+                .color-box {
+                  width: 25px;
+                  height: 25px;
+                  display: inline-block;
+                  border-radius: 7px;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

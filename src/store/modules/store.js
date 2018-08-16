@@ -121,7 +121,6 @@ const actions = {
               value: 'notfound',
             })
         }
-        // return reject(error);
       })
     })
   },

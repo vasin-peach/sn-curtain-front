@@ -1,7 +1,5 @@
+import Vue from 'vue';
 import _ from 'lodash';
-import {
-  router
-} from 'sw-toolbox';
 ///
 // State
 ///
@@ -30,7 +28,7 @@ const mutations = {
   },
   basketPush(state, data) {
     var basket = state.basket
-    var itemStatus = false
+
     // push if basket empty
     if (_.isEmpty(basket)) basket.push(data);
 
@@ -48,33 +46,70 @@ const mutations = {
     if (!original) {
       basket.push(data);
     }
-
-    // if (_.isEmpty(basket)) basket.push(data);
-    // else Object.keys(basket).forEach((key) => {
-    //   if (data.id == basket[key].id && data.amount != basket[key].amount) { // update item
-    //     basket[key].data = data.data
-    //     basket[key].amount = data.amount
-    //     return true
-    //   } else if (data.id != basket[key].id) { // push new item
-    //     basket.push(data);
-    //     return true
-    //   }
-    // })
   },
-  // basketPop(state, data) {
-  //   var basket = state.basket
-  //   if (_.isEmpty(basket)) return false
-  //   else Object.keys(basket).forEach((key) => {
-  //     basket[key].id == data.id && basket[key].amount == 1 ? delete basket[key] : basket[key].amount -= 1
-  //   })
-  // }
 }
 
 
 ///
 // Actions
 ///
-const actions = {}
+const actions = {
+  basketGet({
+    commit
+  }, payload) {
+    return new Promise((resolve, reject) => {
+      if (!payload) return reject('payload empty');
+
+      var requestURL = process.env.BACKEND_URO + "/basket/get/"
+
+      Vue.http.get(requestURL).then(response => {
+        commit('basketUpdate', response.data);
+        return resolve(response.data)
+      }, error => {
+        switch (error.status) {
+          case 0:
+            commit('loadingUpdate', {
+              type: 'store',
+              value: 'fail',
+            })
+            break;
+          case 404:
+            commit('loadingUpdate', {
+              type: 'store',
+              value: 'notfound',
+            })
+        }
+      })
+    })
+  },
+  basketCreate({
+    commit
+  }, payload) {
+    return new Promise((resolve, reject) => {
+      if (!payload) return reject('payload empty');
+
+      var requestURL = process.env.BACKEND_URO + "/basket/create/" + payload.key + "/" + payload.data
+
+      Vue.http.get(requestURL).then(response => {
+        return resolve(response.data)
+      }, error => {
+        switch (error.status) {
+          case 0:
+            commit('loadingUpdate', {
+              type: 'store',
+              value: 'fail',
+            })
+            break;
+          case 404:
+            commit('loadingUpdate', {
+              type: 'store',
+              value: 'notfound',
+            })
+        }
+      })
+    })
+  }
+}
 
 export default {
   state,

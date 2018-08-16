@@ -20,6 +20,8 @@ const Product = () =>
   import ('@component/Product/Product')
 const FloatBar = () =>
   import ('@component/FloatBar/FloatBar')
+const Basket = () =>
+  import ('@component/Basket/Basket')
 
 Vue.use(Router)
 
@@ -60,6 +62,11 @@ const router = new Router({
         component: Service,
         name: 'Service'
       },
+      {
+        path: 'basket',
+        component: Basket,
+        name: 'Basket'
+      }
     ]
   }],
   scrollBehavior(to, from, savedPosition) {

@@ -4,14 +4,17 @@
       <transition name="basket">
         <div class="floatbar-basket animate" v-show="basketData.length">
 
-          <div class="floatbar-basket-wrapper">
-            <div class="floatbar-basket-icon">
-              <font-awesome-icon icon="shopping-bag" aria-hidden="true" />
-              <span class="amount">
-                <div>{{basketData.length}}</div>
-              </span>
+            <div class="floatbar-basket-wrapper">
+              <router-link :to="{ name: 'Basket' }">
+                <div class="floatbar-basket-icon">
+                  <font-awesome-icon icon="shopping-bag" aria-hidden="true" />
+                  <span class="amount">
+                    <div>{{basketData.length}}</div>
+                  </span>
+                </div>
+              </router-link>
             </div>
-          </div>
+
         </div>
       </transition>
     </div>
@@ -19,17 +22,15 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
-  name: 'FloatBar',
-  
+  name: "FloatBar",
+
   ///
   // Data
   ///
   data() {
-    return {
-      
-    }
+    return {};
   },
 
   ///
@@ -38,6 +39,10 @@ export default {
   watch: {
     basketData: function(data) {
       this.basketAnimate();
+      this.basketCreate({
+        key: "basket",
+        data: this.basketData
+      });
     }
   },
 
@@ -45,12 +50,13 @@ export default {
   // Methods
   ///
   methods: {
+    ...mapActions(["basketCreate"]),
     basketAnimate() {
-      var basket = $('.floatbar-basket')
-      $('.floatbar-basket').removeClass('animate');
+      var basket = $(".floatbar-basket");
+      $(".floatbar-basket").removeClass("animate");
       setTimeout(function() {
-        $('.floatbar-basket').addClass('animate');
-      }, 100)
+        $(".floatbar-basket").addClass("animate");
+      }, 100);
     }
   },
 
@@ -58,10 +64,9 @@ export default {
   // Computedf
   ///
   computed: {
-    ...mapGetters(['basketData'])
+    ...mapGetters(["basketData"])
   }
-
-}
+};
 </script>
 
 <style>

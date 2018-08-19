@@ -4,16 +4,16 @@
       <transition name="basket">
         <div class="floatbar-basket animate" v-show="basketData.length">
 
-            <div class="floatbar-basket-wrapper">
-              <router-link :to="{ name: 'Basket' }">
-                <div class="floatbar-basket-icon">
-                  <font-awesome-icon icon="shopping-bag" aria-hidden="true" />
-                  <span class="amount">
-                    <div>{{basketData.length}}</div>
-                  </span>
-                </div>
-              </router-link>
-            </div>
+          <div class="floatbar-basket-wrapper">
+            <router-link :to="{ name: 'Basket' }">
+              <div class="floatbar-basket-icon">
+                <font-awesome-icon icon="shopping-bag" aria-hidden="true" />
+                <span class="amount">
+                  <div>{{basketData.length}}</div>
+                </span>
+              </div>
+            </router-link>
+          </div>
 
         </div>
       </transition>
@@ -39,18 +39,20 @@ export default {
   watch: {
     basketData: function(data) {
       this.basketAnimate();
-      this.basketCreate({
-        key: "basket",
-        data: this.basketData
-      });
     }
+  },
+  ///
+  // Mounted
+  ///
+  mounted() {
+    if (localStorage.basket) this.basketUpdate(JSON.parse(localStorage.getItem('basket')))
   },
 
   ///
   // Methods
   ///
   methods: {
-    ...mapActions(["basketCreate"]),
+    ...mapMutations(['basketUpdate']),
     basketAnimate() {
       var basket = $(".floatbar-basket");
       $(".floatbar-basket").removeClass("animate");
@@ -61,7 +63,7 @@ export default {
   },
 
   ///
-  // Computedf
+  // Computed
   ///
   computed: {
     ...mapGetters(["basketData"])

@@ -151,7 +151,7 @@ export default {
   ///
   methods: {
     ...mapActions(['productGet']),
-    ...mapMutations(['basketPush']),
+    ...mapMutations(['basketUpdate']),
     initSwiper() {
       this.$nextTick(() => {
         const swiperTop = this.$refs.swiperTop.swiper
@@ -161,11 +161,44 @@ export default {
       })
     },
     productToBasket() {
-      this.basketPush({
+
+      // set basket to array if basket is empty.
+      var oldItems = JSON.parse(localStorage.getItem("basket") || [])
+
+      // init data in payload
+      var payload = {
         id: this.productData[0]._id,
         amount: this.amount,
         data: this.productData[0]
-      })
+      }
+
+      // payload into localStorage.basket
+      if (_.isEmpty(localStorage.basket))  {
+        this.updateBasket(oldItems, payload)
+      } else {
+
+        // same item but diffirent amount
+        var getIndex = oldItems.findIndex(item => item.id == payload.id && item.amount != payload.amount)
+        if (getIndex >= 0) {
+          // remove array by index
+          oldItems.splice(getIndex);
+          this.updateBasket(oldItems, payload)
+        }
+
+        // check item was exist then push
+        var temp = oldItems.find((item, index) => {
+          return item.id === payload.id
+        })
+
+        if (!temp) {
+          this.updateBasket(oldItems, payload)
+        }
+      }
+    },
+    updateBasket(oldItems, payload) {
+      oldItems.push(payload);
+      localStorage.setItem("basket", JSON.stringify(oldItems))
+      this.basketUpdate(JSON.parse(localStorage.getItem('basket')))
     }
   },
 

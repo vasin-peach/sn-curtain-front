@@ -46,7 +46,7 @@
                               -
                             </div>
                             <div class="num">
-                              {{ item.amount }}
+                              {{ numberWithCommas(item.amount) }}
                             </div>
                             <div class="plus" @click="amountPlus(item.id)">
                               +
@@ -58,11 +58,11 @@
                         </div>
                       </div>
                       <div class="price-sm">
-                        ฿{{item.data.price * item.amount}}
+                        ฿{{numberWithCommas(item.data.price * item.amount)}}
                       </div>
                     </div>
                     <div class="price-lg col col-sm-3 col-md-2">
-                      ฿{{item.data.price * item.amount}}
+                      ฿{{numberWithCommas(item.data.price * item.amount)}}
                     </div>
                   </div>
                   <hr>
@@ -79,7 +79,7 @@
             </div>
             <div class="price">
               <div>รวมราคาส่ง</div>
-              <div>฿{{sumPrice}}</div>
+              <div>฿{{numberWithCommas(sumPrice)}}</div>
             </div>
             <div class="transport">
               <div>ราคาขนส่ง</div>
@@ -91,7 +91,7 @@
             </div>
             <div class="summary">
               <div>รวมทั้งหมด</div>
-              <div>฿{{sumAll}}</div>
+              <div>฿{{numberWithCommas(sumAll)}}</div>
             </div>
             <hr>
             <div class="detail">
@@ -189,6 +189,9 @@ export default {
       oldItems.splice(getIndex, 0, payload);
       localStorage.setItem("basket", JSON.stringify(oldItems))
       this.basketUpdate(JSON.parse(localStorage.getItem('basket')))
+    },
+    numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   },
 

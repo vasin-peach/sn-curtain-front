@@ -67,7 +67,7 @@
               @include small {
                 border-radius: 0px;
                 width: 100%;
-                max-width: 70px;
+                max-width: 130px;
               }
               @include mobile {
                 border-radius: 10px;
@@ -113,6 +113,45 @@
               max-height: 120;
             }
           }
+          .amount {
+            .amount-wrapper {
+              margin: 2vh 0;
+              display: flex;
+              direction: column;
+              font-size: 15px;
+              width: 100%;
+              >div {
+                width: 50%;
+                border: 1px solid $gray2;
+                border-left-style: none;
+                border-right-style: none;
+                display: flex;
+                direction: column;
+                justify-content: space-around;
+                align-items: center;
+                &:last-child {
+                  border-left-style: solid;
+                  justify-content: center;
+                }
+                >div {
+                  &:not(:nth-child(2)) {
+                    cursor: pointer;
+                    color: $orange1;
+                    font-size: 25px;
+                    font-weight: 400;
+                    transition: color 0.3s ease;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -khtml-user-select: none;
+                    -ms-user-select: none;
+                    &:hover {
+                      color: $orange2;
+                    }
+                  }
+                }
+              }
+            }
+          }
           .price-sm {
             font-size: 21px;
             font-weight: 400;
@@ -150,6 +189,59 @@
         }
       }
     }
-    .basket-summary {}
+    .basket-summary {
+      .summary-block {
+        >hr {
+          margin: 5px 0;
+        }
+        border: 1px solid $dark3;
+        border-radius: 10px;
+        padding: 10px;
+        >div:not(:first-child) {
+          padding: 10px 0;
+        }
+        .title {
+          margin-top: 10px;
+          font-size: 20px;
+          color: $dark3;
+          hr {
+            margin-top: 5px;
+            margin-bottom: 20px;
+          }
+        }
+        .price {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          >div:last-child {
+            color: $green1;
+            font-weight: 400;
+          }
+        }
+        .transport,
+        .tax,
+        .summary {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          >div:last-child {
+            font-weight: 400;
+          }
+        }
+        .summary {
+          margin-top: 30px;
+          >div:last-child {
+            color: $green1;
+          }
+        }
+        .detail {
+          font-size: 13px;
+          font-weight: 200;
+        }
+        .button {
+          margin-bottom: 10px;
+        }
+      }
+    }
   }
 }

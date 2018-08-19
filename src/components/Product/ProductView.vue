@@ -162,12 +162,12 @@ export default {
     },
     productToBasket() {
 
-      if (localStorage.getItem("basket") === 'undefined') {
-        localStorage.setItem("basket", JSON.stringify([]))
-      }
+      // if (localStorage.getItem("basket") === 'undefined' || localStorage.getItem("basket")) {
+      //   localStorage.setItem("basket", JSON.stringify([]))
+      // }
       
       // set basket to array if basket is empty.
-      var oldItems = JSON.parse(localStorage.getItem("basket") || [])
+      var oldItems = JSON.parse(localStorage.getItem("basket") === 'undefined' || !localStorage.getItem("basket") ? [] : localStorage.getItem("basket"))
 
 
       // init data in payload

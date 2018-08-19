@@ -137,6 +137,7 @@ export default {
   ///
   watch: {
     basketData: function() {
+      this.oldItems = JSON.parse(localStorage.getItem("basket") || [])
       this.updateSumPrice();
     }
   },

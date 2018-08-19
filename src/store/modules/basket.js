@@ -25,6 +25,13 @@ const getters = {
 const mutations = {
   basketUpdate(state, data) {
     state.basket = data;
+  },
+  basketDelete(state, id) {
+    var getIndex = state.basket.findIndex(item => item.id == id)
+    if (getIndex >= 0) {
+      state.basket.splice(getIndex, 1);
+      localStorage.setItem("basket", JSON.stringify(state.basket))
+    }
   }
 }
 

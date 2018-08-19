@@ -162,8 +162,13 @@ export default {
     },
     productToBasket() {
 
+      if (localStorage.getItem("basket") === 'undefined') {
+        localStorage.setItem("basket", JSON.stringify([]))
+      }
+      
       // set basket to array if basket is empty.
       var oldItems = JSON.parse(localStorage.getItem("basket") || [])
+
 
       // init data in payload
       var payload = {
@@ -181,7 +186,7 @@ export default {
         var getIndex = oldItems.findIndex(item => item.id == payload.id && item.amount != payload.amount)
         if (getIndex >= 0) {
           // remove array by index
-          oldItems.splice(getIndex);
+          oldItems.splice(getIndex, 1);
           this.updateBasket(oldItems, payload)
         }
 

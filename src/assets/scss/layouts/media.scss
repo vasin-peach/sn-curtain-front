@@ -27,7 +27,7 @@ $extra: 1200px;
 }
 
 @mixin desktop {
-  @media (min-width: #{$desktop} and (max-width: #{$extra})) {
+  @media (min-width: #{$desktop}) and (max-width: #{$extra}) {
     @content;
   }
 }

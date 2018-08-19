@@ -1,0 +1,155 @@
+.basket {
+  .basket-container {
+    .basket-list {
+      .head {
+        font-weight: 200;
+        color: $dark3;
+        .hr {
+          height: 1px;
+          width: 100%;
+          background-color: $gray3;
+          margin-top: 5px;
+          margin-bottom: 40px;
+        }
+      }
+      .content {
+        transition: all 0.3s;
+        .warpper {
+          width: 100%;
+          min-height: 20vh;
+          padding-bottom: 40px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid $gray3;
+          border-style: none none solid none;
+          >div:first-child {
+            color: $orange1;
+          }
+          >div:last-child {
+            color: $dark1;
+            font-size: 23px;
+            font-weight: 400;
+            transition: opacity 0.2s ease-out;
+            &:hover,
+            &:active {
+              opacity: .7;
+            }
+          }
+        }
+        .basket-item {
+          position: relative;
+          .remove {
+            z-index: 10;
+            cursor: pointer;
+            color: $red1;
+            position: absolute;
+            top: -35px;
+            right: 0px;
+            font-size: 20px;
+            @include mobile {
+              top: 0;
+            }
+          }
+          hr {
+            margin: 40px 0;
+            @include mobile {
+              margin: 10px 0;
+            }
+          }
+          .image {
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              border-radius: 10px;
+              @include small {
+                border-radius: 0px;
+                width: 100%;
+                max-width: 70px;
+              }
+              @include mobile {
+                border-radius: 10px;
+                width: 100%;
+                margin-top: -2px;
+              }
+            }
+          }
+        }
+        .detail {
+          .title {
+            font-size: 23px;
+            font-weight: 400;
+            padding-bottom: 5px;
+            color: $dark1;
+            @include small {
+              font-size: 20px;
+              font-weight: 300;
+            }
+            @include mobile {
+              font-size: 20 px;
+              font-weight: 300;
+            }
+          }
+          .desc {
+            font-size: 15px;
+            font-weight: 100;
+            color: $dark3;
+            line-height: 20px;
+            -webkit-line-clamp: 4;
+            max-height: 60;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            @include small {
+              display: none;
+            }
+            @include mobile {
+              display: none;
+            }
+            @include desktop {
+              -webkit-line-clamp: 6;
+              max-height: 120;
+            }
+          }
+          .price-sm {
+            font-size: 21px;
+            font-weight: 400;
+            padding-bottom: 5px;
+            color: $green1;
+            @include small {
+              font-size: 17px;
+            }
+            @include mobile {
+              font-size: 17px;
+            }
+            @include desktop {
+              display: none !important;
+            }
+            @include extra {
+              display: none !important;
+            }
+          }
+        }
+        .price-lg {
+          font-size: 21px;
+          font-weight: 400;
+          padding-bottom: 5px;
+          color: $green1;
+          text-align: right;
+          @include small {
+            display: none !important;
+          }
+          @include mobile {
+            display: none !important;
+          }
+          @include tablet {
+            display: none !important;
+          }
+        }
+      }
+    }
+    .basket-summary {}
+  }
+}

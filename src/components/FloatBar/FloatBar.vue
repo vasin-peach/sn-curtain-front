@@ -45,14 +45,15 @@ export default {
   // Mounted
   ///
   mounted() {
-    if (localStorage.basket) this.basketUpdate(JSON.parse(localStorage.getItem('basket')))
+    if (localStorage.basket)
+      this.basketUpdate(JSON.parse(localStorage.getItem("basket")));
   },
 
   ///
   // Methods
   ///
   methods: {
-    ...mapMutations(['basketUpdate']),
+    ...mapMutations(["basketUpdate"]),
     basketAnimate() {
       var basket = $(".floatbar-basket");
       $(".floatbar-basket").removeClass("animate");

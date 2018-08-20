@@ -86,15 +86,15 @@
 </template>
 
 <script>
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
-import 'swiper/dist/css/swiper.css'
-import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { swiper, swiperSlide } from "vue-awesome-swiper";
+import "swiper/dist/css/swiper.css";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
-  name: 'ProductView',
+  name: "ProductView",
   ///
   // Data
   ///
-  data () {
+  data() {
     return {
       id: null,
       amount: 1,
@@ -103,8 +103,8 @@ export default {
         loop: true,
         loopedSlides: 5, //looped slides should be the same
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
         }
       },
       swiperOptionThumbs: {
@@ -113,10 +113,10 @@ export default {
         touchRatio: 0.2,
         loop: true,
         loopedSlides: 5, //looped slides should be the same
-        slideToClickedSlide: true,
+        slideToClickedSlide: true
       },
-      swiperSlides: [1, 2, 3, 4, 5],
-    }
+      swiperSlides: [1, 2, 3, 4, 5]
+    };
   },
 
   ///
@@ -127,8 +127,8 @@ export default {
     if (this.$route.params.id) {
       this.id = this.$route.params.id;
       this.productGet(this.id).then(() => {
-        this.initSwiper()
-      })
+        this.initSwiper();
+      });
     }
   },
 
@@ -136,74 +136,78 @@ export default {
   // Watch
   ///
   watch: {
+    "$route.params.id": function(id) {
+      this.id = this.$route.params.id;
+      this.productGet(this.id).then(() => {
+        this.initSwiper();
+      });
+    }
   },
 
   ///
   // Computed
   ///
   computed: {
-    ...mapGetters(['productData']),
-  
+    ...mapGetters(["productData"])
   },
 
-  /// 
+  ///
   // Methods
   ///
   methods: {
-    ...mapActions(['productGet']),
-    ...mapMutations(['basketUpdate']),
+    ...mapActions(["productGet"]),
+    ...mapMutations(["basketUpdate"]),
     initSwiper() {
       this.$nextTick(() => {
-        const swiperTop = this.$refs.swiperTop.swiper
-        const swiperThumbs = this.$refs.swiperThumbs.swiper
-        swiperTop.controller.control = swiperThumbs
-        swiperThumbs.controller.control = swiperTop
-      })
+        const swiperTop = this.$refs.swiperTop.swiper;
+        const swiperThumbs = this.$refs.swiperThumbs.swiper;
+        swiperTop.controller.control = swiperThumbs;
+        swiperThumbs.controller.control = swiperTop;
+      });
     },
     productToBasket() {
-
-      if (localStorage.basket === 'undefined' || !localStorage.basket) {
-        localStorage.setItem("basket", JSON.stringify([]))
+      if (localStorage.basket === "undefined" || !localStorage.basket) {
+        localStorage.setItem("basket", JSON.stringify([]));
       }
-      
-      // set basket to array if basket is empty.
-      var oldItems = JSON.parse(localStorage.getItem("basket"))
 
+      // set basket to array if basket is empty.
+      var oldItems = JSON.parse(localStorage.getItem("basket"));
 
       // init data in payload
       var payload = {
         id: this.productData[0]._id,
         amount: this.amount,
         data: this.productData[0]
-      }
+      };
 
       // payload into localStorage.basket
-      if (_.isEmpty(localStorage.basket))  {
-        this.updateBasket(oldItems, payload)
+      if (_.isEmpty(localStorage.basket)) {
+        this.updateBasket(oldItems, payload);
       } else {
-
         // same item but diffirent amount
-        var getIndex = oldItems.findIndex(item => item.id == payload.id && item.amount != payload.amount)
+        var getIndex = oldItems.findIndex(
+          item => item.id == payload.id && item.amount != payload.amount
+        );
         if (getIndex >= 0) {
           // remove array by index
           oldItems.splice(getIndex, 1);
-          this.updateBasket(oldItems, payload)
+          this.updateBasket(oldItems, payload);
         }
 
         // check item was exist then push
         var temp = oldItems.find((item, index) => {
-          return item.id === payload.id
-        })
+          return item.id === payload.id;
+        });
 
         if (!temp) {
-          this.updateBasket(oldItems, payload)
+          this.updateBasket(oldItems, payload);
         }
       }
     },
     updateBasket(oldItems, payload) {
       oldItems.push(payload);
-      localStorage.setItem("basket", JSON.stringify(oldItems))
-      this.basketUpdate(JSON.parse(localStorage.getItem('basket')))
+      localStorage.setItem("basket", JSON.stringify(oldItems));
+      this.basketUpdate(JSON.parse(localStorage.getItem("basket")));
     }
   },
 
@@ -213,8 +217,8 @@ export default {
   components: {
     swiper,
     swiperSlide
-  },
-}
+  }
+};
 </script>
 
 <style lang="scss" scoped>

@@ -38,9 +38,12 @@ $colours: "dark1" #363349,
 //
 @each $i in $colours {
   .bg-#{nth($i, 1)} {
-    background: nth($i, 2);
+    background: nth($i, 2) !important;
   }
   .color-#{nth($i, 1)} {
-    color: nth($i, 2);
+    color: nth($i, 2) !important;
+  }
+  .border-#{nth($i, 1)} {
+    border: 1px solid nth($i, 2) !important;
   }
 }

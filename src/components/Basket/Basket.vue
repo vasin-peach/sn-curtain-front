@@ -87,7 +87,7 @@
             </div>
             <div class="code">
               <div>ส่วนลด</div>
-              <div>฿{{numberWithCommas(sumDiscount)}}</div>
+              <div class="color-green1">฿{{numberWithCommas(sumDiscount)}}</div>
             </div>
             <div class="summary">
               <div>รวมทั้งหมด</div>
@@ -95,7 +95,7 @@
             </div>
             <hr>
             <div class="code-input">
-              <input type="text" v-model="codeNumber" placeholder="รหัสส่วนลด">
+              <input type="text" id="codeNumber" v-model="codeNumber" placeholder="รหัสส่วนลด">
             </div>
             <div class="transport-input p-0">
 
@@ -116,7 +116,8 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
+import $ from 'jquery';
 export default {
   name: "Basket",
   ///
@@ -124,6 +125,7 @@ export default {
   ///
   data() {
     return {
+      timeout: null,
       oldItems: JSON.parse(localStorage.getItem("basket") || []),
       sumPrice: 0,
       sumTran: 0,
@@ -147,6 +149,15 @@ export default {
     basketData: function() {
       this.oldItems = JSON.parse(localStorage.getItem("basket") || [])
       this.updateSumPrice();
+    },
+    codeNumber: function(code) {
+      $('#codeNumber').removeClass('color-red3 color-green1 border-red3 border-green1');
+      this.sumDiscount = 0;
+      var _this = this;
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(function() {
+        _this.codeNumberSearch(code);
+      }, 500);
     }
   },
 
@@ -155,6 +166,7 @@ export default {
   ///
   methods: {
     ...mapMutations(['basketUpdate', 'basketDelete']),
+    ...mapActions(['discountGet']),
     updateSumPrice() {
       this.sumPrice  = this.basketData.reduce((sum, item) => {
         return sum + (item.data.price * item.amount)
@@ -200,6 +212,29 @@ export default {
     },
     numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    codeNumberSearch(code) {
+      this.discountGet(code).then(response => {
+        $('#codeNumber').removeClass('color-red3 border-red3');
+        $('#codeNumber').addClass("color-green1 border-green1");
+
+        // discount sumPrice
+        var discount = response.data.discount
+        if (discount.percent) {
+          this.sumDiscount = (this.sumPrice * discount.percent) / 100
+        } else if (discount.amount) {
+          this.sumDiscount = discount.amount
+        }
+        
+        // sum all
+        var sumAll = this.sumPrice + this.sumTran - this.sumDiscount;
+        this.sumAll = sumAll > 0 ? sumAll : 0; 
+      }).catch(err => {
+        $('#codeNumber').removeClass("color-green1 border-green1");
+        $('#codeNumber').addClass('color-red3 border-red3');
+        var sumAll = this.sumPrice + this.sumTran - this.sumDiscount;
+        this.sumAll = sumAll > 0 ? sumAll : 0; 
+      })
     }
   },
 

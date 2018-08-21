@@ -4,7 +4,7 @@ import Vue from 'vue';
 import Raven from 'raven-js';
 import RavenVue from 'raven-js/plugins/vue';
 import BootstrapVue from 'bootstrap-vue';
-import VeeValidae from 'vee-validate';
+import VeeValidate from 'vee-validate';
 import VueResource from 'vue-resource';
 import App from './App';
 import router from './router';
@@ -30,6 +30,7 @@ import {
 
 Vue.use(BootstrapVue);
 Vue.use(VueResource);
+Vue.use(VeeValidate);
 Vue.use(VueLazyLoad, {
   preLoad: 1.3,
   loading: '../static/images/lazy/lazyload.svg',

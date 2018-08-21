@@ -248,6 +248,7 @@
             font-size: 15px;
             color: $dark1;
             font-weight: 400;
+            transition: color 0.3s ease, border 0.3s ease;
             &:focus {
               box-shadow: none;
               outline: none;

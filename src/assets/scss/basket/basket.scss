@@ -223,7 +223,7 @@
           }
         }
         .transport,
-        .tax,
+        .code,
         .summary {
           display: flex;
           flex-direction: row;
@@ -238,6 +238,23 @@
             color: $green1;
           }
         }
+        .code-input {
+          width: 100%;
+          input {
+            width: 100%;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid $gray3;
+            font-size: 15px;
+            color: $dark1;
+            font-weight: 400;
+            &:focus {
+              box-shadow: none;
+              outline: none;
+            }
+          }
+        }
+        .transport-input {}
         .detail {
           font-size: 13px;
           font-weight: 200;

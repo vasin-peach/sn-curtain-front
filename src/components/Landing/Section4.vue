@@ -17,8 +17,8 @@
                 <div class="row m-0">
                   <div class="col-6 col-sm-12 col-md-4 product-content">
                     <p class="text">{{item.name}}</p>
-                    <p>{{item.price}} บาท</p>
-                    <div class="button">Buy</div>
+                    <p>฿{{item.price}}</p>
+                    <div class="button">ดูสินค้า</div>
                   </div>
                   <div class="col order-first product-img">
                     <img v-lazy="item.brand.src" :alt="item.name">

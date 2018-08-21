@@ -48,7 +48,7 @@
                 </div>
               </div>
             </div>
-            <div class="button buy font-bourbon" @click="productToBasket()">BUY</div>
+            <div class="button buy font-bourbon" @click="productToBasket()">หยิบลงตะกร้า</div>
             <div class="other">
               <div class="other-container">
                 <div class="other-box">

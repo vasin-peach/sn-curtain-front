@@ -14,7 +14,7 @@
                 </div>
                 <div class="card-content">
                   <p class="title">{{item.name || 'ชื่อสินค้า' }}</p>
-                  <p class="price">{{item.price || 'ไม่ระบุ' }} บาท</p>
+                  <p class="price">฿{{item.price || 'ไม่ระบุ' }}</p>
                   <hr>
                   <div class="detail row m-0">
                     <div class="col-12 col-sm-6">
@@ -29,7 +29,7 @@
                   </div>
                 </div>
                 <div class="card-footer">
-                  <div class="button">Buy</div>
+                  <div class="button">ดูสินค้า</div>
                 </div>
               </div>
             </router-link>

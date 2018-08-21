@@ -83,15 +83,22 @@
             </div>
             <div class="transport">
               <div>ราคาขนส่ง</div>
-              <div>ฟรี</div>
+              <div>{{sumTran ? numberWithCommas('฿' + sumTran) : 'ฟรี'}}</div>
             </div>
-            <div class="tax">
-              <div>ภาษี</div>
-              <div>ฟรี</div>
+            <div class="code">
+              <div>ส่วนลด</div>
+              <div>฿{{numberWithCommas(sumDiscount)}}</div>
             </div>
             <div class="summary">
               <div>รวมทั้งหมด</div>
               <div>฿{{numberWithCommas(sumAll)}}</div>
+            </div>
+            <hr>
+            <div class="code-input">
+              <input type="text" v-model="codeNumber" placeholder="รหัสส่วนลด">
+            </div>
+            <div class="transport-input p-0">
+
             </div>
             <hr>
             <div class="detail">
@@ -120,8 +127,9 @@ export default {
       oldItems: JSON.parse(localStorage.getItem("basket") || []),
       sumPrice: 0,
       sumTran: 0,
-      sumTax: 0,
       sumAll: 0,
+      sumDiscount: 0,
+      codeNumber: null
     };
   },
 
@@ -154,7 +162,7 @@ export default {
       this.updateSumAll();
     },
     updateSumAll() {
-      this.sumAll = this.sumPrice + this.sumTran + this.sumTax;
+      this.sumAll = this.sumPrice + this.sumTran + this.sumDiscount;
     },
     amountMinus(id) {
       // get index by id

@@ -117,7 +117,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
-import $ from 'jquery';
+import $ from "jquery";
 export default {
   name: "Basket",
   ///
@@ -147,11 +147,14 @@ export default {
   ///
   watch: {
     basketData: function() {
-      this.oldItems = JSON.parse(localStorage.getItem("basket") || [])
+      this.oldItems = JSON.parse(localStorage.getItem("basket") || []);
       this.updateSumPrice();
+      this.updateSumAll();
     },
     codeNumber: function(code) {
-      $('#codeNumber').removeClass('color-red3 color-green1 border-red3 border-green1');
+      $("#codeNumber").removeClass(
+        "color-red3 color-green1 border-red3 border-green1"
+      );
       this.sumDiscount = 0;
       var _this = this;
       clearTimeout(this.timeout);
@@ -165,76 +168,79 @@ export default {
   // Methods
   ///
   methods: {
-    ...mapMutations(['basketUpdate', 'basketDelete']),
-    ...mapActions(['discountGet']),
+    ...mapMutations(["basketUpdate", "basketDelete"]),
+    ...mapActions(["discountGet"]),
     updateSumPrice() {
-      this.sumPrice  = this.basketData.reduce((sum, item) => {
-        return sum + (item.data.price * item.amount)
-      }, 0)
+      this.sumPrice = this.basketData.reduce((sum, item) => {
+        return sum + item.data.price * item.amount;
+      }, 0);
       this.updateSumAll();
     },
     updateSumAll() {
-      this.sumAll = this.sumPrice + this.sumTran + this.sumDiscount;
+      var sumAll = this.sumPrice + this.sumTran - this.sumDiscount;
+      sumAll = this.sumPrice + this.sumTran - this.sumDiscount;
+      this.sumAll = sumAll > 0 ? sumAll : 0;
     },
     amountMinus(id) {
       // get index by id
-      var getIndex = this.basketData.findIndex((item) => item.id == id)
+      var getIndex = this.basketData.findIndex(item => item.id == id);
       if (getIndex >= 0) {
-
         // check amount
-        if (this.basketData[getIndex].amount <= 1) return false
+        if (this.basketData[getIndex].amount <= 1) return false;
         // minus amount -1
         this.basketData[getIndex].amount -= 1;
         // remove array by index
         this.oldItems.splice(getIndex, 1);
-        this.updateBasket(this.oldItems, this.basketData[getIndex], getIndex)
+        this.updateBasket(this.oldItems, this.basketData[getIndex], getIndex);
       }
     },
     amountPlus(id) {
       // get index by id
-      var getIndex = this.basketData.findIndex((item) => item.id == id)
+      var getIndex = this.basketData.findIndex(item => item.id == id);
       if (getIndex >= 0) {
-        
         // check amount
-        if (this.basketData[getIndex].amount >= this.basketData[getIndex].data.quantity) return false
+        if (
+          this.basketData[getIndex].amount >=
+          this.basketData[getIndex].data.quantity
+        )
+          return false;
         // minus amount -1
         this.basketData[getIndex].amount += 1;
         // remove array by index
         this.oldItems.splice(getIndex, 1);
-        this.updateBasket(this.oldItems, this.basketData[getIndex], getIndex)
+        this.updateBasket(this.oldItems, this.basketData[getIndex], getIndex);
       }
-
     },
     updateBasket(oldItems, payload, getIndex) {
       oldItems.splice(getIndex, 0, payload);
-      localStorage.setItem("basket", JSON.stringify(oldItems))
-      this.basketUpdate(JSON.parse(localStorage.getItem('basket')))
+      localStorage.setItem("basket", JSON.stringify(oldItems));
+      this.basketUpdate(JSON.parse(localStorage.getItem("basket")));
     },
     numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
     codeNumberSearch(code) {
-      this.discountGet(code).then(response => {
-        $('#codeNumber').removeClass('color-red3 border-red3');
-        $('#codeNumber').addClass("color-green1 border-green1");
+      this.discountGet(code)
+        .then(response => {
+          $("#codeNumber").removeClass("color-red3 border-red3");
+          $("#codeNumber").addClass("color-green1 border-green1");
 
-        // discount sumPrice
-        var discount = response.data.discount
-        if (discount.percent) {
-          this.sumDiscount = (this.sumPrice * discount.percent) / 100
-        } else if (discount.amount) {
-          this.sumDiscount = discount.amount
-        }
-        
-        // sum all
-        var sumAll = this.sumPrice + this.sumTran - this.sumDiscount;
-        this.sumAll = sumAll > 0 ? sumAll : 0; 
-      }).catch(err => {
-        $('#codeNumber').removeClass("color-green1 border-green1");
-        $('#codeNumber').addClass('color-red3 border-red3');
-        var sumAll = this.sumPrice + this.sumTran - this.sumDiscount;
-        this.sumAll = sumAll > 0 ? sumAll : 0; 
-      })
+          // discount sumPrice
+          var discount = response.data.discount;
+          if (discount.percent) {
+            this.sumDiscount = this.sumPrice * discount.percent / 100;
+          } else if (discount.amount) {
+            this.sumDiscount = discount.amount;
+          }
+
+          // sum all
+          this.updateSumAll();
+        })
+        .catch(err => {
+          $("#codeNumber").removeClass("color-green1 border-green1");
+          $("#codeNumber").addClass("color-red3 border-red3");
+          this.updateSumAll();
+        });
     }
   },
 

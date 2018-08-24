@@ -1,3 +1,4 @@
+@import 'modify';
 @import 'layouts/main';
 @import 'text/main';
 @import 'color/main';
@@ -11,4 +12,13 @@
 a {
   color: $dark2 !important;
   text-decoration: none !important;
+}
+
+@include small {
+  select,
+  input,
+  button,
+  .button {
+    border-radius: 0 !important;
+  }
 }

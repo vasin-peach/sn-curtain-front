@@ -84,7 +84,7 @@
             <div class="transport">
               <div>ค่าขนส่ง</div>
               <div>
-                <b-form-select v-model="delivery" :options="deliveryData ? deliveryData : {text: 'LOADING...'}" :disabled="basketData.length == 0 || deliveryData.length == 0"></b-form-select>
+                <b-form-select v-model="delivery" :options="deliveryData ? deliveryData : {text: 'LOADING...'}"></b-form-select>
               </div>
             </div>
             <div class="code">
@@ -97,8 +97,7 @@
             </div>
             <hr>
             <div class="code-input">
-              <b-form-input type="text" id="codeNumber" v-model="codeNumber" :disabled="basketData.length == 0 || deliveryData.length == 0">
-              </b-form-input>
+              <input type="text" id="codeNumber" v-model="codeNumber">
             </div>
             <div class="transport-input p-0">
 

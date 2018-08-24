@@ -1,28 +1,15 @@
 <template>
   <div class="login">
-    Login
+    <loginForm></loginForm>
   </div>
 </template>
 
 <script>
+import LoginForm from './LoginForm';
 export default {
-  name: 'login',
-  data() {
-    return {
-
-    }
-  },
-  mounted() {
-
-  },
-  methods: {
-
-  },
-  computed: {
-
-  },
-  watch: {
-    
+  name: "Login",
+  components: {
+    LoginForm
   }
 }
 </script>

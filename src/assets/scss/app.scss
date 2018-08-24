@@ -1,4 +1,3 @@
-@import 'modify';
 @import 'layouts/main';
 @import 'text/main';
 @import 'color/main';
@@ -9,16 +8,28 @@
 @import 'bug/main';
 @import 'floatbar/main';
 @import 'basket/main';
+@import 'auth/main';
 a {
   color: $dark2 !important;
   text-decoration: none !important;
 }
 
+// Modify 
 @include small {
   select,
   input,
   button,
   .button {
     border-radius: 0 !important;
+  }
+}
+
+input,
+button,
+select {
+  &:hover,
+  &:active,
+  &:focus {
+    box-shadow: none !important;
   }
 }

@@ -22,6 +22,8 @@ const FloatBar = () =>
   import ('@component/FloatBar/FloatBar')
 const Basket = () =>
   import ('@component/Basket/Basket')
+const Login = () =>
+  import ('@component/Auth/Login')
 
 Vue.use(Router)
 
@@ -66,6 +68,11 @@ const router = new Router({
         path: 'basket',
         component: Basket,
         name: 'Basket'
+      },
+      {
+        path: 'login',
+        component: Login,
+        name: 'Login'
       }
     ]
   }],

@@ -21,9 +21,10 @@
     <div class="header-menu">
       <div @click="menu_off()">
         <router-link :to="{ name: 'Landing' }" id="menu-1">หน้าหลัก</router-link>
-        <router-link :to="{ name: 'Store' }" id="menu-2">สินค้า</router-link>
-        <router-link :to="{ name: 'Service' }" id="menu-3">บริการ</router-link>
-        <router-link :to="{ name: 'Landing' }" id="menu-4">ติดต่อ</router-link>
+        <router-link :to="{ name: 'Login' }" id="menu-2">เข้าสู่ระบบ</router-link>
+        <router-link :to="{ name: 'Store' }" id="menu-3">สินค้า</router-link>
+        <router-link :to="{ name: 'Service' }" id="menu-4">บริการ</router-link>
+        <router-link :to="{ name: 'Landing' }" id="menu-5">ติดต่อ</router-link>
       </div>
     </div>
     <div class="header-fade">
@@ -59,6 +60,7 @@ export default {
         $('#menu-2').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 100, _cacheValues:false}, [.53,.49,.18,.97]);
         $('#menu-3').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 150, _cacheValues:false}, [.53,.49,.18,.97]);
         $('#menu-4').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 200, _cacheValues:false}, [.53,.49,.18,.97]);
+        $('#menu-5').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 200, _cacheValues:false}, [.53,.49,.18,.97]);
         
         // // disable scroll
         // $('html').addClass('stop-scrolling');
@@ -83,6 +85,7 @@ export default {
         $('#menu-2').velocity({ opacity: "0", top: "0px" }, { duration: 300}, [.53,.49,.18,.97]);
         $('#menu-3').velocity({ opacity: "0", top: "0px" }, { duration: 350}, [.53,.49,.18,.97]);
         $('#menu-4').velocity({ opacity: "0", top: "0px" }, { duration: 400}, [.53,.49,.18,.97]);
+        $('#menu-5').velocity({ opacity: "0", top: "0px" }, { duration: 400}, [.53,.49,.18,.97]);
 
         // // enable scroll
         // $('html').removeClass('stop-scrolling');

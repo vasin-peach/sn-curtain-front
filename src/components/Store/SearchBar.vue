@@ -25,7 +25,7 @@
               <div class="title">
                 ประเภทผ้าม่าน
               </div>
-              <b-form-select v-model="type" :options="storeFilterData ? storeFilterData.type : {text: 'S&N CURTAIN'}"></b-form-select>
+              <b-form-select v-model="type" :options="storeFilterData ? storeFilterData.type : {text: 'LOADING...'}"></b-form-select>
             </div>
           </div>
 
@@ -34,7 +34,7 @@
               <div class="title">
                 ชนิดของผ้า
               </div>
-              <b-form-select v-model="fabric" :options="storeFilterData ? storeFilterData.fabric : {text: 'S&N CURTAIN'}"></b-form-select>
+              <b-form-select v-model="fabric" :options="storeFilterData ? storeFilterData.fabric : {text: 'LOADING...'}"></b-form-select>
             </div>
           </div>
 
@@ -43,7 +43,7 @@
               <div class="title">
                 สีของผ้า
               </div>
-              <b-form-select v-model="color" :options="storeFilterData ? storeFilterData.color : {text: 'S&N CURTAIN'}"></b-form-select>
+              <b-form-select v-model="color" :options="storeFilterData ? storeFilterData.color : {text: 'LOADING...'}"></b-form-select>
             </div>
           </div>
         </div>

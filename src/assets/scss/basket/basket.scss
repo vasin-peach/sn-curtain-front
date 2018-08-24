@@ -66,7 +66,7 @@
               object-fit: cover;
               border-radius: 10px;
               @include small {
-                border-radius: 0px;
+                border-radius: 0px !important;
                 width: 100%;
                 max-width: 130px;
               }
@@ -198,8 +198,13 @@
         >hr {
           margin: 5px 0;
         }
-        border: 1px solid $dark3;
+        border: 1px solid $gray1;
         border-radius: 10px;
+        @include small {
+          border-radius: 0px !important;
+          box-shadow: none !important;
+          border-color: $gray3;
+        }
         padding: 15px;
         >div:not(:first-child) {
           padding: 10px 0;
@@ -232,6 +237,15 @@
             font-weight: 400;
           }
         }
+        .transport {
+          select,
+          option {
+            padding: 5px 20px 5px 10px;
+            font-size: 13px;
+            height: auto;
+            font-weight: 200;
+          }
+        }
         .summary {
           margin-top: 30px;
           >div:last-child {
@@ -262,6 +276,14 @@
         }
         .button {
           margin-bottom: 10px;
+          border-color: $gray1;
+          color: $gray1;
+          transition: all 0.3s ease !important;
+          &:hover {
+            background: $orange1;
+            border-color: $orange1;
+            color: $white2;
+          }
         }
       }
     }

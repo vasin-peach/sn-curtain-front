@@ -83,7 +83,11 @@
             </div>
             <div class="transport">
               <div>ราคาขนส่ง</div>
-              <div>{{sumTran ? numberWithCommas('฿' + sumTran) : 'ฟรี'}}</div>
+              <!-- {{ deliveryData }} -->
+              <!-- <div>{{sumTran ? numberWithCommas('฿' + sumTran) : 'ฟรี'}}</div> -->
+              <div>
+                <b-form-select v-model="transport" :options="deliveryData ? deliveryData : {text: 'LOADING...'}"></b-form-select>
+              </div>
             </div>
             <div class="code">
               <div>ส่วนลด</div>
@@ -131,7 +135,16 @@ export default {
       sumTran: 0,
       sumAll: 0,
       sumDiscount: 0,
-      codeNumber: null
+      codeNumber: null,
+      transport: 0,
+      options: {
+        transport: [
+          { value: 0, text: "ฟรี (ส่งธรรมดา)" },
+          { value: 30, text: "฿30 (ลงทะเบียน)" },
+          { value: 60, text: "฿60 (ด่วนพิเศษ)" },
+          { value: 50, text: "฿50 (Kerry)" }
+        ]
+      }
     };
   },
 
@@ -140,6 +153,7 @@ export default {
   ///
   mounted() {
     this.updateSumPrice();
+    this.deliveryGet();
   },
 
   ///
@@ -169,7 +183,7 @@ export default {
   ///
   methods: {
     ...mapMutations(["basketUpdate", "basketDelete"]),
-    ...mapActions(["discountGet"]),
+    ...mapActions(["discountGet", "deliveryGet"]),
     updateSumPrice() {
       this.sumPrice = this.basketData.reduce((sum, item) => {
         return sum + item.data.price * item.amount;
@@ -248,7 +262,7 @@ export default {
   // Computed
   ///
   computed: {
-    ...mapGetters(["basketData"])
+    ...mapGetters(["basketData", "deliveryData"])
   }
 };
 </script>

@@ -7,6 +7,7 @@ import loading from './modules/loading';
 import product from './modules/product';
 import basket from './modules/basket';
 import discount from './modules/discount';
+import delivery from './modules/delivery'
 
 // Use Moduesl
 Vue.use(Vuex)
@@ -19,7 +20,8 @@ export default new Vuex.Store({
     loading,
     product,
     basket,
-    discount
+    discount,
+    delivery
   },
   strict: false
 })

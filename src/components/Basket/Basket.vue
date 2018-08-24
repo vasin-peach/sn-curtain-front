@@ -78,15 +78,13 @@
               <hr>
             </div>
             <div class="price">
-              <div>รวมราคาส่ง</div>
+              <div>สินค้ารวม</div>
               <div>฿{{numberWithCommas(sumPrice)}}</div>
             </div>
             <div class="transport">
-              <div>ราคาขนส่ง</div>
-              <!-- {{ deliveryData }} -->
-              <!-- <div>{{sumTran ? numberWithCommas('฿' + sumTran) : 'ฟรี'}}</div> -->
+              <div>ค่าขนส่ง</div>
               <div>
-                <b-form-select v-model="transport" :options="deliveryData ? deliveryData : {text: 'LOADING...'}"></b-form-select>
+                <b-form-select v-model="delivery" :options="deliveryData ? deliveryData : {text: 'LOADING...'}" :disabled="basketData.length == 0 || deliveryData.length == 0"></b-form-select>
               </div>
             </div>
             <div class="code">
@@ -99,7 +97,8 @@
             </div>
             <hr>
             <div class="code-input">
-              <input type="text" id="codeNumber" v-model="codeNumber" placeholder="รหัสส่วนลด">
+              <b-form-input type="text" id="codeNumber" v-model="codeNumber" :disabled="basketData.length == 0 || deliveryData.length == 0">
+              </b-form-input>
             </div>
             <div class="transport-input p-0">
 
@@ -122,6 +121,7 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import $ from "jquery";
+import _ from 'lodash'
 export default {
   name: "Basket",
   ///
@@ -136,15 +136,7 @@ export default {
       sumAll: 0,
       sumDiscount: 0,
       codeNumber: null,
-      transport: 0,
-      options: {
-        transport: [
-          { value: 0, text: "ฟรี (ส่งธรรมดา)" },
-          { value: 30, text: "฿30 (ลงทะเบียน)" },
-          { value: 60, text: "฿60 (ด่วนพิเศษ)" },
-          { value: 50, text: "฿50 (Kerry)" }
-        ]
-      }
+      delivery: 0,
     };
   },
 
@@ -175,6 +167,11 @@ export default {
       this.timeout = setTimeout(function() {
         _this.codeNumberSearch(code);
       }, 500);
+    },
+    delivery: function(data) {
+      this.sumTran = data;
+      this.updateSumAll();
+      
     }
   },
 

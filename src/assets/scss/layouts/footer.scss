@@ -43,6 +43,7 @@
   .scrolltop-container {
     position: relative;
     .scrolltop {
+      z-index: 6;
       position: absolute;
       left: 0;
       right: 0;

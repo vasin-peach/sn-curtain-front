@@ -24,6 +24,8 @@ const Basket = () =>
   import ('@component/Basket/Basket')
 const Login = () =>
   import ('@component/Auth/Login')
+const Register = () =>
+  import ('@component/Auth/Register')
 
 Vue.use(Router)
 
@@ -73,6 +75,11 @@ const router = new Router({
         path: 'login',
         component: Login,
         name: 'Login'
+      },
+      {
+        path: 'register',
+        component: Register,
+        name: 'Register'
       }
     ]
   }],

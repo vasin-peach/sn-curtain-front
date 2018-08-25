@@ -14,6 +14,7 @@ import VueLazyLoad from 'vue-lazyload';
 // import Assets
 import '@scss/app.scss';
 import 'bootstrap/dist/css/bootstrap.css'
+import dictionary from './dictionary.js';
 import {
   library
 } from '@fortawesome/fontawesome-svg-core'

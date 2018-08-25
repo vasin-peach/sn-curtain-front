@@ -26,6 +26,10 @@ import {
   faLock
 } from '@fortawesome/free-solid-svg-icons'
 import {
+  faFacebookSquare,
+  faGooglePlusSquare
+} from '@fortawesome/free-brands-svg-icons'
+import {
   FontAwesomeIcon
 } from '@fortawesome/vue-fontawesome'
 
@@ -39,7 +43,16 @@ Vue.use(VueLazyLoad, {
   attempt: 1
 });
 
-library.add(faSearch, faClone, faShoppingBag, faTimes, faUserCircle, faLock)
+library.add(
+  faSearch,
+  faClone,
+  faShoppingBag,
+  faTimes,
+  faUserCircle,
+  faLock,
+  faFacebookSquare,
+  faGooglePlusSquare
+)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 

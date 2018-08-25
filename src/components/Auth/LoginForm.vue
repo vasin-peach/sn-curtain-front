@@ -38,6 +38,25 @@
               เข้าสู่ระบบ
             </div>
           </div>
+          <div class="col-6 pr-1">
+            <div class="button-facebook">
+              <font-awesome-icon :icon="['fab', 'facebook-square']" aria-hidden="true" />
+              <!-- FACEBOOK -->
+            </div>
+          </div>
+          <div class="col-6 pl-1">
+            <div class="button-google">
+              <font-awesome-icon :icon="['fab', 'google-plus-square']" aria-hidden="true" />
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="button-register">
+              <span>ยังไม่มีบัญชี?</span>
+              <router-link :to="{ name: 'Register' }">
+                <span>สมัครสมาชิก</span>
+              </router-link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

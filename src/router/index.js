@@ -44,42 +44,66 @@ const router = new Router({
         path: 'landing',
         alias: '/',
         component: Landing,
-        name: 'Landing'
+        name: 'Landing',
+        meta: {
+          title: 'หน้าหลัก'
+        }
       },
       {
         path: 'store/:type',
         component: Store,
-        name: 'Store-Filter'
+        name: 'Store-Filter',
+        meta: {
+          title: 'หน้าร้าน'
+        }
       },
       {
         path: 'store',
         component: Store,
-        name: 'Store'
+        name: 'Store',
+        meta: {
+          title: 'หน้าร้าน'
+        }
       },
       {
         path: 'product/:id',
         component: Product,
-        name: 'Product'
+        name: 'Product',
+        meta: {
+          title: 'สินค้า'
+        }
       },
       {
         path: 'service',
         component: Service,
-        name: 'Service'
+        name: 'Service',
+        meta: {
+          title: 'บริการ'
+        }
       },
       {
         path: 'basket',
         component: Basket,
-        name: 'Basket'
+        name: 'Basket',
+        meta: {
+          title: 'ตะกร้า'
+        }
       },
       {
         path: 'login',
         component: Login,
-        name: 'Login'
+        name: 'Login',
+        meta: {
+          title: 'เข้าสู่ระบบ'
+        }
       },
       {
         path: 'register',
         component: Register,
-        name: 'Register'
+        name: 'Register',
+        meta: {
+          title: 'สมัครสมาชิก'
+        }
       }
     ]
   }],
@@ -96,7 +120,11 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  // init storeUpdate
   if (from.name == 'Store-Filter') store.commit('storeUpdate', null);
+  // update title
+  document.title = to.meta.title + " - S&N Curtain"
+  // next
   next();
 })
 

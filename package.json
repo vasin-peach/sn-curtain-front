@@ -30,7 +30,6 @@
     "paroller.js": "^1.4.2",
     "raven-js": "^3.26.2",
     "scrollmagic": "^2.0.5",
-    "sweetalert2": "^7.25.0",
     "swiper": "^4.3.3",
     "vee-validate": "^2.1.0-beta.8",
     "velocity-animate": "^1.5.1",
@@ -39,6 +38,7 @@
     "vue-lazyload": "^1.2.6",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1",
+    "vue-sweetalert2": "^1.5.2",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

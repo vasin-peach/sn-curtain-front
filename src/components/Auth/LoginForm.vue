@@ -13,7 +13,7 @@
             <div class="col-12">
               <div class="input-group">
                 <b-form-group label="อีเมลล์">
-                  <b-form-input :state="!errors.has('email')" v-validate="'required|min:4|email'" name="email" v-model="email" type="text" placeholder="Email"></b-form-input>
+                  <b-form-input :state="!errors.has('email')" v-validate="'required|min:4|email'" name="email" v-model="form.email" type="text" placeholder="Email"></b-form-input>
                   <b-form-invalid-feedback v-show="errors.has('email')">
                     {{ errors.first('email') }}
                   </b-form-invalid-feedback>
@@ -23,7 +23,7 @@
             <div class="col-12">
               <div class="input-group">
                 <b-form-group label="รหัสผ่าน">
-                  <b-form-input :state="!errors.has('password')" v-validate="'required|min:4'" name="password" v-model="password" type="password" placeholder="Password"></b-form-input>
+                  <b-form-input :state="!errors.has('password')" v-validate="'required|min:4'" name="password" v-model="form.password" type="password" placeholder="Password"></b-form-input>
                   <b-form-invalid-feedback v-show="errors.has('password')">
                     {{ errors.first('password') }}
                   </b-form-invalid-feedback>
@@ -62,22 +62,30 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: 'LoginForm',
   data() {
     return {
-      email: "",
-      password: ""
+      form: {
+        email: "",
+        password: ""
+      }
     }
   },
   mounted() {
 
   },
   methods: {
+       ...mapActions(['localLogin']),
     validateLogin() {
       this.$validator.validateAll().then((result) => {
         if (result) {
-          // do something
+           var payload = {
+            username: this.form.email,
+            password: this.form.password,
+          }
+           this.localLogin(payload)
         }
       })
     }

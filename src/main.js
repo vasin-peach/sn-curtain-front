@@ -6,6 +6,7 @@ import RavenVue from 'raven-js/plugins/vue';
 import BootstrapVue from 'bootstrap-vue';
 import VeeValidate from 'vee-validate';
 import VueResource from 'vue-resource';
+import VueSweetalert2 from 'vue-sweetalert2';
 import App from './App';
 import router from './router';
 import store from './store/main';
@@ -38,6 +39,7 @@ import {
 Vue.use(BootstrapVue);
 Vue.use(VueResource);
 Vue.use(VeeValidate);
+Vue.use(VueSweetalert2);
 Vue.use(VueLazyLoad, {
   preLoad: 1.3,
   loading: '../static/images/lazy/lazyload.svg',
@@ -56,8 +58,8 @@ library.add(
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-
-
+//add credentials in request
+Vue.http.options.credentials = true;
 
 // Sentry.io Setting
 if (process.env.NODE_ENV === 'staging') {

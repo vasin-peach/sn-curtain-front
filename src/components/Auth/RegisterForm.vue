@@ -23,7 +23,7 @@
             <div class="col-12">
               <div class="input-group">
                 <b-form-group label="อีเมลล์">
-                  <b-form-input :state="!errors.has('email')" v-validate="'required|email|min:4'" name="email" v-model="form.username" type="email" placeholder="Email"></b-form-input>
+                  <b-form-input :state="!errors.has('email')" v-validate="'required|email|min:4'" name="email" v-model="form.email" type="email" placeholder="Email"></b-form-input>
                   <b-form-invalid-feedback v-show="errors.has('email')">
                     {{ errors.first('email') }}
                   </b-form-invalid-feedback>
@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: 'LoginForm',
   data() {
@@ -85,13 +86,19 @@ export default {
     }
   },
   mounted() {
-
+    this.localProfile();
   },
   methods: {
+    ...mapActions(['localRegister', 'localProfile']),
     validateRegister() {
       this.$validator.validateAll().then((result) => {
         if (result) {
-          // do something
+          var payload = {
+            name: this.form.full_name,
+            email: this.form.email,
+            password: this.form.password,
+          }
+          this.localRegister(payload)
         }
       })
     }

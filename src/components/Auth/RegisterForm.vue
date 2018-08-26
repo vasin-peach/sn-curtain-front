@@ -86,10 +86,9 @@ export default {
     }
   },
   mounted() {
-    this.localProfile();
   },
   methods: {
-    ...mapActions(['localRegister', 'localProfile']),
+    ...mapActions(['localRegister']),
     validateRegister() {
       this.$validator.validateAll().then((result) => {
         if (result) {

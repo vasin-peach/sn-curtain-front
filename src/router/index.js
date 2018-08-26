@@ -1,9 +1,13 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from '../store/main';
+import _ from 'lodash';
+
 
 const main = () =>
   import ('@component/Main')
+const Notfound = () =>
+  import ('@component/Notfound');
 const Header = () =>
   import ('@component/Header')
 const Body = () =>
@@ -26,6 +30,8 @@ const Login = () =>
   import ('@component/Auth/Login')
 const Register = () =>
   import ('@component/Auth/Register')
+const Profile = () =>
+  import ('@component/Auth/Profile')
 
 Vue.use(Router)
 
@@ -46,7 +52,15 @@ const router = new Router({
         component: Landing,
         name: 'Landing',
         meta: {
-          title: 'หน้าหลัก'
+          title: 'หน้าหลัก',
+        }
+      },
+      {
+        path: '404',
+        component: Notfound,
+        name: 'Notfound',
+        meta: {
+          title: '404'
         }
       },
       {
@@ -94,7 +108,8 @@ const router = new Router({
         component: Login,
         name: 'Login',
         meta: {
-          title: 'เข้าสู่ระบบ'
+          title: 'เข้าสู่ระบบ',
+          login: 0
         }
       },
       {
@@ -102,7 +117,17 @@ const router = new Router({
         component: Register,
         name: 'Register',
         meta: {
-          title: 'สมัครสมาชิก'
+          title: 'สมัครสมาชิก',
+          login: 0
+        }
+      },
+      {
+        path: 'profile',
+        component: Profile,
+        name: 'Profile',
+        meta: {
+          title: 'ข้อมูลส่วนตัว',
+          login: 1
         }
       }
     ]
@@ -120,10 +145,59 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+
   // init storeUpdate
   if (from.name == 'Store-Filter') store.commit('storeUpdate', null);
+
   // update title
-  document.title = to.meta.title + " - S&N Curtain"
+  document.title = to.meta.title + " - S&N Curtain";
+
+  // check path exist
+  to.matched.length ? next() : next({
+    name: 'Notfound'
+  });
+
+  /// --
+  // Metadata Middleware
+  /// --
+
+  checkAuth().then((user) => {
+
+    // Auth
+    if (to.matched.some(record => record.meta.login == 0 || record.meta.login == 1)) {
+
+      var user = store.getters.userData;
+
+      if (to.meta.login) {
+        if (_.isEmpty(user)) {
+          return next({
+            name: 'Login'
+          })
+        }
+      } else if (!to.meta.login) {
+        if (!_.isEmpty(user)) {
+          return next({
+            name: 'Profile'
+          })
+        }
+      }
+    }
+  })
+
+
+
+
+  async function checkAuth() {
+    return new Promise((resolve, reject) => {
+      store.dispatch('profile').then(() => {
+        return resolve()
+      }, () => {
+        return resolve()
+      })
+
+    })
+  }
+
   // next
   next();
 })

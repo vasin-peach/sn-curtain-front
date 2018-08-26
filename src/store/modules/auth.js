@@ -4,15 +4,19 @@ import _ from 'lodash';
 
 
 const state = {
-
+  user: null
 }
 
 const getters = {
-
+  userData: state => {
+    return state.user
+  },
 }
 
 const mutations = {
-
+  userUpdate(state, data) {
+    state.user = data;
+  },
 }
 
 const actions = {
@@ -32,7 +36,7 @@ const actions = {
           text: "ทำการเข้าสู่ระบบแล้ว."
         }).then(() => {
           router.push({
-            name: 'Login'
+            name: 'Profile'
           })
         })
       }, error => {
@@ -80,12 +84,16 @@ const actions = {
     })
   },
 
-  localProfile({
+  profile({
     commit
   }) {
     return new Promise((resolve, reject) => {
-      Vue.http.get(process.env.BACKEND_URI + "/auth/local/profile").then(response => {
-        console.log(response);
+      Vue.http.get(process.env.BACKEND_URI + "/auth/profile").then(response => {
+        commit('userUpdate', response.data.data);
+        return resolve(response.data);
+      }, error => {
+        commit('userUpdate', null);
+        return reject(error);
       });
     });
   },

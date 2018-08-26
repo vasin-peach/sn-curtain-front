@@ -33,7 +33,7 @@ export default {
   name: 'Footer',
   methods: {
     scrollTop() {
-        TweenMax.to($(window), 2, {
+        TweenMax.to($(window), 1, {
           scrollTo : { y: 0, autoKill:true },
             ease: Power3.easeInOut,	
             autoKill: true,

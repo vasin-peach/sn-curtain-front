@@ -36,7 +36,7 @@ const actions = {
           })
         })
       }, error => {
-        if (error.status == 500) {
+        if (error.status == 500 || error.status == 401) {
           Vue.swal({
             type: "warning",
             title: "อีเมลล์หรือรหัสผ่านไม่ถูกต้อง",

@@ -161,7 +161,7 @@ router.beforeEach((to, from, next) => {
   // Metadata Middleware
   /// --
 
-  checkAuth().then((user) => {
+  checkAuth().then(() => {
 
     // Auth
     if (to.matched.some(record => record.meta.login == 0 || record.meta.login == 1)) {

@@ -10,15 +10,15 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex"
-import Section1 from './Section1';
-import Section2 from './Section2';
-import Section3 from './Section3';
-import Section4 from './Section4';
-import Section5 from './Section5';
-import Section6 from './Section6';
+import { mapActions, mapGetters } from "vuex";
+import Section1 from "./Section1";
+import Section2 from "./Section2";
+import Section3 from "./Section3";
+import Section4 from "./Section4";
+import Section5 from "./Section5";
+import Section6 from "./Section6";
 export default {
-  name: 'Landing',
+  name: "Landing",
   components: {
     Section1,
     Section2,
@@ -26,8 +26,8 @@ export default {
     Section4,
     Section5,
     Section6
-  },
-}
+  }
+};
 </script>
 
 <style>

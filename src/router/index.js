@@ -161,11 +161,8 @@ router.beforeEach((to, from, next) => {
   // Metadata Middleware
   /// --
 
-  checkAuth().then(() => {
-
-    // Auth
-    if (to.matched.some(record => record.meta.login == 0 || record.meta.login == 1)) {
-
+  if (to.matched.some(record => record.meta.login == 0 || record.meta.login == 1)) {
+    checkAuth().then(() => {
       var user = store.getters.userData;
 
       if (to.meta.login) {
@@ -181,8 +178,31 @@ router.beforeEach((to, from, next) => {
           })
         }
       }
-    }
-  })
+    })
+  }
+
+  // checkAuth().then(() => {
+
+  //   // Auth
+  //   if (to.matched.some(record => record.meta.login == 0 || record.meta.login == 1)) {
+
+  //     var user = store.getters.userData;
+
+  //     if (to.meta.login) {
+  //       if (_.isEmpty(user)) {
+  //         return next({
+  //           name: 'Login'
+  //         })
+  //       }
+  //     } else if (!to.meta.login) {
+  //       if (!_.isEmpty(user)) {
+  //         return next({
+  //           name: 'Profile'
+  //         })
+  //       }
+  //     }
+  //   }
+  // })
 
 
 

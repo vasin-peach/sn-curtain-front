@@ -1,0 +1,55 @@
+.profile-me-container {
+  padding: 10px 30px;
+
+  .profile-me-header {
+    .title {
+      font-size: 25px;
+      font-weight: 400;
+      color: $dark1;
+
+      @include small {
+        font-size: 20px;
+        text-align: center;
+      }
+    }
+
+    >span {
+      display: block;
+      font-weight: 200;
+
+      @include small {
+        font-size: 13px;
+        text-align: center;
+      }
+    }
+  }
+
+  .profile-me-body {
+    .group {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .title {
+        width: 100px;
+        color: $gray1;
+      }
+
+      .input {
+        input {
+          border: none;
+          padding: 0;
+
+          &:focus {
+            outline: none;
+          }
+
+          &:disabled {
+            background: $white1;
+            font-weight: 400;
+          }
+        }
+      }
+    }
+  }
+}

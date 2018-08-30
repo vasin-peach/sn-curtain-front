@@ -1,12 +1,12 @@
 <template>
-  <div class="profile">
-    Profile
+  <div class="profile-history">
+    Profile History
   </div>
 </template>
 
 <script>
 export default {
-  name: "Profile"
+  name: 'ProfileHistory'
 }
 </script>
 

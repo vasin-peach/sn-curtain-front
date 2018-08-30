@@ -5,33 +5,38 @@ import _ from 'lodash';
 
 
 const main = () =>
-  import ('@component/Main')
+  import ('@component/Main');
 const Notfound = () =>
   import ('@component/Notfound');
 const Header = () =>
-  import ('@component/Header')
+  import ('@component/Header');
 const Body = () =>
-  import ('@component/Body')
+  import ('@component/Body');
 const Footer = () =>
-  import ('@component/Footer')
+  import ('@component/Footer');
 const Landing = () =>
   import ('@component/Landing/Landing')
 const Store = () =>
-  import ('@component/Store/Store')
+  import ('@component/Store/Store');
 const Service = () =>
-  import ('@component/Service/Service')
+  import ('@component/Service/Service');
 const Product = () =>
-  import ('@component/Product/Product')
+  import ('@component/Product/Product');
 const FloatBar = () =>
-  import ('@component/FloatBar/FloatBar')
+  import ('@component/FloatBar/FloatBar');
 const Basket = () =>
-  import ('@component/Basket/Basket')
+  import ('@component/Basket/Basket');
 const Login = () =>
-  import ('@component/Auth/Login')
+  import ('@component/Auth/Login');
 const Register = () =>
-  import ('@component/Auth/Register')
+  import ('@component/Auth/Register');
+// Profile
 const Profile = () =>
-  import ('@component/Auth/Profile')
+  import ('@component/Auth/Profile/Profile');
+const ProfileMe = () =>
+  import ('@component/Auth/Profile/Me');
+const ProfileHistory = () =>
+  import ('@component/AUth/Profile/History');
 
 Vue.use(Router)
 
@@ -121,14 +126,37 @@ const router = new Router({
           login: 0
         }
       },
+      // {
+      //   path: '/',
+      //   components: {
+      //     header: Header,
+      //     body: Body,
+      //     footer: Footer,
+      //     floatbar: FloatBar
+      //   },
+      //   children: [{
       {
-        path: 'profile',
+        path: '/profile',
         component: Profile,
-        name: 'Profile',
-        meta: {
-          title: 'ข้อมูลส่วนตัว',
-          login: 1
-        }
+        children: [{
+            path: '',
+            component: ProfileMe,
+            name: 'Profile',
+            meta: {
+              title: 'ข้อมูลส่วนตัว',
+              login: 1
+            },
+          },
+          {
+            path: 'history',
+            component: ProfileHistory,
+            name: 'ProfileHistory',
+            meta: {
+              title: 'ประวัติการสั่งซื้อ',
+              login: 1
+            },
+          }
+        ]
       }
     ]
   }],

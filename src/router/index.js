@@ -36,7 +36,7 @@ const Profile = () =>
 const ProfileMe = () =>
   import ('@component/Auth/Profile/Me');
 const ProfileHistory = () =>
-  import ('@component/AUth/Profile/History');
+  import ('@component/Auth/Profile/History');
 
 Vue.use(Router)
 

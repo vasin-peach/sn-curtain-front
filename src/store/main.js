@@ -1,7 +1,8 @@
 // Import Modules
 import Vuex from 'vuex';
 import Vue from 'vue';
-import auth from './modules/auth';
+import auth from './modules/auth/auth';
+import profile from './modules/auth/profile';
 import store from './modules/store';
 import loading from './modules/loading';
 import product from './modules/product';
@@ -21,7 +22,8 @@ export default new Vuex.Store({
     product,
     basket,
     discount,
-    delivery
+    delivery,
+    profile
   },
   strict: false
 })

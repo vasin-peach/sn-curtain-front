@@ -11,11 +11,17 @@ const dictionary = {
       min: (field, params) => {
         return "ฟิลด์จำเป็นต้องมีตัวอักษรมากกว่า " + params + " ตัวอักษร.";
       },
+      max: (field, params) => {
+        return "ฟิลด์จำเป็นต้องมีตัวอักษรน้อยกว่า " + params + " ตัวอักษร.";
+      },
       email: (field, params) => {
         return "รูปแบบอีเมลล์ไม่ถูกต้อง.";
       },
       confirmed: (field, params) => {
         return "กรุณายืนยันรหัสผ่านให้ถูกต้อง.";
+      },
+      numeric: (field, params) => {
+        return "ต้องเป็นตัวเลขเท่านั้น"
       }
     }
   },

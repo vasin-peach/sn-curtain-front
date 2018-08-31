@@ -37,8 +37,6 @@
   .profile-nav {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     border-right: 1px solid $gray2;
 
     @include small {

@@ -21,23 +21,24 @@ $green1: #378a5d;
 //
 // Color set
 //
-$colours: "dark1" #363349,
-"dark2" #404149,
-"gray1" #757575,
-"gray2" #c1c1c1,
-"gray3" #d8d8d8,
-"white1" #ffffff,
-"white2" #f6f6f6,
-"white3" #f2f2f2,
-"orange1" #ee9b5c,
-"orange2" #f4c676,
-"red1" #e17769,
-"red2" #ef476f,
-"red3" #E2473B,
-"red4" #D44638,
-"blue1" #2d93a5,
-"blue2" #3b5998,
-"green1" #378a5d;
+$colours: "dark1"#363349,
+"dark2"#404149,
+"gray1"#757575,
+"gray2"#c1c1c1,
+"gray3"#d8d8d8,
+"white1"#ffffff,
+"white2"#f6f6f6,
+"white3"#f2f2f2,
+"orange1"#ee9b5c,
+"orange2"#f4c676,
+"red1"#e17769,
+"red2"#ef476f,
+"red3"#E2473B,
+"red4"#D44638,
+"blue1"#2d93a5,
+"blue2"#3b5998,
+"green1"#378a5d;
+
 //
 // Generate Color Class
 //
@@ -45,10 +46,22 @@ $colours: "dark1" #363349,
   .bg-#{nth($i, 1)} {
     background: nth($i, 2) !important;
   }
+
   .color-#{nth($i, 1)} {
     color: nth($i, 2) !important;
   }
+
   .border-#{nth($i, 1)} {
     border: 1px solid nth($i, 2) !important;
   }
+}
+
+.error {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #dc3545;
+  font-family: 'Kanit', 'Bourbon', sans-serif;
+  font-weight: 300;
+  font-size: 15px;
 }

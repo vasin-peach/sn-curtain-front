@@ -1,3 +1,7 @@
 @import 'profile';
 @import 'me';
 @import 'history';
+
+.profile-wrapper .container {
+  padding-bottom: 10vh !important;
+}

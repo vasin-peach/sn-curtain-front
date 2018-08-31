@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import router from '../../router';
+import router from '../../../router';
 import _ from 'lodash';
 
 
@@ -8,19 +8,19 @@ const state = {
 }
 
 const getters = {
-  userData: state => {
-    return state.user
-  },
+  // userData: state => {
+  //   return state.user
+  // },
 }
 
 const mutations = {
-  userUpdate(state, data) {
-    state.user = data;
-  },
+  // update(state, data) {
+  //   state.user = data;
+  // },
 }
 
 const actions = {
-  localLogin({
+  profileUpdate({
     commit
   }, payload) {
     return new Promise((resolve, reject) => {
@@ -29,7 +29,7 @@ const actions = {
       if (!payload) return reject('payload empty');
 
       // send request
-      Vue.http.post(process.env.BACKEND_URI + "/auth/local/login", payload).then(response => {
+      Vue.http.post(process.env.BACKEND_URI + "/auth/profile/", payload).then(response => {
         Vue.swal({
           type: "success",
           title: "ทำการเข้าสู่ระบบ",

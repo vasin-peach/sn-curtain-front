@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'ProfileMe',
   data() {
@@ -141,9 +141,25 @@ export default {
   watch: {
   },
   methods: {
+    ...mapActions(['profileUpdate', 'profile']),
     validateForm() {
       this.$validator.validateAll().then((result) => {
-        console.log(result);
+        if (result) {
+          const payload = {
+            email: this.userData.email,
+            provider: this.userData.provider,
+            data: {
+              name: this.form.name.val,
+              tel: this.form.tel.val || null,
+              address: this.form.address.val || null,
+              gender: this.form.gender.val || null,
+              birthday: this.form.birthday.val || null
+            }
+          }
+          this.profileUpdate(payload);
+        }
+        
+
       });
     
     }

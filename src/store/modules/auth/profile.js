@@ -21,7 +21,8 @@ const mutations = {
 
 const actions = {
   profileUpdate({
-    commit
+    commit,
+    dispatch
   }, payload) {
     return new Promise((resolve, reject) => {
 
@@ -29,24 +30,21 @@ const actions = {
       if (!payload) return reject('payload empty');
 
       // send request
-      Vue.http.post(process.env.BACKEND_URI + "/auth/profile/", payload).then(response => {
+      Vue.http.post(process.env.BACKEND_URI + "/auth/profile/update", payload).then(response => {
         Vue.swal({
           type: "success",
-          title: "ทำการเข้าสู่ระบบ",
-          text: "ทำการเข้าสู่ระบบแล้ว."
-        }).then(() => {
-          router.push({
-            name: 'Profile'
-          })
+          title: "บันทึก",
+          text: "ทำการอัพเดทข้อมูลส่วนตัวแล้ว."
         })
+        dispatch('profile');
+        return resolve(response);
       }, error => {
-        if (error.status == 500 || error.status == 401) {
-          Vue.swal({
-            type: "warning",
-            title: "อีเมลล์หรือรหัสผ่านไม่ถูกต้อง",
-            text: "อีเมลล์หรือรหัสผ่านไม่ถูกต้อง."
-          });
-        }
+        Vue.swal({
+          type: "error",
+          title: "ผิดพลาด",
+          text: "ไม่สามารถอัพเดทข้อมูลส่วนตัวได้ กรุณาติดต่อผู้ดูแลระบบ."
+        });
+        return reject(error);
       })
 
     })

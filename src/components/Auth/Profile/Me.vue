@@ -130,10 +130,7 @@ export default {
     }
   },
   mounted() {
-    this.form.email.val = this.userData.email;
-    this.form.name.val = this.userData.name;
-    this.form.gender.val = this.userData.gender;
-    this.form.birthday.val = this.userData.birthday.split('T')[0];
+    this.updateForm();
   },
   computed: {
     ...mapGetters(['userData'])
@@ -142,6 +139,14 @@ export default {
   },
   methods: {
     ...mapActions(['profileUpdate', 'profile']),
+    updateForm() {
+      this.form.email.val = this.userData.email;
+      this.form.name.val = this.userData.name;
+      this.form.gender.val = this.userData.gender;
+      this.form.birthday.val = this.userData.birthday.split('T')[0];
+      this.form.address.val = this.userData.address;
+      this.form.tel.val = this.userData.tel;
+    },
     validateForm() {
       this.$validator.validateAll().then((result) => {
         if (result) {
@@ -158,8 +163,6 @@ export default {
           }
           this.profileUpdate(payload);
         }
-        
-
       });
     
     }

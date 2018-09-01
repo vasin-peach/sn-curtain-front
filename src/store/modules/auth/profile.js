@@ -36,7 +36,6 @@ const actions = {
           title: "บันทึก",
           text: "ทำการอัพเดทข้อมูลส่วนตัวแล้ว."
         })
-        dispatch('profile');
         return resolve(response);
       }, error => {
         Vue.swal({

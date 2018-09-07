@@ -1,7 +1,10 @@
 <template>
   <div class="login-form">
-    <div class="bg-fade"></div>
+    <div class="bg-fade" @click="popupAuthUpdate(false)"></div>
     <div class="login-wrapper">
+      <div class="close" @click="popupAuthUpdate(false)">
+        <font-awesome-icon icon="times" aria-hidden="true" />
+      </div>
       <div class="login-head">
         <div class="login-head-wrapper">
           <img src="/static/images/brand-no-text.svg">
@@ -66,7 +69,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 export default {
   name: 'LoginForm',
   data() {
@@ -82,7 +85,8 @@ export default {
 
   },
   methods: {
-       ...mapActions(['localLogin']),
+    ...mapMutations(['popupAuthUpdate']),
+    ...mapActions(['localLogin']),
     validateLogin() {
       this.$validator.validateAll().then((result) => {
         if (result) {

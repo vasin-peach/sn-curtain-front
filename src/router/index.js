@@ -37,6 +37,8 @@ const ProfileMe = () =>
   import ('@component/Auth/Profile/Me');
 const ProfileHistory = () =>
   import ('@component/Auth/Profile/History');
+const Payment = () =>
+  import ('@component/Payment/Payment');
 
 Vue.use(Router)
 
@@ -126,15 +128,15 @@ const router = new Router({
           login: 0
         }
       },
-      // {
-      //   path: '/',
-      //   components: {
-      //     header: Header,
-      //     body: Body,
-      //     footer: Footer,
-      //     floatbar: FloatBar
-      //   },
-      //   children: [{
+      {
+        path: 'payment',
+        component: Payment,
+        name: 'Payment',
+        meta: {
+          title: 'ชำระเงิน',
+          login: 1
+        }
+      },
       {
         path: '/profile',
         component: Profile,
@@ -242,7 +244,6 @@ router.beforeEach((to, from, next) => {
       }, () => {
         return resolve()
       })
-
     })
   }
 

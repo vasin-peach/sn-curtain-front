@@ -20,6 +20,7 @@ import {
   library
 } from '@fortawesome/fontawesome-svg-core'
 import {
+  faTime,
   faSearch,
   faClone,
   faShoppingBag,

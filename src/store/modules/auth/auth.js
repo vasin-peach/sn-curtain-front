@@ -4,10 +4,14 @@ import _ from 'lodash';
 
 
 const state = {
+  popupAuth: false,
   user: null
 }
 
 const getters = {
+  popupAuthData: state => {
+    return state.popupAuth
+  },
   userData: state => {
     return state.user
   },
@@ -17,6 +21,9 @@ const mutations = {
   userUpdate(state, data) {
     state.user = data;
   },
+  popupAuthUpdate(state, data) {
+    state.popupAuth = data;
+  }
 }
 
 const actions = {

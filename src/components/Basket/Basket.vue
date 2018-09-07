@@ -107,9 +107,11 @@
               Our Phoenix Collection of Contemporary Door Styles now includes Strata, a very durable textured surface that provides a look and feel that is unmatched.
               <hr>
             </div>
-            <div class="button">
-              ชำระเงิน
-            </div>
+            <router-link :to="{ name: 'Payment' }">
+              <div class="button">
+                ชำระเงิน
+              </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -170,7 +172,6 @@ export default {
     delivery: function(data) {
       this.sumTran = data;
       this.updateSumAll();
-      
     }
   },
 

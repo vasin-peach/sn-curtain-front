@@ -1,5 +1,9 @@
 <template>
   <div id="productview">
+    <!-- Popup -->
+    <div class="popup-container" v-show="popupAuthData">
+      <login class="float"></login>
+    </div>
     <div class="container">
       <div class="row product-container" v-if="productData">
         <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 product-show">
@@ -86,6 +90,7 @@
 </template>
 
 <script>
+import Login from '../Auth/LoginForm';
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import "swiper/dist/css/swiper.css";
 import { mapActions, mapGetters, mapMutations } from "vuex";
@@ -148,7 +153,7 @@ export default {
   // Computed
   ///
   computed: {
-    ...mapGetters(["productData"])
+    ...mapGetters(["productData", "userData", "popupAuthData"])
   },
 
   ///
@@ -156,7 +161,7 @@ export default {
   ///
   methods: {
     ...mapActions(["productGet"]),
-    ...mapMutations(["basketUpdate"]),
+    ...mapMutations(["basketUpdate", "popupAuthUpdate"]),
     initSwiper() {
       this.$nextTick(() => {
         const swiperTop = this.$refs.swiperTop.swiper;
@@ -166,6 +171,12 @@ export default {
       });
     },
     productToBasket() {
+      var user = this.userData;
+      if (_.isEmpty(user)) {
+        this.popupAuthUpdate(true);
+        return false;
+      }
+
       if (localStorage.basket === "undefined" || !localStorage.basket) {
         localStorage.setItem("basket", JSON.stringify([]));
       }
@@ -216,7 +227,8 @@ export default {
   ///
   components: {
     swiper,
-    swiperSlide
+    swiperSlide,
+    Login
   }
 };
 </script>

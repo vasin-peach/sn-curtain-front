@@ -3,6 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   .bg-fade {
     z-index: 5;
     background: rgba($color: $white1, $alpha: 0.4);
@@ -12,6 +13,7 @@
     top: 0;
     bottom: 0;
   }
+
   .login-wrapper {
     margin: 5vw;
     z-index: 8;
@@ -20,30 +22,38 @@
     box-shadow: 0 1px 1px 0.5px $gray3;
     width: 30vw;
     max-width: 310px;
+
     @include small {
       width: 100% !important;
     }
+
     @include mobile {
       width: 100% !important;
     }
+
     @include tablet {
       width: 100% !important;
     }
+
     @include desktop {
       max-width: 330px !important;
     }
+
     @include extra {
       max-width: 350px !important;
     }
+
     .login-container {
       padding: 30px;
       padding-bottom: 50px;
+
       .title {
         text-align: center;
         font-weight: 400;
         color: $dark1;
         font-size: 20px;
       }
+
       .detail {
         text-align: center;
         font-weight: 300;
@@ -52,6 +62,7 @@
         margin-bottom: 20px;
       }
     }
+
     .login-head {
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
@@ -61,6 +72,7 @@
       background: linear-gradient(135deg, $orange1, $orange3);
       position: relative;
       height: 220px;
+
       .login-head-wrapper {
         width: 100px;
         height: 100px;
@@ -68,28 +80,34 @@
         border-radius: 50%;
         box-shadow: 0 0 2px 0.5px $gray3;
         background: $white1;
+
         img {
           width: 100%;
           height: 100%;
         }
+
         margin: 25px 0 20px 0;
       }
     }
+
     .login-body {
       position: relative;
       margin-top: -100px;
       background: $white1 !important;
       padding: 20px 10px;
       border-radius: 5px;
+
       .input-group-text {
         width: 43px;
         height: 40px;
         color: $dark1;
         box-shadow: none;
       }
+
       .b-form-group {
         width: 100%;
       }
+
       input {
         height: 40px;
         width: 100%;
@@ -104,19 +122,24 @@
         transition: border 0.5s ease;
         font-size: 16px;
         padding: 5px 10px;
+
         &:focus {
           border-color: $dark1 !important;
         }
+
         &.is-invalid {
           border-color: $red1 !important;
         }
+
         &.is-valid {
           border-color: $green1 !important;
         }
       }
+
       .invalid-feedback {
         font-size: 12px;
       }
+
       .col-form-label {
         font-size: 12px;
         font-weight: 300;
@@ -124,6 +147,7 @@
         transform: translateX(10px);
         padding: 0 !important;
       }
+
       .button-login,
       .button-facebook,
       .button-google {
@@ -134,9 +158,11 @@
         font-weight: 300;
         padding: 10px 0;
       }
+
       .button-forgot {
         background: $white1;
       }
+
       .button-login,
       .button-facebook,
       .button-google {
@@ -146,49 +172,97 @@
         color: $white2;
         font-weight: 400;
         transition: all 0.3s ease;
+
         &:hover,
         &:focus {
           filter: brightness(0.9);
           box-shadow: none !important;
           outline: none !important;
         }
+
         &:active {
           filter: brightness(0.8);
           box-shadow: none !important;
         }
       }
+
       .button-facebook {
         background: linear-gradient(135deg, $blue2, $blue1);
         padding: 5px 0;
         font-size: 20px;
       }
+
       .button-google {
         background: linear-gradient(135deg, $red3, $red1);
         padding: 5px 0;
         font-size: 20px;
       }
+
       .button-register {
         text-align: center;
         font-size: 16px;
         font-weight: 300;
         color: $gray1;
         margin: 15px 0;
+
         span:first-child {
           font-size: 15px;
           color: $gray2;
         }
+
         span:last-child {
           font-size: 15px;
           font-weight: 400;
           color: $dark3;
           transition: color 0.3s ease;
+
           &:hover,
           &:focus {
             color: $dark1;
           }
+
           &:active {
             color: #000;
           }
+        }
+      }
+    }
+  }
+
+  &.float {
+    z-index: 10;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 73px;
+    bottom: 0;
+
+    .bg-fade {
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .login-wrapper {
+      position: relative;
+      box-shadow: 0 2px 5px 1px $gray2 !important;
+
+      .close {
+        z-index: 11;
+        display: block;
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        border-radius: 50%;
+        background: $red3;
+        height: auto !important;
+        padding: 2px;
+        opacity: 1;
+        transition: 0.3s ease;
+
+        svg {
+          width: 25px;
+          height: 20px;
+          font-size: 20px;
+          color: $white1;
         }
       }
     }

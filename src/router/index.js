@@ -201,7 +201,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.login == 0 || record.meta.login == 1 || record.meta.login == 2)) {
     checkAuth().then(() => {
       var user = store.getters.userData;
-
+      if (to.meta.login == 2) return;
       if (to.meta.login) {
         if (_.isEmpty(user)) {
           return next({

@@ -11,6 +11,7 @@ import App from './App';
 import router from './router';
 import store from './store/main';
 import VueLazyLoad from 'vue-lazyload';
+import VueCookie from 'vue-cookie';
 
 // import Assets
 import '@scss/app.scss';
@@ -42,6 +43,7 @@ Vue.use(BootstrapVue);
 Vue.use(VueResource);
 Vue.use(VeeValidate);
 Vue.use(VueSweetalert2);
+Vue.use(VueCookie);
 Vue.use(VueLazyLoad, {
   preLoad: 1.3,
   loading: '../static/images/lazy/lazyload.svg',

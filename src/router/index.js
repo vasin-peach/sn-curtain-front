@@ -107,7 +107,8 @@ const router = new Router({
         component: Basket,
         name: 'Basket',
         meta: {
-          title: 'ตะกร้า'
+          title: 'ตะกร้า',
+          login: 1,
         }
       },
       {
@@ -134,7 +135,7 @@ const router = new Router({
         name: 'Payment',
         meta: {
           title: 'ชำระเงิน',
-          login: 1
+          login: 1,
         }
       },
       {
@@ -146,7 +147,7 @@ const router = new Router({
             name: 'Profile',
             meta: {
               title: 'ข้อมูลส่วนตัว',
-              login: 1
+              login: 1,
             },
           },
           {
@@ -155,7 +156,7 @@ const router = new Router({
             name: 'ProfileHistory',
             meta: {
               title: 'ประวัติการสั่งซื้อ',
-              login: 1
+              login: 1,
             },
           }
         ]
@@ -187,9 +188,14 @@ router.beforeEach((to, from, next) => {
     name: 'Notfound'
   });
 
+  // update redirect after login path every time
+  Vue.cookie.set("redirect", to.path);
+
+
   /// --
   // Metadata Middleware
   /// --
+
 
   if (to.matched.some(record => record.meta.login == 0 || record.meta.login == 1)) {
     checkAuth().then(() => {
@@ -199,16 +205,16 @@ router.beforeEach((to, from, next) => {
         if (_.isEmpty(user)) {
           return next({
             name: 'Login'
-          })
+          });
         }
       } else if (!to.meta.login) {
         if (!_.isEmpty(user)) {
           return next({
             name: 'Profile'
-          })
+          });
         }
       }
-    })
+    });
   }
 
   // checkAuth().then(() => {

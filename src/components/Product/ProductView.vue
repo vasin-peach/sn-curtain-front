@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import Login from '../Auth/LoginForm';
+import Login from "../Auth/LoginForm";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import "swiper/dist/css/swiper.css";
 import { mapActions, mapGetters, mapMutations } from "vuex";
@@ -172,9 +172,10 @@ export default {
     },
     productToBasket() {
       var user = this.userData;
+      // if user is empty
       if (_.isEmpty(user)) {
         this.popupAuthUpdate(true);
-        return false;
+        return;
       }
 
       if (localStorage.basket === "undefined" || !localStorage.basket) {

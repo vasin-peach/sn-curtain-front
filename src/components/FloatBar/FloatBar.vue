@@ -1,7 +1,7 @@
 <template>
   <div class="floatbar">
     <div class="floatbar-wrapper">
-      <transition name="basket">
+      <transition name="basket" v-if="userData">
         <div class="floatbar-basket animate" v-show="basketData.length">
 
           <div class="floatbar-basket-wrapper">
@@ -67,7 +67,7 @@ export default {
   // Computed
   ///
   computed: {
-    ...mapGetters(["basketData"])
+    ...mapGetters(["basketData", "userData"])
   }
 };
 </script>

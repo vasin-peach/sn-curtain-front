@@ -91,7 +91,8 @@ const router = new Router({
         component: Product,
         name: 'Product',
         meta: {
-          title: 'สินค้า'
+          title: 'สินค้า',
+          login: 2,
         }
       },
       {
@@ -197,7 +198,7 @@ router.beforeEach((to, from, next) => {
   /// --
 
 
-  if (to.matched.some(record => record.meta.login == 0 || record.meta.login == 1)) {
+  if (to.matched.some(record => record.meta.login == 0 || record.meta.login == 1 || record.meta.login == 2)) {
     checkAuth().then(() => {
       var user = store.getters.userData;
 

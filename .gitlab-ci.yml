@@ -94,3 +94,4 @@ deploy-production:
     url: http://sn-curtain.com
   only:
     - master
+  when: on_success

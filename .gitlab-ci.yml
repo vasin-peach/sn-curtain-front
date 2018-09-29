@@ -71,6 +71,7 @@ build-production-image:
   after_script:
     - docker rmi $(docker images -qa -f 'dangling=true')
   when: manual
+  allow_failure: false
 
 # Deploy Production Image
 deploy-production:

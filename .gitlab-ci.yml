@@ -55,7 +55,7 @@ deploy-staging:
 
 # Build Production
 build-production-image:
-  stage: build-prod
+  stage: build
   image: docker:stable
   tags:
     - docker
@@ -72,7 +72,7 @@ build-production-image:
 # Deploy Production
 deploy-production:
   image: $DOCKER_IMAGE_NAME/production:latest
-  stage: deploy-prod
+  stage: deploy
   tags:
     - deploy
   before_script:

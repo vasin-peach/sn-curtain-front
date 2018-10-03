@@ -25,7 +25,7 @@
                   <div class="title">
                     ประเภท
                   </div>
-                  <b-form-select v-model="category" :options="storeFilterData ? storeFilterData.category : {text: 'LOADING...'}"></b-form-select>
+                  <b-form-select v-model="category" :options=" storeFilterCategoryData ? storeFilterCategoryData : {text: 'LOADING...'}" :disabled="!storeFilterCategoryData"></b-form-select>
                 </div>
               </div>
 
@@ -34,7 +34,7 @@
                   <div class="title">
                     ชนิด
                   </div>
-                  <b-form-select v-model="type" :options="storeFilterData ? storeFilterData.type : {text: 'LOADING...'}"></b-form-select>
+                  <b-form-select v-model="type" :options="storeFilterTypeData ? storeFilterTypeData : {text: 'LOADING...'}" :disabled="!storeFilterTypeData"></b-form-select>
                 </div>
               </div>
 
@@ -43,7 +43,7 @@
                   <div class="title">
                     ลักษณะ
                   </div>
-                  <b-form-select v-model="nature" :options="storeFilterData ? storeFilterData.nature : {text: 'LOADING...'}"></b-form-select>
+                  <b-form-select v-model="nature" :options="storeFilterNatureData ? storeFilterNatureData : {text: 'LOADING...'}" :disabled="!storeFilterNatureData"></b-form-select>
                 </div>
               </div>
             </div>
@@ -72,6 +72,10 @@ export default {
       nature: null,
       timeout: null,
       page: 1,
+      disable: {
+        type: false,
+        nature: false
+      },
       animate: {
         trigger: 0
       },
@@ -101,14 +105,24 @@ export default {
     category: function(name) {
       this.triggerSearch();
       this.storeTempUpdate({ type: "category", data: name });
+      this.storeTypeUpdate({ category: this.category });
+      this.type = null;
+      this.nature = null;
     },
     type: function(name) {
       this.triggerSearch();
       this.storeTempUpdate({ type: "type", data: name });
+      this.storeNatureUpdate({ category: this.category, type: this.type });
+      this.nature = null;
     },
     nature: function(name) {
       this.triggerSearch();
       this.storeTempUpdate({ type: "nature", data: name });
+    },
+    storeFilterData: function(data) {
+      this.storeCategoryUpdate(this.category);
+      this.storeTypeUpdate(null);
+      this.storeNatureUpdate(null);
     }
   },
 
@@ -123,7 +137,7 @@ export default {
     }
 
     if (this.$route.params.category) {
-      this.type = this.$route.params.category;
+      this.category = this.$route.params.category;
       this.triggerFilter();
     }
 
@@ -135,7 +149,13 @@ export default {
   // Methods
   ///
   methods: {
-    ...mapMutations(["storeTempUpdate", "storeUpdate"]),
+    ...mapMutations([
+      "storeTempUpdate",
+      "storeUpdate",
+      "storeCategoryUpdate",
+      "storeTypeUpdate",
+      "storeNatureUpdate"
+    ]),
     ...mapActions(["storeGet", "storeFilterGet"]),
     triggerFilter() {
       if (this.animate.trigger) {
@@ -184,7 +204,13 @@ export default {
   // Computed
   ///
   computed: {
-    ...mapGetters(["storeData", "storeFilterData"])
+    ...mapGetters([
+      "storeData",
+      "storeFilterData",
+      "storeFilterCategoryData",
+      "storeFilterTypeData",
+      "storeFilterNatureData"
+    ])
   }
 };
 </script>

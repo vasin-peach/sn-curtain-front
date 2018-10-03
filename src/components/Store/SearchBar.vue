@@ -12,44 +12,44 @@
               </span>
               <input class="form-control py-2 border-left-0 border" type="search" placeholder="ค้นหา" id="search" v-model="search">
             </div>
-          </div>
-        </div>
-
-        <div class="trigger-filter" @click="triggerFilter">
-          <img src="/static/images/icon/arrow-up.svg">
-        </div>
-
-        <div id="bar-filter" class="bar-filter row m-0 no-gutters">
-          <div class="col-sm-12 col-md-4 bar-filter-select">
-            <div class="mr-2">
-              <div class="title">
-                ประเภทผ้าม่าน
-              </div>
-              <b-form-select v-model="type" :options="storeFilterData ? storeFilterData.type : {text: 'LOADING...'}"></b-form-select>
             </div>
           </div>
 
-          <div class="col-sm-12 col-md-4 bar-filter-select">
-            <div class="ml-2 mr-2">
-              <div class="title">
-                ชนิดของผ้า
-              </div>
-              <b-form-select v-model="fabric" :options="storeFilterData ? storeFilterData.fabric : {text: 'LOADING...'}"></b-form-select>
-            </div>
-          </div>
+          <div class="trigger-filter" @click="triggerFilter">
+            <img src="/static/images/icon/arrow-up.svg">
+        </div>
 
-          <div class="col-sm-12 col-md-4 bar-filter-select">
-            <div class="ml-2">
-              <div class="title">
-                สีของผ้า
+            <div id="bar-filter" class="bar-filter row m-0 no-gutters">
+              <div class="col-sm-12 col-md-4 bar-filter-select">
+                <div class="mr-2">
+                  <div class="title">
+                    ประเภท
+                  </div>
+                  <b-form-select v-model="category" :options="storeFilterData ? storeFilterData.category : {text: 'LOADING...'}"></b-form-select>
+                </div>
               </div>
-              <b-form-select v-model="color" :options="storeFilterData ? storeFilterData.color : {text: 'LOADING...'}"></b-form-select>
+
+              <div class="col-sm-12 col-md-4 bar-filter-select">
+                <div class="ml-2 mr-2">
+                  <div class="title">
+                    ชนิด
+                  </div>
+                  <b-form-select v-model="type" :options="storeFilterData ? storeFilterData.type : {text: 'LOADING...'}"></b-form-select>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-4 bar-filter-select">
+                <div class="ml-2">
+                  <div class="title">
+                    ลักษณะ
+                  </div>
+                  <b-form-select v-model="nature" :options="storeFilterData ? storeFilterData.nature : {text: 'LOADING...'}"></b-form-select>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -67,31 +67,11 @@ export default {
   data() {
     return {
       search: null,
+      category: null,
       type: null,
-      fabric: null,
-      color: null,
+      nature: null,
       timeout: null,
       page: 1,
-      options: {
-        type: [
-          { value: null, text: "เลือกชนิดของผ้าม่าน" },
-          { value: "ม่านตาไก่", text: "ม่านตาไก่" },
-          { value: "ม่านคอกระเช้า", text: "ม่านคอกระเช้า" },
-          { value: "value3", text: "ผ้าชนิด 3" }
-        ],
-        fabric: [
-          { value: null, text: "เลือกคุณภาพของผ้า" },
-          { value: "มาตรฐาน", text: "มาตรฐาน" },
-          { value: "ประหยัด", text: "ประหยัด" },
-          { value: "หรูหรา", text: "หรูหรา" }
-        ],
-        color: [
-          { value: null, text: "เลือกสีของผ้าม่าน" },
-          { value: "แดง", text: "แดง" },
-          { value: "น้ำตาล", text: "น้ำตาล" },
-          { value: "value3", text: "ผ้าชนิด 3" }
-        ]
-      },
       animate: {
         trigger: 0
       },
@@ -104,11 +84,11 @@ export default {
   ///
   watch: {
     $route: function(type) {
-      this.type = this.$route.params.type
-      this.search =  null
-      this.fabric =  null
-      this.color =  null
-      this.timeout =  null
+      this.category = this.$route.params.category;
+      this.type = null;
+      this.nature = null;
+      this.search = null;
+      this.timeout = null;
     },
     search: function(name) {
       var _this = this;
@@ -116,40 +96,39 @@ export default {
       this.timeout = setTimeout(function() {
         _this.triggerSearch();
       }, 500);
-      this.storeTempUpdate({ type: 'search', data: name})
+      this.storeTempUpdate({ type: "search", data: name });
+    },
+    category: function(name) {
+      this.triggerSearch();
+      this.storeTempUpdate({ type: "category", data: name });
     },
     type: function(name) {
       this.triggerSearch();
-      this.storeTempUpdate({ type: 'type', data: name})
+      this.storeTempUpdate({ type: "type", data: name });
     },
-    fabric: function(name) {
+    nature: function(name) {
       this.triggerSearch();
-      this.storeTempUpdate({ type: 'fabric', data: name})
-    },
-    color: function(name) {
-      this.triggerSearch();
-      this.storeTempUpdate({ type: 'color', data: name})
-    },
+      this.storeTempUpdate({ type: "nature", data: name });
+    }
   },
 
   ///
   // Mounted
   ///
   mounted() {
-
     if (!this.storeData) {
       this.storeGet({
         page: 1
       });
     }
 
-    if (this.$route.params.type) {
-      this.type = this.$route.params.type;
+    if (this.$route.params.category) {
+      this.type = this.$route.params.category;
       this.triggerFilter();
     }
-    
-    this.storeFilterGet()    
-    this.options = this.storeFilterData
+
+    this.storeFilterGet();
+    this.options = this.storeFilterData;
   },
 
   ///
@@ -194,9 +173,9 @@ export default {
       this.storeGet({
         search: this.search,
         page: this.page,
-        color: this.color,
+        category: this.category,
         type: this.type,
-        fabric: this.fabric
+        nature: this.nature
       });
     }
   },
@@ -205,8 +184,8 @@ export default {
   // Computed
   ///
   computed: {
-    ...mapGetters(["storeData", "storeFilterData"]),
-  },
+    ...mapGetters(["storeData", "storeFilterData"])
+  }
 };
 </script>
 

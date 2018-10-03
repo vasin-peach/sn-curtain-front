@@ -25,7 +25,7 @@
                   <div class="title">
                     ประเภท
                   </div>
-                  <b-form-select v-model="category" :options=" storeFilterCategoryData ? storeFilterCategoryData : {text: 'LOADING...'}" :disabled="!storeFilterCategoryData"></b-form-select>
+                  <b-form-select v-model="category" :options=" storeFilterCategoryData ? storeFilterCategoryData : {text: 'LOADING...'}" :disabled="storeFilterCategoryData == null"></b-form-select>
                 </div>
               </div>
 
@@ -34,7 +34,9 @@
                   <div class="title">
                     ชนิด
                   </div>
-                  <b-form-select v-model="type" :options="storeFilterTypeData ? storeFilterTypeData : {text: 'LOADING...'}" :disabled="!storeFilterTypeData"></b-form-select>
+                  <div v-if="storeFilterTypeData">
+                    <b-form-select v-model="type" :options="storeFilterTypeData ? storeFilterTypeData : {text: 'LOADING...'}" :disabled="storeFilterTypeData.length == 1" :class="{'disable': storeFilterTypeData.length == 1 }"></b-form-select>
+                  </div>
                 </div>
               </div>
 
@@ -43,7 +45,9 @@
                   <div class="title">
                     ลักษณะ
                   </div>
-                  <b-form-select v-model="nature" :options="storeFilterNatureData ? storeFilterNatureData : {text: 'LOADING...'}" :disabled="!storeFilterNatureData"></b-form-select>
+                  <div v-if="storeFilterNatureData">
+                    <b-form-select v-model="nature" :options="storeFilterNatureData ? storeFilterNatureData : {text: 'LOADING...'}" :disabled="storeFilterNatureData.length == 1" :class="{'disable': storeFilterNatureData.length == 1}"></b-form-select>
+                  </div>
                 </div>
               </div>
             </div>

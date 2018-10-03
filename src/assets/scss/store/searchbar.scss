@@ -4,25 +4,35 @@
   position: relative;
   box-shadow: 0 1px 1px 0 $gray3;
   height: 100px;
+
   &.closed {
     height: auto !important;
   }
+
+  .disable {
+    opacity: 0.7 !important;
+  }
+
   .bar-search {
     padding: 30px 0;
+
     #search {
       border: 1px solid $dark3;
       border-top-right-radius: 30px;
       border-bottom-right-radius: 30px;
+
       &:focus {
         box-shadow: none !important;
       }
     }
+
     .input-group-text {
       background-color: $white1;
       border-top-left-radius: 30px !important;
       border-bottom-left-radius: 30px !important;
     }
   }
+
   .trigger-filter {
     z-index: 7;
     cursor: pointer;
@@ -38,37 +48,45 @@
     border: 1px solid $gray2;
     border-radius: 30px;
     transition: background-color 0.3s ease-out;
+
     &:hover {
       background-color: $white4;
     }
+
     img {
       width: 100%;
       height: 100%;
       transform: rotate(180deg);
     }
   }
+
   .bar-filter {
     opacity: 0;
     visibility: hidden;
     display: none;
     padding-bottom: 40px;
     width: 100%;
+
     .bar-filter-select {
       @include mobile {
         &:first-child div:not(.title) {
           margin-left: 0.5em;
         }
+
         &:last-child div {
           margin-right: 0.5em;
         }
       }
+
       padding-bottom: 10px;
+
       .title {
         font-weight: 500;
         padding-bottom: 5px;
         padding-left: 7px;
         color: $orange1;
       }
+
       select {
         border: none;
         border-bottom: 1px solid $gray2;
@@ -76,14 +94,17 @@
         color: $dark3;
         padding: 0 7px;
         font-weight: 200;
+
         &:focus {
           box-shadow: none;
         }
+
         option {
           background-color: $white1;
           color: $dark3;
           font-size: 15px;
           text-indent: 10px;
+
           &:first-child {
             color: $gray2;
           }

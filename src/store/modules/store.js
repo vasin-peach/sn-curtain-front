@@ -129,12 +129,12 @@ const mutations = {
       }]
     }
 
+    if (!state.storeFilter) return false;
+
     // filter type by category
     let type = state.storeFilter.filter(data => {
       return data.val == filter.category;
     });
-
-    // if (category.indexOf(filter) < 0) return false;
 
     // get type;
     type = type.map(data => {
@@ -157,9 +157,6 @@ const mutations = {
     let nature = state.storeFilter.filter(data => {
       return data.val == filter.category && data.type.val == filter.type;
     });
-
-
-    // if (category.indexOf(filter) < 0) return false;
 
     // get nature;
     nature = nature.map(data => {

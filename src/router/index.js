@@ -71,7 +71,7 @@ const router = new Router({
         }
       },
       {
-        path: 'store/:type',
+        path: 'store/:category',
         component: Store,
         name: 'Store-Filter',
         meta: {

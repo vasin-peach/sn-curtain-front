@@ -18,16 +18,16 @@ const state = {
 ///
 const getters = {
   storeData: (state) => {
-    return state.store
+    return state.store;
   },
   storePopularData: (state) => {
-    return state.storePopular
+    return state.storePopular;
   },
   storeFilterData: (state) => {
-    return state.storeFilter
+    return state.storeFilter;
   },
   storeTempData: (state) => {
-    return state.storeTemp
+    return state.storeTemp;
   }
 }
 
@@ -86,21 +86,22 @@ const actions = {
         type: 'store',
         value: true
       });
-      var search = payload.search || " "
-      var page = payload.page || 1
-      var fabric = payload.fabric || null
-      var color = payload.color || null
-      var type = payload.type || null
+      var search = payload.search || " ";
+      var page = payload.page || 1;
+      var category = payload.category || null;
+      var type = payload.type || null;
+      var nature = payload.nature || null;
 
       var uriRequest = "/product/get/" +
         (search ? search + "/" : " /") +
         (page ? page + "/" : " /") +
-        (fabric ? fabric + "/" : " /") +
-        (color ? color + "/" : " /") +
-        (type ? type : " ")
+        (category ? category + "/" : " /") +
+        (type ? type + "/" : " /") +
+        (nature ? nature : " ");
 
       // request
       Vue.http.get(process.env.BACKEND_URI + uriRequest).then(response => {
+        console.log(response);
         commit('storeUpdate', response.data.data);
         commit('loadingUpdate', {
           type: 'store',

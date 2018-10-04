@@ -51,33 +51,39 @@
                   จำนวน
                 </div>
               </div>
+              <div class="nature-container">
+                <div class="nature-box">
+                  <div>เลือกลักษณะ</div>
+                </div>
+              </div>
+
             </div>
             <div class="button buy font-bourbon" @click="productToBasket()">หยิบลงตะกร้า</div>
             <div class="other">
               <div class="other-container">
-                <div class="other-box">
+                <!-- <div class="other-box">
                   <div>
                     สี:
                   </div>
                   <div class="color">
-                    <!-- <div>{{productData[0].category.color.val}}</div> -->
+                    <div>{{productData[0].category.color.val}}</div>
                     <div class="color-box" :style="{background: productData[0].category.color.hex || '#ccc'}"></div>
                   </div>
+                </div> -->
+                <div class="other-box">
+                  <div>
+                    ประเภท:
+                  </div>
+                  <div>
+                    {{productData[0].category.val}}
+                  </div>
                 </div>
                 <div class="other-box">
                   <div>
-                    ชนิดของผ้า:
+                    ชนิด:
                   </div>
                   <div>
-                    {{productData[0].fabric}}
-                  </div>
-                </div>
-                <div class="other-box">
-                  <div>
-                    ชนิดของผ้าม่าน:
-                  </div>
-                  <div>
-                    {{productData[0].category.type}}
+                    {{productData[0].category.type.val}}
                   </div>
                 </div>
               </div>

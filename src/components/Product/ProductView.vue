@@ -211,9 +211,7 @@ export default {
         this.updateBasket(oldItems, payload);
       } else {
         // same item but diffirent amount
-        var getIndex = oldItems.findIndex(
-          item => item.id == payload.id && item.amount != payload.amount
-        );
+        var getIndex = oldItems.findIndex(item => item.id == payload.id);
         if (getIndex >= 0) {
           // remove array by index
           oldItems.splice(getIndex, 1);

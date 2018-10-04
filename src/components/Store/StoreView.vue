@@ -7,7 +7,7 @@
         </div>
         <div class="row store-container" v-else key="content">
           <div class="col-6 col-sm-6 col-lg-4 col-xl-3 store-item" v-for="(item, count) in storeData.data" :key="count">
-            <!-- <router-link :to="{ name: 'Product', params: { id: item._id } }">
+            <router-link :to="{ name: 'Product', params: { id: item._id } }">
               <div class="card-container">
                 <div class="card-head">
                   <img v-lazy="item.brand.src" :alt="item.name || 'ชื่อสินค้า'">
@@ -18,13 +18,14 @@
                     <hr>
                     <div class="detail row m-0">
                       <div class="col-12 col-sm-6">
-                        <span class="fabric-title">ผ้า: </span>
-                        <span class="fabric-content">{{ item.fabric || 'ไม่ระบุ' }}</span>
+                        <span class="fabric-title">View: </span>
+                        <span class="fabric-content">{{ item.view || 0 }}</span>
                       </div>
                       <span class="color-orange1 d-none d-sm-block">|</span>
                       <div class="col-12 col-sm-6">
-                        <span class="color-title">สี:</span>
-                        <span class="color-box" :style="{background: item.category.color.hex || '#ccc'}"></span>
+                        <span class="color-title">Like:</span>
+                        <span class="fabric-content">{{ item.like || 0 }}</span>
+                        <!-- <span class="color-box" :style="{background: item.category.color.hex || '#ccc'}"></span> -->
                       </div>
                     </div>
                   </div>
@@ -32,7 +33,7 @@
                     <div class="button">ดูสินค้า</div>
                   </div>
                 </div>
-            </router-link> -->
+            </router-link>
           </div>
         </div>
       </transition>

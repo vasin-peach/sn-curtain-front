@@ -29,7 +29,7 @@
             </div>
             <hr>
             <div class="price">
-              ฿{{ productData[0].price }}
+              ฿{{ buyOption }}
             </div>
             <div class="detail">
               {{ productData[0].desc[0].val }}
@@ -51,7 +51,12 @@
                   จำนวน
                 </div>
               </div>
-
+            </div>
+            <div class="option-container">
+              <div class="option-block">
+                <div>ตัวเลือก</div>
+                <b-form-select v-model="buyOption" :options="productData ? productData[0].price : {text: 'LOADING...'}"></b-form-select>
+              </div>
             </div>
             <div class="button buy font-bourbon" @click="productToBasket()">หยิบลงตะกร้า</div>
             <div class="other">
@@ -62,7 +67,7 @@
                   </div>
                   <div class="color">
                     <div v-for="item in productData[0].category.type.nature" :key="item.val">
-                      <div class="color-box tooltip-container" :style="{background: item.option || '#ccc'}">
+                      <div class="color-box tooltip-container" :style="{background: /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(item.option) ? item.option : '#ccc'}">
                         <span class="tooltip-text">{{item.text}}</span>
                       </div>
                     </div>
@@ -107,6 +112,7 @@ export default {
     return {
       id: null,
       amount: 1,
+      buyOption: 0,
       swiperOptionTop: {
         spaceBetween: 10,
         loop: true,
@@ -150,6 +156,9 @@ export default {
       this.productGet(this.id).then(() => {
         this.initSwiper();
       });
+    },
+    productData: function(data) {
+      this.buyOption = data[0].price[0].value;
     }
   },
 
@@ -193,6 +202,7 @@ export default {
       var payload = {
         id: this.productData[0]._id,
         amount: this.amount,
+        buyOption: this.buyOption,
         data: this.productData[0]
       };
 
@@ -201,9 +211,7 @@ export default {
         this.updateBasket(oldItems, payload);
       } else {
         // same item but diffirent amount
-        var getIndex = oldItems.findIndex(
-          item => item.id == payload.id && item.amount != payload.amount
-        );
+        var getIndex = oldItems.findIndex(item => item.id == payload.id);
         if (getIndex >= 0) {
           // remove array by index
           oldItems.splice(getIndex, 1);

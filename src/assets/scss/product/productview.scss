@@ -91,6 +91,10 @@
         }
       }
 
+      .option-container {
+        .option-block {}
+      }
+
       .buy {
         border-color: $dark1;
         color: $dark1;
@@ -108,42 +112,53 @@
         }
       }
 
-      .other {
-        .other-container {
+
+      .other-container,
+      .option-container {
+        display: flex;
+        flex-direction: column;
+
+        .option-block {
+          border-top: none;
+          border-bottom: 1px solid $gray2;
+          margin-bottom: 30px;
+          margin-top: -38px;
+        }
+
+        >div {
+          // other-block
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          border: 1px solid $dark3;
+          padding: 10px 5px;
+          border-left-style: none;
+          border-right-style: none;
+
+          &:nth-child(2) {
+            border: none;
+          }
 
           >div {
-            // other-block
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid $dark3;
-            padding: 10px 5px;
-            border-left-style: none;
-            border-right-style: none;
-
-            &:nth-child(2) {
-              border: none;
+            &:first-child {
+              min-width: 30%;
             }
 
-            >div {
-              &:last-child {
-                font-weight: 200 !important;
-                display: flex;
-                text-align: right;
+            &:last-child {
+              font-weight: 200 !important;
+              display: flex;
+              text-align: right;
 
-                .color-box {
-                  width: 30px;
-                  height: 30px;
-                  border-radius: 7px;
-                  margin-left: 5px;
-                  transition: box-shadow 0.3s ease;
+              .color-box {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                margin-left: 10px;
+                transition: box-shadow 0.3s ease;
 
-                  &:hover {
-                    box-shadow: 0 0 0 1px $dark1;
-                  }
+                &:hover {
+                  box-shadow: 0 0 0 1px $dark1;
                 }
               }
             }

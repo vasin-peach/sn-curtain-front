@@ -58,11 +58,11 @@
                         </div>
                       </div>
                       <div class="price-sm">
-                        ฿{{numberWithCommas(item.data.price * item.amount)}}
+                        ฿{{numberWithCommas(item.buyOption * item.amount)}}
                       </div>
                     </div>
                     <div class="price-lg col col-sm-3 col-md-2">
-                      ฿{{numberWithCommas(item.data.price * item.amount)}}
+                      ฿{{numberWithCommas(item.buyOption * item.amount)}}
                     </div>
                   </div>
                   <hr>
@@ -77,52 +77,52 @@
               ORDER SUMMARY
               <hr>
             </div>
-            <div class="price">
-              <div>สินค้ารวม</div>
-              <div>฿{{numberWithCommas(sumPrice)}}</div>
-            </div>
-            <div class="transport">
-              <div>ค่าขนส่ง</div>
-              <div>
-                <b-form-select v-model="delivery" :options="deliveryData ? deliveryData : {text: 'LOADING...'}"></b-form-select>
+              <div class="price">
+                <div>สินค้ารวม</div>
+                <div>฿{{numberWithCommas(sumPrice)}}</div>
               </div>
-            </div>
-            <div class="code">
-              <div>ส่วนลด</div>
-              <div class="color-green1">฿{{numberWithCommas(sumDiscount)}}</div>
-            </div>
-            <div class="summary">
-              <div>รวมทั้งหมด</div>
-              <div>฿{{numberWithCommas(sumAll)}}</div>
-            </div>
-            <hr>
-            <div class="code-input">
-              <input type="text" id="codeNumber" v-model="codeNumber">
-            </div>
-            <div class="transport-input p-0">
-
-            </div>
-            <hr>
-            <div class="detail">
-              Our Phoenix Collection of Contemporary Door Styles now includes Strata, a very durable textured surface that provides a look and feel that is unmatched.
+              <div class="transport">
+                <div>ค่าขนส่ง</div>
+                <div>
+                  <b-form-select v-model="delivery" :options="deliveryData ? deliveryData : {text: 'LOADING...'}"></b-form-select>
+                </div>
+              </div>
+              <div class="code">
+                <div>ส่วนลด</div>
+                <div class="color-green1">฿{{numberWithCommas(Math.round(sumDiscount))}}</div>
+              </div>
+              <div class="summary">
+                <div>รวมทั้งหมด</div>
+                <div>฿{{numberWithCommas(Math.round(sumAll))}}</div>
+              </div>
               <hr>
+              <div class="code-input">
+                <input type="text" id="codeNumber" v-model="codeNumber">
             </div>
-            <router-link :to="{ name: 'Payment' }">
-              <div class="button">
-                ชำระเงิน
+                <div class="transport-input p-0">
+
+                </div>
+                <hr>
+                <div class="detail">
+                  Our Phoenix Collection of Contemporary Door Styles now includes Strata, a very durable textured surface that provides a look and feel that is unmatched.
+                  <hr>
+            </div>
+                  <router-link :to="{ name: 'Payment' }">
+                    <div class="button">
+                      ชำระเงิน
+                    </div>
+                  </router-link>
+                </div>
               </div>
-            </router-link>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import $ from "jquery";
-import _ from 'lodash'
+import _ from "lodash";
 export default {
   name: "Basket",
   ///
@@ -137,7 +137,7 @@ export default {
       sumAll: 0,
       sumDiscount: 0,
       codeNumber: null,
-      delivery: 0,
+      delivery: 0
     };
   },
 
@@ -183,7 +183,7 @@ export default {
     ...mapActions(["discountGet", "deliveryGet"]),
     updateSumPrice() {
       this.sumPrice = this.basketData.reduce((sum, item) => {
-        return sum + item.data.price * item.amount;
+        return sum + item.buyOption * item.amount;
       }, 0);
       this.updateSumAll();
     },
@@ -239,7 +239,7 @@ export default {
           // discount sumPrice
           var discount = response.data.discount;
           if (discount.percent) {
-            this.sumDiscount = this.sumPrice * discount.percent / 100;
+            this.sumDiscount = (this.sumPrice * discount.percent) / 100;
           } else if (discount.amount) {
             this.sumDiscount = discount.amount;
           }

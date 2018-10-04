@@ -14,7 +14,7 @@
                 </div>
                   <div class="card-content">
                     <p class="title">{{item.name || 'ชื่อสินค้า' }}</p>
-                    <p class="price">฿{{item.price || 'ไม่ระบุ' }}</p>
+                    <p class="price">฿{{item.price[0].value || 'ไม่ระบุ' }}</p>
                     <hr>
                     <div class="detail row m-0">
                       <div class="col-12 col-sm-6">

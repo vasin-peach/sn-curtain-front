@@ -29,7 +29,7 @@
             </div>
             <hr>
             <div class="price">
-              ฿{{ productData[0].price }}
+              ฿{{ productData[0].price[0].value }}
             </div>
             <div class="detail">
               {{ productData[0].desc[0].val }}

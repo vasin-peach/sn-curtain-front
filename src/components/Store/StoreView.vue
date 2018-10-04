@@ -18,13 +18,13 @@
                     <hr>
                     <div class="detail row m-0">
                       <div class="col-12 col-sm-6">
-                        <span class="fabric-title">View: </span>
+                        <span class="fabric-title">รับชม: </span>
                         <span class="fabric-content">{{ item.view || 0 }}</span>
                       </div>
                       <span class="color-orange1 d-none d-sm-block">|</span>
                       <div class="col-12 col-sm-6">
-                        <span class="color-title">Like:</span>
-                        <span class="fabric-content">{{ item.like || 0 }}</span>
+                        <span class="color-title">จำนวน:</span>
+                        <span class="fabric-content">{{ item.quantity || หมด }} </span>
                         <!-- <span class="color-box" :style="{background: item.category.color.hex || '#ccc'}"></span> -->
                       </div>
                     </div>

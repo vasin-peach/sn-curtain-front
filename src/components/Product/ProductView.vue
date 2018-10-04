@@ -29,7 +29,7 @@
             </div>
             <hr>
             <div class="price">
-              ฿{{ productData[0].price[0].value }}
+              ฿{{ buyOption }}
             </div>
             <div class="detail">
               {{ productData[0].desc[0].val }}
@@ -51,7 +51,12 @@
                   จำนวน
                 </div>
               </div>
-
+            </div>
+            <div class="option-container">
+              <div class="option-block">
+                <div>ตัวเลือก</div>
+                <b-form-select v-model="buyOption" :options="productData ? productData[0].price : {text: 'LOADING...'}"></b-form-select>
+              </div>
             </div>
             <div class="button buy font-bourbon" @click="productToBasket()">หยิบลงตะกร้า</div>
             <div class="other">
@@ -107,6 +112,7 @@ export default {
     return {
       id: null,
       amount: 1,
+      buyOption: 0,
       swiperOptionTop: {
         spaceBetween: 10,
         loop: true,
@@ -150,6 +156,9 @@ export default {
       this.productGet(this.id).then(() => {
         this.initSwiper();
       });
+    },
+    productData: function(data) {
+      this.buyOption = data[0].price[0].value;
     }
   },
 
@@ -193,6 +202,7 @@ export default {
       var payload = {
         id: this.productData[0]._id,
         amount: this.amount,
+        buyOption: this.buyOption,
         data: this.productData[0]
       };
 

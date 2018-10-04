@@ -62,7 +62,7 @@
                   </div>
                   <div class="color">
                     <div v-for="item in productData[0].category.type.nature" :key="item.val">
-                      <div class="color-box tooltip-container" :style="{background: item.option || '#ccc'}">
+                      <div class="color-box tooltip-container" :style="{background: /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(item.option) ? item.option : '#ccc'}">
                         <span class="tooltip-text">{{item.text}}</span>
                       </div>
                     </div>

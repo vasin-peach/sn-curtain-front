@@ -5,6 +5,8 @@
 @import "ratio";
 @import "icons";
 @import "button";
+@import "tooltip";
+
 // location
 .flex {
   display: flex;
@@ -31,6 +33,7 @@
   transition: transform 0.4s ease-out, opacity 0.4s ease-out !important;
   transform: translateY(30px) !important;
   opacity: 0;
+
   &.fade-in {
     transform: translateY(0) !important;
     opacity: 1 !important;
@@ -40,6 +43,7 @@
 .fade2 {
   transition: opacity 0.4s ease-out !important;
   opacity: 0;
+
   &.fade-in {
     opacity: 1 !important;
   }
@@ -49,6 +53,7 @@
   transition: transform 0.4s ease-out, opacity 0.4s ease-out;
   transform: translateY(30px);
   opacity: 0;
+
   &.active {
     transform: translateY(-0px) !important;
     opacity: 1 !important;

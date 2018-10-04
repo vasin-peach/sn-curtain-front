@@ -51,25 +51,23 @@
                   จำนวน
                 </div>
               </div>
-              <div class="nature-container">
-                <div class="nature-box">
-                  <div>เลือกลักษณะ</div>
-                </div>
-              </div>
 
             </div>
             <div class="button buy font-bourbon" @click="productToBasket()">หยิบลงตะกร้า</div>
             <div class="other">
               <div class="other-container">
-                <!-- <div class="other-box">
+                <div class="other-box">
                   <div>
-                    สี:
+                    ลักษณะ:
                   </div>
                   <div class="color">
-                    <div>{{productData[0].category.color.val}}</div>
-                    <div class="color-box" :style="{background: productData[0].category.color.hex || '#ccc'}"></div>
+                    <div v-for="item in productData[0].category.type.nature" :key="item.val">
+                      <div class="color-box tooltip-container" :style="{background: item.option || '#ccc'}">
+                        <span class="tooltip-text">{{item.text}}</span>
+                      </div>
+                    </div>
                   </div>
-                </div> -->
+                </div>
                 <div class="other-box">
                   <div>
                     ประเภท:

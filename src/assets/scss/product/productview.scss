@@ -91,10 +91,6 @@
         }
       }
 
-      .option-container {
-        .option-block {}
-      }
-
       .buy {
         border-color: $dark1;
         color: $dark1;
@@ -119,10 +115,10 @@
         flex-direction: column;
 
         .option-block {
-          border-top: none;
           border-bottom: 1px solid $gray2;
+          border-top: 1px solid $gray2;
           margin-bottom: 30px;
-          margin-top: -38px;
+          border: none;
         }
 
         >div {

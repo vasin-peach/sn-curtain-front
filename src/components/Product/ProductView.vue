@@ -6,7 +6,7 @@
     </div>
     <div class="container">
       <div class="row product-container" v-if="productData">
-        <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 product-show">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 product-show">
           <div style="height: 70vh">
             <!-- swiper1 -->
             <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop">

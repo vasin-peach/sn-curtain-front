@@ -152,10 +152,11 @@ export default {
   // Mounted
   ///
   mounted() {
+    
+    //// clear localstorage.
+    // localStorage.setItem("basket", JSON.stringify([]));
     this.updateSumPrice();
     this.deliveryGet();
-
-    console.log(this.basketData);
   },
 
   ///
@@ -184,8 +185,26 @@ export default {
     },
     basketData: {
         handler: function(data) {
+          
           this.updateSumPrice();
           this.updateSumAll();
+
+          // get index of different item.
+          let diff = data.findIndex((item, idx) => {
+            return item.buyOption !== this.oldItems[idx].buyOption;
+          });
+
+          // update old item.
+          if (diff >= 0) {
+            this.oldItems[diff].buyOption = data[diff].buyOption;
+          }
+
+          // update to localstorage.
+          localStorage.setItem("basket", JSON.stringify(this.oldItems));
+
+          // animate
+          this.basketAnimate();
+
         },
         deep: true
     }
@@ -268,6 +287,13 @@ export default {
           $("#codeNumber").addClass("color-red3 border-red3");
           this.updateSumAll();
         });
+    },
+    basketAnimate() {
+      var basket = $(".floatbar-basket");
+      $(".floatbar-basket").removeClass("animate");
+      setTimeout(function() {
+        $(".floatbar-basket").addClass("animate");
+      }, 100);
     }
   },
 

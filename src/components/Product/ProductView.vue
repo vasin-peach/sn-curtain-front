@@ -138,7 +138,7 @@ export default {
   // Mounted
   ///
   mounted() {
-    // init product id
+    // init product
     if (this.$route.params.id) {
       this.id = this.$route.params.id;
       this.productGet(this.id).then(() => {

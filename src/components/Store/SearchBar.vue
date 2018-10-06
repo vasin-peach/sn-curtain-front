@@ -98,9 +98,11 @@ export default {
       this.firstTime = true;
 
       // init category & type
-      let params = this.$route.params.category.split(',');
-      this.category = params[0];
-      if (this.firstTime && params.length >= 2) this.type = params[1]; this.firstTime = false 
+      if (this.$route.params.category) {
+        let params = this.$route.params.category.split(',');
+        this.category = params[0];
+        if (this.firstTime && params.length >= 2) this.type = params[1]; this.firstTime = false 
+      }
 
     },
     search: function(name) {
@@ -122,8 +124,10 @@ export default {
       this.nature = null;
 
       // check if not firsttime change type option to null
-      let params = this.$route.params.category.split(',');
-      if (this.firstTime && params.length >= 2) this.type = params[1]; this.firstTime = false 
+      if (this.$route.params.category) {
+        let params = this.$route.params.category.split(',');
+        if (this.firstTime && params.length >= 2) this.type = params[1]; this.firstTime = false 
+      }
 
     },
     type: function(name) {
@@ -162,8 +166,10 @@ export default {
     }
 
     // init category
-    let params = this.$route.params.category.split(',');
-    this.category = params[0];
+    if (this.$route.params.category) {
+      let params = this.$route.params.category.split(',');
+      this.category = params[0];
+    }
 
     // open search option
     this.triggerFilter();

@@ -2,6 +2,7 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 import auth from './modules/auth/auth';
+import payment from './modules/payment/payment';
 import profile from './modules/auth/profile';
 import store from './modules/store';
 import loading from './modules/loading';
@@ -23,7 +24,8 @@ export default new Vuex.Store({
     basket,
     discount,
     delivery,
-    profile
+    profile,
+    payment
   },
   strict: false
 })

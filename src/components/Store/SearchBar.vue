@@ -12,48 +12,48 @@
               </span>
               <input class="form-control py-2 border-left-0 border" type="search" placeholder="ค้นหา" id="search" v-model="search">
             </div>
+          </div>
+        </div>
+
+        <div class="trigger-filter" @click="triggerFilter">
+          <img src="/static/images/icon/arrow-up.svg">
+        </div>
+
+        <div id="bar-filter" class="bar-filter row m-0 no-gutters">
+          <div class="col-sm-12 col-md-4 bar-filter-select">
+            <div class="mr-2">
+              <div class="title">
+                ประเภท
+              </div>
+              <b-form-select v-model="category" :options=" storeFilterCategoryData ? storeFilterCategoryData : {text: 'LOADING...'}" :disabled="storeFilterCategoryData == null"></b-form-select>
             </div>
           </div>
 
-          <div class="trigger-filter" @click="triggerFilter">
-            <img src="/static/images/icon/arrow-up.svg">
-        </div>
-
-            <div id="bar-filter" class="bar-filter row m-0 no-gutters">
-              <div class="col-sm-12 col-md-4 bar-filter-select">
-                <div class="mr-2">
-                  <div class="title">
-                    ประเภท
-                  </div>
-                  <b-form-select v-model="category" :options=" storeFilterCategoryData ? storeFilterCategoryData : {text: 'LOADING...'}" :disabled="storeFilterCategoryData == null"></b-form-select>
-                </div>
+          <div class="col-sm-12 col-md-4 bar-filter-select">
+            <div class="ml-2 mr-2">
+              <div class="title">
+                ชนิด
               </div>
-
-              <div class="col-sm-12 col-md-4 bar-filter-select">
-                <div class="ml-2 mr-2">
-                  <div class="title">
-                    ชนิด
-                  </div>
-                  <div v-if="storeFilterTypeData">
-                    <b-form-select v-model="type" :options="storeFilterTypeData ? storeFilterTypeData : {text: 'LOADING...'}" :disabled="storeFilterTypeData.length == 1" :class="{'disable': storeFilterTypeData.length == 1 }"></b-form-select>
-                  </div>
-                </div>
+              <div v-if="storeFilterTypeData">
+                <b-form-select v-model="type" :options="storeFilterTypeData ? storeFilterTypeData : {text: 'LOADING...'}" :disabled="storeFilterTypeData.length == 1" :class="{'disable': storeFilterTypeData.length == 1 }"></b-form-select>
               </div>
+            </div>
+          </div>
 
-              <div class="col-sm-12 col-md-4 bar-filter-select">
-                <div class="ml-2">
-                  <div class="title">
-                    ลักษณะ
-                  </div>
-                  <div v-if="storeFilterNatureData">
-                    <b-form-select v-model="nature" :options="storeFilterNatureData ? storeFilterNatureData : {text: 'LOADING...'}" :disabled="storeFilterNatureData.length == 1" :class="{'disable': storeFilterNatureData.length == 1}"></b-form-select>
-                  </div>
-                </div>
+          <div class="col-sm-12 col-md-4 bar-filter-select">
+            <div class="ml-2">
+              <div class="title">
+                ลักษณะ
+              </div>
+              <div v-if="storeFilterNatureData">
+                <b-form-select v-model="nature" :options="storeFilterNatureData ? storeFilterNatureData : {text: 'LOADING...'}" :disabled="storeFilterNatureData.length == 1" :class="{'disable': storeFilterNatureData.length == 1}"></b-form-select>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -70,6 +70,7 @@ export default {
   ///
   data() {
     return {
+      firstTime: true,
       search: null,
       category: null,
       type: null,
@@ -92,41 +93,59 @@ export default {
   ///
   watch: {
     $route: function(type) {
-      this.category = this.$route.params.category;
-      this.type = null;
-      this.nature = null;
-      this.search = null;
-      this.timeout = null;
+
+      // refresh firsttime
+      this.firstTime = true;
+
+      // init category & type
+      let params = this.$route.params.category.split(',');
+      this.category = params[0];
+      if (this.firstTime && params.length >= 2) this.type = params[1]; this.firstTime = false 
+
     },
     search: function(name) {
+
       var _this = this;
       clearTimeout(this.timeout);
       this.timeout = setTimeout(function() {
         _this.triggerSearch();
       }, 500);
       this.storeTempUpdate({ type: "search", data: name });
+
     },
     category: function(name) {
+
       this.triggerSearch();
       this.storeTempUpdate({ type: "category", data: name });
-      this.storeTypeUpdate({ category: this.category });
+      this.storeTypeUpdate({ category: name });
       this.type = null;
       this.nature = null;
+
+      // check if not firsttime change type option to null
+      let params = this.$route.params.category.split(',');
+      if (this.firstTime && params.length >= 2) this.type = params[1]; this.firstTime = false 
+
     },
     type: function(name) {
+
       this.triggerSearch();
       this.storeTempUpdate({ type: "type", data: name });
       this.storeNatureUpdate({ category: this.category, type: this.type });
       this.nature = null;
+
     },
     nature: function(name) {
+
       this.triggerSearch();
       this.storeTempUpdate({ type: "nature", data: name });
+
     },
     storeFilterData: function(data) {
+
       this.storeCategoryUpdate(this.category);
-      this.storeTypeUpdate(null);
+      this.storeTypeUpdate({ category: this.category });
       this.storeNatureUpdate(null);
+      
     }
   },
 
@@ -134,19 +153,23 @@ export default {
   // Mounted
   ///
   mounted() {
+
+    // init page
     if (!this.storeData) {
       this.storeGet({
         page: 1
       });
     }
 
-    if (this.$route.params.category) {
-      this.category = this.$route.params.category;
-      this.triggerFilter();
-    }
+    // init category
+    let params = this.$route.params.category.split(',');
+    this.category = params[0];
 
+    // open search option
+    this.triggerFilter();
     this.storeFilterGet();
     this.options = this.storeFilterData;
+
   },
 
   ///

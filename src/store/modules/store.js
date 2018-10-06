@@ -98,14 +98,14 @@ const mutations = {
       case 'page':
         state.storeTemp.page = data.data
         break;
-      case 'color':
-        state.storeTemp.color = data.data
+      case 'category':
+        state.storeTemp.category = data.data
         break;
       case 'type':
         state.storeTemp.type = data.data
         break;
-      case 'fabric':
-        state.storeTemp.fabric = data.data
+      case 'nature':
+        state.storeTemp.nature = data.data
         break;
     }
   },
@@ -128,6 +128,7 @@ const mutations = {
         value: null
       }]
     }
+
 
     if (!state.storeFilter) return false;
 

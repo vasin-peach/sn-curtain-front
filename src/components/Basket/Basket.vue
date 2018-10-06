@@ -57,6 +57,12 @@
                           </div>
                         </div>
                       </div>
+                      <div class="option-container">
+                        <div class="option-block">
+                          <div>ตัวเลือก</div>
+                          <b-form-select v-model="item.buyOption" :options="item.data ? item.data.price : {text: 'LOADING...'}"></b-form-select>
+                        </div>
+                      </div>
                       <div class="price-sm">
                         ฿{{numberWithCommas(item.buyOption * item.amount)}}
                       </div>
@@ -77,46 +83,46 @@
               ORDER SUMMARY
               <hr>
             </div>
-              <div class="price">
-                <div>สินค้ารวม</div>
-                <div>฿{{numberWithCommas(sumPrice)}}</div>
-              </div>
-              <div class="transport">
-                <div>ค่าขนส่ง</div>
-                <div>
-                  <b-form-select v-model="delivery" :options="deliveryData ? deliveryData : {text: 'LOADING...'}"></b-form-select>
-                </div>
-              </div>
-              <div class="code">
-                <div>ส่วนลด</div>
-                <div class="color-green1">฿{{numberWithCommas(Math.round(sumDiscount))}}</div>
-              </div>
-              <div class="summary">
-                <div>รวมทั้งหมด</div>
-                <div>฿{{numberWithCommas(Math.round(sumAll))}}</div>
-              </div>
-              <hr>
-              <div class="code-input">
-                <input type="text" id="codeNumber" v-model="codeNumber">
+            <div class="price">
+              <div>สินค้ารวม</div>
+              <div>฿{{numberWithCommas(sumPrice)}}</div>
             </div>
-                <div class="transport-input p-0">
+            <div class="transport">
+              <div>ค่าขนส่ง</div>
+              <div>
+                <b-form-select v-model="delivery" :options="deliveryData ? deliveryData : {text: 'LOADING...'}"></b-form-select>
+              </div>
+            </div>
+            <div class="code">
+              <div>ส่วนลด</div>
+              <div class="color-green1">฿{{numberWithCommas(Math.round(sumDiscount))}}</div>
+            </div>
+            <div class="summary">
+              <div>รวมทั้งหมด</div>
+              <div>฿{{numberWithCommas(Math.round(sumAll))}}</div>
+            </div>
+            <hr>
+            <div class="code-input">
+              <input type="text" id="codeNumber" v-model="codeNumber">
+            </div>
+            <div class="transport-input p-0">
 
-                </div>
-                <hr>
-                <div class="detail">
-                  Our Phoenix Collection of Contemporary Door Styles now includes Strata, a very durable textured surface that provides a look and feel that is unmatched.
-                  <hr>
             </div>
-                  <router-link :to="{ name: 'Payment' }">
-                    <div class="button">
-                      ชำระเงิน
-                    </div>
-                  </router-link>
-                </div>
+            <hr>
+            <div class="detail">
+              Our Phoenix Collection of Contemporary Door Styles now includes Strata, a very durable textured surface that provides a look and feel that is unmatched.
+              <hr>
+            </div>
+            <router-link :to="{ name: 'Payment' }">
+              <div class="button">
+                ชำระเงิน
               </div>
-            </div>
+            </router-link>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -137,7 +143,8 @@ export default {
       sumAll: 0,
       sumDiscount: 0,
       codeNumber: null,
-      delivery: 0
+      delivery: 0,
+      buyOption: {}
     };
   },
 
@@ -147,6 +154,8 @@ export default {
   mounted() {
     this.updateSumPrice();
     this.deliveryGet();
+
+    console.log(this.basketData);
   },
 
   ///
@@ -172,6 +181,13 @@ export default {
     delivery: function(data) {
       this.sumTran = data;
       this.updateSumAll();
+    },
+    basketData: {
+        handler: function(data) {
+          this.updateSumPrice();
+          this.updateSumAll();
+        },
+        deep: true
     }
   },
 

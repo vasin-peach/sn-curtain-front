@@ -70,11 +70,11 @@
     .bar-filter-select {
       @include mobile {
         &:first-child div:not(.title) {
-          margin-left: 0.5em;
+          margin-left: 5px;
         }
 
         &:last-child div {
-          margin-right: 0.5em;
+          margin-right: 5px;
         }
       }
 

@@ -147,8 +147,6 @@ const mutations = {
   },
   storeNatureUpdate(state, filter) {
 
-    console.log(filter);
-
     // check object is not empty      
     if (filter) {
       // check category is not empty

@@ -140,8 +140,8 @@ export default {
     type: function(name) {
       this.triggerSearch();
       this.storeTempUpdate({ type: "type", data: name });
-      this.storeNatureUpdate({ category: this.category, type: this.type });
       this.nature = null;
+      this.storeNatureUpdate({ category: this.category, type: this.type });
     },
     nature: function(name) {
       this.triggerSearch();
@@ -150,7 +150,7 @@ export default {
     storeFilterData: function(data) {
       this.storeCategoryUpdate(this.category);
       this.storeTypeUpdate({ category: this.category });
-      this.storeNatureUpdate(null);
+      this.storeNatureUpdate({ category: this.category, type: this.type });
     }
   },
 

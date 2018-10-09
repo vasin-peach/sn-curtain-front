@@ -114,6 +114,11 @@ export default {
         if (this.firstTime && params.length >= 2) this.type = params[1];
         this.firstTime = false;
       }
+
+      // open filter option
+      if (this.$route.params.category) {
+        this.triggerFilter();
+      }
     },
     search: function(name) {
       var _this = this;
@@ -169,10 +174,10 @@ export default {
     if (this.$route.params.category) {
       let params = this.$route.params.category.split(",");
       this.category = params[0];
+      this.triggerFilter();
     }
 
     // open search option
-    this.triggerFilter();
     this.storeFilterGet();
     this.options = this.storeFilterData;
   },

@@ -29,7 +29,18 @@ const Basket = () =>
 const Login = () =>
   import ('@component/Auth/Login');
 const Register = () =>
-  import ('@component/Auth/Register');
+  import('@component/Auth/Register');
+
+// Payment
+const Payment = () =>
+  import('@component/Payment/Payment');
+const Payment_Address = () =>
+  import('@component/Payment/Address');
+const Payment_Credit = () =>
+  import ('@component/Payment/Credit');
+const Payment_Atm = () =>
+  import('@component/Payment/Atm');
+
 // Profile
 const Profile = () =>
   import ('@component/Auth/Profile/Profile');
@@ -37,8 +48,6 @@ const ProfileMe = () =>
   import ('@component/Auth/Profile/Me');
 const ProfileHistory = () =>
   import ('@component/Auth/Profile/History');
-const Payment = () =>
-  import ('@component/Payment/Payment');
 
 Vue.use(Router)
 
@@ -60,6 +69,7 @@ const router = new Router({
         name: 'Landing',
         meta: {
           title: 'หน้าหลัก',
+          login: 2,
         }
       },
       {
@@ -75,7 +85,8 @@ const router = new Router({
         component: Store,
         name: 'Store-Filter',
         meta: {
-          title: 'หน้าร้าน'
+          title: 'หน้าร้าน',
+          login: 2,
         }
       },
       {
@@ -83,7 +94,8 @@ const router = new Router({
         component: Store,
         name: 'Store',
         meta: {
-          title: 'หน้าร้าน'
+          title: 'หน้าร้าน',
+          login: 2,
         }
       },
       {
@@ -133,11 +145,39 @@ const router = new Router({
       {
         path: 'payment',
         component: Payment,
-        name: 'Payment',
         meta: {
           title: 'ชำระเงิน',
           login: 1,
-        }
+        },
+        children: [{
+            path: '/address',
+            alias: '/',
+            component: Payment_Address,
+            name: 'Payment',
+            meta: {
+              title: 'ชำระเงิน - ข้อมูลที่อยู่',
+              login: 1
+            }
+          },
+          {
+            path: '/credit',
+            component: Payment_Credit,
+            name: 'credit',
+            meta: {
+              title: 'ชำระเงิน - ชำระผ่านบัตร',
+              login: 1
+            }
+          },
+          {
+            path: '/atm',
+            component: Payment_Atm,
+            name: 'atm',
+            meta: {
+              title: 'ชำระเงิน - ชำระผ่านการโอน',
+              login: 1
+            }
+          }
+        ]
       },
       {
         path: '/profile',

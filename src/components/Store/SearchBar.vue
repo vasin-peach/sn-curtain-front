@@ -25,7 +25,12 @@
               <div class="title">
                 ประเภท
               </div>
-              <b-form-select v-model="category" :options=" storeFilterCategoryData ? storeFilterCategoryData : {text: 'LOADING...'}" :disabled="storeFilterCategoryData == null"></b-form-select>
+              <div v-if="storeFilterTypeData">
+                <b-form-select v-model="category" :options=" storeFilterCategoryData ? storeFilterCategoryData : {text: 'โปรดรอ'}" :disabled="storeFilterCategoryData == null"></b-form-select>
+              </div>
+              <div v-else>
+                <b-form-select value="โปรดรอ" :disabled="true"></b-form-select>
+              </div>
             </div>
           </div>
 
@@ -35,7 +40,10 @@
                 ชนิด
               </div>
               <div v-if="storeFilterTypeData">
-                <b-form-select v-model="type" :options="storeFilterTypeData ? storeFilterTypeData : {text: 'LOADING...'}" :disabled="storeFilterTypeData.length == 1" :class="{'disable': storeFilterTypeData.length == 1 }"></b-form-select>
+                <b-form-select v-model="type" :options="storeFilterTypeData ? storeFilterTypeData : {text: 'กรุณาเลือกประเภท'}" :disabled="storeFilterTypeData.length == 1" :class="{'disable': storeFilterTypeData.length == 1 }"></b-form-select>
+              </div>
+              <div v-else>
+                <b-form-select value="กรุณาเลือกประเภท" :disabled="true"></b-form-select>
               </div>
             </div>
           </div>
@@ -46,7 +54,10 @@
                 ลักษณะ
               </div>
               <div v-if="storeFilterNatureData">
-                <b-form-select v-model="nature" :options="storeFilterNatureData ? storeFilterNatureData : {text: 'LOADING...'}" :disabled="storeFilterNatureData.length == 1" :class="{'disable': storeFilterNatureData.length == 1}"></b-form-select>
+                <b-form-select v-model="nature" :options="storeFilterNatureData ? storeFilterNatureData : {text: 'กรุณาเลือดชนิด'}" :disabled="storeFilterNatureData.length == 1" :class="{'disable': storeFilterNatureData.length == 1}"></b-form-select>
+              </div>
+              <div v-else>
+                <b-form-select value="กรุณาเลือกชนิด" :disabled="true"></b-form-select>
               </div>
             </div>
           </div>
@@ -93,30 +104,26 @@ export default {
   ///
   watch: {
     $route: function(type) {
-
       // refresh firsttime
       this.firstTime = true;
 
       // init category & type
       if (this.$route.params.category) {
-        let params = this.$route.params.category.split(',');
+        let params = this.$route.params.category.split(",");
         this.category = params[0];
-        if (this.firstTime && params.length >= 2) this.type = params[1]; this.firstTime = false 
+        if (this.firstTime && params.length >= 2) this.type = params[1];
+        this.firstTime = false;
       }
-
     },
     search: function(name) {
-
       var _this = this;
       clearTimeout(this.timeout);
       this.timeout = setTimeout(function() {
         _this.triggerSearch();
       }, 500);
       this.storeTempUpdate({ type: "search", data: name });
-
     },
     category: function(name) {
-
       this.triggerSearch();
       this.storeTempUpdate({ type: "category", data: name });
       this.storeTypeUpdate({ category: name });
@@ -125,31 +132,25 @@ export default {
 
       // check if not firsttime change type option to null
       if (this.$route.params.category) {
-        let params = this.$route.params.category.split(',');
-        if (this.firstTime && params.length >= 2) this.type = params[1]; this.firstTime = false 
+        let params = this.$route.params.category.split(",");
+        if (this.firstTime && params.length >= 2) this.type = params[1];
+        this.firstTime = false;
       }
-
     },
     type: function(name) {
-
       this.triggerSearch();
       this.storeTempUpdate({ type: "type", data: name });
       this.storeNatureUpdate({ category: this.category, type: this.type });
       this.nature = null;
-
     },
     nature: function(name) {
-
       this.triggerSearch();
       this.storeTempUpdate({ type: "nature", data: name });
-
     },
     storeFilterData: function(data) {
-
       this.storeCategoryUpdate(this.category);
       this.storeTypeUpdate({ category: this.category });
       this.storeNatureUpdate(null);
-      
     }
   },
 
@@ -157,7 +158,6 @@ export default {
   // Mounted
   ///
   mounted() {
-
     // init page
     if (!this.storeData) {
       this.storeGet({
@@ -167,7 +167,7 @@ export default {
 
     // init category
     if (this.$route.params.category) {
-      let params = this.$route.params.category.split(',');
+      let params = this.$route.params.category.split(",");
       this.category = params[0];
     }
 
@@ -175,7 +175,6 @@ export default {
     this.triggerFilter();
     this.storeFilterGet();
     this.options = this.storeFilterData;
-
   },
 
   ///

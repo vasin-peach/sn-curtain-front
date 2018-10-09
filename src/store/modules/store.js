@@ -146,32 +146,39 @@ const mutations = {
     state.storeFilterType = createFilterFormat(type);
   },
   storeNatureUpdate(state, filter) {
-    // check category is empty
-    if (!filter || !filter.category || !filter.type) {
-      return state.storeFilterNature = [{
-        text: "กรุณาเลือกชนิด",
-        value: null
-      }]
+
+    console.log(filter);
+
+    // check object is not empty      
+    if (filter) {
+      // check category is not empty
+      if (filter.category && filter.type && state.storeFilter) {
+        // filter type by category
+        let nature = state.storeFilter.filter(data => {
+          return data.val == filter.category && data.type.val == filter.type;
+        });
+
+        // get nature;
+        nature = nature.map(data => {
+          return data.type.nature;
+        })
+
+        var natureTemp = []
+
+        for (let item of nature[0]) {
+          natureTemp.push(item.val);
+        }
+
+        // set nature options
+        return state.storeFilterNature = createFilterFormat(natureTemp);
+      }
     }
 
-    // filter type by category
-    let nature = state.storeFilter.filter(data => {
-      return data.val == filter.category && data.type.val == filter.type;
-    });
+    return state.storeFilterNature = [{
+      text: "กรุณาเลือกชนิด",
+      value: null
+    }]
 
-    // get nature;
-    nature = nature.map(data => {
-      return data.type.nature;
-    })
-
-    var natureTemp = []
-
-    for (let item of nature[0]) {
-      natureTemp.push(item.val);
-    }
-
-    // set nature options
-    state.storeFilterNature = createFilterFormat(natureTemp);
   }
 }
 

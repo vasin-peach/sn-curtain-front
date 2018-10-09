@@ -1,0 +1,90 @@
+@import 'address';
+@import 'credit';
+@import 'atm';
+
+.payment .container {
+  padding: 0;
+}
+
+.payment-container {
+  border-radius: 10px;
+  box-shadow: 0 1px 3px 0 $gray2;
+  margin: 30px 10px !important;
+
+  @include small {
+    border-radius: 0px;
+    margin: 15px 10px !important;
+  }
+
+
+  >div {
+    padding: 20px 15px;
+
+    @include small {
+      border-radius: 0px !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .payment-content {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background: $white1;
+  }
+
+  .payment-detail {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: -2px 0 3px 0 $gray3;
+    background: $white3;
+  }
+
+  .wrapper {
+    .wrapper-header {
+      position: relative;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+
+
+      .title {
+        font-weight: 400;
+        font-size: 23px;
+        text-align: center;
+        color: $dark1;
+      }
+
+      .back {
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        transition: 0.1s ease-in-out;
+
+        span {
+          @include small {
+            display: none;
+          }
+        }
+
+        svg {
+          display: inline-block;
+          font-size: 23px;
+          color: $orange1;
+          margin-bottom: -2.8px;
+          transition: 0.1s ease-in-out;
+        }
+
+        &:hover,
+        &:focus {
+          transform: translateX(-3px);
+
+          svg {
+            transform: translateX(-1px);
+          }
+        }
+      }
+    }
+  }
+}

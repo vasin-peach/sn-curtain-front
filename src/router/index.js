@@ -150,12 +150,12 @@ const router = new Router({
           login: 1,
         },
         children: [{
-            path: '/address',
+            path: 'address',
             alias: '/',
             component: Payment_Address,
             name: 'Payment',
             meta: {
-              title: 'ชำระเงิน - ข้อมูลที่อยู่',
+              title: 'ข้อมูลที่อยู่',
               login: 1
             }
           },
@@ -164,7 +164,7 @@ const router = new Router({
             component: Payment_Credit,
             name: 'credit',
             meta: {
-              title: 'ชำระเงิน - ชำระผ่านบัตร',
+              title: 'ชำระผ่านบัตร',
               login: 1
             }
           },
@@ -173,7 +173,7 @@ const router = new Router({
             component: Payment_Atm,
             name: 'atm',
             meta: {
-              title: 'ชำระเงิน - ชำระผ่านการโอน',
+              title: 'ชำระผ่านการโอน',
               login: 1
             }
           }

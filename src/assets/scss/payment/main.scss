@@ -60,7 +60,7 @@
         cursor: pointer;
         position: absolute;
         left: 0;
-        transition: 0.1s ease-in-out;
+        transition: 0.2s ease-in-out;
 
         span {
           @include small {
@@ -73,7 +73,7 @@
           font-size: 23px;
           color: $orange1;
           margin-bottom: -2.8px;
-          transition: 0.1s ease-in-out;
+          transition: 0.2s ease-in-out;
         }
 
         &:hover,

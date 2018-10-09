@@ -13,6 +13,7 @@
               </div>
               <div class="title">สถานที่ส่ง</div>
             </div>
+            <hr>
             <router-view />
           </div>
         </div>
@@ -20,9 +21,12 @@
         <div class="payment-detail col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3">
           <div class="wrapper">
             <div class="wrapper-header">
-              Hi
+              <div class="title">
+                รายการ
+              </div>
             </div>
-            Right
+            <hr>
+            รายการสินค้า
           </div>
         </div>
       </div>

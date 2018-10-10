@@ -26,7 +26,21 @@
               </div>
             </div>
             <hr>
-            รายการสินค้า
+            <div class="wrapper-content">
+              <div class="order-box scrollCancel">
+                <div class="order-item" v-for="items in basketData" :key="items.id">
+                  <div class="row m-0">
+                    <div class="col-7 col-sm-7 col-md-7">
+                      <img v-lazy="items.data.brand.src">
+                    </div>
+                    <div class="col">
+                      <span>{{ numberWithCommas(items.buyOption * items.amount) }}</span>
+                      <span>({{items.amount}})</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -35,11 +49,16 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "Payment",
   methods: {
-    // ...mapActions(["createToken"])
+    numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  },
+  computed: {
+    ...mapGetters(["basketData"])
   },
   created() {
     // this.createToken();

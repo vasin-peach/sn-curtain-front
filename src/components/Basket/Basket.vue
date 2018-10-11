@@ -143,7 +143,7 @@ export default {
       sumAll: 0,
       sumDiscount: 0,
       codeNumber: null,
-      delivery: 0,
+      delivery: 50,
       buyOption: {}
     };
   },
@@ -152,9 +152,6 @@ export default {
   // Mounted
   ///
   mounted() {
-    
-    //// clear localstorage.
-    // localStorage.setItem("basket", JSON.stringify([]));
     this.updateSumPrice();
     this.deliveryGet();
   },
@@ -184,29 +181,27 @@ export default {
       this.updateSumAll();
     },
     basketData: {
-        handler: function(data) {
-          
-          this.updateSumPrice();
-          this.updateSumAll();
+      handler: function(data) {
+        this.updateSumPrice();
+        this.updateSumAll();
 
-          // get index of different item.
-          let diff = data.findIndex((item, idx) => {
-            return item.buyOption !== this.oldItems[idx].buyOption;
-          });
+        // get index of different item.
+        let diff = data.findIndex((item, idx) => {
+          return item.buyOption !== this.oldItems[idx].buyOption;
+        });
 
-          // update old item.
-          if (diff >= 0) {
-            this.oldItems[diff].buyOption = data[diff].buyOption;
-          }
+        // update old item.
+        if (diff >= 0) {
+          this.oldItems[diff].buyOption = data[diff].buyOption;
+        }
 
-          // update to localstorage.
-          localStorage.setItem("basket", JSON.stringify(this.oldItems));
+        // update to localstorage.
+        localStorage.setItem("basket", JSON.stringify(this.oldItems));
 
-          // animate
-          this.basketAnimate();
-
-        },
-        deep: true
+        // animate
+        this.basketAnimate();
+      },
+      deep: true
     }
   },
 
@@ -214,7 +209,12 @@ export default {
   // Methods
   ///
   methods: {
-    ...mapMutations(["basketUpdate", "basketDelete"]),
+    ...mapMutations([
+      "basketUpdate",
+      "basketDelete",
+      "discountUpdate",
+      "transportUpdate"
+    ]),
     ...mapActions(["discountGet", "deliveryGet"]),
     updateSumPrice() {
       this.sumPrice = this.basketData.reduce((sum, item) => {
@@ -226,6 +226,12 @@ export default {
       var sumAll = this.sumPrice + this.sumTran - this.sumDiscount;
       sumAll = this.sumPrice + this.sumTran - this.sumDiscount;
       this.sumAll = sumAll > 0 ? sumAll : 0;
+
+      // update discount state
+      this.discountUpdate(this.sumDiscount);
+
+      // update transport state
+      this.transportUpdate(this.delivery);
     },
     amountMinus(id) {
       // get index by id

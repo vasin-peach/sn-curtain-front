@@ -5,7 +5,9 @@ import _ from 'lodash';
 ///
 
 const state = {
-  basket: []
+  basket: [],
+  discount: 0,
+  transport: 0,
 }
 
 
@@ -16,6 +18,12 @@ const getters = {
   basketData: state => {
     return state.basket
   },
+  discountData: state => {
+    return state.discount
+  },
+  transportData: state => {
+    return state.transport
+  }
 }
 
 
@@ -32,6 +40,12 @@ const mutations = {
       state.basket.splice(getIndex, 1);
       localStorage.setItem("basket", JSON.stringify(state.basket))
     }
+  },
+  discountUpdate(state, data) {
+    state.discount = data;
+  },
+  transportUpdate(state, data) {
+    state.transport = data;
   }
 }
 

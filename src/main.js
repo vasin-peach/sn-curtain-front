@@ -29,7 +29,8 @@ import {
   faUserCircle,
   faLock,
   faListAlt,
-  faChevronLeft
+  faChevronLeft,
+  faMapMarkedAlt
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faFacebookSquare,
@@ -61,7 +62,9 @@ library.add(
   faFacebookSquare,
   faGooglePlusSquare,
   faListAlt,
-  faChevronLeft
+  faChevronLeft,
+  faMapMarkedAlt
+
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

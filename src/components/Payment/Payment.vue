@@ -11,7 +11,8 @@
                   <font-awesome-icon icon="chevron-left" aria-hidden="true" /> <span>ย้อนกลับ</span>
                 </router-link>
               </div>
-              <div class="title">สถานที่ส่ง</div>
+              <div class="title">
+                <font-awesome-icon icon="map-marked-alt" aria-hidden="true" /> สถานที่ส่ง</div>
             </div>
             <hr>
             <router-view />
@@ -31,12 +32,24 @@
                 <div class="order-item" v-for="items in basketData" :key="items.id">
                   <div class="row m-0">
                     <div class="col-7 col-sm-7 col-md-7">
-                      <img v-lazy="items.data.brand.src">
+                      <router-link :to="{ name: 'Product', params: { id: items.id} }">
+                        <img v-lazy="items.data.brand.src">
+                      </router-link>
                     </div>
                     <div class="col">
                       <span>{{ numberWithCommas(items.buyOption * items.amount) }}</span>
                       <span>({{items.amount}})</span>
                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="order-detail">
+                <div class="row m-0">
+                  <div class="col">
+                    สินค้ารวม
+                  </div>
+                  <div class="col">
+                    {{ productPrice }}
                   </div>
                 </div>
               </div>
@@ -52,17 +65,36 @@
 import { mapGetters } from "vuex";
 export default {
   name: "Payment",
+  data() {
+    return {
+      productPrice: 0,
+      discountPrice: 0,
+      transportPrice: 0
+    };
+  },
+  watch: {
+    basketData: function() {
+      this.initPrice();
+    }
+  },
   methods: {
     numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    initPrice() {
+      // init sum of product
+      this.productPrice = this.basketData.reduce((total, current) => {
+        return total + current.buyOption * current.amount;
+      }, 0);
+
+      // init sum of product minus discount
+      console.log(this.basketData);
     }
   },
   computed: {
     ...mapGetters(["basketData"])
   },
-  created() {
-    // this.createToken();
-  }
+  created() {}
 };
 </script>
 

@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Payment",
   data() {
@@ -107,6 +107,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['getSession']),
     numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
@@ -128,6 +129,7 @@ export default {
   },
   mounted() {
     this.initPrice();
+    this.getSession();
   }
 };
 </script>

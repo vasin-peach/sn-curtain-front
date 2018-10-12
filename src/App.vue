@@ -18,7 +18,7 @@ export default {
   },
   mounted() {
     this.csrfGet();
-  }
+  },
 };
 </script>
 

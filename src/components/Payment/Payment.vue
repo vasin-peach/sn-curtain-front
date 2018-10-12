@@ -107,7 +107,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getSession']),
+    ...mapActions(['basketGetSession']),
     numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
@@ -129,7 +129,11 @@ export default {
   },
   mounted() {
     this.initPrice();
-    this.getSession();
+    this.basketGetSession().then(response => {
+      this.productPrice = response.data.price;
+      this.discountPrice = response.data.discount;
+      this.transportPrice = response.data.delivery;
+    })
   }
 };
 </script>

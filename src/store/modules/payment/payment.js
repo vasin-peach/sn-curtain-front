@@ -24,13 +24,14 @@ const mutations = {
 
 // Actions
 const actions = {
-  getSession({ commit }) {
+  getSession({
+    commit,
+    getters
+  }) {
     return new Promise((resolve, reject) => {
       var uriRequest = process.env.BACKEND_URI + "/basket/get";
       Vue.http
-        .post(uriRequest, {
-          var: "test"
-        })
+        .get(uriRequest)
         .then(
           response => {
             console.log(response);
@@ -42,7 +43,9 @@ const actions = {
     });
   },
 
-  createToken({ commit }) {
+  createToken({
+    commit
+  }) {
     return new Promise((resolve, reject) => {
       Omise.setPublicKey(process.env.OMISE_CLIENT);
 

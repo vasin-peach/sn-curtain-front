@@ -53,7 +53,32 @@ const mutations = {
 ///
 // Actions
 ///
-const actions = {}
+const actions = {
+  basketUpdateSession({
+    commit
+  }, data) {
+    return new Promise((resolve, reject) => {
+      let uriRequest = process.env.BACKEND_URI + "/basket/update";
+      Vue.http.post(uriRequest, data).then(response => {
+        resolve(response.data);
+      }, error => {
+        reject(error);
+      })
+    })
+  },
+  basketGetSession({
+    commit
+  }) {
+    return new Promise((resolve, reject) => {
+      let uriRequest = process.env.BACKEND_URI + "/basket/get";
+      Vue.http.get(uriRequest).then(response => {
+        resolve(response.data);
+      }, error => {
+        reject(error);
+      })
+    })
+  }
+}
 
 export default {
   state,

@@ -16,7 +16,7 @@ const getters = {
 const mutations = {
   csrfUpdate(state, data) {
     state.csrf = data
-  }
+  },
 }
 
 // ACTIONS
@@ -28,7 +28,7 @@ const actions = {
       let uriRequest = process.env.BACKEND_URI + "/csrf/get";
       Vue.http.get(uriRequest).then(response => {
         commit("csrfUpdate", response.data.data);
-        return resolve(response);
+        return resolve(response.data.data);
       }, error => {
         return reject(error);
       })

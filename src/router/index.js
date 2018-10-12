@@ -29,7 +29,18 @@ const Basket = () =>
 const Login = () =>
   import ('@component/Auth/Login');
 const Register = () =>
-  import ('@component/Auth/Register');
+  import('@component/Auth/Register');
+
+// Payment
+const Payment = () =>
+  import('@component/Payment/Payment');
+const Payment_Address = () =>
+  import('@component/Payment/Address');
+const Payment_Credit = () =>
+  import ('@component/Payment/Credit');
+const Payment_Atm = () =>
+  import('@component/Payment/Atm');
+
 // Profile
 const Profile = () =>
   import ('@component/Auth/Profile/Profile');
@@ -37,8 +48,6 @@ const ProfileMe = () =>
   import ('@component/Auth/Profile/Me');
 const ProfileHistory = () =>
   import ('@component/Auth/Profile/History');
-const Payment = () =>
-  import ('@component/Payment/Payment');
 
 Vue.use(Router)
 
@@ -60,6 +69,7 @@ const router = new Router({
         name: 'Landing',
         meta: {
           title: 'หน้าหลัก',
+          login: 2,
         }
       },
       {
@@ -75,7 +85,8 @@ const router = new Router({
         component: Store,
         name: 'Store-Filter',
         meta: {
-          title: 'หน้าร้าน'
+          title: 'หน้าร้าน',
+          login: 2,
         }
       },
       {
@@ -83,7 +94,8 @@ const router = new Router({
         component: Store,
         name: 'Store',
         meta: {
-          title: 'หน้าร้าน'
+          title: 'หน้าร้าน',
+          login: 2,
         }
       },
       {
@@ -133,11 +145,39 @@ const router = new Router({
       {
         path: 'payment',
         component: Payment,
-        name: 'Payment',
         meta: {
           title: 'ชำระเงิน',
           login: 1,
-        }
+        },
+        children: [{
+            path: 'address',
+            alias: '/',
+            component: Payment_Address,
+            name: 'Payment',
+            meta: {
+              title: 'ข้อมูลที่อยู่',
+              login: 1
+            }
+          },
+          {
+            path: '/credit',
+            component: Payment_Credit,
+            name: 'credit',
+            meta: {
+              title: 'ชำระผ่านบัตร',
+              login: 1
+            }
+          },
+          {
+            path: '/atm',
+            component: Payment_Atm,
+            name: 'atm',
+            meta: {
+              title: 'ชำระผ่านการโอน',
+              login: 1
+            }
+          }
+        ]
       },
       {
         path: '/profile',
@@ -184,6 +224,9 @@ router.beforeEach((to, from, next) => {
   // update title
   document.title = to.meta.title + " - S&N Curtain";
 
+  // init smooth scroll
+  smoothScroll(to);
+
   // check path exist
   to.matched.length ? next() : next({
     name: 'Notfound'
@@ -191,6 +234,8 @@ router.beforeEach((to, from, next) => {
 
   // update redirect after login path every time
   Vue.cookie.set("redirect", to.path);
+
+
 
 
   /// --
@@ -217,33 +262,6 @@ router.beforeEach((to, from, next) => {
       }
     });
   }
-
-  // checkAuth().then(() => {
-
-  //   // Auth
-  //   if (to.matched.some(record => record.meta.login == 0 || record.meta.login == 1)) {
-
-  //     var user = store.getters.userData;
-
-  //     if (to.meta.login) {
-  //       if (_.isEmpty(user)) {
-  //         return next({
-  //           name: 'Login'
-  //         })
-  //       }
-  //     } else if (!to.meta.login) {
-  //       if (!_.isEmpty(user)) {
-  //         return next({
-  //           name: 'Profile'
-  //         })
-  //       }
-  //     }
-  //   }
-  // })
-
-
-
-
   async function checkAuth() {
     return new Promise((resolve, reject) => {
       store.dispatch('profile').then(() => {
@@ -256,6 +274,41 @@ router.beforeEach((to, from, next) => {
 
   // next
   next();
-})
+});
+
+function smoothScroll(to) {
+  var $window = $("html"); //Window object
+  var scrollTime = 0.8; //Scroll time
+  var scrollDistance = 270; //Distance. Use smaller value for shorter scroll and greater value for longer scroll
+
+  // check if path area ['address']
+  if (to.path.split("/").indexOf('address') == -1) {
+    // bind html scroll
+    $window.bind("mousewheel DOMMouseScroll scroll", function (event) {
+      event.preventDefault();
+
+      var delta =
+        event.originalEvent.wheelDelta / 120 ||
+        -event.originalEvent.detail / 3;
+      var scrollTop = $window.scrollTop();
+      var finalScroll = scrollTop - parseInt(delta * scrollDistance);
+
+      TweenMax.to($window, scrollTime, {
+        scrollTo: {
+          y: finalScroll,
+          autoKill: true
+        },
+        ease: Power1.easeOut, //For more easing functions see https://api.greensock.com/js/com/greensock/easing/package-detail.html
+        overwrite: 5
+      });
+    });
+  } else {
+    // unbind html scroll
+    $window.unbind("mousewheel DOMMouseScroll scroll");
+  }
+
+}
+
+
 
 export default router

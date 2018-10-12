@@ -2,7 +2,7 @@
   <div class="section2">
     <div class="container">
       <div class="row category-container d-flex justify-content-between">
-        <div class="col-4 col-md-2 category-box fade" v-for="(item, index) in category" :key="index">
+        <div class="col-3 col-md-2 category-box fade" v-for="(item, index) in category" :key="index">
           <router-link :to="{ name: 'Store-Filter', params: { category: item.params} }">
             <div class="category-content">
               <img v-lazy="'/static/images/category/' + item.name" :alt="item.name">
@@ -26,33 +26,63 @@ export default {
       category: [
         {
           name: "category-01.png",
-          params: "ประเภท1",
-          title: "ม่านเลื่อน"
+          params: "ประเภท1,ชนิด1",
+          title: "ม่านตาไก่"
         },
         {
           name: "category-02.png",
           params: "ประเภท1,ชนิด2",
-          title: "ม่านพับ"
+          title: "ม่านจีบ"
         },
         {
           name: "category-03.png",
           params: "ประเภท1,ชนิด3",
-          title: "ม่านคอกระเช้า"
+          title: "ม่านพับ"
         },
         {
           name: "category-04.png",
-          params: "ประเภท2",
-          title: "ม่านตาไก่"
+          params: "ประเภท1, ชนิด4",
+          title: "ม่านคอกระเช้า"
         },
         {
           name: "category-05.png",
           params: "ประเภท2,ชนิด1",
-          title: "ม่านตาไก่"
+          title: "ม่านหลุย"
         },
         {
           name: "category-06.png",
           params: "ประเภท2,ชนิด2",
-          title: "ม่านตาไก่"
+          title: "ม่านมู่ลี่"
+        },
+        {
+          name: "category-01.png",
+          params: "ประเภท3,ชนิด1",
+          title: "ม่านม้วน"
+        },
+        {
+          name: "category-02.png",
+          params: "ประเภท3,ชนิด2",
+          title: "ม่านกั้นแอร์"
+        },
+        {
+          name: "category-06.png",
+          params: "ประเภท2,ชนิด2",
+          title: "ม่านลอน"
+        },
+        {
+          name: "category-03.png",
+          params: "ประเภท3,ชนิด3",
+          title: "วอลล์เปอเปอร์"
+        },
+        {
+          name: "category-04.png",
+          params: "ประเภท3, ชนิด4",
+          title: "มุ้งลวด-มุ้งจีบ"
+        },
+        {
+          name: "category-05.png",
+          params: "ประเภท4,ชนิด1",
+          title: "อุปกรณ์ม่าน"
         }
       ]
     };

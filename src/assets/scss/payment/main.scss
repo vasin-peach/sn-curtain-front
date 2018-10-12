@@ -10,6 +10,7 @@
   border-radius: 10px;
   box-shadow: 0 1px 3px 0 $gray2;
   margin: 30px 10px !important;
+  margin-bottom: 15vh !important;
 
   @include small {
     border-radius: 0px;
@@ -30,6 +31,10 @@
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     background: $white1;
+
+    @include small {
+      border-radius: 0px !important;
+    }
   }
 
   .payment-detail {
@@ -115,13 +120,32 @@
             .col {
               margin: 0;
               padding: 0px 13px 0px 0px;
-              text-align: right;
+              text-align: left;
               color: $green1;
 
               @include tablet {
                 font-size: 16px;
               }
             }
+          }
+        }
+      }
+
+      .order-detail {
+        margin-top: 30px;
+
+        .col:last-child {
+          font-weight: 400;
+          color: $green1;
+        }
+
+        .row:last-child {
+          display: flex;
+          align-items: center;
+
+          .col:last-child {
+            font-weight: 500;
+            font-size: 23px;
           }
         }
       }

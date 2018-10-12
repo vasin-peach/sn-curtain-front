@@ -49,7 +49,36 @@
                     สินค้ารวม
                   </div>
                   <div class="col">
-                    {{ productPrice }}
+                    {{ numberWithCommas(productPrice) }}
+                  </div>
+                </div>
+                <div class="row m-0">
+                  <div class="col">
+                    ส่วนลด
+                  </div>
+                  <div class="col">
+                    {{ numberWithCommas(discountPrice) }}
+                  </div>
+                </div>
+                <div class="row m-0">
+                  <div class="col">
+                    ค่าขนส่ง
+                  </div>
+                  <div class="col">
+                    {{ numberWithCommas(transportPrice) }}
+                  </div>
+                </div>
+                <div class="row m-0">
+                  <div class="col-12">
+                    <hr>
+                  </div>
+                </div>
+                <div class="row m-0">
+                  <div class="col">
+                    รวม
+                  </div>
+                  <div class="col">
+                    {{numberWithCommas(productPrice + transportPrice - discountPrice)}}
                   </div>
                 </div>
               </div>
@@ -87,14 +116,19 @@ export default {
         return total + current.buyOption * current.amount;
       }, 0);
 
-      // init sum of product minus discount
-      console.log(this.basketData);
+      // init price of discount
+      this.discountPrice = Math.round(this.discountData);
+
+      // init price of delivery
+      this.transportPrice = Math.round(this.transportData);
     }
   },
   computed: {
-    ...mapGetters(["basketData"])
+    ...mapGetters(["basketData", "discountData", "transportData"])
   },
-  created() {}
+  mounted() {
+    this.initPrice();
+  }
 };
 </script>
 

@@ -9,15 +9,25 @@
               <div class="col-2 col-sm-2 col-md-3 col-lg-2">
                 <img v-lazy="'/static/images/icon/marker.svg'" alt="market">
               </div>
-              <div class="col flex align-center font-mitr">
+              <div class="col flex align-center font-mitr" style="font-size: 13px;">
+                สำนักงานใหญ่
                 18 ถนน หทัยมิตร แขวง ทรายกองดิน เขต คลองสามวา กรุงเทพมหานคร 10510
+              </div>
+            </li>
+            <li class="row m-0 fade">
+              <div class="col-2 col-sm-2 col-md-3 col-lg-2">
+                <img v-lazy="'/static/images/icon/marker.svg'" alt="market">
+              </div>
+              <div class="col flex align-center font-mitr" style="font-size: 13px;">
+                สาขาสอง
+                59/1 ซ.รามอินทรา 117 ถ.รามอินทรา แขวง.มีนบุรี เขต.มีนบุรี กรุงเทพมหานคร 10510
               </div>
             </li>
             <li class="row m-0 fade">
               <div class="col-2 col-sm-2 col-md-3 col-lg-2">
                 <img v-lazy="'/static/images/icon/mail.svg'" alt="mail">
               </div>
-              <div class="col flex align-center font-mitr">
+              <div class="col flex align-center font-mitr" style="font-size: 13px;">
                 curtain9@gmail.com
               </div>
             </li>
@@ -25,8 +35,10 @@
               <div class="col-2 col-sm-2 col-md-3 col-lg-2">
                 <img v-lazy="'/static/images/icon/mobile.svg'" alt="mobile">
               </div>
-              <div class="col flex align-center font-mitr">
-                089 796 3038
+              <div class="col flex align-center font-mitr" style="font-size: 13px;">
+                089 796 3038 (ฝ่ายออนไลน์)<br>
+                081 550 8044 (ฝ่ายประเมินราคา)<br>
+                081 808 9033 (ฝ่ายติดตั้ง)<br>
               </div>
             </li>
           </ul>
@@ -40,23 +52,23 @@
 </template>
 
 <script>
-import ScrollMagic from 'scrollmagic';
+import ScrollMagic from "scrollmagic";
 export default {
-  name: 'Section6',
+  name: "Section6",
   mounted() {
     // init scrollmagic
-      var controller = new ScrollMagic.Controller();
-              $('fade').each(function() {
-          var categoryScene = new ScrollMagic.Scene({
-            triggerElement: this,
-            triggerHook: 1,
-            reverse: false
-          })
-          .setClassToggle(this, 'fade-in')
-          .addTo(controller);
-        })
+    var controller = new ScrollMagic.Controller();
+    $("fade").each(function() {
+      var categoryScene = new ScrollMagic.Scene({
+        triggerElement: this,
+        triggerHook: 1,
+        reverse: false
+      })
+        .setClassToggle(this, "fade-in")
+        .addTo(controller);
+    });
   }
-}
+};
 </script>
 
 <style>

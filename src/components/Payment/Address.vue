@@ -52,7 +52,6 @@
     </form>
   </div>
 </template>
-
 <script>
 export default {
   name: "payment_address",
@@ -72,6 +71,8 @@ export default {
         }
       })
     }
+  },
+  mounted() {
   }
 };
 </script>

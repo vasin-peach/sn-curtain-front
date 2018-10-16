@@ -65,7 +65,7 @@
           <div class="col">
             <div class="input-group">
               <b-form-group label="หมู่บ้าน">
-                <b-form-input :state="!errors.has('village_no')" v-validate="{ required: true, regex: /^(\d{5})?$/ }" name="village_no" v-model="form.village_no" type="text" placeholder="เช่น 10510" maxlength="5"></b-form-input>
+                <b-form-input :state="!errors.has('village_no')" v-validate="{ required: true, }" name="village_no" v-model="form.village_no" type="text" placeholder="หมู่บ้าน"></b-form-input>
                 <b-form-invalid-feedback v-show="errors.has('village_no')">
                   {{ errors.first('village_no') }}
                 </b-form-invalid-feedback>
@@ -77,7 +77,7 @@
           <div class="col">
             <div class="input-group">
               <b-form-group label="แขวง/ตำบล">
-                <b-form-input :state="!errors.has('district')" v-validate="{ required: true, min: 3 }" name="district" v-model="form.district" type="text" placeholder="แขวง/ตำบล" maxlength="5"></b-form-input>
+                <b-form-input :state="!errors.has('district')" v-validate="{ required: true, }" name="district" v-model="form.district" type="text" placeholder="แขวง/ตำบล" maxlength="5"></b-form-input>
                 <b-form-invalid-feedback v-show="errors.has('district')">
                   {{ errors.first('district') }}
                 </b-form-invalid-feedback>
@@ -89,7 +89,7 @@
           <div class="col">
             <div class="input-group">
               <b-form-group label="เขต/อำเภอ">
-                <b-form-input :state="!errors.has('amphoe')" v-validate="{ required: true, min: 3 }" name="amphoe" v-model="form.amphoe" type="text" placeholder="เขต/อำเภอ"></b-form-input>
+                <b-form-input :state="!errors.has('amphoe')" v-validate="{ required: true }" name="amphoe" v-model="form.amphoe" type="text" placeholder="เขต/อำเภอ"></b-form-input>
                 <b-form-invalid-feedback v-show="errors.has('amphoe')">
                   {{ errors.first('amphoe') }}
                 </b-form-invalid-feedback>
@@ -101,7 +101,7 @@
           <div class="col">
             <div class="input-group">
               <b-form-group label="ถนน">
-                <b-form-input :state="!errors.has('road')" v-validate="{ required: true, min: 3 }" name="road" v-model="form.road" type="text" placeholder="ถนน"></b-form-input>
+                <b-form-input :state="!errors.has('road')" v-validate="{ required: true }" name="road" v-model="form.road" type="text" placeholder="ถนน"></b-form-input>
                 <b-form-invalid-feedback v-show="errors.has('road')">
                   {{ errors.first('road') }}
                 </b-form-invalid-feedback>
@@ -113,7 +113,7 @@
           <div class="col">
             <div class="input-group">
               <b-form-group label="จังหวัด">
-                <b-form-input :state="!errors.has('province')" v-validate="{ required: true, min: 3 }" name="province" v-model="form.province" type="text" placeholder="จังหวัด"></b-form-input>
+                <b-form-input :state="!errors.has('province')" v-validate="{ required: true }" name="province" v-model="form.province" type="text" placeholder="จังหวัด"></b-form-input>
                 <b-form-invalid-feedback v-show="errors.has('province')">
                   {{ errors.first('province') }}
                 </b-form-invalid-feedback>

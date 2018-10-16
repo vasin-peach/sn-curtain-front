@@ -65,7 +65,7 @@
                 </div>
                 <div class="row m-0">
                   <div class="col">
-                    รวม
+                    <b>รวม</b>
                   </div>
                   <div class="col">
                     ฿{{numberWithCommas(productPrice + transportPrice - discountPrice)}}

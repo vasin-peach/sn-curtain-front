@@ -1,8 +1,17 @@
 <template>
   <div class="payment_address">
+    <div class="wrapper-header">
+      <div class="back">
+        <router-link :to="{ name: 'Basket'}">
+          <font-awesome-icon icon="chevron-left" aria-hidden="true" /> <span>ย้อนกลับ</span>
+        </router-link>
+      </div>
+      <div class="title">
+        <font-awesome-icon icon="map-marked-alt" aria-hidden="true" /> สถานที่ส่ง</div>
+    </div>
+    <hr>
     <form @submit.prevent="validateAddress">
       <div class="address-body">
-        {{ form }}
         <div class="row">
           <div class="col-12 col-sm-12 col-md-6">
             <div class="input-group">
@@ -135,6 +144,14 @@
               <b-form-checkbox v-model="form.save" :value="true" :unchecked-value="false"></b-form-checkbox>
               <span>ใช้ที่อยู่นี้เป็นที่อยู่หลัก</span>
             </div>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col">
+            <button type="submit" class="button w-100 p-3">
+              ชำระเงิน
+              <font-awesome-icon icon="lock" aria-hidden="true" class="ml-1" />
+            </button>
           </div>
         </div>
       </div>

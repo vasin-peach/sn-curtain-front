@@ -189,8 +189,25 @@ export default {
   methods: {
     validateAddress() {
       this.$validator.validateAll().then(result => {
-        if (result) {
-          console.log("hi");
+        if (!result) {
+          // empty text array
+          var errorText = [];
+
+          // get error message from validator and push to error text
+          for (let key in this.errors.items) {
+            let item = this.errors.items[key];
+            errorText.push(item.msg);
+          }
+
+          // remove duplicate error and combind array to word
+          errorText = _.uniq(errorText).join("<br>");
+
+          // alert error
+          this.$swal({
+            type: "warning",
+            title: "ที่อยู่ไม่ถูกต้อง",
+            html: errorText
+          });
         }
       });
     }

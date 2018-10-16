@@ -27,7 +27,7 @@
                       </router-link>
                     </div>
                     <div class="col">
-                      <span>{{ numberWithCommas(items.buyOption * items.amount) }}</span>
+                      <span>฿{{ numberWithCommas(items.buyOption * items.amount) }}</span>
                       <span>({{items.amount}})</span>
                     </div>
                   </div>
@@ -39,7 +39,7 @@
                     สินค้ารวม
                   </div>
                   <div class="col">
-                    {{ numberWithCommas(productPrice) }}
+                    ฿{{ numberWithCommas(productPrice) }}
                   </div>
                 </div>
                 <div class="row m-0">
@@ -47,7 +47,7 @@
                     ส่วนลด
                   </div>
                   <div class="col">
-                    {{ numberWithCommas(discountPrice) }}
+                    ฿{{ numberWithCommas(discountPrice) }}
                   </div>
                 </div>
                 <div class="row m-0">
@@ -55,7 +55,7 @@
                     ค่าขนส่ง
                   </div>
                   <div class="col">
-                    {{ numberWithCommas(transportPrice) }}
+                    ฿{{ numberWithCommas(transportPrice) }}
                   </div>
                 </div>
                 <div class="row m-0">
@@ -68,7 +68,7 @@
                     รวม
                   </div>
                   <div class="col">
-                    {{numberWithCommas(productPrice + transportPrice - discountPrice)}}
+                    ฿{{numberWithCommas(productPrice + transportPrice - discountPrice)}}
                   </div>
                 </div>
               </div>

@@ -148,6 +148,7 @@ const router = new Router({
         meta: {
           title: 'ชำระเงิน',
           login: 1,
+          payment: 1
         },
         children: [{
             path: 'address',
@@ -157,7 +158,7 @@ const router = new Router({
             meta: {
               title: 'ข้อมูลที่อยู่',
               login: 1,
-              payment: 1
+
             }
           },
           {
@@ -228,11 +229,6 @@ router.beforeEach((to, from, next) => {
   // init smooth scroll
   smoothScroll(to);
 
-  // check path exist
-  to.matched.length ? next() : next({
-    name: 'Notfound'
-  });
-
   // update redirect after login path every time
   Vue.cookie.set("redirect", to.path);
 
@@ -265,29 +261,10 @@ router.beforeEach((to, from, next) => {
   }
 
   if (to.matched.some(record => record.meta.payment == 1)) {
-    store.dispatch('basketGetSession').then(response => {
-
-      if (_.isEmpty(response)) return next({
-        name: 'Basket'
-      });
-
-      if (!response.data.price == undefined || response.data.price == 0) return next({
-        name: 'Basket'
-      });
-
-      if (response.data.discount == undefined) return next({
-        name: 'Basket'
-      });
-
-      if (!response.data.delivery == undefined) return next({
-        name: 'Basket'
-      });
-
-    }, error => {
-      return next({
-        name: 'Basket'
-      });
-    })
+    // navigation to basket if basket is empty
+    if (_.isEmpty(JSON.parse(localStorage.basket))) return next({
+      name: 'Basket'
+    });
   }
 
 
@@ -300,6 +277,12 @@ router.beforeEach((to, from, next) => {
       })
     })
   }
+
+
+  // check path exist
+  to.matched.length ? next() : next({
+    name: 'Notfound'
+  });
 
   // next
   next();

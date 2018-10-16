@@ -114,7 +114,7 @@
               <hr>
             </div>
             <router-link :to="{ name: 'Payment' }">
-              <div class="button">
+              <div class="button" @click="basketUpdateSession({price: sumPrice, delivery: delivery, discount: sumDiscount})">
                 ชำระเงิน
               </div>
             </router-link>
@@ -193,10 +193,9 @@ export default {
         // update old item.
         if (diff >= 0) {
           this.oldItems[diff].buyOption = data[diff].buyOption;
+          // update to localstorage.
+          localStorage.setItem("basket", JSON.stringify(this.oldItems));
         }
-
-        // update to localstorage.
-        localStorage.setItem("basket", JSON.stringify(this.oldItems));
 
         // animate
         this.basketAnimate();
@@ -215,7 +214,7 @@ export default {
       "discountUpdate",
       "transportUpdate"
     ]),
-    ...mapActions(["discountGet", "deliveryGet"]),
+    ...mapActions(["discountGet", "deliveryGet", "basketUpdateSession"]),
     updateSumPrice() {
       this.sumPrice = this.basketData.reduce((sum, item) => {
         return sum + item.buyOption * item.amount;
@@ -232,6 +231,13 @@ export default {
 
       // update transport state
       this.transportUpdate(this.delivery);
+
+      // update basket session
+      this.basketUpdateSession({
+        price: this.sumPrice,
+        delivery: this.delivery,
+        discount: this.sumDiscount
+      });
     },
     amountMinus(id) {
       // get index by id

@@ -84,6 +84,15 @@ if (process.env.NODE_ENV === 'staging') {
     .install();
 }
 
+// Init csrf to request headers
+store.dispatch("csrfGet").then(response => {
+  Vue.http.interceptors.push((request, next) => {
+    request.headers.set('CSRF-Token', response)
+    next();
+  })
+})
+
+
 Vue.config.productionTip = false
 
 

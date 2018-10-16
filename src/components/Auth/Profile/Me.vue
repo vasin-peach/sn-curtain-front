@@ -85,9 +85,9 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 export default {
-  name: 'ProfileMe',
+  name: "ProfileMe",
   data() {
     return {
       form: {
@@ -108,13 +108,16 @@ export default {
           status: false,
           options: [
             {
-              text: 'ชาย', value: 'male',
+              text: "ชาย",
+              value: "male"
             },
             {
-              text: 'หญิง', value: 'female',
+              text: "หญิง",
+              value: "female"
             },
             {
-              text: 'อื่นๆ', value: 'other'
+              text: "อื่นๆ",
+              value: "other"
             }
           ]
         },
@@ -127,28 +130,27 @@ export default {
           status: false
         }
       }
-    }
+    };
   },
   mounted() {
     this.updateForm();
   },
   computed: {
-    ...mapGetters(['userData'])
+    ...mapGetters(["userData"])
   },
-  watch: {
-  },
+  watch: {},
   methods: {
-    ...mapActions(['profileUpdate', 'profile']),
+    ...mapActions(["profileUpdate", "profile"]),
     updateForm() {
       this.form.email.val = this.userData.email;
-      this.form.name.val = this.userData.name;
+      this.form.name.val = this.userData.name.display_name;
       this.form.gender.val = this.userData.gender;
-      this.form.birthday.val = this.userData.birthday.split('T')[0];
+      this.form.birthday.val = this.userData.birthday.split("T")[0];
       this.form.address.val = this.userData.address;
       this.form.tel.val = this.userData.tel;
     },
     validateForm() {
-      this.$validator.validateAll().then((result) => {
+      this.$validator.validateAll().then(result => {
         if (result) {
           const payload = {
             email: this.userData.email,
@@ -160,14 +162,13 @@ export default {
               gender: this.form.gender.val || null,
               birthday: this.form.birthday.val || null
             }
-          }
+          };
           this.profileUpdate(payload);
         }
       });
-    
     }
   }
-}
+};
 </script>
 
 <style>

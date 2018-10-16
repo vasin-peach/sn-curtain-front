@@ -22,7 +22,7 @@ const mutations = {
     state.user = data;
   },
   popupAuthUpdate(state, data) {
-    state.popupAuth = data;
+    state.popupAuth = data || false;
   }
 }
 

@@ -21,7 +21,10 @@ const dictionary = {
         return "กรุณายืนยันรหัสผ่านให้ถูกต้อง.";
       },
       numeric: (field, params) => {
-        return "ต้องเป็นตัวเลขเท่านั้น"
+        return "ต้องเป็นตัวเลขเท่านั้น";
+      },
+      regex: (field, params) => {
+        return "รูปแบบไม่ถูกต้อง";
       }
     }
   },

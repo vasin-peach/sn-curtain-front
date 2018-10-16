@@ -10,6 +10,7 @@ import product from './modules/product';
 import basket from './modules/basket';
 import discount from './modules/discount';
 import delivery from './modules/delivery'
+import csrf from './modules/csrf';
 
 // Use Moduesl
 Vue.use(Vuex)
@@ -25,7 +26,8 @@ export default new Vuex.Store({
     discount,
     delivery,
     profile,
-    payment
+    payment,
+    csrf
   },
   strict: false
 })

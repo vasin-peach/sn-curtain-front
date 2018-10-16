@@ -5,16 +5,6 @@
         <!-- Left -->
         <div class="payment-content col col-sm col-md col-lg col-xl">
           <div class="wrapper">
-            <div class="wrapper-header">
-              <div class="back">
-                <router-link :to="{ name: 'Basket'}">
-                  <font-awesome-icon icon="chevron-left" aria-hidden="true" /> <span>ย้อนกลับ</span>
-                </router-link>
-              </div>
-              <div class="title">
-                <font-awesome-icon icon="map-marked-alt" aria-hidden="true" /> สถานที่ส่ง</div>
-            </div>
-            <hr>
             <router-view />
           </div>
         </div>
@@ -91,7 +81,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Payment",
   data() {
@@ -107,6 +97,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["basketGetSession"]),
     numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
@@ -128,6 +119,11 @@ export default {
   },
   mounted() {
     this.initPrice();
+    this.basketGetSession().then(response => {
+      this.productPrice = response.data.price;
+      this.discountPrice = response.data.discount;
+      this.transportPrice = response.data.delivery;
+    });
   }
 };
 </script>

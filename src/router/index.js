@@ -156,7 +156,8 @@ const router = new Router({
             name: 'Payment',
             meta: {
               title: 'ข้อมูลที่อยู่',
-              login: 1
+              login: 1,
+              payment: 1
             }
           },
           {
@@ -262,6 +263,34 @@ router.beforeEach((to, from, next) => {
       }
     });
   }
+
+  if (to.matched.some(record => record.meta.payment == 1)) {
+    store.dispatch('basketGetSession').then(response => {
+
+      if (_.isEmpty(response)) return next({
+        name: 'Basket'
+      });
+
+      if (!response.data.price == undefined || response.data.price == 0) return next({
+        name: 'Basket'
+      });
+
+      if (response.data.discount == undefined) return next({
+        name: 'Basket'
+      });
+
+      if (!response.data.delivery == undefined) return next({
+        name: 'Basket'
+      });
+
+    }, error => {
+      return next({
+        name: 'Basket'
+      });
+    })
+  }
+
+
   async function checkAuth() {
     return new Promise((resolve, reject) => {
       store.dispatch('profile').then(() => {

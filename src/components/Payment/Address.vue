@@ -178,11 +178,12 @@ export default {
         province: "",
         zip: "",
         save: false
-      },
-      autoComplete: {
-        amphoe: "",
-        district: ""
       }
+      //// auto complete
+      // autoComplete: {
+      //   amphoe: "",
+      //   district: ""
+      // }
     };
   },
   methods: {
@@ -195,9 +196,10 @@ export default {
     }
   },
   mounted() {
-    this.autoComplete.amphoe = _.uniq(thailand.map(item => item.amphoe));
-    this.autoComplete.district = _.uniq(thailand.map(item => item.district));
-    this.autoComplete.province = _.uniq(thailand.map(item => item.province));
+    //// auto complete
+    // this.autoComplete.amphoe = _.uniq(thailand.map(item => item.amphoe));
+    // this.autoComplete.district = _.uniq(thailand.map(item => item.district));
+    // this.autoComplete.province = _.uniq(thailand.map(item => item.province));
   },
   components: {
     VueBootstrapTypeahead

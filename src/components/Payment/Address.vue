@@ -15,7 +15,7 @@
         <div class="row">
           <div class="col-12 col-sm-12 col-md-6">
             <div class="input-group">
-              <b-form-group label="ชื่อต้น">
+              <b-form-group label="ชื่อต้น (ภาษาไทย)">
                 <b-form-input :state="!errors.has('first_name')" v-validate="'required|min:4'" name="first_name" v-model="form.first_name" type="text" placeholder="ชื่อต้น"></b-form-input>
                 <b-form-invalid-feedback v-show="errors.has('first_name')">
                   {{ errors.first('first_name') }}
@@ -25,7 +25,7 @@
           </div>
           <div class="col">
             <div class="input-group">
-              <b-form-group label="นามสกุล">
+              <b-form-group label="นามสกุล (ภาษาไทย)">
                 <b-form-input :state="!errors.has('last_name')" v-validate="'required|min:4'" name="last_name" v-model="form.last_name" type="text" placeholder="ชื่อต้น"></b-form-input>
                 <b-form-invalid-feedback v-show="errors.has('last_name')">
                   {{ errors.first('last_name') }}

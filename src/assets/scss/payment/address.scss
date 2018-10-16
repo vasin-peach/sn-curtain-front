@@ -18,5 +18,15 @@
     fieldset {
       width: 100%;
     }
+
+    .custom-checkbox label {
+
+      &::before,
+      :checked {
+        background-color: $orange1 !important;
+      }
+
+
+    }
   }
 }

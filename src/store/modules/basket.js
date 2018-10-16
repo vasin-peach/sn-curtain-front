@@ -38,7 +38,7 @@ const mutations = {
     var getIndex = state.basket.findIndex(item => item.id == id)
     if (getIndex >= 0) {
       state.basket.splice(getIndex, 1);
-      localStorage.setItem("basket", JSON.stringify(state.basket))
+      localStorage.setItem("basket", JSON.stringify(state.basket));
     }
   },
   discountUpdate(state, data) {

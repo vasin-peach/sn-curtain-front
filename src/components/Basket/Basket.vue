@@ -193,10 +193,9 @@ export default {
         // update old item.
         if (diff >= 0) {
           this.oldItems[diff].buyOption = data[diff].buyOption;
+          // update to localstorage.
+          localStorage.setItem("basket", JSON.stringify(this.oldItems));
         }
-
-        // update to localstorage.
-        localStorage.setItem("basket", JSON.stringify(this.oldItems));
 
         // animate
         this.basketAnimate();
@@ -234,7 +233,11 @@ export default {
       this.transportUpdate(this.delivery);
 
       // update basket session
-      this.basketUpdateSession({price: this.sumPrice, delivery: this.delivery, discount: this.sumDiscount})
+      this.basketUpdateSession({
+        price: this.sumPrice,
+        delivery: this.delivery,
+        discount: this.sumDiscount
+      });
     },
     amountMinus(id) {
       // get index by id

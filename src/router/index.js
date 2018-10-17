@@ -164,7 +164,7 @@ const router = new Router({
           {
             path: '/credit',
             component: Payment_Credit,
-            name: 'credit',
+            name: 'Payment_Credit',
             meta: {
               title: 'ชำระผ่านบัตร',
               login: 1
@@ -173,7 +173,7 @@ const router = new Router({
           {
             path: '/atm',
             component: Payment_Atm,
-            name: 'atm',
+            name: 'Payment_Atm',
             meta: {
               title: 'ชำระผ่านการโอน',
               login: 1

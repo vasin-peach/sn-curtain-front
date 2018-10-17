@@ -109,10 +109,13 @@ const actions = {
       }
 
       Vue.http.post(process.env.BACKEND_URI + "/auth/profile/address/update", payload).then(response => {
-        console.log(response);
         return resolve(response);
       }, error => {
-        console.log(error);
+        Vue.swal({
+          type: 'error',
+          title: 'ผิดพลาด',
+          text: 'ไม่สามารถอัพเดทที่อยู่ได้ กรุณาลองใหม่อีกครั้ง'
+        });
         return reject(error);
       })
     })

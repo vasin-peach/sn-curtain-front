@@ -94,6 +94,29 @@ const actions = {
       });
     });
   },
+  profileAddressUpdate({
+    commit
+  }, data) {
+    return new Promise((resolve, reject) => {
+      const payload = {
+        house_no: data.house_no,
+        village_no: data.village_no,
+        amphoe: data.amphoe,
+        district: data.district,
+        road: data.road,
+        province: data.province,
+        zip: data.zip
+      }
+
+      Vue.http.post(process.env.BACKEND_URI + "/auth/profile/address/update", payload).then(response => {
+        console.log(response);
+        return resolve(response);
+      }, error => {
+        console.log(error);
+        return reject(error);
+      })
+    })
+  }
 }
 
 export default {

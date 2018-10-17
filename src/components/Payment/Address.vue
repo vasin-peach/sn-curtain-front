@@ -159,6 +159,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
 import thailand from "@data/thailand.raw.json";
 import _ from "lodash";
@@ -187,6 +188,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["profileAddressUpdate"]),
     validateAddress() {
       this.$validator.validateAll().then(result => {
         if (!result) {
@@ -208,6 +210,12 @@ export default {
             title: "ที่อยู่ไม่ถูกต้อง",
             html: errorText
           });
+        } else {
+          // if user save this address
+          if (this.form.save) {
+            // save address to user
+            this.profileAddressUpdate(this.form);
+          }
         }
       });
     }

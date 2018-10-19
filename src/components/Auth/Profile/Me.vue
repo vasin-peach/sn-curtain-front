@@ -20,12 +20,34 @@
           </div>
           <div class="name group">
             <div class="title">
-              ชื่อ
+              ชื่อที่แสดง
             </div>
             <div class="input">
-              <b-form-input v-validate="'required'" type="text" name="name" v-model="form.name.val" :disabled="form.name.status"></b-form-input>
-              <div v-show="errors.has('name')" class="error">
-                {{ errors.first('name') }}
+              <b-form-input v-validate="'required'" type="text" name="display_name" v-model="form.name.display_name.val" :disabled="form.name.display_name.status"></b-form-input>
+              <div v-show="errors.has('display_name')" class="error">
+                {{ errors.first('display_name') }}
+              </div>
+            </div>
+          </div>
+          <div class="name group">
+            <div class="title">
+              ชื่อต้น
+            </div>
+            <div class="input">
+              <b-form-input v-validate="'required|min:3'" type="text" name="first_name" v-model="form.name.first_name.val" :disabled="form.name.first_name.status" placholder="ชื่อต้น (ภาษาไทย)"></b-form-input>
+              <div v-show="errors.has('first_name')" class="error">
+                {{ errors.first('first_name') }}
+              </div>
+            </div>
+          </div>
+          <div class="name group">
+            <div class="title">
+              นามสกุล
+            </div>
+            <div class="input">
+              <b-form-input v-validate="'required|min:3'" type="text" name="last_name" v-model="form.name.last_name.val" :disabled="form.name.last_name.status" placholder="นามสกุล (ภาษาไทย)"></b-form-input>
+              <div v-show="errors.has('last_name')" class="error">
+                {{ errors.first('last_name') }}
               </div>
             </div>
           </div>
@@ -40,15 +62,82 @@
               </div>
             </div>
           </div>
+          <hr>
           <div class="address group">
             <div class="title">
-              ที่อยู่
+              บ้านเลขที่
             </div>
             <div class="input">
-              <b-form-textarea v-model="form.address.val" name="address" :disabled="form.address.status"></b-form-textarea>
-              <div v-show="errors.has('address')" class="error">
-                {{ errors.first('address') }}
-              </div>
+              <b-form-input :state="!errors.has('house_no')" v-validate="{ required: true, min: 3 }" name="house_no" v-model="form.house_no.val" type="text" placeholder="เช่น 38/5, 24/589" :disabled="form.house_no.status" maxlength="10"></b-form-input>
+              <b-form-invalid-feedback v-show="errors.has('house_no')">
+                {{ errors.first('house_no') }}
+              </b-form-invalid-feedback>
+            </div>
+          </div>
+          <div class="address group">
+            <div class="title">
+              หมู่บ้าน
+            </div>
+            <div class="input">
+              <b-form-input :state="!errors.has('village_no')" v-validate="{ required: true, }" name="village_no" v-model="form.village_no.val" type="text" placeholder="หมู่บ้าน"  :disabled="form.village_no.status"></b-form-input>
+              <b-form-invalid-feedback v-show="errors.has('village_no')">
+                {{ errors.first('village_no') }}
+              </b-form-invalid-feedback>
+            </div>
+          </div>
+          <div class="address group">
+            <div class="title">
+              แขวง/ตำบล
+            </div>
+            <div class="input">
+              <b-form-input :state="!errors.has('district')" v-validate="{ required: true, }" name="district" v-model="form.district.val" type="text" placeholder="แขวง/ตำบล" :disabled="form.district.status"></b-form-input>
+              <b-form-invalid-feedback v-show="errors.has('district')">
+                {{ errors.first('district') }}
+              </b-form-invalid-feedback>
+            </div>
+          </div>
+          <div class="address group">
+            <div class="title">
+              เขต/อำเภอ
+            </div>
+            <div class="input">
+              <b-form-input :state="!errors.has('amphoe')" v-validate="{ required: true }" name="amphoe" v-model="form.amphoe.val" type="text" placeholder="เขต/อำเภอ"  :disabled="form.amphoe.status"></b-form-input>
+              <b-form-invalid-feedback v-show="errors.has('amphoe')">
+                {{ errors.first('amphoe') }}
+              </b-form-invalid-feedback>
+            </div>
+          </div>
+          <div class="address group">
+            <div class="title">
+              ถนน
+            </div>
+            <div class="input">
+              <b-form-input :state="!errors.has('road')" v-validate="{ required: true }" name="road" v-model="form.road.val" type="text" placeholder="ถนน"  :disabled="form.road.status"></b-form-input>
+              <b-form-invalid-feedback v-show="errors.has('road')">
+                {{ errors.first('road') }}
+              </b-form-invalid-feedback>
+            </div>
+          </div>
+          <div class="address group">
+            <div class="title">
+              จังหวัด
+            </div>
+            <div class="input">
+              <b-form-input :state="!errors.has('province')" v-validate="{ required: true }" name="province" v-model="form.province.val" type="text" placeholder="จังหวัด"  :disabled="form.province.status"></b-form-input>
+              <b-form-invalid-feedback v-show="errors.has('province')">
+                {{ errors.first('province') }}
+              </b-form-invalid-feedback>
+            </div>
+          </div>
+          <div class="address group">
+            <div class="title">
+              รหัสไปรษณีย์
+            </div>
+            <div class="input">
+              <b-form-input :state="!errors.has('zip')" v-validate="{ required: true, regex: /^(\d{5})?$/ }" name="zip" v-model="form.zip.val" type="text" placeholder="เช่น 10510"  :disabled="form.zip.status" maxlength="5"></b-form-input>
+              <b-form-invalid-feedback v-show="errors.has('zip')">
+                {{ errors.first('zip') }}
+              </b-form-invalid-feedback>
             </div>
           </div>
           <hr>
@@ -96,10 +185,48 @@ export default {
           status: true
         },
         name: {
+          display_name: {
+            val: null,
+            status: false
+          },
+          first_name: {
+            val: null,
+            status: false
+          },
+          last_name: {
+            val: null,
+            status: false
+          }
+        },
+        tel: {
           val: null,
           status: false
         },
-        tel: {
+        house_no: {
+          val: null,
+          status: false
+        },
+        village_no: {
+          val: null,
+          status: false
+        },
+        district: {
+          val: null,
+          status: false
+        },
+        amphoe: {
+          val: null,
+          status: false
+        },
+        road: {
+          val: null,
+          status: false
+        },
+        province: {
+          val: null,
+          status: false
+        },
+        zip: {
           val: null,
           status: false
         },
@@ -125,10 +252,6 @@ export default {
           val: null,
           status: false
         },
-        address: {
-          val: null,
-          status: false
-        }
       }
     };
   },
@@ -143,11 +266,19 @@ export default {
     ...mapActions(["profileUpdate", "profile"]),
     updateForm() {
       this.form.email.val = this.userData.email;
-      this.form.name.val = this.userData.name.display_name;
+      this.form.name.display_name.val = this.userData.name.display_name;
+      this.form.name.first_name.val = this.userData.name.first_name;
+      this.form.name.last_name.val = this.userData.name.last_name;
       this.form.gender.val = this.userData.gender;
       this.form.birthday.val = this.userData.birthday.split("T")[0];
-      this.form.address.val = this.userData.address;
       this.form.tel.val = this.userData.tel;
+      this.form.house_no.val = this.userData.address.house_no;
+      this.form.village_no.val = this.userData.address.village_no;
+      this.form.district.val = this.userData.address.district;
+      this.form.amphoe.val = this.userData.address.amphoe;
+      this.form.road.val = this.userData.address.road;
+      this.form.province.val = this.userData.address.province;
+      this.form.zip.val = this.userData.address.zip;
     },
     validateForm() {
       this.$validator.validateAll().then(result => {
@@ -156,11 +287,23 @@ export default {
             email: this.userData.email,
             provider: this.userData.provider,
             data: {
-              name: this.form.name.val,
+              name: {
+                display_name: this.form.name.display_name.val || null,
+                first_name: this.form.name.first_name.val || null,
+                last_name: this.form.name.last_name.val || null
+              },
               tel: this.form.tel.val || null,
-              address: this.form.address.val || null,
               gender: this.form.gender.val || null,
-              birthday: this.form.birthday.val || null
+              birthday: this.form.birthday.val || null,
+              address: {
+                house_no: this.form.house_no.val || null,
+                village_no: this.form.village_no.val || null,
+                district: this.form.district.val || null,
+                amphoe: this.form.amphoe.val || null,
+                road: this.form.road.val || null,
+                province: this.form.province.val || null,
+                zip: this.form.zip.val || null
+              }
             }
           };
           this.profileUpdate(payload);

@@ -165,8 +165,8 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
-import thailand from "@data/thailand.raw.json";
+// import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
+// import thailand from "@data/thailand.raw.json";
 import _ from "lodash";
 import Options from "./Options";
 export default {
@@ -219,6 +219,11 @@ export default {
             this.profileAddressUpdate(this.form);
           }
 
+          // update address to cookie
+          this.$cookie.set("paymentAddress", JSON.stringify(this.form), {
+            expireds: "1h"
+          });
+
           // show choose payment option
           this.popupPaymentOptionsUpdate(true);
         }
@@ -253,11 +258,19 @@ export default {
     ...mapGetters(["popupPaymentOptionsData", "userData"])
   },
   components: {
-    VueBootstrapTypeahead,
     Options
   }
 };
 </script>
 
 <style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease-out;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>

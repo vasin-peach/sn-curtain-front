@@ -174,16 +174,16 @@ export default {
   data() {
     return {
       form: {
-        first_name: "",
-        last_name: "",
-        tel: "",
-        house_no: "",
-        village_no: "",
-        amphoe: "",
-        district: "",
-        road: "",
-        province: "",
-        zip: "",
+        first_name: null,
+        last_name: null,
+        tel: null,
+        house_no: null,
+        village_no: null,
+        amphoe: null,
+        district: null,
+        road: null,
+        province: null,
+        zip: null,
         save: false
       }
     };

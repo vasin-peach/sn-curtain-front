@@ -186,11 +186,6 @@ export default {
         zip: "",
         save: false
       }
-      //// auto complete
-      // autoComplete: {
-      //   amphoe: "",
-      //   district: ""
-      // }
     };
   },
   methods: {
@@ -228,16 +223,30 @@ export default {
           this.popupPaymentOptionsUpdate(true);
         }
       });
+    },
+
+    updateForm() {
+      this.form.first_name = this.userData.name.first_name || null;
+      this.form.last_name = this.userData.name.last_name || null;
+      this.form.tel = this.userData.tel || null;
+      // check user has address object
+      if (this.userData.address) {
+        this.form.house_no = this.userData.address.house_no || null;
+        this.form.village_no = this.userData.address.village_no || null;
+        this.form.amphoe = this.userData.address.amphoe || null;
+        this.form.district = this.userData.address.district || null;
+        this.form.road = this.userData.address.road || null;
+        this.form.province = this.userData.address.province || null;
+        this.form.zip = this.userData.address.zip || null;
+      }
     }
   },
   mounted() {
-    //// auto complete
-    // this.autoComplete.amphoe = _.uniq(thailand.map(item => item.amphoe));
-    // this.autoComplete.district = _.uniq(thailand.map(item => item.district));
-    // this.autoComplete.province = _.uniq(thailand.map(item => item.province));
+    // call update form
+    this.updateForm();
   },
   computed: {
-    ...mapGetters(["popupPaymentOptionsData"])
+    ...mapGetters(["popupPaymentOptionsData", "userData"])
   },
   components: {
     VueBootstrapTypeahead,

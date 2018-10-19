@@ -165,8 +165,8 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
-import thailand from "@data/thailand.raw.json";
+// import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
+// import thailand from "@data/thailand.raw.json";
 import _ from "lodash";
 import Options from "./Options";
 export default {
@@ -258,7 +258,6 @@ export default {
     ...mapGetters(["popupPaymentOptionsData", "userData"])
   },
   components: {
-    VueBootstrapTypeahead,
     Options
   }
 };

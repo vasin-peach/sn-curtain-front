@@ -79,7 +79,7 @@
               หมู่บ้าน
             </div>
             <div class="input">
-              <b-form-input :state="!errors.has('village_no')" v-validate="{ required: true, }" name="village_no" v-model="form.village_no.val" type="text" placeholder="หมู่บ้าน"  :disabled="form.village_no.status"></b-form-input>
+              <b-form-input :state="!errors.has('village_no')" v-validate="{ required: true, }" name="village_no" v-model="form.village_no.val" type="text" placeholder="หมู่บ้าน" :disabled="form.village_no.status"></b-form-input>
               <b-form-invalid-feedback v-show="errors.has('village_no')">
                 {{ errors.first('village_no') }}
               </b-form-invalid-feedback>
@@ -101,7 +101,7 @@
               เขต/อำเภอ
             </div>
             <div class="input">
-              <b-form-input :state="!errors.has('amphoe')" v-validate="{ required: true }" name="amphoe" v-model="form.amphoe.val" type="text" placeholder="เขต/อำเภอ"  :disabled="form.amphoe.status"></b-form-input>
+              <b-form-input :state="!errors.has('amphoe')" v-validate="{ required: true }" name="amphoe" v-model="form.amphoe.val" type="text" placeholder="เขต/อำเภอ" :disabled="form.amphoe.status"></b-form-input>
               <b-form-invalid-feedback v-show="errors.has('amphoe')">
                 {{ errors.first('amphoe') }}
               </b-form-invalid-feedback>
@@ -112,7 +112,7 @@
               ถนน
             </div>
             <div class="input">
-              <b-form-input :state="!errors.has('road')" v-validate="{ required: true }" name="road" v-model="form.road.val" type="text" placeholder="ถนน"  :disabled="form.road.status"></b-form-input>
+              <b-form-input :state="!errors.has('road')" v-validate="{ required: true }" name="road" v-model="form.road.val" type="text" placeholder="ถนน" :disabled="form.road.status"></b-form-input>
               <b-form-invalid-feedback v-show="errors.has('road')">
                 {{ errors.first('road') }}
               </b-form-invalid-feedback>
@@ -123,7 +123,7 @@
               จังหวัด
             </div>
             <div class="input">
-              <b-form-input :state="!errors.has('province')" v-validate="{ required: true }" name="province" v-model="form.province.val" type="text" placeholder="จังหวัด"  :disabled="form.province.status"></b-form-input>
+              <b-form-input :state="!errors.has('province')" v-validate="{ required: true }" name="province" v-model="form.province.val" type="text" placeholder="จังหวัด" :disabled="form.province.status"></b-form-input>
               <b-form-invalid-feedback v-show="errors.has('province')">
                 {{ errors.first('province') }}
               </b-form-invalid-feedback>
@@ -134,7 +134,7 @@
               รหัสไปรษณีย์
             </div>
             <div class="input">
-              <b-form-input :state="!errors.has('zip')" v-validate="{ required: true, regex: /^(\d{5})?$/ }" name="zip" v-model="form.zip.val" type="text" placeholder="เช่น 10510"  :disabled="form.zip.status" maxlength="5"></b-form-input>
+              <b-form-input :state="!errors.has('zip')" v-validate="{ required: true, regex: /^(\d{5})?$/ }" name="zip" v-model="form.zip.val" type="text" placeholder="เช่น 10510" :disabled="form.zip.status" maxlength="5"></b-form-input>
               <b-form-invalid-feedback v-show="errors.has('zip')">
                 {{ errors.first('zip') }}
               </b-form-invalid-feedback>
@@ -251,7 +251,7 @@ export default {
         birthday: {
           val: null,
           status: false
-        },
+        }
       }
     };
   },
@@ -270,15 +270,21 @@ export default {
       this.form.name.first_name.val = this.userData.name.first_name;
       this.form.name.last_name.val = this.userData.name.last_name;
       this.form.gender.val = this.userData.gender;
-      this.form.birthday.val = this.userData.birthday.split("T")[0];
+      this.form.birthday.val = this.userData.birthday
+        ? this.userData.birthday.split("T")[0]
+        : null;
       this.form.tel.val = this.userData.tel;
-      this.form.house_no.val = this.userData.address.house_no;
-      this.form.village_no.val = this.userData.address.village_no;
-      this.form.district.val = this.userData.address.district;
-      this.form.amphoe.val = this.userData.address.amphoe;
-      this.form.road.val = this.userData.address.road;
-      this.form.province.val = this.userData.address.province;
-      this.form.zip.val = this.userData.address.zip;
+
+      // check is user have address object?
+      if (this.userData.address) {
+        this.form.house_no.val = this.userData.address.house_no;
+        this.form.village_no.val = this.userData.address.village_no;
+        this.form.district.val = this.userData.address.district;
+        this.form.amphoe.val = this.userData.address.amphoe;
+        this.form.road.val = this.userData.address.road;
+        this.form.province.val = this.userData.address.province;
+        this.form.zip.val = this.userData.address.zip;
+      }
     },
     validateForm() {
       this.$validator.validateAll().then(result => {

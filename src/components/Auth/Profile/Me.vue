@@ -23,7 +23,7 @@
               ชื่อที่แสดง
             </div>
             <div class="input">
-              <b-form-input v-validate="'required'" type="text" name="display_name" v-model="form.name.display_name.val" :disabled="form.name.display_name.status"></b-form-input>
+              <b-form-input v-validate="" type="text" name="display_name" v-model="form.name.display_name.val" :disabled="form.name.display_name.status"></b-form-input>
               <div v-show="errors.has('display_name')" class="error">
                 {{ errors.first('display_name') }}
               </div>
@@ -34,7 +34,7 @@
               ชื่อต้น
             </div>
             <div class="input">
-              <b-form-input v-validate="'required|min:3'" type="text" name="first_name" v-model="form.name.first_name.val" :disabled="form.name.first_name.status" placholder="ชื่อต้น (ภาษาไทย)"></b-form-input>
+              <b-form-input v-validate="'min:3'" type="text" name="first_name" v-model="form.name.first_name.val" :disabled="form.name.first_name.status" placholder="ชื่อต้น (ภาษาไทย)"></b-form-input>
               <div v-show="errors.has('first_name')" class="error">
                 {{ errors.first('first_name') }}
               </div>
@@ -45,7 +45,7 @@
               นามสกุล
             </div>
             <div class="input">
-              <b-form-input v-validate="'required|min:3'" type="text" name="last_name" v-model="form.name.last_name.val" :disabled="form.name.last_name.status" placholder="นามสกุล (ภาษาไทย)"></b-form-input>
+              <b-form-input v-validate="'min:3'" type="text" name="last_name" v-model="form.name.last_name.val" :disabled="form.name.last_name.status" placholder="นามสกุล (ภาษาไทย)"></b-form-input>
               <div v-show="errors.has('last_name')" class="error">
                 {{ errors.first('last_name') }}
               </div>
@@ -68,7 +68,7 @@
               บ้านเลขที่
             </div>
             <div class="input">
-              <b-form-input :state="!errors.has('house_no')" v-validate="{ required: true, min: 3 }" name="house_no" v-model="form.house_no.val" type="text" placeholder="เช่น 38/5, 24/589" :disabled="form.house_no.status" maxlength="10"></b-form-input>
+              <b-form-input :state="!errors.has('house_no')" v-validate="{ min: 3 }" name="house_no" v-model="form.house_no.val" type="text" placeholder="เช่น 38/5, 24/589" :disabled="form.house_no.status" maxlength="10"></b-form-input>
               <b-form-invalid-feedback v-show="errors.has('house_no')">
                 {{ errors.first('house_no') }}
               </b-form-invalid-feedback>
@@ -79,7 +79,7 @@
               หมู่บ้าน
             </div>
             <div class="input">
-              <b-form-input :state="!errors.has('village_no')" v-validate="{ required: true, }" name="village_no" v-model="form.village_no.val" type="text" placeholder="หมู่บ้าน" :disabled="form.village_no.status"></b-form-input>
+              <b-form-input :state="!errors.has('village_no')" v-validate="{ }" name="village_no" v-model="form.village_no.val" type="text" placeholder="หมู่บ้าน" :disabled="form.village_no.status"></b-form-input>
               <b-form-invalid-feedback v-show="errors.has('village_no')">
                 {{ errors.first('village_no') }}
               </b-form-invalid-feedback>
@@ -90,7 +90,7 @@
               แขวง/ตำบล
             </div>
             <div class="input">
-              <b-form-input :state="!errors.has('district')" v-validate="{ required: true, }" name="district" v-model="form.district.val" type="text" placeholder="แขวง/ตำบล" :disabled="form.district.status"></b-form-input>
+              <b-form-input :state="!errors.has('district')" v-validate="{ }" name="district" v-model="form.district.val" type="text" placeholder="แขวง/ตำบล" :disabled="form.district.status"></b-form-input>
               <b-form-invalid-feedback v-show="errors.has('district')">
                 {{ errors.first('district') }}
               </b-form-invalid-feedback>
@@ -101,7 +101,7 @@
               เขต/อำเภอ
             </div>
             <div class="input">
-              <b-form-input :state="!errors.has('amphoe')" v-validate="{ required: true }" name="amphoe" v-model="form.amphoe.val" type="text" placeholder="เขต/อำเภอ" :disabled="form.amphoe.status"></b-form-input>
+              <b-form-input :state="!errors.has('amphoe')" v-validate="{}" name="amphoe" v-model="form.amphoe.val" type="text" placeholder="เขต/อำเภอ" :disabled="form.amphoe.status"></b-form-input>
               <b-form-invalid-feedback v-show="errors.has('amphoe')">
                 {{ errors.first('amphoe') }}
               </b-form-invalid-feedback>
@@ -112,7 +112,7 @@
               ถนน
             </div>
             <div class="input">
-              <b-form-input :state="!errors.has('road')" v-validate="{ required: true }" name="road" v-model="form.road.val" type="text" placeholder="ถนน" :disabled="form.road.status"></b-form-input>
+              <b-form-input :state="!errors.has('road')" v-validate="{}" name="road" v-model="form.road.val" type="text" placeholder="ถนน" :disabled="form.road.status"></b-form-input>
               <b-form-invalid-feedback v-show="errors.has('road')">
                 {{ errors.first('road') }}
               </b-form-invalid-feedback>
@@ -123,7 +123,7 @@
               จังหวัด
             </div>
             <div class="input">
-              <b-form-input :state="!errors.has('province')" v-validate="{ required: true }" name="province" v-model="form.province.val" type="text" placeholder="จังหวัด" :disabled="form.province.status"></b-form-input>
+              <b-form-input :state="!errors.has('province')" v-validate="{}" name="province" v-model="form.province.val" type="text" placeholder="จังหวัด" :disabled="form.province.status"></b-form-input>
               <b-form-invalid-feedback v-show="errors.has('province')">
                 {{ errors.first('province') }}
               </b-form-invalid-feedback>
@@ -134,7 +134,7 @@
               รหัสไปรษณีย์
             </div>
             <div class="input">
-              <b-form-input :state="!errors.has('zip')" v-validate="{ required: true, regex: /^(\d{5})?$/ }" name="zip" v-model="form.zip.val" type="text" placeholder="เช่น 10510" :disabled="form.zip.status" maxlength="5"></b-form-input>
+              <b-form-input :state="!errors.has('zip')" v-validate="{ regex: /^(\d{5})?$/ }" name="zip" v-model="form.zip.val" type="text" placeholder="เช่น 10510" :disabled="form.zip.status" maxlength="5"></b-form-input>
               <b-form-invalid-feedback v-show="errors.has('zip')">
                 {{ errors.first('zip') }}
               </b-form-invalid-feedback>

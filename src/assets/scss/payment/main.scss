@@ -1,6 +1,7 @@
 @import 'address';
 @import 'credit';
 @import 'atm';
+@import 'options';
 
 .payment .container {
   padding: 0;
@@ -110,7 +111,12 @@
           img {
             width: 100%;
             border-radius: 5px;
-            // box-shadow: 0 0 3px 1px $gray2;
+            box-shadow: 0 0 1px 1px $gray2;
+            transition: opacity 0.3s ease;
+
+            &:hover {
+              opacity: 0.8;
+            }
           }
 
           .row {

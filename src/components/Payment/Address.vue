@@ -1,5 +1,10 @@
 <template>
   <div class="payment_address">
+    <transition name="fade" mode="out-in">
+      <div class="popup-container" v-show="popupPaymentOptionsData">
+        <options class="float"></options>
+      </div>
+    </transition>
     <div class="wrapper-header">
       <div class="back">
         <router-link :to="{ name: 'Basket'}">
@@ -159,9 +164,11 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
 import thailand from "@data/thailand.raw.json";
 import _ from "lodash";
+import Options from "./Options";
 export default {
   name: "payment_address",
   data() {
@@ -187,6 +194,8 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["profileAddressUpdate"]),
+    ...mapMutations(["popupPaymentOptionsUpdate"]),
     validateAddress() {
       this.$validator.validateAll().then(result => {
         if (!result) {
@@ -208,6 +217,15 @@ export default {
             title: "ที่อยู่ไม่ถูกต้อง",
             html: errorText
           });
+        } else {
+          // if user save this address
+          if (this.form.save) {
+            // save address to user
+            this.profileAddressUpdate(this.form);
+          }
+
+          // show choose payment option
+          this.popupPaymentOptionsUpdate(true);
         }
       });
     }
@@ -218,8 +236,12 @@ export default {
     // this.autoComplete.district = _.uniq(thailand.map(item => item.district));
     // this.autoComplete.province = _.uniq(thailand.map(item => item.province));
   },
+  computed: {
+    ...mapGetters(["popupPaymentOptionsData"])
+  },
   components: {
-    VueBootstrapTypeahead
+    VueBootstrapTypeahead,
+    Options
   }
 };
 </script>

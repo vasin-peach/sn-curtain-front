@@ -5,21 +5,21 @@ import "../../../lib/omise";
 
 // State
 const state = {
-  // delivery: []
+  popupPaymentOptions: false
 };
 
 // Getters
 const getters = {
-  // deliveryData: state => {
-  //   return state.delivery
-  // },
+  popupPaymentOptionsData: state => {
+    return state.popupPaymentOptions
+  }
 };
 
 // Mutations
 const mutations = {
-  // deliveryUpdate(state, data) {
-  //   state.delivery = data
-  // }
+  popupPaymentOptionsUpdate(state, data) {
+    state.popupPaymentOptions = data || false;
+  }
 };
 
 // Actions

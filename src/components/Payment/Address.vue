@@ -219,6 +219,11 @@ export default {
             this.profileAddressUpdate(this.form);
           }
 
+          // update address to cookie
+          this.$cookie.set("paymentAddress", JSON.stringify(this.form), {
+            expireds: "1h"
+          });
+
           // show choose payment option
           this.popupPaymentOptionsUpdate(true);
         }

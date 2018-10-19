@@ -9,7 +9,7 @@
               <img :src="userData.photo || '/static/images/lazy/lazyload.svg'">
             </div>
             <div class="name">
-              {{ userData.name.display_name }}
+              {{ userData.name ? userData.name.display_name : userData.email }}
             </div>
           </div>
         </div>

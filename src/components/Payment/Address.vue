@@ -226,8 +226,12 @@ export default {
     },
 
     updateForm() {
-      this.form.first_name = this.userData.name.first_name || null;
-      this.form.last_name = this.userData.name.last_name || null;
+      this.form.first_name = this.userData.name
+        ? this.userData.name.first_name
+        : null || null;
+      this.form.last_name = this.userData.name
+        ? this.userData.name.last_name
+        : null || null;
       this.form.tel = this.userData.tel || null;
       // check user has address object
       if (this.userData.address) {

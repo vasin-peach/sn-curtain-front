@@ -95,7 +95,8 @@ const actions = {
     });
   },
   profileAddressUpdate({
-    commit
+    commit,
+    getters
   }, data) {
     return new Promise((resolve, reject) => {
       const payload = {
@@ -107,6 +108,13 @@ const actions = {
         province: data.province,
         zip: data.zip
       }
+
+      // update new profile to userData state
+      let temp = getters.userData;
+      temp.address = payload;
+      commit('userUpdate', temp);
+
+
 
       Vue.http.post(process.env.BACKEND_URI + "/auth/profile/address/update", payload).then(response => {
         return resolve(response);

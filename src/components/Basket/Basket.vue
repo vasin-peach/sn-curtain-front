@@ -177,6 +177,9 @@ export default {
     delivery: function(data) {
       this.sumTran = data;
       this.updateSumAll();
+
+      // update paymentPayload delivery type
+      this.deliveryTypeUpdate(code);
     },
     basketData: {
       handler: function(data) {
@@ -210,7 +213,9 @@ export default {
       "basketUpdate",
       "basketDelete",
       "discountUpdate",
-      "transportUpdate"
+      "discountCodeUpdate",
+      "transportUpdate",
+      "deliveryTypeUodate"
     ]),
     ...mapActions(["discountGet", "deliveryGet", "basketUpdateSession"]),
     updateSumPrice() {
@@ -280,6 +285,9 @@ export default {
         .then(response => {
           $("#codeNumber").removeClass("color-red3 border-red3");
           $("#codeNumber").addClass("color-green1 border-green1");
+
+          // update paymentPayload discount code
+          this.discountCodeUpdate(code);
 
           // discount sumPrice
           var discount = response.data.discount;

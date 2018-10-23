@@ -15,7 +15,7 @@ const mutations = {};
 // Actions
 const actions = {
   creditCreateToken({
-    commit,
+    state,
     getters
   }, data) {
     return new Promise((resolve, reject) => {
@@ -29,11 +29,9 @@ const actions = {
         security_code: data.cvv
       };
 
-      // const product = {
+      const product = getters.paymentPayloadData;
 
-      // }
 
-      console.log(getters);
 
       Omise.createToken("card", card, (statusCode, response) => {
         // if (statusCode == 200) {

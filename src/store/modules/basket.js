@@ -28,6 +28,9 @@ const getters = {
   },
   transportData: state => {
     return state.transport
+  },
+  paymentPayloadData: state => {
+    return state.paymentPayload
   }
 }
 

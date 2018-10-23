@@ -90,7 +90,7 @@
             <div class="transport">
               <div>ค่าขนส่ง</div>
               <div>
-                <b-form-select v-model="delivery" :options="deliveryData ? deliveryData : {text: 'LOADING...'}"></b-form-select>
+                <b-form-select v-model="delivery" :options="deliveryData ? deliveryData : {text: 'LOADING...'}" id="delivery_option"></b-form-select>
               </div>
             </div>
             <div class="code">
@@ -141,7 +141,7 @@ export default {
       sumAll: 0,
       sumDiscount: 0,
       codeNumber: null,
-      delivery: 50,
+      delivery: null,
       buyOption: {}
     };
   },
@@ -179,7 +179,10 @@ export default {
       this.updateSumAll();
 
       // update paymentPayload delivery type
-      this.deliveryTypeUpdate(code);
+      this.deliveryTypeUpdate(data);
+    },
+    deliveryData: function(data) {
+      this.delivery = data[0].value;
     },
     basketData: {
       handler: function(data) {
@@ -215,7 +218,7 @@ export default {
       "discountUpdate",
       "discountCodeUpdate",
       "transportUpdate",
-      "deliveryTypeUodate"
+      "deliveryTypeUpdate"
     ]),
     ...mapActions(["discountGet", "deliveryGet", "basketUpdateSession"]),
     updateSumPrice() {

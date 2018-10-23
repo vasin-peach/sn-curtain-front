@@ -12,7 +12,20 @@
     <hr>
     <form @submit.prevent="validateCredit">
       <div class="credit-body">
-        {{ card_type }}
+        <div class="row credit-card">
+          <div class="col">
+            <img src="../../assets/images/credit/visa.png" :class="{ 'active': card_type == 'visa'}">
+            <!-- <span class="d-none d-sm-block" v-if="card_type == 'visa'">VISA</span> -->
+          </div>
+          <div class="col">
+            <img src="../../assets/images/credit/mastercard.png" :class="{ 'active': card_type == 'mastercard'}">
+            <!-- <span class="d-none d-sm-block" v-if="card_type == 'mastercard'">MASTERCARD</span> -->
+          </div>
+          <div class="col">
+            <img src="../../assets/images/credit/jcb.png" :class="{ 'active': card_type == 'jcb'}">
+            <!-- <span class="d-none d-sm-block" v-if="card_type == 'jcb'">JCB</span> -->
+          </div>
+        </div>
         <div class="row">
           <div class="col">
             <div class="input-group">

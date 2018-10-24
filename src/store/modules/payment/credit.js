@@ -39,7 +39,8 @@ const actions = {
             product: localStorage.basket,
             discount: localStorage.discount,
             delivery: localStorage.delivery,
-            card_id: response.id
+            card_token: response.id,
+            card: response.card
           }
 
           let urlRequest = process.env.BACKEND_URI + "/payment/charge";

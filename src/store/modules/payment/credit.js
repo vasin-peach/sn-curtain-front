@@ -29,28 +29,29 @@ const actions = {
         security_code: data.cvv
       };
 
-      const product = {
-        product: localStorage.basket,
-        discount: localStorage.discount,
-        delivery: localStorage.delivery
-      }
-
-      console.log(product);
 
 
 
       Omise.createToken("card", card, (statusCode, response) => {
-        // if (statusCode == 200) {
-        //   let urlRequest = process.env.BACKEND_URI + "/payment/charge";
-        //   Vue.http.post(urlRequest, response).then(
-        //     response => {
-        //       console.log(response);
-        //     },
-        //     error => {
-        //       console.log(error);
-        //     }
-        //   );
-        // }
+        if (statusCode == 200) {
+
+          const product = {
+            product: localStorage.basket,
+            discount: localStorage.discount,
+            delivery: localStorage.delivery,
+            card_id: response.id
+          }
+
+          let urlRequest = process.env.BACKEND_URI + "/payment/charge";
+          Vue.http.post(urlRequest, product).then(
+            response => {
+              console.log(response);
+            },
+            error => {
+              console.log(error);
+            }
+          );
+        }
       });
 
     });

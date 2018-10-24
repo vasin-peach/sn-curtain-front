@@ -1,0 +1,55 @@
+.payment_credit {
+
+  .credit-body {
+
+    padding: 30px;
+
+    @include tablet {
+      padding: 20px !important;
+    }
+
+    @include mobile {
+      padding: 15px !important;
+    }
+
+    @include small {
+      padding: 10px !important;
+    }
+
+    fieldset {
+      width: 100%;
+    }
+
+    .custom-checkbox label {
+
+      &::before,
+      :checked {
+        background-color: $orange1 !important;
+      }
+
+
+    }
+
+
+    .credit-card {
+      max-width: 250px;
+      text-align: center;
+      margin-bottom: 20px;
+
+      .col {
+        padding-right: 0;
+      }
+
+      img {
+        width: 100%;
+        max-width: 50px;
+        opacity: 0.4;
+        transition: opacity 0.3s ease-out;
+
+        &.active {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

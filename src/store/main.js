@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 import auth from './modules/auth/auth';
 import payment from './modules/payment/payment';
+import payment_credit from './modules/payment/credit';
 import profile from './modules/auth/profile';
 import store from './modules/store';
 import loading from './modules/loading';
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     delivery,
     profile,
     payment,
+    payment_credit,
     csrf
   },
   strict: false

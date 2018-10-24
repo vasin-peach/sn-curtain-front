@@ -12,7 +12,20 @@
     <hr>
     <form @submit.prevent="validateCredit">
       <div class="credit-body">
-        {{ card_type }}
+        <div class="row credit-card">
+          <div class="col">
+            <img src="../../assets/images/credit/visa.png" :class="{ 'active': card_type == 'visa'}">
+            <!-- <span class="d-none d-sm-block" v-if="card_type == 'visa'">VISA</span> -->
+          </div>
+          <div class="col">
+            <img src="../../assets/images/credit/jcb.png" :class="{ 'active': card_type == 'jcb'}">
+            <!-- <span class="d-none d-sm-block" v-if="card_type == 'jcb'">JCB</span> -->
+          </div>
+          <div class="col">
+            <img src="../../assets/images/credit/mastercard.png" :class="{ 'active': card_type == 'mastercard'}">
+            <!-- <span class="d-none d-sm-block" v-if="card_type == 'mastercard'">MASTERCARD</span> -->
+          </div>
+        </div>
         <div class="row">
           <div class="col">
             <div class="input-group">
@@ -51,9 +64,9 @@
           <div class="col-12 col-sm-12 col-md-6">
             <div class="input-group">
               <b-form-group label="CVV">
-                <b-form-input :state="!errors.has('ccv')" v-validate="'required|min:3'" name="ccv" v-model="form.ccv" type="text" placeholder="รหัสลับ" v-mask="'###'"></b-form-input>
-                <b-form-invalid-feedback v-show="errors.has('ccv')">
-                  {{ errors.first('ccv') }}
+                <b-form-input :state="!errors.has('cvv')" v-validate="'required|min:3'" name="cvv" v-model="form.cvv" type="text" placeholder="รหัสลับ" v-mask="'###'"></b-form-input>
+                <b-form-invalid-feedback v-show="errors.has('cvv')">
+                  {{ errors.first('cvv') }}
                 </b-form-invalid-feedback>
               </b-form-group>
             </div>
@@ -87,10 +100,10 @@ export default {
   data() {
     return {
       form: {
-        card_number: null,
-        card_name: null,
-        expires_date: null,
-        cvv: null
+        card_number: 4532156407749521,
+        card_name: "Vasin Sermsampan",
+        expires_date: "07/21",
+        cvv: "121"
       },
       card_type: null
     };
@@ -121,10 +134,11 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['creditCreateToken']),
     validateCredit() {
       this.$validator.validateAll().then(result => {
         if (!result) return false;
-        // do something
+        this.creditCreateToken(this.form);
       });
     }
   },

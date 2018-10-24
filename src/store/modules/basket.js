@@ -8,6 +8,11 @@ const state = {
   basket: [],
   discount: 0,
   transport: 0,
+  paymentPayload: {
+    basket: [],
+    discount: null,
+    delivery: null
+  }
 }
 
 
@@ -23,6 +28,9 @@ const getters = {
   },
   transportData: state => {
     return state.transport
+  },
+  paymentPayloadData: state => {
+    return state.paymentPayload
   }
 }
 
@@ -33,6 +41,7 @@ const getters = {
 const mutations = {
   basketUpdate(state, data) {
     state.basket = data;
+    state.paymentPayload.basket = data;
   },
   basketDelete(state, id) {
     var getIndex = state.basket.findIndex(item => item.id == id)
@@ -44,8 +53,15 @@ const mutations = {
   discountUpdate(state, data) {
     state.discount = data;
   },
+  discountCodeUpdate(state, data) {
+    state.paymentPayload.discount = data
+  },
+
   transportUpdate(state, data) {
     state.transport = data;
+  },
+  deliveryTypeUpdate(state, data) {
+    state.paymentPayload.delivery = data
   }
 }
 

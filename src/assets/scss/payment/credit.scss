@@ -1,6 +1,7 @@
 .payment_credit {
 
   .credit-body {
+
     padding: 30px;
 
     @include tablet {
@@ -27,6 +28,28 @@
       }
 
 
+    }
+
+
+    .credit-card {
+      max-width: 250px;
+      text-align: center;
+      margin-bottom: 20px;
+
+      .col {
+        padding-right: 0;
+      }
+
+      img {
+        width: 100%;
+        max-width: 50px;
+        opacity: 0.4;
+        transition: opacity 0.3s ease-out;
+
+        &.active {
+          opacity: 1;
+        }
+      }
     }
   }
 }

@@ -29,7 +29,13 @@ const actions = {
         security_code: data.cvv
       };
 
-      const product = getters.paymentPayloadData;
+      const product = {
+        product: localStorage.basket,
+        discount: localStorage.discount,
+        delivery: localStorage.delivery
+      }
+
+      console.log(product);
 
 
 

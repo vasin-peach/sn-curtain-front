@@ -11,81 +11,86 @@
     </div>
     <hr>
     <form @submit.prevent="validateCredit">
-      <div class="credit-body">
-        <div class="row credit-card">
-          <div class="col">
-            <img src="../../assets/images/credit/visa.png" :class="{ 'active': card_type == 'visa'}">
-            <!-- <span class="d-none d-sm-block" v-if="card_type == 'visa'">VISA</span> -->
-          </div>
-          <div class="col">
-            <img src="../../assets/images/credit/jcb.png" :class="{ 'active': card_type == 'jcb'}">
-            <!-- <span class="d-none d-sm-block" v-if="card_type == 'jcb'">JCB</span> -->
-          </div>
-          <div class="col">
-            <img src="../../assets/images/credit/mastercard.png" :class="{ 'active': card_type == 'mastercard'}">
-            <!-- <span class="d-none d-sm-block" v-if="card_type == 'mastercard'">MASTERCARD</span> -->
-          </div>
+      <transition name="fade" mode="out-in">
+        <div v-if="loadingState">
+          <loading :style="{height: loadingHeight - 20 + 'px'}"></loading>
         </div>
-        <div class="row">
-          <div class="col">
-            <div class="input-group">
-              <b-form-group label="CARDNUMBER">
-                <b-form-input :state=" !errors.has('card_number')" id="card_number" name="card_number" v-validate="{required: true, min:19, card: true}" v-model="form.card_number" type="text" placeholder="เลขบัตร" v-mask="'#### #### #### ####'"></b-form-input>
-                <b-form-invalid-feedback v-show="errors.has('card_number')">
-                  {{ errors.first('card_number') }}
-                </b-form-invalid-feedback>
-              </b-form-group>
+        <div class="credit-body" ref="credit_body" key="credit-body" v-else>
+          <div class="row credit-card">
+            <div class="col">
+              <img src="../../assets/images/credit/visa.png" :class="{ 'active': card_type == 'visa'}">
+              <!-- <span class="d-none d-sm-block" v-if="card_type == 'visa'">VISA</span> -->
+            </div>
+            <div class="col">
+              <img src="../../assets/images/credit/jcb.png" :class="{ 'active': card_type == 'jcb'}">
+              <!-- <span class="d-none d-sm-block" v-if="card_type == 'jcb'">JCB</span> -->
+            </div>
+            <div class="col">
+              <img src="../../assets/images/credit/mastercard.png" :class="{ 'active': card_type == 'mastercard'}">
+              <!-- <span class="d-none d-sm-block" v-if="card_type == 'mastercard'">MASTERCARD</span> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="input-group">
+                <b-form-group label="CARDNUMBER">
+                  <b-form-input :state=" !errors.has('card_number')" id="card_number" name="card_number" v-validate="{required: true, min:19, card: true}" v-model="form.card_number" type="text" placeholder="เลขบัตร" v-mask="'#### #### #### ####'"></b-form-input>
+                  <b-form-invalid-feedback v-show="errors.has('card_number')">
+                    {{ errors.first('card_number') }}
+                  </b-form-invalid-feedback>
+                </b-form-group>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="input-group">
+                <b-form-group label="CARDHOLDERS NAME">
+                  <b-form-input :state="!errors.has('card_name')" name="card_name" v-validate="'required|min:3'" v-model="form.card_name" type="text" placeholder="ชื่อผู้ถือบัตร"></b-form-input>
+                  <b-form-invalid-feedback v-show="errors.has('card_name')">
+                    {{ errors.first('card_name') }}
+                  </b-form-invalid-feedback>
+                </b-form-group>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-6">
+              <div class="input-group">
+                <b-form-group label="EXPIRY DATE">
+                  <b-form-input :state="!errors.has('expires_date')" v-validate="'required|min:5'" name="expires_date" v-model="form.expires_date" type="text" placeholder="วันหมดอายุ" v-mask="'##/##'"></b-form-input>
+                  <b-form-invalid-feedback v-show="errors.has('expires_date')">
+                    {{ errors.first('expires_date') }}
+                  </b-form-invalid-feedback>
+                </b-form-group>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6">
+              <div class="input-group">
+                <b-form-group label="CVV">
+                  <b-form-input :state="!errors.has('cvv')" v-validate="'required|min:3'" name="cvv" v-model="form.cvv" type="text" placeholder="รหัสลับ" v-mask="'###'"></b-form-input>
+                  <b-form-invalid-feedback v-show="errors.has('cvv')">
+                    {{ errors.first('cvv') }}
+                  </b-form-invalid-feedback>
+                </b-form-group>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <hr>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col">
+              <button type="submit" class="button w-100 p-3">
+                ชำระเงิน
+                <font-awesome-icon icon="lock" aria-hidden="true" class="ml-1" />
+              </button>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <div class="input-group">
-              <b-form-group label="CARDHOLDERS NAME">
-                <b-form-input :state="!errors.has('card_name')" name="card_name" v-validate="'required|min:3'" v-model="form.card_name" type="text" placeholder="ชื่อผู้ถือบัตร"></b-form-input>
-                <b-form-invalid-feedback v-show="errors.has('card_name')">
-                  {{ errors.first('card_name') }}
-                </b-form-invalid-feedback>
-              </b-form-group>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-sm-12 col-md-6">
-            <div class="input-group">
-              <b-form-group label="EXPIRY DATE">
-                <b-form-input :state="!errors.has('expires_date')" v-validate="'required|min:5'" name="expires_date" v-model="form.expires_date" type="text" placeholder="วันหมดอายุ" v-mask="'##/##'"></b-form-input>
-                <b-form-invalid-feedback v-show="errors.has('expires_date')">
-                  {{ errors.first('expires_date') }}
-                </b-form-invalid-feedback>
-              </b-form-group>
-            </div>
-          </div>
-          <div class="col-12 col-sm-12 col-md-6">
-            <div class="input-group">
-              <b-form-group label="CVV">
-                <b-form-input :state="!errors.has('cvv')" v-validate="'required|min:3'" name="cvv" v-model="form.cvv" type="text" placeholder="รหัสลับ" v-mask="'###'"></b-form-input>
-                <b-form-invalid-feedback v-show="errors.has('cvv')">
-                  {{ errors.first('cvv') }}
-                </b-form-invalid-feedback>
-              </b-form-group>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <hr>
-          </div>
-        </div>
-        <div class="row mt-4">
-          <div class="col">
-            <button type="submit" class="button w-100 p-3">
-              ชำระเงิน
-              <font-awesome-icon icon="lock" aria-hidden="true" class="ml-1" />
-            </button>
-          </div>
-        </div>
-      </div>
+      </transition>
     </form>
   </div>
 </template>
@@ -94,6 +99,7 @@
 import { mapActions } from "vuex";
 import { mask } from "vue-the-mask";
 import { ErrorBag } from "vee-validate";
+import Loading from '../Loading';
 import _ from "lodash";
 export default {
   name: "payment_credit",
@@ -105,7 +111,9 @@ export default {
         expires_date: "07/21",
         cvv: "121"
       },
-      card_type: null
+      card_type: null,
+      loadingHeight: 0,
+      loadingState: false,
     };
   },
   watch: {
@@ -136,16 +144,40 @@ export default {
   methods: {
     ...mapActions(['creditCreateToken']),
     validateCredit() {
-      this.$validator.validateAll().then(result => {
-        if (!result) return false;
-        this.creditCreateToken(this.form);
+
+      this.$validator.validateAll().then(result => { // validate all input
+
+       
+        if (!result) return false;  // exist if validate is false
+
+        // enable loading
+        this.loadingState = true;
+        
+        this.creditCreateToken(this.form).then(() => { // call function in state
+
+          // disable loading
+          this.loadingState = false
+
+        }).catch(() => {
+
+          // disable loading
+          this.loadingState = false
+
+        });
+
       });
+      
     }
   },
-  directives: { mask }
+  directives: { mask },
+  components: { Loading },
+  mounted() {
+
+    // get height from credit_body
+    this.loadingHeight = this.$refs.credit_body.clientHeight;
+  }
 };
 </script>
 
 <style>
 </style>
-f

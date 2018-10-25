@@ -62,6 +62,7 @@ const actions = {
                     title: 'ชำระเงินเสร็จสิ้น',
                     text: 'ท่านสามารถดูรายระเอียดรายได้ใน ข้อมูลส่วนตัว -> รายการ.'
                   });
+                  return resolve(response.body);
 
                 } else if (errorCode == 'invalid_security_code') { // invalid_security_code
 
@@ -70,6 +71,7 @@ const actions = {
                     title: 'CVV ไม่ถูกต้อง',
                     text: 'ไม่สามารถชำระเงินได้ เนื่องจากรหัสความปลอดภัย (CVV) ไม่ถูกต้อง, หรือบัตรยังไม่ได้รับการอนุมัติ.'
                   });
+                  return reject(response.body);
 
                 } else if (errorCode == 'payment_rejected') { // payment_rejected
 
@@ -78,6 +80,7 @@ const actions = {
                     title: 'การชำระเงินถูกปฎิเสธโดยผู้ออกบัตร',
                     text: 'ไม่สามารถชำระเงินได้ เนื่องจากถูกปฎิเสธโดยผู้ออกบัตร, หรือผู้ซื้อ.'
                   });
+                  return reject(response.body);
 
                 } else if (errorCode == 'insufficient_fund') { // insufficient_fund
 
@@ -86,6 +89,7 @@ const actions = {
                     title: 'วงเงินภายในบัตรไม่เพียงพอ',
                     text: 'ไม่สามารถชำระเงินได้ เนื่องจากเงินไม่เพียงพอ, หรือวงเงินภายในบัตรไม่เพียงพอ.'
                   });
+                  return reject(response.body);
 
                 } else if (errorCode == 'stolen_or_lost_card') { // stolen_or_lost_card
 
@@ -94,6 +98,7 @@ const actions = {
                     title: 'ปฎิเสธการชำระเงิน',
                     text: 'ธุรกรรมนี้ได้ถูกปฎิเสธ เนื่องจากบัตรหายหรือถูกโจรกรรม.'
                   });
+                  return reject(response.body);
 
                 } else if (errorCode == 'failed_processing') { // payment_rejected
 
@@ -102,6 +107,7 @@ const actions = {
                     title: 'การดำเนินการไม่สำเร็จ',
                     text: 'การประมวลผลบัตรล้วเหลว กรุณาทำรายการใหม่อีกครั้ง'
                   });
+                  return reject(response.body);
 
                 } else if (errorCode == 'failed_fraud_check') { // failed_fraud_check
 
@@ -110,6 +116,7 @@ const actions = {
                     title: 'ปฎิเสธการชำระเงิน',
                     text: 'ธุรกรรมนี้ได้ถูกปฎิเสธ เนื่องจากบัตรไม่ผ่านการตรวจสอบระบบคัดกรองทุจริต (fraud check).'
                   });
+                  return reject(response.body);
 
                 } else if (errorCode == 'invalid_account_number') { // invalid_account_number
 
@@ -118,6 +125,7 @@ const actions = {
                     title: 'เลขบัตรไม่ถูกต้อง',
                     text: 'ไม่สามารถชำระเงินได้ เลขบัตรไม่ถูกต้อง กรุณาทำรายการใหม่อีกครั้ง.'
                   });
+                  return reject(response.body);
 
                 }
 
@@ -127,6 +135,7 @@ const actions = {
                   title: 'ผิดพลาด',
                   text: 'เกิดข้อผิดพลาดในการชำระเงิน กรุณาติดต่อเจ้าหน้าที่ผ่านแชท.'
                 });
+                return reject(response.body);
               }
             }, // response succes block end.
 
@@ -137,6 +146,7 @@ const actions = {
                 title: 'ผิดพลาด',
                 text: 'เกิดข้อผิดพลาดในการชำระเงิน กรุณาติดต่อเจ้าหน้าที่ผ่านแชท.'
               });
+              return reject(response.body);
             }
 
           ); // http request block end.
@@ -149,6 +159,7 @@ const actions = {
               title: 'เลขบัตรไม่ถูกต้อง',
               text: 'ไม่สามารถชำระเงินได้ เลขบัตรไม่ถูกต้อง กรุณาทำรายการใหม่อีกครั้ง.'
             });
+            return reject(response.body);
           }
 
         } else { // other condition idk lol.
@@ -158,6 +169,7 @@ const actions = {
             title: 'เลขบัตรไม่ถูกต้อง',
             text: 'ไม่สามารถชำระเงินได้ เลขบัตรไม่ถูกต้อง กรุณาทำรายการใหม่อีกครั้ง.'
           });
+          return reject(response.body);
 
         } // condition response status block end.
 

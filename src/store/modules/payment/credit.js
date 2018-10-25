@@ -14,7 +14,10 @@ const mutations = {};
 
 // Actions
 const actions = {
-  creditCreateToken({ state, getters }, data) {
+  creditCreateToken({
+    state,
+    getters
+  }, data) {
     return new Promise((resolve, reject) => {
       Omise.setPublicKey(process.env.OMISE_CLIENT);
 
@@ -37,13 +40,30 @@ const actions = {
             card: response.card
           };
 
+          // create request uri
           let urlRequest = process.env.BACKEND_URI + "/payment/charge";
+
+          // call
           Vue.http.post(urlRequest, product).then(
             response => {
-              console.log(response);
+
+              // success
+              if (response.body.status == 200) {
+
+                // popup success
+                Vue.swal({
+                  type: 'success',
+                  title: 'ชำระเงินเสร็จสิ้น',
+                  text: 'ท่านสามารถดูรายระเอียดรายได้ใน ข้อมูลส่วนตัว -> รายการ.'
+                });
+              }
             },
             error => {
-              console.log(error);
+              Vue.swal({
+                type: 'error',
+                title: 'ผิดพลาด',
+                text: 'เกิดข้อผิดพลาดในการชำระเงิน กรุณาติดต่อเจ้าหน้าที่ผ่านแชท.'
+              })
             }
           );
         }

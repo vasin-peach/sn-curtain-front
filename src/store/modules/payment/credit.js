@@ -28,10 +28,8 @@ const actions = {
 
       Omise.createToken("card", card, (statusCode, response) => {
         if (statusCode == 200) {
-          console.log(getters);
-
           const product = {
-            email: getters.auth.email,
+            email: getters.userData.email,
             product: localStorage.basket,
             discount: localStorage.discount,
             delivery: localStorage.delivery,

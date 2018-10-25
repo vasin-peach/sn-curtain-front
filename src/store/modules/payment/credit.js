@@ -45,19 +45,93 @@ const actions = {
 
           // call
           Vue.http.post(urlRequest, product).then(
+            // response success
             response => {
 
-              // success
+              // check callback status
               if (response.body.status == 200) {
 
-                // popup success
-                Vue.swal({
-                  type: 'success',
-                  title: 'ชำระเงินเสร็จสิ้น',
-                  text: 'ท่านสามารถดูรายระเอียดรายได้ใน ข้อมูลส่วนตัว -> รายการ.'
-                });
+                // check error code
+                let errorCode = response.body.data.failure_code;
+
+                console.log(response.body);
+                console.log(errorCode);
+
+                if (!errorCode) {
+
+                  // success
+                  Vue.swal({
+                    type: 'success',
+                    title: 'ชำระเงินเสร็จสิ้น',
+                    text: 'ท่านสามารถดูรายระเอียดรายได้ใน ข้อมูลส่วนตัว -> รายการ.'
+                  });
+
+                } else if (errorCode == 'invalid_security_code') {
+
+                  // invalid_security_code
+                  Vue.swal({
+                    type: 'warning',
+                    title: 'CVV ไม่ถูกต้อง',
+                    text: 'ไม่สามารถชำระเงินได้ เนื่องจากรหัสความปลอดภัย (CVV) ไม่ถูกต้อง, หรือบัตรยังไม่ได้รับการอนุมัติ.'
+                  });
+                } else if (errorCode == 'payment_rejected') {
+
+                  // payment_rejected
+                  Vue.swal({
+                    type: 'warning',
+                    title: 'การชำระเงินถูกปฎิเสธโดยผู้ออกบัตร',
+                    text: 'ไม่สามารถชำระเงินได้ เนื่องจากถูกปฎิเสธโดยผู้ออกบัตร, หรือผู้ซื้อ.'
+                  });
+
+                } else if (errorCode == 'insufficient_fund') {
+
+                  // insufficient_fund
+                  Vue.swal({
+                    type: 'warning',
+                    title: 'วงเงินภายในบัตรไม่เพียงพอ',
+                    text: 'ไม่สามารถชำระเงินได้ เนื่องจากเงินไม่เพียงพอ, หรือวงเงินภายในบัตรไม่เพียงพอ.'
+                  });
+
+                } else if (errorCode == 'stolen_or_lost_card') {
+
+                  // stolen_or_lost_card
+                  Vue.swal({
+                    type: 'warning',
+                    title: 'ปฎิเสธการชำระเงิน',
+                    text: 'ธุรกรรมนี้ได้ถูกปฎิเสธ เนื่องจากบัตรหายหรือถูกโจรกรรม.'
+                  });
+
+                } else if (errorCode == 'failed_processing') {
+
+                  // payment_rejected
+                  Vue.swal({
+                    type: 'warning',
+                    title: 'การดำเนินการไม่สำเร็จ',
+                    text: 'การประมวลผลบัตรล้วเหลว กรุณาทำรายการใหม่อีกครั้ง'
+                  });
+
+                } else if (errorCode == 'failed_fraud_check') {
+
+                  // failed_fraud_check
+                  Vue.swal({
+                    type: 'warning',
+                    title: 'ปฎิเสธการชำระเงิน',
+                    text: 'ธุรกรรมนี้ได้ถูกปฎิเสธ เนื่องจากบัตรไม่ผ่านการตรวจสอบระบบคัดกรองทุจริต (fraud check).'
+                  });
+
+                } else if (errorCode == 'invalid_account_number') {
+
+                  // invalid_account_number
+                  Vue.swal({
+                    type: 'warning',
+                    title: 'เลขบัตรไม่ถูกต้อง',
+                    text: 'ไม่สามารถชำระเงินได้ เลขบัตรไม่ถูกต้อง กรุณาทำรายการใหม่อีกครั้ง.'
+                  });
+
+                }
               }
             },
+            // response error
             error => {
               Vue.swal({
                 type: 'error',

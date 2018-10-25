@@ -1,0 +1,32 @@
+.payment_address {
+
+  .address-body {
+    padding: 30px;
+
+    @include tablet {
+      padding: 20px !important;
+    }
+
+    @include mobile {
+      padding: 15px !important;
+    }
+
+    @include small {
+      padding: 10px !important;
+    }
+
+    fieldset {
+      width: 100%;
+    }
+
+    .custom-checkbox label {
+
+      &::before,
+      :checked {
+        background-color: $orange1 !important;
+      }
+
+
+    }
+  }
+}

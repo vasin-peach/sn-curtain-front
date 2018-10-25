@@ -9,6 +9,8 @@
 @import 'floatbar/main';
 @import 'basket/main';
 @import 'auth/main';
+@import 'payment/main';
+
 a {
   color: $dark2 !important;
   text-decoration: none !important;
@@ -16,6 +18,7 @@ a {
 
 // Modify 
 @include small {
+
   select,
   input,
   button,
@@ -27,6 +30,7 @@ a {
 input,
 button,
 select {
+
   &:hover,
   &:active,
   &:focus {

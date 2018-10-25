@@ -29,6 +29,7 @@ module.exports = {
       '@scss': resolve('src/assets/scss'),
       '@image': resolve('src/assets/images'),
       '@font': resolve('src/assets/fonts'),
+      '@data': resolve('src/assets/data'),
       // '@config': path.join(__dirname, 'config', process.env)
     }
   },

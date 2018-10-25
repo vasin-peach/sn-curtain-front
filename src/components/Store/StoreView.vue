@@ -12,26 +12,27 @@
                 <div class="card-head">
                   <img v-lazy="item.brand.src" :alt="item.name || 'ชื่อสินค้า'">
                 </div>
-                <div class="card-content">
-                  <p class="title">{{item.name || 'ชื่อสินค้า' }}</p>
-                  <p class="price">฿{{item.price || 'ไม่ระบุ' }}</p>
-                  <hr>
-                  <div class="detail row m-0">
-                    <div class="col-12 col-sm-6">
-                      <span class="fabric-title">ผ้า: </span>
-                      <span class="fabric-content">{{ item.fabric || 'ไม่ระบุ' }}</span>
-                    </div>
-                    <span class="color-orange1 d-none d-sm-block">|</span>
-                    <div class="col-12 col-sm-6">
-                      <span class="color-title">สี:</span>
-                      <span class="color-box" :style="{background: item.category.color.hex || '#ccc'}"></span>
+                  <div class="card-content">
+                    <p class="title">{{item.name || 'ชื่อสินค้า' }}</p>
+                    <p class="price">฿{{item.price[0].value || 'ไม่ระบุ' }}</p>
+                    <hr>
+                    <div class="detail row m-0">
+                      <div class="col-12 col-sm-6">
+                        <span class="fabric-title">รับชม: </span>
+                        <span class="fabric-content">{{ item.view || 0 }}</span>
+                      </div>
+                      <span class="color-orange1 d-none d-sm-block">|</span>
+                      <div class="col-12 col-sm-6">
+                        <span class="color-title">จำนวน:</span>
+                        <span class="fabric-content">{{ item.quantity || หมด }} </span>
+                        <!-- <span class="color-box" :style="{background: item.category.color.hex || '#ccc'}"></span> -->
+                      </div>
                     </div>
                   </div>
+                  <div class="card-footer">
+                    <div class="button">ดูสินค้า</div>
+                  </div>
                 </div>
-                <div class="card-footer">
-                  <div class="button">ดูสินค้า</div>
-                </div>
-              </div>
             </router-link>
           </div>
         </div>
@@ -46,8 +47,8 @@
 </template>
 
 <script>
-import Loading from '../Loading';
-import { mapGetters, mapActions, mapMutations } from "vuex"
+import Loading from "../Loading";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   ///
   // Name
@@ -60,7 +61,7 @@ export default {
   data() {
     return {
       currentPage: 1
-    }
+    };
   },
 
   ///
@@ -76,33 +77,31 @@ export default {
         fabric: this.storeTempData.fabric
       });
       TweenMax.to($(window), 0.4, {
-        scrollTo : { y: $('.bar-container').height() - 50, autoKill:true },
-          ease: Power3.easeInOut,	
-          autoKill: true,
-          overwrite: 5							
+        scrollTo: { y: $(".bar-container").height() - 50, autoKill: true },
+        ease: Power3.easeInOut,
+        autoKill: true,
+        overwrite: 5
       });
     }
   },
 
-
   ///
   // Mounted
   ///
-  mounted() {
-  },
+  mounted() {},
 
   ///
   // Methods
   ///
   methods: {
-    ...mapActions(["storeGet"]),
+    ...mapActions(["storeGet"])
   },
-  
+
   ///
   // Computed
   ///
   computed: {
-    ...mapGetters(["storeData", "loadingData", "storeTempData"]),
+    ...mapGetters(["storeData", "loadingData", "storeTempData"])
   },
 
   ///
@@ -111,7 +110,7 @@ export default {
   components: {
     Loading
   }
-}
+};
 </script>
 
 <style>

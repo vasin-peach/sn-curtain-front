@@ -94,6 +94,40 @@ const actions = {
       });
     });
   },
+  profileAddressUpdate({
+    commit,
+    getters
+  }, data) {
+    return new Promise((resolve, reject) => {
+      const payload = {
+        house_no: data.house_no,
+        village_no: data.village_no,
+        amphoe: data.amphoe,
+        district: data.district,
+        road: data.road,
+        province: data.province,
+        zip: data.zip
+      }
+
+      // update new profile to userData state
+      let temp = getters.userData;
+      temp.address = payload;
+      commit('userUpdate', temp);
+
+
+
+      Vue.http.post(process.env.BACKEND_URI + "/auth/profile/address/update", payload).then(response => {
+        return resolve(response);
+      }, error => {
+        Vue.swal({
+          type: 'error',
+          title: 'ผิดพลาด',
+          text: 'ไม่สามารถอัพเดทที่อยู่ได้ กรุณาลองใหม่อีกครั้ง'
+        });
+        return reject(error);
+      })
+    })
+  }
 }
 
 export default {

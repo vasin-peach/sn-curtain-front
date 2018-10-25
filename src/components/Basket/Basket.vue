@@ -57,12 +57,18 @@
                           </div>
                         </div>
                       </div>
+                      <div class="option-container">
+                        <div class="option-block">
+                          <div>ตัวเลือก</div>
+                          <b-form-select v-model="item.buyOption" :options="item.data ? item.data.price : {text: 'LOADING...'}"></b-form-select>
+                        </div>
+                      </div>
                       <div class="price-sm">
-                        ฿{{numberWithCommas(item.data.price * item.amount)}}
+                        ฿{{numberWithCommas(item.buyOption * item.amount)}}
                       </div>
                     </div>
                     <div class="price-lg col col-sm-3 col-md-2">
-                      ฿{{numberWithCommas(item.data.price * item.amount)}}
+                      ฿{{numberWithCommas(item.buyOption * item.amount)}}
                     </div>
                   </div>
                   <hr>
@@ -84,16 +90,16 @@
             <div class="transport">
               <div>ค่าขนส่ง</div>
               <div>
-                <b-form-select v-model="delivery" :options="deliveryData ? deliveryData : {text: 'LOADING...'}"></b-form-select>
+                <b-form-select v-model="delivery" :options="deliveryData ? deliveryData : {text: 'LOADING...'}" id="delivery_option"></b-form-select>
               </div>
             </div>
             <div class="code">
               <div>ส่วนลด</div>
-              <div class="color-green1">฿{{numberWithCommas(sumDiscount)}}</div>
+              <div class="color-green1">฿{{numberWithCommas(Math.round(sumDiscount))}}</div>
             </div>
             <div class="summary">
               <div>รวมทั้งหมด</div>
-              <div>฿{{numberWithCommas(sumAll)}}</div>
+              <div>฿{{numberWithCommas(Math.round(sumAll))}}</div>
             </div>
             <hr>
             <div class="code-input">
@@ -107,11 +113,9 @@
               Our Phoenix Collection of Contemporary Door Styles now includes Strata, a very durable textured surface that provides a look and feel that is unmatched.
               <hr>
             </div>
-            <router-link :to="{ name: 'Payment' }">
-              <div class="button">
-                ชำระเงิน
-              </div>
-            </router-link>
+            <div class="button" @click="validateBasket()">
+              ชำระเงิน
+            </div>
           </div>
         </div>
       </div>
@@ -122,7 +126,7 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import $ from "jquery";
-import _ from 'lodash'
+import _ from "lodash";
 export default {
   name: "Basket",
   ///
@@ -137,7 +141,8 @@ export default {
       sumAll: 0,
       sumDiscount: 0,
       codeNumber: null,
-      delivery: 0,
+      delivery: null,
+      buyOption: {}
     };
   },
 
@@ -172,6 +177,34 @@ export default {
     delivery: function(data) {
       this.sumTran = data;
       this.updateSumAll();
+
+      // update paymentPayload delivery type
+      this.deliveryTypeUpdate(data);
+    },
+    deliveryData: function(data) {
+      this.delivery = data[0].value;
+    },
+    basketData: {
+      handler: function(data) {
+        this.updateSumPrice();
+        this.updateSumAll();
+
+        // get index of different item.
+        let diff = data.findIndex((item, idx) => {
+          return item.buyOption !== this.oldItems[idx].buyOption;
+        });
+
+        // update old item.
+        if (diff >= 0) {
+          this.oldItems[diff].buyOption = data[diff].buyOption;
+          // update to localstorage.
+          localStorage.setItem("basket", JSON.stringify(this.oldItems));
+        }
+
+        // animate
+        this.basketAnimate();
+      },
+      deep: true
     }
   },
 
@@ -179,11 +212,18 @@ export default {
   // Methods
   ///
   methods: {
-    ...mapMutations(["basketUpdate", "basketDelete"]),
-    ...mapActions(["discountGet", "deliveryGet"]),
+    ...mapMutations([
+      "basketUpdate",
+      "basketDelete",
+      "discountUpdate",
+      "discountCodeUpdate",
+      "transportUpdate",
+      "deliveryTypeUpdate"
+    ]),
+    ...mapActions(["discountGet", "deliveryGet", "basketUpdateSession"]),
     updateSumPrice() {
       this.sumPrice = this.basketData.reduce((sum, item) => {
-        return sum + item.data.price * item.amount;
+        return sum + item.buyOption * item.amount;
       }, 0);
       this.updateSumAll();
     },
@@ -191,6 +231,19 @@ export default {
       var sumAll = this.sumPrice + this.sumTran - this.sumDiscount;
       sumAll = this.sumPrice + this.sumTran - this.sumDiscount;
       this.sumAll = sumAll > 0 ? sumAll : 0;
+
+      // update discount state
+      this.discountUpdate(this.sumDiscount);
+
+      // update transport state
+      this.transportUpdate(this.delivery);
+
+      // update basket session
+      this.basketUpdateSession({
+        price: this.sumPrice,
+        delivery: this.delivery,
+        discount: this.sumDiscount
+      });
     },
     amountMinus(id) {
       // get index by id
@@ -236,10 +289,13 @@ export default {
           $("#codeNumber").removeClass("color-red3 border-red3");
           $("#codeNumber").addClass("color-green1 border-green1");
 
+          // update paymentPayload discount code
+          this.discountCodeUpdate(code);
+
           // discount sumPrice
           var discount = response.data.discount;
           if (discount.percent) {
-            this.sumDiscount = this.sumPrice * discount.percent / 100;
+            this.sumDiscount = (this.sumPrice * discount.percent) / 100;
           } else if (discount.amount) {
             this.sumDiscount = discount.amount;
           }
@@ -252,6 +308,34 @@ export default {
           $("#codeNumber").addClass("color-red3 border-red3");
           this.updateSumAll();
         });
+    },
+    basketAnimate() {
+      var basket = $(".floatbar-basket");
+      $(".floatbar-basket").removeClass("animate");
+      setTimeout(function() {
+        $(".floatbar-basket").addClass("animate");
+      }, 100);
+    },
+    // validate basket is not empty
+    validateBasket() {
+      // if empty alert 'สินค้าว่าวปล่าว'
+      if (_.isEmpty(this.basketData)) {
+        this.$swal({
+          type: "warning",
+          title: "สินค้าว่างปล่าว",
+          text: "ไม่สามาระชำระสินค้าได้ เนื่องจากไม่มีสินค้าในตะกร้าสินค้า"
+        });
+      } else {
+        // update data to session
+        this.basketUpdateSession({
+          price: this.sumPrice,
+          delivery: this.delivery,
+          discount: this.sumDiscount
+        });
+
+        // navigation to payment page
+        this.$router.push({ name: "Payment" });
+      }
     }
   },
 

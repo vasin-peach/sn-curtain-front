@@ -65,3 +65,7 @@ $colours: "dark1"#363349,
   font-weight: 300;
   font-size: 15px;
 }
+
+.is-valid {
+  border-color: $gray2 !important;
+}

@@ -23,27 +23,42 @@
           <div class="col-sm-12 col-md-4 bar-filter-select">
             <div class="mr-2">
               <div class="title">
-                ประเภทผ้าม่าน
+                ประเภท
               </div>
-              <b-form-select v-model="type" :options="storeFilterData ? storeFilterData.type : {text: 'LOADING...'}"></b-form-select>
+              <div v-if="storeFilterTypeData">
+                <b-form-select v-model="category" :options=" storeFilterCategoryData ? storeFilterCategoryData : {text: 'โปรดรอ'}" :disabled="storeFilterCategoryData == null"></b-form-select>
+              </div>
+              <div v-else>
+                <b-form-select value="โปรดรอ" :disabled="true"></b-form-select>
+              </div>
             </div>
           </div>
 
           <div class="col-sm-12 col-md-4 bar-filter-select">
             <div class="ml-2 mr-2">
               <div class="title">
-                ชนิดของผ้า
+                ชนิด
               </div>
-              <b-form-select v-model="fabric" :options="storeFilterData ? storeFilterData.fabric : {text: 'LOADING...'}"></b-form-select>
+              <div v-if="storeFilterTypeData">
+                <b-form-select v-model="type" :options="storeFilterTypeData ? storeFilterTypeData : {text: 'กรุณาเลือกประเภท'}" :disabled="storeFilterTypeData.length == 1" :class="{'disable': storeFilterTypeData.length == 1 }"></b-form-select>
+              </div>
+              <div v-else>
+                <b-form-select value="กรุณาเลือกประเภท" :disabled="true"></b-form-select>
+              </div>
             </div>
           </div>
 
           <div class="col-sm-12 col-md-4 bar-filter-select">
             <div class="ml-2">
               <div class="title">
-                สีของผ้า
+                ลักษณะ
               </div>
-              <b-form-select v-model="color" :options="storeFilterData ? storeFilterData.color : {text: 'LOADING...'}"></b-form-select>
+              <div v-if="storeFilterNatureData">
+                <b-form-select v-model="nature" :options="storeFilterNatureData ? storeFilterNatureData : {text: 'กรุณาเลือดชนิด'}" :disabled="storeFilterNatureData.length == 1" :class="{'disable': storeFilterNatureData.length == 1}"></b-form-select>
+              </div>
+              <div v-else>
+                <b-form-select value="กรุณาเลือกชนิด" :disabled="true"></b-form-select>
+              </div>
             </div>
           </div>
         </div>
@@ -66,31 +81,16 @@ export default {
   ///
   data() {
     return {
+      firstTime: true,
       search: null,
+      category: null,
       type: null,
-      fabric: null,
-      color: null,
+      nature: null,
       timeout: null,
       page: 1,
-      options: {
-        type: [
-          { value: null, text: "เลือกชนิดของผ้าม่าน" },
-          { value: "ม่านตาไก่", text: "ม่านตาไก่" },
-          { value: "ม่านคอกระเช้า", text: "ม่านคอกระเช้า" },
-          { value: "value3", text: "ผ้าชนิด 3" }
-        ],
-        fabric: [
-          { value: null, text: "เลือกคุณภาพของผ้า" },
-          { value: "มาตรฐาน", text: "มาตรฐาน" },
-          { value: "ประหยัด", text: "ประหยัด" },
-          { value: "หรูหรา", text: "หรูหรา" }
-        ],
-        color: [
-          { value: null, text: "เลือกสีของผ้าม่าน" },
-          { value: "แดง", text: "แดง" },
-          { value: "น้ำตาล", text: "น้ำตาล" },
-          { value: "value3", text: "ผ้าชนิด 3" }
-        ]
+      disable: {
+        type: false,
+        nature: false
       },
       animate: {
         trigger: 0
@@ -104,11 +104,21 @@ export default {
   ///
   watch: {
     $route: function(type) {
-      this.type = this.$route.params.type
-      this.search =  null
-      this.fabric =  null
-      this.color =  null
-      this.timeout =  null
+      // refresh firsttime
+      this.firstTime = true;
+
+      // init category & type
+      if (this.$route.params.category) {
+        let params = this.$route.params.category.split(",");
+        this.category = params[0];
+        if (this.firstTime && params.length >= 2) this.type = params[1];
+        this.firstTime = false;
+      }
+
+      // open filter option
+      if (this.$route.params.category) {
+        this.triggerFilter();
+      }
     },
     search: function(name) {
       var _this = this;
@@ -116,47 +126,73 @@ export default {
       this.timeout = setTimeout(function() {
         _this.triggerSearch();
       }, 500);
-      this.storeTempUpdate({ type: 'search', data: name})
+      this.storeTempUpdate({ type: "search", data: name });
+    },
+    category: function(name) {
+      this.triggerSearch();
+      this.storeTempUpdate({ type: "category", data: name });
+      this.storeTypeUpdate({ category: name });
+      this.type = null;
+      this.nature = null;
+
+      // check if not firsttime change type option to null
+      if (this.$route.params.category) {
+        let params = this.$route.params.category.split(",");
+        if (this.firstTime && params.length >= 2) this.type = params[1];
+        this.firstTime = false;
+      }
     },
     type: function(name) {
       this.triggerSearch();
-      this.storeTempUpdate({ type: 'type', data: name})
+      this.storeTempUpdate({ type: "type", data: name });
+      this.nature = null;
+      this.storeNatureUpdate({ category: this.category, type: this.type });
     },
-    fabric: function(name) {
+    nature: function(name) {
       this.triggerSearch();
-      this.storeTempUpdate({ type: 'fabric', data: name})
+      this.storeTempUpdate({ type: "nature", data: name });
     },
-    color: function(name) {
-      this.triggerSearch();
-      this.storeTempUpdate({ type: 'color', data: name})
-    },
+    storeFilterData: function(data) {
+      this.storeCategoryUpdate(this.category);
+      this.storeTypeUpdate({ category: this.category });
+      this.storeNatureUpdate({ category: this.category, type: this.type });
+    }
   },
 
   ///
   // Mounted
   ///
   mounted() {
-
+    // init page
     if (!this.storeData) {
       this.storeGet({
         page: 1
       });
     }
 
-    if (this.$route.params.type) {
-      this.type = this.$route.params.type;
+    // init category
+    if (this.$route.params.category) {
+      let params = this.$route.params.category.split(",");
+      this.category = params[0];
       this.triggerFilter();
     }
-    
-    this.storeFilterGet()    
-    this.options = this.storeFilterData
+
+    // open search option
+    this.storeFilterGet();
+    this.options = this.storeFilterData;
   },
 
   ///
   // Methods
   ///
   methods: {
-    ...mapMutations(["storeTempUpdate", "storeUpdate"]),
+    ...mapMutations([
+      "storeTempUpdate",
+      "storeUpdate",
+      "storeCategoryUpdate",
+      "storeTypeUpdate",
+      "storeNatureUpdate"
+    ]),
     ...mapActions(["storeGet", "storeFilterGet"]),
     triggerFilter() {
       if (this.animate.trigger) {
@@ -194,9 +230,9 @@ export default {
       this.storeGet({
         search: this.search,
         page: this.page,
-        color: this.color,
+        category: this.category,
         type: this.type,
-        fabric: this.fabric
+        nature: this.nature
       });
     }
   },
@@ -205,8 +241,14 @@ export default {
   // Computed
   ///
   computed: {
-    ...mapGetters(["storeData", "storeFilterData"]),
-  },
+    ...mapGetters([
+      "storeData",
+      "storeFilterData",
+      "storeFilterCategoryData",
+      "storeFilterTypeData",
+      "storeFilterNatureData"
+    ])
+  }
 };
 </script>
 

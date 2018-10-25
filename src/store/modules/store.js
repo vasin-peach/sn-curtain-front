@@ -1,5 +1,35 @@
 import Vue from 'vue';
-import _ from 'lodash'
+import _ from 'lodash';
+
+///
+// Function
+///
+function createFilterFormat(data) {
+
+  if (!data) return null;
+  let response = null
+
+  // make array unique
+  response = Array.from(new Set(data))
+
+  // create format of option
+  response = response.map((item, key) => {
+    return Object.assign({}, {
+      text: item,
+      value: item
+    });
+  });
+
+  // add default option at begining
+  response.unshift({
+    text: "กรุณาเลือก",
+    value: null
+  });
+
+
+  return response;
+}
+
 
 ///
 // State
@@ -9,6 +39,9 @@ const state = {
   store: null,
   storePopular: null,
   storeFilter: null,
+  storeFilterCategory: null,
+  storeFilterType: null,
+  storeFilterNature: null,
   storeTemp: {}
 }
 
@@ -18,17 +51,26 @@ const state = {
 ///
 const getters = {
   storeData: (state) => {
-    return state.store
+    return state.store;
   },
   storePopularData: (state) => {
-    return state.storePopular
+    return state.storePopular;
   },
   storeFilterData: (state) => {
-    return state.storeFilter
+    return state.storeFilter;
   },
   storeTempData: (state) => {
-    return state.storeTemp
-  }
+    return state.storeTemp;
+  },
+  storeFilterCategoryData: (state) => {
+    return state.storeFilterCategory;
+  },
+  storeFilterTypeData: (state) => {
+    return state.storeFilterType;
+  },
+  storeFilterNatureData: (state) => {
+    return state.storeFilterNature;
+  },
 }
 
 
@@ -56,16 +98,85 @@ const mutations = {
       case 'page':
         state.storeTemp.page = data.data
         break;
-      case 'color':
-        state.storeTemp.color = data.data
+      case 'category':
+        state.storeTemp.category = data.data
         break;
       case 'type':
         state.storeTemp.type = data.data
         break;
-      case 'fabric':
-        state.storeTemp.fabric = data.data
+      case 'nature':
+        state.storeTemp.nature = data.data
         break;
     }
+  },
+  storeCategoryUpdate(state, filter) {
+
+    // get category;
+    let category = state.storeFilter.map(data => {
+      return data.val;
+    });
+
+    // set category options
+    state.storeFilterCategory = createFilterFormat(category);
+  },
+  storeTypeUpdate(state, filter) {
+
+    // check category is empty
+    if (!filter || !filter.category) {
+      return state.storeFilterType = [{
+        text: "กรุณาเลือกประเภท",
+        value: null
+      }]
+    }
+
+
+    if (!state.storeFilter) return false;
+
+    // filter type by category
+    let type = state.storeFilter.filter(data => {
+      return data.val == filter.category;
+    });
+
+    // get type;
+    type = type.map(data => {
+      return data.type.val;
+    })
+
+    // set type options
+    state.storeFilterType = createFilterFormat(type);
+  },
+  storeNatureUpdate(state, filter) {
+
+    // check object is not empty      
+    if (filter) {
+      // check category is not empty
+      if (filter.category && filter.type && state.storeFilter) {
+        // filter type by category
+        let nature = state.storeFilter.filter(data => {
+          return data.val == filter.category && data.type.val == filter.type;
+        });
+
+        // get nature;
+        nature = nature.map(data => {
+          return data.type.nature;
+        })
+
+        var natureTemp = []
+
+        for (let item of nature[0]) {
+          natureTemp.push(item.val);
+        }
+
+        // set nature options
+        return state.storeFilterNature = createFilterFormat(natureTemp);
+      }
+    }
+
+    return state.storeFilterNature = [{
+      text: "กรุณาเลือกชนิด",
+      value: null
+    }]
+
   }
 }
 
@@ -86,18 +197,18 @@ const actions = {
         type: 'store',
         value: true
       });
-      var search = payload.search || " "
-      var page = payload.page || 1
-      var fabric = payload.fabric || null
-      var color = payload.color || null
-      var type = payload.type || null
+      var search = payload.search || " ";
+      var page = payload.page || 1;
+      var category = payload.category || null;
+      var type = payload.type || null;
+      var nature = payload.nature || null;
 
       var uriRequest = "/product/get/" +
         (search ? search + "/" : " /") +
         (page ? page + "/" : " /") +
-        (fabric ? fabric + "/" : " /") +
-        (color ? color + "/" : " /") +
-        (type ? type : " ")
+        (category ? category + "/" : " /") +
+        (type ? type + "/" : " /") +
+        (nature ? nature : " ");
 
       // request
       Vue.http.get(process.env.BACKEND_URI + uriRequest).then(response => {
@@ -138,22 +249,23 @@ const actions = {
       // request
       Vue.http.get(process.env.BACKEND_URI + '/product/category').then(response => {
 
+        const item = response.data.data;
 
-        // create new object format for select options
-        response.data.data.type.unshift({
-          value: null,
-          text: 'กรุณาเลือกประเภทผ้าม่าน'
-        });
-        response.data.data.fabric.unshift({
-          value: null,
-          text: 'กรุณาเลือกคุณภาพของผ้า'
-        });
-        response.data.data.color.unshift({
-          value: null,
-          text: 'กรุณาเลือกสีของผ้าม่าน'
-        });
+        // // create new object format for select options
+        // response.data.data.type.unshift({
+        //   value: null,
+        //   text: 'กรุณาเลือกประเภทผ้าม่าน'
+        // });
+        // response.data.data.fabric.unshift({
+        //   value: null,
+        //   text: 'กรุณาเลือกคุณภาพของผ้า'
+        // });
+        // response.data.data.color.unshift({
+        //   value: null,
+        //   text: 'กรุณาเลือกสีของผ้าม่าน'
+        // });
 
-        commit('storeFilterUpdate', response.data.data)
+        commit('storeFilterUpdate', item);
         commit('loadingUpdate', {
           type: 'storePopular',
           value: false

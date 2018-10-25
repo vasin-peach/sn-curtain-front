@@ -9,7 +9,7 @@
               <img :src="userData.photo || '/static/images/lazy/lazyload.svg'">
             </div>
             <div class="name">
-              {{ userData.name }}
+              {{ userData.name ? userData.name.display_name : userData.email }}
             </div>
           </div>
         </div>
@@ -35,7 +35,7 @@
             </router-link>
           </div>
           <div class="profile-body col">
-            <router-view/>
+            <router-view />
           </div>
         </div>
       </div>
@@ -44,26 +44,26 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 export default {
   name: "Profile",
   data() {
     return {
-      currentRoute: 'profile',
-    }
+      currentRoute: "profile"
+    };
   },
   computed: {
-    ...mapGetters(['userData'])
+    ...mapGetters(["userData"])
   },
   mounted() {
     this.currentRoute = this.$route.name;
   },
   watch: {
-    $route (to, from) {
+    $route(to, from) {
       this.currentRoute = to.name;
     }
   }
-}
+};
 </script>
 
 <style>

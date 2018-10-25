@@ -28,7 +28,10 @@ import {
   faTimes,
   faUserCircle,
   faLock,
-  faListAlt
+  faListAlt,
+  faChevronLeft,
+  faMapMarkedAlt,
+  faCreditCard
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faFacebookSquare,
@@ -59,7 +62,10 @@ library.add(
   faLock,
   faFacebookSquare,
   faGooglePlusSquare,
-  faListAlt
+  faListAlt,
+  faChevronLeft,
+  faMapMarkedAlt,
+  faCreditCard
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
@@ -78,6 +84,15 @@ if (process.env.NODE_ENV === 'staging') {
     .addPlugin(RavenVue, Vue)
     .install();
 }
+
+// Init csrf to request headers
+store.dispatch("csrfGet").then(response => {
+  Vue.http.interceptors.push((request, next) => {
+    request.headers.set('CSRF-Token', response)
+    next();
+  })
+})
+
 
 Vue.config.productionTip = false
 

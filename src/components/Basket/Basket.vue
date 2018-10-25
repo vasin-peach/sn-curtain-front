@@ -182,7 +182,9 @@ export default {
       this.deliveryTypeUpdate(data);
     },
     deliveryData: function(data) {
-      this.delivery = data[0].value;
+      if (!_.isEmpty(data)) {
+        this.delivery = data[0].value;
+      }
     },
     basketData: {
       handler: function(data) {
@@ -295,9 +297,9 @@ export default {
           // discount sumPrice
           var discount = response.data.discount;
           if (discount.percent) {
-            this.sumDiscount = (this.sumPrice * discount.percent) / 100;
+            this.sumDiscount = Math.floor((this.sumPrice * discount.percent) / 100);
           } else if (discount.amount) {
-            this.sumDiscount = discount.amount;
+            this.sumDiscount = Math.floor(discount.amount);
           }
 
           // sum all

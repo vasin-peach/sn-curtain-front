@@ -182,7 +182,9 @@ export default {
       this.deliveryTypeUpdate(data);
     },
     deliveryData: function(data) {
-      this.delivery = data[0].value;
+      if (!_.isEmpty(data)) {
+        this.delivery = data[0].value;
+      }
     },
     basketData: {
       handler: function(data) {

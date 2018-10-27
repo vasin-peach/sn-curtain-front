@@ -13,6 +13,7 @@ import discount from './modules/discount';
 import delivery from './modules/delivery'
 import csrf from './modules/csrf';
 import order from './modules/payment/order';
+import clear from './modules/clear';
 
 // Use Moduesl
 Vue.use(Vuex)
@@ -31,7 +32,8 @@ export default new Vuex.Store({
     payment,
     payment_credit,
     csrf,
-    order
+    order,
+    clear
   },
   strict: false
 })

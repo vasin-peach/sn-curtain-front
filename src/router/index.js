@@ -264,7 +264,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.payment == 1)) {
 
     // navigation to basket if basket is empty
-    if (_.isEmpty(JSON.parse(localStorage.basket))) return next({
+    if (_.isEmpty(JSON.parse(localStorage.basket || 'null') || null)) return next({
       name: 'Basket'
     });
   }

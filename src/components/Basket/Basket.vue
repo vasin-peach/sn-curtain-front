@@ -136,7 +136,7 @@ export default {
   data() {
     return {
       timeout: null,
-      oldItems: JSON.parse(localStorage.getItem("basket") || []),
+      oldItems: JSON.parse(localStorage.getItem("basket") || 'null') || null,
       sumPrice: 0,
       sumTran: 0,
       sumAll: 0,

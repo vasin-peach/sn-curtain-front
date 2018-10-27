@@ -142,7 +142,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['creditCreateToken', 'getOrder']),
+    ...mapActions(['creditCreateToken', 'getOrder', 'shoppingClear']),
     validateCredit() {
 
       this.$validator.validateAll().then(result => { // validate all input
@@ -158,8 +158,13 @@ export default {
           // disable loading
           this.loadingState = false
 
-          // navigation to bill
-          // this.$router.push({ name: 'Bill' });
+          // remove all history about transaction
+          this.shoppingClear().then(() => {
+
+            // navigation to bill
+            this.$router.push({ name: 'Bill' });
+          })
+
 
         }).catch(() => {
 

@@ -1,8 +1,6 @@
 import Vue from "vue";
 import "../../../lib/omise";
 
-// console.log(process.env.OMISE_CLIENT);
-
 // State
 const state = {};
 

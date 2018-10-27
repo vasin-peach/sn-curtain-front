@@ -39,11 +39,13 @@ const actions = {
             discount: localStorage.discount,
             delivery: localStorage.delivery,
             card_token: response.id,
-            card: response.card
+            card: response.card,
+            payment: JSON.parse(Vue.cookie.get("paymentAddress") || 'null') || null
           };
 
           // create request uri
           let urlRequest = process.env.BACKEND_URI + "/payment/charge";
+
 
           Vue.http.post(urlRequest, product).then( // call
 

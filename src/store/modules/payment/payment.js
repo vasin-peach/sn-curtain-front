@@ -58,6 +58,9 @@ const actions = {
       };
 
       Omise.createToken("card", card, (statusCode, response) => {
+
+        console.log(Vue.cookie);
+
         if (statusCode == 200) {
           let urlRequest = process.env.BACKEND_URI + "/payment/charge";
           Vue.http.post(urlRequest, response).then(
@@ -70,14 +73,6 @@ const actions = {
           );
         }
       });
-
-      // var uriRequest = process.env.BACKEND_URI + "/delivery";
-      // Vue.http.get(uriRequest).then(response => {
-      //   commit("deliveryUpdate", response.data.data);
-      //   return resolve(response.data);
-      // }, err => {
-      //   return reject(err)
-      // })
     });
   }
 };

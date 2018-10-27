@@ -142,7 +142,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['creditCreateToken']),
+    ...mapActions(['creditCreateToken', 'getOrder']),
     validateCredit() {
 
       this.$validator.validateAll().then(result => { // validate all input
@@ -153,10 +153,13 @@ export default {
         // enable loading
         this.loadingState = true;
         
-        this.creditCreateToken(this.form).then(() => { // call function in state
+        this.creditCreateToken(this.form).then((response) => { // call function in state
 
           // disable loading
           this.loadingState = false
+
+          // navigation to bill
+          // this.$router.push({ name: 'Bill' });
 
         }).catch(() => {
 

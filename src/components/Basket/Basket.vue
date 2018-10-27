@@ -99,7 +99,8 @@
             </div>
             <div class="summary">
               <div>รวมทั้งหมด</div>
-              <div>฿{{numberWithCommas(Math.round(sumAll))}}</div>
+              <div v-if="sumAll <= 0">฿20</div>
+              <div v-else>฿{{numberWithCommas(Math.round(sumAll))}}</div>
             </div>
             <hr>
             <div class="code-input">

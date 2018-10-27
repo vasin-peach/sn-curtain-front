@@ -1,8 +1,6 @@
 import Vue from "vue";
 import "../../../lib/omise";
 
-// console.log(process.env.OMISE_CLIENT);
-
 // State
 const state = {
   popupPaymentOptions: false
@@ -47,6 +45,7 @@ const actions = {
     commit
   }) {
     return new Promise((resolve, reject) => {
+
       Omise.setPublicKey(process.env.OMISE_CLIENT);
 
       const card = {

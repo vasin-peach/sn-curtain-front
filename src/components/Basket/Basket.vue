@@ -152,6 +152,7 @@ export default {
   mounted() {
     this.updateSumPrice();
     this.deliveryGet();
+    this.discountCodeUpdate("");
   },
 
   ///

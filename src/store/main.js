@@ -12,6 +12,8 @@ import basket from './modules/basket';
 import discount from './modules/discount';
 import delivery from './modules/delivery'
 import csrf from './modules/csrf';
+import order from './modules/payment/order';
+import clear from './modules/clear';
 
 // Use Moduesl
 Vue.use(Vuex)
@@ -29,7 +31,9 @@ export default new Vuex.Store({
     profile,
     payment,
     payment_credit,
-    csrf
+    csrf,
+    order,
+    clear
   },
   strict: false
 })

@@ -13,21 +13,19 @@ const mutations = {};
 
 // Actions
 const actions = {
-  getOrder() {
+  orderGetById({}, order_id) {
     return new Promise((resolve, reject) => {
 
       // request uri
-      let uri = process.env.BACKEND_URI + "/order";
+      let uri = process.env.BACKEND_URI + "/order/" + order_id;
 
       Vue.http.get(uri).then( // call api
 
         response => { // response success
-          console.log(response);
           return resolve(response);
         },
 
         error => { // response error
-          console.log(error);
           return reject(error);
         }
 

@@ -41,6 +41,18 @@ const Payment_Credit = () =>
 const Payment_Atm = () =>
   import('@component/Payment/Atm');
 
+// Bill
+const Bill = () =>
+  import('@component/Bill/Bill');
+const Bill_View = () =>
+  import('@component/Bill/View');
+
+// Order
+const Order = () =>
+  import('@component/Order/Order');
+const Order_View = () =>
+  import('@component/Order/View');
+
 // Profile
 const Profile = () =>
   import('@component/Auth/Profile/Profile');
@@ -181,6 +193,46 @@ const router = new Router({
           }
         ]
       },
+
+      // Order
+      {
+        path: '/order',
+        component: Order,
+        name: 'Order',
+        meta: {
+          title: 'รายการสั่งซื้อทั้งหมด',
+          login: 1
+        }
+      },
+      {
+        path: '/order/:id',
+        component: Order_View,
+        name: 'Order_View',
+        meta: {
+          title: 'ดูรายการสั่งซื้อ'
+        }
+      },
+
+      // Bill
+      {
+        path: '/bill',
+        component: Bill,
+        name: 'Bill',
+        meta: {
+          title: 'ใบเสร็จทั้งหมด',
+          login: 1
+        }
+      },
+      {
+        path: '/bill/:id',
+        component: Bill_View,
+        name: 'Bill_View',
+        meta: {
+          title: 'ดูใบเสร็จ'
+        }
+      },
+
+      // Profile
       {
         path: '/profile',
         component: Profile,

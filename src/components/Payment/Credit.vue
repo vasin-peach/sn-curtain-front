@@ -162,7 +162,7 @@ export default {
           this.shoppingClear().then(() => {
 
             // navigation to bill
-            this.$router.push({ name: 'Bill' });
+            this.$router.push({ name: 'Bill_View', params: {id: response.data._id} });
           })
 
 

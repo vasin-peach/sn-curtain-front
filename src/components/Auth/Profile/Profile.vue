@@ -30,7 +30,7 @@
                 <div>
                   <font-awesome-icon icon="list-alt" aria-hidden="true" />
                 </div>
-                <span :class="{'color-orange1' : currentRoute == 'ProfileHistory'}">ประวัติการซื้อ</span>
+                <span :class="{'color-orange1' : currentRoute == 'ProfileHistory'}">รายการสั่งซื้อ</span>
               </div>
             </router-link>
           </div>

@@ -42,10 +42,85 @@
 
       </div>
       <div class="bill-detail">
-
+        <div class="row m-0">
+          <div class="col-5 title">
+            รายการ
+          </div>
+          <div class="col title">
+            จำนวน
+          </div>
+          <div class="col title">
+            ราคา
+          </div>
+          <div class="col title">
+            รวม
+          </div>
+        </div>
+        <div class="row m-0 order-list" v-for="items in order_data.product" :key="items.data._id">
+          <div class="col-5 detail">
+            {{ items.data.name }}
+          </div>
+          <div class="col detail">
+            {{ items.amount }}
+          </div>
+          <div class="col detail">
+            {{ numberWithCommas(items.option) }} บาท
+          </div>
+          <div class="col detail">
+            {{ numberWithCommas(items.amount * items.option) }} บาท
+          </div>
+        </div>
+        <div class="row m-0 order-list" v-if="order_data.discount.discount_code">
+          <div class="col-5 detail">
+            ส่วนลดโค้ด ({{ order_data.discount.discount_code }}) บาท
+          </div>
+          <div class="col detail">
+            -
+          </div>
+          <div class="col detail">
+            {{ numberWithCommas(order_data.discount.discount_amount || 0) }} บาท
+          </div>
+          <div class="col detail">
+            {{ numberWithCommas(order_data.discount.discount_amount || 0) }} บาท
+          </div>
+        </div>
       </div>
       <div class="bill-footer">
-
+        <div class="row m-0">
+          <div class="col">
+            <div class="detail">ราคาสินค้ารวม</div>
+            <div>{{ numberWithCommas(order_data.pricing.product_price) }} - <span v-if="order_data.discount.discount_code"> {{ numberWithCommas(order_data.discount.discount_amount )}}</span> บาท</div>
+          </div>
+          <div class="col">
+            <div class="detail">ค่าขนส่ง</div>
+            <div>{{ numberWithCommas(order_data.pricing.delivery_price) }} บาท</div>
+          </div>
+          <div class="col">
+            <div class="detail">รวมทั้งหมด</div>
+            <div>{{ numberWithCommas(order_data.pricing.product_price + order_data.pricing.delivery_price - order_data.discount.discount_amount) }} บาท</div>
+          </div>
+        </div>
+      </div>
+      <div class="bill-end">
+        <div class="row m-0">
+          <div class="col col-4">
+            <div class="title">
+              เพิ่มเติม
+            </div>
+            <div class="detail">
+              แอนด์วอล์กเช็งเม้งโบว์ โมจิฮาราคีรี คอนเซ็ปต์โปรโบ้ยเซ็กซ์เจ็ต แซนด์วิชคอนเซปต์ คอลเล็กชั่นแพ็คอะ เบนโตะกิมจิบ๊วยรวมมิตร ซิลเวอร์ยังไง
+            </div>
+          </div>
+        </div>
+        <div class="row m-0">
+          <div class="col title">
+            ขอบคุณสำหรับการสั่งซื้อ!
+            <hr>
+            <div class="text-right detail">
+              {{ order_date_mask }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -81,6 +156,10 @@ export default {
 
         // clear order_data
         this.order_data = null;
+
+        // navigation to landing
+        this.$router.push({ name: 'Landing' });
+        
       });
 
     }
@@ -90,7 +169,7 @@ export default {
       order_id: null,
       order_data: null,
       order_id_mask: null,
-      order_date_mask: null
+      order_date_mask: null,
     }
   },
   computed: {
@@ -109,10 +188,13 @@ export default {
       while (s.length < (size || 2)) { s = "0" + s;}
       return s;
     },
-    makeDate(date) {
-      if (!date) return false;
-      return moment(date).format('LLL', 'th');
-    }
+    makeDate(data) {
+      if (!data) return false;
+      return moment(data).format('LLL', 'th');
+    },
+    numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
   }
 }
 </script>

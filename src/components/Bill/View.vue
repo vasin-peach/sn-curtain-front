@@ -1,6 +1,8 @@
 <template>
   <div class="bill-view">
     <div class="container bill-container" v-if="order_data">
+
+      <span @click="print()"></span>
       <div class="bill-head">
 
         <div class="row m-0">
@@ -159,7 +161,7 @@ export default {
 
         // navigation to landing
         this.$router.push({ name: 'Landing' });
-        
+
       });
 
     }

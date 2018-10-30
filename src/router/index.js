@@ -41,6 +41,18 @@ const Payment_Credit = () =>
 const Payment_Atm = () =>
   import('@component/Payment/Atm');
 
+// Bill
+const Bill = () =>
+  import('@component/Bill/Bill');
+const Bill_View = () =>
+  import('@component/Bill/View');
+
+// Order
+const Order = () =>
+  import('@component/Order/Order');
+const Order_View = () =>
+  import('@component/Order/View');
+
 // Profile
 const Profile = () =>
   import('@component/Auth/Profile/Profile');
@@ -181,6 +193,46 @@ const router = new Router({
           }
         ]
       },
+
+      // Order
+      {
+        path: '/order',
+        component: Order,
+        name: 'Order',
+        meta: {
+          title: 'รายการสั่งซื้อทั้งหมด',
+          login: 1
+        }
+      },
+      {
+        path: '/order/:id',
+        component: Order_View,
+        name: 'Order_View',
+        meta: {
+          title: 'ดูรายการสั่งซื้อ'
+        }
+      },
+
+      // Bill
+      {
+        path: '/bill',
+        component: Bill,
+        name: 'Bill',
+        meta: {
+          title: 'ใบเสร็จทั้งหมด',
+          login: 1
+        }
+      },
+      {
+        path: '/bill/:id',
+        component: Bill_View,
+        name: 'Bill_View',
+        meta: {
+          title: 'ดูใบเสร็จ'
+        }
+      },
+
+      // Profile
       {
         path: '/profile',
         component: Profile,
@@ -264,7 +316,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.payment == 1)) {
 
     // navigation to basket if basket is empty
-    if (_.isEmpty(JSON.parse(localStorage.basket))) return next({
+    if (_.isEmpty(JSON.parse(localStorage.basket || 'null') || null)) return next({
       name: 'Basket'
     });
   }
@@ -307,8 +359,8 @@ function smoothScroll(to) {
   var scrollTime = 0.8; //Scroll time
   var scrollDistance = 270; //Distance. Use smaller value for shorter scroll and greater value for longer scroll
 
-  // check if path area ['address']
-  if (to.path.split("/").indexOf('address') == -1) {
+  // check if path area ['address'] or ['credit']
+  if (to.path.split("/").indexOf('address') == -1 && to.path.split("/").indexOf('credit') == -1) {
     // bind html scroll
     $window.bind("mousewheel DOMMouseScroll scroll", function (event) {
       event.preventDefault();

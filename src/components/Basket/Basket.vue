@@ -99,7 +99,8 @@
             </div>
             <div class="summary">
               <div>รวมทั้งหมด</div>
-              <div>฿{{numberWithCommas(Math.round(sumAll))}}</div>
+              <div v-if="sumAll <= 0">฿20</div>
+              <div v-else>฿{{numberWithCommas(Math.round(sumAll))}}</div>
             </div>
             <hr>
             <div class="code-input">
@@ -135,7 +136,7 @@ export default {
   data() {
     return {
       timeout: null,
-      oldItems: JSON.parse(localStorage.getItem("basket") || []),
+      oldItems: JSON.parse(localStorage.getItem("basket") || 'null') || null,
       sumPrice: 0,
       sumTran: 0,
       sumAll: 0,
@@ -152,6 +153,7 @@ export default {
   mounted() {
     this.updateSumPrice();
     this.deliveryGet();
+    this.discountCodeUpdate("");
   },
 
   ///
@@ -182,7 +184,9 @@ export default {
       this.deliveryTypeUpdate(data);
     },
     deliveryData: function(data) {
-      this.delivery = data[0].value;
+      if (!_.isEmpty(data)) {
+        this.delivery = data[0].value;
+      }
     },
     basketData: {
       handler: function(data) {
@@ -295,9 +299,9 @@ export default {
           // discount sumPrice
           var discount = response.data.discount;
           if (discount.percent) {
-            this.sumDiscount = (this.sumPrice * discount.percent) / 100;
+            this.sumDiscount = Math.floor((this.sumPrice * discount.percent) / 100);
           } else if (discount.amount) {
-            this.sumDiscount = discount.amount;
+            this.sumDiscount = Math.floor(discount.amount);
           }
 
           // sum all

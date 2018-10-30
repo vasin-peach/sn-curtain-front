@@ -34,6 +34,26 @@ const actions = {
 
   },
 
+  getOrder() {
+    return new Promise((resolve, reject) => {
+
+      let uri = process.env.BACKEND_URI + "/order";
+
+      Vue.http.get(uri).then( // call api
+
+        response => { // success
+          return resolve(response);
+        },
+
+        error => { // error
+          return reject(error);
+        }
+
+      );
+
+    })
+  }
+
 } // action block end.
 
 export default {

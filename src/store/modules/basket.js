@@ -28,9 +28,6 @@ const getters = {
   },
   transportData: state => {
     return state.transport
-  },
-  paymentPayloadData: state => {
-    return state.paymentPayload
   }
 }
 
@@ -54,14 +51,14 @@ const mutations = {
     state.discount = data;
   },
   discountCodeUpdate(state, data) {
-    state.paymentPayload.discount = data
+    localStorage.setItem("discount", JSON.stringify(data));
   },
 
   transportUpdate(state, data) {
     state.transport = data;
   },
   deliveryTypeUpdate(state, data) {
-    state.paymentPayload.delivery = data
+    localStorage.setItem("delivery", JSON.stringify(data));
   }
 }
 

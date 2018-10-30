@@ -68,7 +68,12 @@
                     <b>รวม</b>
                   </div>
                   <div class="col">
-                    ฿{{numberWithCommas(productPrice + transportPrice - discountPrice)}}
+                    <span v-if="(productPrice + transportPrice - discountPrice) > 0">
+                      ฿{{numberWithCommas((productPrice + transportPrice - discountPrice) )}}
+                    </span>
+                    <span v-else>
+                      ฿20
+                    </span>
                   </div>
                 </div>
               </div>

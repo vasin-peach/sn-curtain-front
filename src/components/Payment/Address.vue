@@ -212,6 +212,7 @@ export default {
             title: "ที่อยู่ไม่ถูกต้อง",
             html: errorText
           });
+          
         } else {
           // if user save this address
           if (this.form.save) {

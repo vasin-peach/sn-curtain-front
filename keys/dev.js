@@ -1,5 +1,5 @@
-// Development config
-module.exports = {
-  NODE_ENV: 'development',
-  BACKEND_URI: 'http://localhost:5000'
-};
+// // Development config
+// module.exports = {
+//   NODE_ENV: 'development',
+//   BACKEND_URI: 'http://localhost:5000'
+// };

@@ -19,6 +19,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       Omise.setPublicKey(process.env.OMISE_CLIENT);
 
+      console.log(process.env);
+
       const card = {
         name: data.card_name,
         number: data.card_number.replace(/\s/g, ""),

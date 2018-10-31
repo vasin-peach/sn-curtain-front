@@ -23,7 +23,7 @@ build-staging-image:
   services:
     - docker:dind
   script:
-    - docker build --pull --no-cache --build-arg BACKEND_URI=${BACKEND_URI_DEV} -t $DOCKER_IMAGE_NAME/staging -f .docker/stag.Dockerfile .
+    - docker build --pull --no-cache --build-arg OMISE_CLIENT=${OMISE_CLIENT_DEV} --build-arg BACKEND_URI=${BACKEND_URI_DEV} -t $DOCKER_IMAGE_NAME/staging -f .docker/stag.Dockerfile .
     - docker push $DOCKER_IMAGE_NAME/staging
   after_script:
     - docker rmi $(docker images -qa -f 'dangling=true')
@@ -64,7 +64,7 @@ build-production-image:
   only:
     - master
   script:
-    - docker build --pull --no-cache --build-arg BACKEND_URI=${BACKEND_URI_PROD} -t $DOCKER_IMAGE_NAME/production -f .docker/stag.Dockerfile .
+    - docker build --pull --no-cache --build-arg OMISE_CLIENT=${OMISE_CLIENT_PROD} --build-arg BACKEND_URI=${BACKEND_URI_PROD} -t $DOCKER_IMAGE_NAME/production -f .docker/stag.Dockerfile .
     - docker push $DOCKER_IMAGE_NAME/production
   after_script:
     - docker rmi $(docker images -qa -f 'dangling=true')

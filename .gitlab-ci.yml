@@ -65,6 +65,7 @@ build-production-image:
     - master
   script:
     - docker build --pull --no-cache --build-arg OMISE_CLIENT=${OMISE_CLIENT} --build-arg BACKEND_URI=${BACKEND_URI_PROD} -t $DOCKER_IMAGE_NAME/production -f .docker/stag.Dockerfile .
+    - echo ${OMISE_CLIEN}
     - docker push $DOCKER_IMAGE_NAME/production
   after_script:
     - docker rmi $(docker images -qa -f 'dangling=true')

@@ -7,6 +7,7 @@ WORKDIR /home/app/sn-curtain.com
 COPY . ./
 
 ARG BACKEND_URI
+ARG OMISE_CLIENT
 
 RUN apk update && apk add git
 RUN yarn install

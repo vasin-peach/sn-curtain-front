@@ -8,7 +8,7 @@
             <form>
               <div class="image">
                 <!-- <img :src="userData.photo || '/static/images/lazy/lazyload.svg'"> -->
-                <input type="file" id="js-file-uploader" class=" hidden" name="profile_img" accept="image/png, image/jpeg">
+                <input type="file" ref="profileUpload" id="profileUpload" name="profile_img" accept="image/png, image/jpeg, image/gif" @change="previewUpload">
                 <div class="image-hover"></div>
                 <div class="image-preview" :style="{ 'background-image' : 'url(' + userData.photo || '/static/images/lazy/lazyload.svg' + ')' }">
                   <div>
@@ -58,7 +58,8 @@ export default {
   name: "Profile",
   data() {
     return {
-      currentRoute: "profile"
+      currentRoute: "profile",
+      file: null
     };
   },
   computed: {
@@ -70,6 +71,61 @@ export default {
   watch: {
     $route(to, from) {
       this.currentRoute = to.name;
+    }
+  },
+  methods: {
+    previewUpload() {
+      // preview image
+
+      this.file = this.$refs.profileUpload.files;
+      const size = this.file[0].size * 0.0009765625;
+      const type = ["image/gif", "image/jpeg", "image/png"].indexOf(
+        this.file[0].type
+      );
+
+      if (type < 0) {
+        // check typ of image
+
+        // clear input val
+        let input = this.$refs.profileUpload;
+        input.type = "text";
+        input.type = "file";
+
+        // alert
+        return this.$swal({
+          type: "warning",
+          title: "รูปแบบภาพไม่ถูกต้อง",
+          text: "นามสกุลของภาพต้องเป็น jpg, jpeg, png หรือ gif เท่านั้น."
+        });
+      } else if (size >= 1000) {
+        // check is of image
+
+        // clear input val
+        let input = this.$refs.profileUpload;
+        input.type = "text";
+        input.type = "file";
+
+        // alert
+        return this.$swal({
+          type: "warning",
+          title: "ขนาดไฟล์ใหญ่เกินไป",
+          text:
+            "ขนาดไฟล์ต้องใหญ่ไม่เกิน 1MB, รูปภาพของคุณขนาด: " +
+            Math.round(size * 0.0009765625 * 100) / 100 +
+            " MB."
+        });
+      }
+
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        $(".image-preview").css(
+          "background-image",
+          "url(" + e.target.result + ")"
+        );
+      };
+
+      reader.readAsDataURL(this.file[0]);
     }
   }
 };

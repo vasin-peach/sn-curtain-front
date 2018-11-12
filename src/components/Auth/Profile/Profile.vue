@@ -5,9 +5,13 @@
         <div class="profile-box">
           <div class="profile-background"></div>
           <div class="profile-profile">
-            <div class="image">
-              <img :src="userData.photo || '/static/images/lazy/lazyload.svg'">
-            </div>
+            <form>
+              <div class="image">
+                <img :src="userData.photo || '/static/images/lazy/lazyload.svg'">
+                <input type="file" id="js-file-uploader" class=" hidden" name="profile_img" accept="image/png, image/jpeg">
+                <div class="fade"></div>
+              </div>
+            </form>
             <div class="name">
               {{ userData.name ? userData.name.display_name : userData.email }}
             </div>

@@ -7,9 +7,14 @@
           <div class="profile-profile">
             <form>
               <div class="image">
-                <img :src="userData.photo || '/static/images/lazy/lazyload.svg'">
+                <!-- <img :src="userData.photo || '/static/images/lazy/lazyload.svg'"> -->
                 <input type="file" id="js-file-uploader" class=" hidden" name="profile_img" accept="image/png, image/jpeg">
-                <div class="fade"></div>
+                <div class="image-hover"></div>
+                <div class="image-preview" :style="{ 'background-image' : 'url(' + userData.photo || '/static/images/lazy/lazyload.svg' + ')' }">
+                  <div>
+                    <span>UPLOAD</span>
+                  </div>
+                </div>
               </div>
             </form>
             <div class="name">

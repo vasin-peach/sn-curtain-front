@@ -96,6 +96,7 @@ const actions = {
   }) {
     return new Promise((resolve, reject) => {
       Vue.http.get(process.env.BACKEND_URI + "/auth/profile").then(response => {
+        console.log(response);
         commit('userUpdate', response.data.data);
         return resolve(response.data);
       }, error => {

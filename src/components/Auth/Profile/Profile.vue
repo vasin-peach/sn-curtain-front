@@ -54,6 +54,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import isEmpty from "lodash.isempty";
 export default {
   name: "Profile",
   data() {
@@ -78,15 +79,18 @@ export default {
     previewUpload() {
       // preview image
 
-      this.file = this.$refs.profileUpload.files;
+      this.file = this.$refs.profileUpload.files || null;
+
+      // check file is not empty
+      if (!this.file || isEmpty(this.file)) return;
+
       const size = this.file[0].size * 0.0009765625;
       const type = ["image/gif", "image/jpeg", "image/png"].indexOf(
         this.file[0].type
       );
 
+      // check typ of image
       if (type < 0) {
-        // check typ of image
-
         // clear input val
         let input = this.$refs.profileUpload;
         input.type = "text";
@@ -125,9 +129,26 @@ export default {
           "url(" + e.target.result + ")"
         );
       };
-      reader.readAsDataURL(this.file[0]);
 
-      this.uploadProfile(this.file[0]);
+      this.uploadProfile(this.file[0]).then(
+        () => {
+          // success
+          reader.readAsDataURL(this.file[0]);
+          return this.$swal({
+            type: "success",
+            title: "อัปโหลดสำเร็จ",
+            text: "รูปภาพส่วนตัวได้อัพเดทแล้ว."
+          });
+        },
+        err => {
+          // error
+          return this.$swal({
+            type: "error",
+            title: "เกิดข้อผิดพลาดในการอัพโหลด กรุณาลองใหม่อีกครั้ง",
+            text: err
+          });
+        }
+      );
     }
   }
 };

@@ -5,9 +5,18 @@
         <div class="profile-box">
           <div class="profile-background"></div>
           <div class="profile-profile">
-            <div class="image">
-              <img :src="userData.photo || '/static/images/lazy/lazyload.svg'">
-            </div>
+            <form enctype="multipart/form-data">
+              <div class="image">
+                <!-- <img :src="userData.photo || '/static/images/lazy/lazyload.svg'"> -->
+                <input type="file" ref="profileUpload" id="profileUpload" name="profile_img" accept="image/png, image/jpeg, image/gif" @change="previewUpload">
+                <div class="image-hover"></div>
+                <div class="image-preview" :style="{ 'background-image' : 'url(' + userData.photo || '/static/images/lazy/lazyload.svg' + ')' }">
+                  <div>
+                    <span>UPLOAD</span>
+                  </div>
+                </div>
+              </div>
+            </form>
             <div class="name">
               {{ userData.name ? userData.name.display_name : userData.email }}
             </div>
@@ -44,12 +53,14 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+import isEmpty from "lodash.isempty";
 export default {
   name: "Profile",
   data() {
     return {
-      currentRoute: "profile"
+      currentRoute: "profile",
+      file: null
     };
   },
   computed: {
@@ -61,6 +72,83 @@ export default {
   watch: {
     $route(to, from) {
       this.currentRoute = to.name;
+    }
+  },
+  methods: {
+    ...mapActions(["uploadProfile"]),
+    previewUpload() {
+      // preview image
+
+      this.file = this.$refs.profileUpload.files || null;
+
+      // check file is not empty
+      if (!this.file || isEmpty(this.file)) return;
+
+      const size = this.file[0].size * 0.0009765625;
+      const type = ["image/gif", "image/jpeg", "image/png"].indexOf(
+        this.file[0].type
+      );
+
+      // check typ of image
+      if (type < 0) {
+        // clear input val
+        let input = this.$refs.profileUpload;
+        input.type = "text";
+        input.type = "file";
+
+        // alert
+        return this.$swal({
+          type: "warning",
+          title: "รูปแบบภาพไม่ถูกต้อง",
+          text: "นามสกุลของภาพต้องเป็น jpg, jpeg, png หรือ gif เท่านั้น."
+        });
+      } else if (size > 1000) {
+        // check is of image
+
+        // clear input val
+        let input = this.$refs.profileUpload;
+        input.type = "text";
+        input.type = "file";
+
+        // alert
+        return this.$swal({
+          type: "warning",
+          title: "ขนาดไฟล์ใหญ่เกินไป",
+          text:
+            "ขนาดไฟล์ต้องใหญ่ไม่เกิน 1MB, รูปภาพของคุณขนาด: " +
+            Math.round(size * 0.0009765625 * 100) / 100 +
+            " MB."
+        });
+      }
+
+      // preview image
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        $(".image-preview").css(
+          "background-image",
+          "url(" + e.target.result + ")"
+        );
+      };
+
+      this.uploadProfile(this.file[0]).then(
+        () => {
+          // success
+          reader.readAsDataURL(this.file[0]);
+          return this.$swal({
+            type: "success",
+            title: "อัปโหลดสำเร็จ",
+            text: "รูปภาพส่วนตัวได้อัพเดทแล้ว."
+          });
+        },
+        err => {
+          // error
+          return this.$swal({
+            type: "error",
+            title: "เกิดข้อผิดพลาดในการอัพโหลด กรุณาลองใหม่อีกครั้ง",
+            text: err
+          });
+        }
+      );
     }
   }
 };

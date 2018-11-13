@@ -5,7 +5,7 @@
         <div class="profile-box">
           <div class="profile-background"></div>
           <div class="profile-profile">
-            <form>
+            <form enctype="multipart/form-data">
               <div class="image">
                 <!-- <img :src="userData.photo || '/static/images/lazy/lazyload.svg'"> -->
                 <input type="file" ref="profileUpload" id="profileUpload" name="profile_img" accept="image/png, image/jpeg, image/gif" @change="previewUpload">
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Profile",
   data() {
@@ -74,6 +74,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["uploadProfile"]),
     previewUpload() {
       // preview image
 
@@ -97,7 +98,7 @@ export default {
           title: "รูปแบบภาพไม่ถูกต้อง",
           text: "นามสกุลของภาพต้องเป็น jpg, jpeg, png หรือ gif เท่านั้น."
         });
-      } else if (size >= 1000) {
+      } else if (size > 1000) {
         // check is of image
 
         // clear input val
@@ -116,16 +117,17 @@ export default {
         });
       }
 
+      // preview image
       const reader = new FileReader();
-
       reader.onload = function(e) {
         $(".image-preview").css(
           "background-image",
           "url(" + e.target.result + ")"
         );
       };
-
       reader.readAsDataURL(this.file[0]);
+
+      this.uploadProfile(this.file[0]);
     }
   }
 };

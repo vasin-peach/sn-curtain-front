@@ -127,7 +127,7 @@ const actions = {
         return reject(error);
       })
     })
-  }
+  },
 }
 
 export default {

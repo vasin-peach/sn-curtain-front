@@ -15,7 +15,6 @@ services:
       - NODE_ENV=production
       - BACKEND_URI=${BACKEND_URI_DEV}
       - OMISE_CLIENT=${OMISE_CLIENT}
-      - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS_STAG}
 
     networks:
       - application-tier

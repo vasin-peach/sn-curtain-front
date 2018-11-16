@@ -55,7 +55,7 @@
                     ค่าขนส่ง
                   </div>
                   <div class="col">
-                    ฿{{ numberWithCommas(transportPrice) }}
+                    ฿{{ numberWithCommas(transportPrice) }} ({{Math.round(weight / 1000 * 100) / 100}}kg)
                   </div>
                 </div>
                 <div class="row m-0">
@@ -93,7 +93,8 @@ export default {
     return {
       productPrice: 0,
       discountPrice: 0,
-      transportPrice: 0
+      transportPrice: 0,
+      weight: 0
     };
   },
   watch: {
@@ -115,19 +116,20 @@ export default {
       // init price of discount
       this.discountPrice = Math.round(this.discountData);
 
-      // init price of delivery
-      this.transportPrice = Math.round(this.transportData);
+      // init price of deliveryPrice
+      this.transportPrice = Math.round(this.deliveryPriceData);
     }
   },
   computed: {
-    ...mapGetters(["basketData", "discountData", "transportData"])
+    ...mapGetters(["basketData", "discountData", "deliveryPriceData"])
   },
   mounted() {
     this.initPrice();
     this.basketGetSession().then(response => {
-      this.productPrice = response.data.price;
-      this.discountPrice = response.data.discount;
-      this.transportPrice = response.data.delivery;
+      this.productPrice = response.data.price || 0;
+      this.discountPrice = response.data.discount  || 0;
+      this.transportPrice = response.data.deliveryPrice  || 0;
+      this.weight = response.data.weight  || 0;
     });
   }
 };

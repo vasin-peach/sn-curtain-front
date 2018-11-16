@@ -247,8 +247,8 @@ export default {
 
       this.sumWeight(this.basketData);
 
-      var sumAll = this.sumPrice + this.deliveryPriceData - this.sumDiscount;
-      sumAll = this.sumPrice + this.deliveryPriceData - this.sumDiscount;
+      var sumAll = (this.sumPrice - this.sumDiscount) + this.deliveryPriceData ;
+      sumAll = (this.sumPrice - this.sumDiscount) + this.deliveryPriceData;
       this.sumAll = sumAll > 0 ? sumAll : 0;
 
       // update discount state
@@ -261,7 +261,8 @@ export default {
       this.basketUpdateSession({
         price: this.sumPrice,
         discount: this.sumDiscount,
-        // delivery: this.delivery,
+        deliveryPrice: this.deliveryPriceData,
+        weight: this.weight
       });
     },
     amountMinus(id) {
@@ -348,8 +349,9 @@ export default {
         // update data to session
         this.basketUpdateSession({
           price: this.sumPrice,
-          discount: this.sumDiscount
-          // delivery: this.delivery,
+          discount: this.sumDiscount,
+          deliveryPrice: this.deliveryPriceData,
+          weight: this.weight
         });
 
         // navigation to payment page

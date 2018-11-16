@@ -261,7 +261,8 @@ export default {
       this.basketUpdateSession({
         price: this.sumPrice,
         discount: this.sumDiscount,
-        // delivery: this.delivery,
+        deliveryPrice: this.deliveryPriceData,
+        weight: this.weight
       });
     },
     amountMinus(id) {
@@ -348,8 +349,9 @@ export default {
         // update data to session
         this.basketUpdateSession({
           price: this.sumPrice,
-          discount: this.sumDiscount
-          // delivery: this.delivery,
+          discount: this.sumDiscount,
+          deliveryPrice: this.deliveryPriceData,
+          weight: this.weight
         });
 
         // navigation to payment page

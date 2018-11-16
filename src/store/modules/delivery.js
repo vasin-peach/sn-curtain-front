@@ -4,46 +4,54 @@ import Vue from 'vue';
 // State
 ///
 const state = {
-  delivery: []
+  deliveryPrice: 0
 }
 
-
-///
-// Getters
-///
+// ? Getters
 const getters = {
-  deliveryData: state => {
-    return state.delivery
-  },
-}
-
-///
-// Mutations
-///
-const mutations = {
-  deliveryUpdate(state, data) {
-    state.delivery = data
+  deliveryPriceData: state => {
+    return state.deliveryPrice;
   }
 }
 
-///
-// Actions
-///
+// ? Mutations
+const mutations = {
+  deliveryPriceUpdate(state, data) {
+
+    /**
+     * @param data value to update to delivery price
+     */
+
+    state.deliveryPrice = data;
+
+  }
+}
+
+// ? Actions
 const actions = {
-  deliveryGet({
+  getDeliveryPrice({
     commit
-  }) {
+  }, weight) {
+
+    /**
+     * @param weight sum weight of product in basket 
+     */
+
     return new Promise((resolve, reject) => {
 
-      var uriRequest = process.env.BACKEND_URI + "/delivery";
-      Vue.http.get(uriRequest).then(response => {
-        commit("deliveryUpdate", response.data.data);
-        return resolve(response.data);
-      }, err => {
-        return reject(err)
-      })
+      // ! Call
+      Vue.http.get(process.env.BACKEND_URI + "/weight/" + weight).then(
 
-    })
+        resp => { // * Success
+          commit('deliveryPriceUpdate', resp.data.data);
+          return resolve(resp.data.data);
+        }, err => { // * Errro
+          commit('deliveryPriceUpdate', 0);
+          return reject(err);
+        });
+
+    });
+
   }
 }
 

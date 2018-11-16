@@ -247,8 +247,8 @@ export default {
 
       this.sumWeight(this.basketData);
 
-      var sumAll = this.sumPrice + this.deliveryPriceData - this.sumDiscount;
-      sumAll = this.sumPrice + this.deliveryPriceData - this.sumDiscount;
+      var sumAll = (this.sumPrice - this.sumDiscount) + this.deliveryPriceData ;
+      sumAll = (this.sumPrice - this.sumDiscount) + this.deliveryPriceData;
       this.sumAll = sumAll > 0 ? sumAll : 0;
 
       // update discount state

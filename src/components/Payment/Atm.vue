@@ -9,6 +9,8 @@
       <div class="title">
         <font-awesome-icon icon="credit-card" aria-hidden="true" /> ชำระด้วยการโอน</div>
     </div>
+
+    <hr>
     <div class="atm-body">
       <div class="row m-0">
         <div class="col-12 atm-title">
@@ -57,7 +59,7 @@
         </div>
         <div class="col-12">
           <div class="button">อัพโหลดหลักฐานการชำระเงิน</div>
-          <router-link :to="{ name: 'ProfileHistory'}" class="button d-block">ย้อนกลับ, อัพโหลดภายหลัง</router-link>
+          <div class="button" @click="confirmPaymentLater()">ชำระเงินภายหลัง, กลับไปหน้าแสดงรายการสั่งซื้อ</div>
         </div>
         <div class="col-12 atm-title">
           <div class="circle">3</div>
@@ -67,14 +69,35 @@
         </div>
       </div>
     </div>
-
-    <hr>
   </div>
 </template>
 
 <script>
 export default {
-  name: "payment_atm"
+  name: "payment_atm",
+  methods: {
+    // Confirm
+    confirmPaymentLater() {
+      this.$swal({
+        type: "warning",
+        title: "ยืนยันรายการ",
+        text: "คุณต้องการยืนยันรายการ เพื่อชำระเงินภายหลังหรือไม่?",
+        showCancelButton: true,
+        confirmButtonText: "ใช่, ยืนยันการทำรายการ",
+        confirmButtonColor: "#ee9b5c",
+        cancelButtonText: "ไม่, ย้อนกลับ"
+      }).then(result => {
+        if (result.value)
+          this.$swal({
+            type: "success",
+            title: "ยืนยันการทำรายการ",
+            text: "ระบบจะนำคุณไปหน้าโชว์รายชื่อการสั่งซื้อ"
+          }).then(() => {
+            this.$router.push({ name: "ProfileHistory" });
+          });
+      });
+    }
+  }
 };
 </script>
 

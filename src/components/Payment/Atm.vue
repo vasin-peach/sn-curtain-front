@@ -73,10 +73,14 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "payment_atm",
   methods: {
-    // Confirm
+    // * Actions
+    ...mapActions(["shoppingClear", "createOrder"]),
+
+    // * Confirm
     confirmPaymentLater() {
       this.$swal({
         type: "warning",
@@ -86,15 +90,21 @@ export default {
         confirmButtonText: "ใช่, ยืนยันการทำรายการ",
         confirmButtonColor: "#ee9b5c",
         cancelButtonText: "ไม่, ย้อนกลับ"
-      }).then(result => {
-        if (result.value)
-          this.$swal({
-            type: "success",
-            title: "ยืนยันการทำรายการ",
-            text: "ระบบจะนำคุณไปหน้าโชว์รายชื่อการสั่งซื้อ"
-          }).then(() => {
-            this.$router.push({ name: "ProfileHistory" });
-          });
+      }).then(async result => {
+        // ok button
+        if (result.value) {
+          // ! Call create order
+
+          this.createOrder("wait upload");
+        }
+
+        // this.$swal({
+        //   type: "success",
+        //   title: "ยืนยันการทำรายการ",
+        //   text: "ระบบจะนำคุณไปหน้าโชว์รายชื่อการสั่งซื้อ"
+        // }).then(() => {
+        //   this.$router.push({ name: "ProfileHistory" });
+        // });
       });
     }
   }

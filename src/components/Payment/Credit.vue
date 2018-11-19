@@ -68,7 +68,7 @@
             <div class="col-12 col-sm-12 col-md-6">
               <div class="input-group">
                 <b-form-group label="CVV">
-                  <b-form-input :state="!errors.has('cvv')" v-validate="'required|min:3'" name="cvv" v-model="form.cvv" type="text" placeholder="รหัสลับ" v-mask="'###'"></b-form-input>
+                  <b-form-input :state="!errors.has('cvv')" v-validate="'required|min:3'" name="cvv" v-model="form.cvv" type="text" placeholder="รหัสหลังบัตร" v-mask="'###'"></b-form-input>
                   <b-form-invalid-feedback v-show="errors.has('cvv')">
                     {{ errors.first('cvv') }}
                   </b-form-invalid-feedback>
@@ -99,21 +99,21 @@
 import { mapActions } from "vuex";
 import { mask } from "vue-the-mask";
 import { ErrorBag } from "vee-validate";
-import Loading from '../Loading';
+import Loading from "../Loading";
 import _ from "lodash";
 export default {
   name: "payment_credit",
   data() {
     return {
       form: {
-        card_number: 4532156407749521,
-        card_name: "Vasin Sermsampan",
-        expires_date: "07/21",
-        cvv: "121"
+        card_number: null,
+        card_name: null,
+        expires_date: null,
+        cvv: null
       },
       card_type: null,
       loadingHeight: 0,
-      loadingState: false,
+      loadingState: false
     };
   },
   watch: {
@@ -142,45 +142,42 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['creditCreateToken', 'getOrder', 'shoppingClear']),
+    ...mapActions(["creditCreateToken", "getOrder", "shoppingClear"]),
     validateCredit() {
+      this.$validator.validateAll().then(result => {
+        // validate all input
 
-      this.$validator.validateAll().then(result => { // validate all input
-
-       
-        if (!result) return false;  // exist if validate is false
+        if (!result) return false; // exist if validate is false
 
         // enable loading
         this.loadingState = true;
-        
-        this.creditCreateToken(this.form).then((response) => { // call function in state
 
-          // disable loading
-          this.loadingState = false
+        this.creditCreateToken(this.form)
+          .then(response => {
+            // call function in state
 
-          // remove all history about transaction
-          this.shoppingClear().then(() => {
+            // disable loading
+            this.loadingState = false;
 
-            // navigation to bill
-            this.$router.push({ name: 'Bill_View', params: {id: response.data._id} });
+            // remove all history about transaction
+            this.shoppingClear().then(() => {
+              // navigation to bill
+              this.$router.push({
+                name: "Bill_View",
+                params: { id: response.data._id }
+              });
+            });
           })
-
-
-        }).catch(() => {
-
-          // disable loading
-          this.loadingState = false
-
-        });
-
+          .catch(() => {
+            // disable loading
+            this.loadingState = false;
+          });
       });
-      
     }
   },
   directives: { mask },
   components: { Loading },
   mounted() {
-
     // get height from credit_body
     this.loadingHeight = this.$refs.credit_body.clientHeight;
   }

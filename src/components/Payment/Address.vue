@@ -21,7 +21,7 @@
           <div class="col-12 col-sm-12 col-md-6">
             <div class="input-group">
               <b-form-group label="ชื่อต้น (ภาษาไทย)">
-                <b-form-input :state="!errors.has('first_name')" v-validate="'required|min:4'" name="first_name" v-model="form.first_name" type="text" placeholder="ชื่อต้น"></b-form-input>
+                <b-form-input :state="!errors.has('first_name')" v-validate="'required|min:1'" name="first_name" v-model="form.first_name" type="text" placeholder="ชื่อต้น"></b-form-input>
                 <b-form-invalid-feedback v-show="errors.has('first_name')">
                   {{ errors.first('first_name') }}
                 </b-form-invalid-feedback>
@@ -31,7 +31,7 @@
           <div class="col">
             <div class="input-group">
               <b-form-group label="นามสกุล (ภาษาไทย)">
-                <b-form-input :state="!errors.has('last_name')" v-validate="'required|min:4'" name="last_name" v-model="form.last_name" type="text" placeholder="ชื่อต้น"></b-form-input>
+                <b-form-input :state="!errors.has('last_name')" v-validate="'required|min:1'" name="last_name" v-model="form.last_name" type="text" placeholder="ชื่อต้น"></b-form-input>
                 <b-form-invalid-feedback v-show="errors.has('last_name')">
                   {{ errors.first('last_name') }}
                 </b-form-invalid-feedback>
@@ -60,7 +60,7 @@
           <div class="col-12 col-sm-12 col-md-6">
             <div class="input-group">
               <b-form-group label="บ้านเลขที่">
-                <b-form-input :state="!errors.has('house_no')" v-validate="{ required: true, min: 3 }" name="house_no" v-model="form.house_no" type="text" placeholder="เช่น 38/5, 24/589" maxlength="10"></b-form-input>
+                <b-form-input :state="!errors.has('house_no')" v-validate="{ required: true, min: 1 }" name="house_no" v-model="form.house_no" type="text" placeholder="เช่น 38/5, 24/589" maxlength="10"></b-form-input>
                 <b-form-invalid-feedback v-show="errors.has('house_no')">
                   {{ errors.first('house_no') }}
                 </b-form-invalid-feedback>
@@ -165,8 +165,6 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
-// import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
-// import thailand from "@data/thailand.raw.json";
 import _ from "lodash";
 import Options from "./Options";
 export default {
@@ -212,7 +210,6 @@ export default {
             title: "ที่อยู่ไม่ถูกต้อง",
             html: errorText
           });
-          
         } else {
           // if user save this address
           if (this.form.save) {

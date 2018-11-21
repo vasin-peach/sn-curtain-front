@@ -166,7 +166,7 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import _ from "lodash";
-import Options from "./Options";
+import Options from "../Popup/Options";
 export default {
   name: "payment_address",
   data() {

@@ -81,16 +81,15 @@ const actions = {
       Vue.http.post(`${process.env.BACKEND_URI}/order`, product).then(
 
         response => { // response success
-          console.log(response);
+          return resolve(response);
         },
 
         (error) => { // response error
-          console.log(error);
+          return reject(error);
         }
       );
 
-    })
-
+    });
 
   }
 

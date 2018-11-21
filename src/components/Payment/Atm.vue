@@ -1,5 +1,10 @@
 <template>
   <div class="payment_atm">
+    <transition name="fade" mode="out-in">
+      <div class="popup-container" v-show="popupUploadData">
+        <upload-component class="float" :destination="'atm'" :maxSize="2000" :type="['image/gif', 'image/jpeg', 'image/png']" :message="{success: {type: 'success', title: 'อัพโหลดหลักฐานการโอนเสร็จสิ้น', text: 'ทางทีมงานจะทำการตรวจสอบหลักฐานการโอนและดำเนินการภายใน 24 ชม.'}}"></upload-component>
+      </div>
+    </transition>
     <div class="wrapper-header">
       <div class="back">
         <router-link :to="{ name: 'Payment'}">
@@ -58,7 +63,7 @@
           หลังจากท่านทำการโอนแล้ว ให้เก็บหลักฐานการโอนแล้วอัพโหลดลงในระบบ ผ่านทางปุ่มด้านล่างนี้
         </div>
         <div class="col-12">
-          <div class="button">อัพโหลดหลักฐานการชำระเงิน</div>
+          <div class="button" @click="popupUploadUpdate(true)">อัพโหลดหลักฐานการชำระเงิน</div>
           <div class="button" @click="confirmPaymentLater()">ชำระเงินภายหลัง, กลับไปหน้าแสดงรายการสั่งซื้อ</div>
         </div>
         <div class="col-12 atm-title">
@@ -73,12 +78,18 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations, mapGetters } from "vuex";
+import UploadComponent from "../Popup/Upload";
 export default {
   name: "payment_atm",
+
+  // ! METHODS
   methods: {
     // * Actions
     ...mapActions(["shoppingClear", "createOrder"]),
+
+    // * Mutations
+    ...mapMutations(["popupUploadUpdate"]),
 
     // * Confirm
     confirmPaymentLater() {
@@ -95,18 +106,32 @@ export default {
         if (result.value) {
           // ! Call create order
 
-          this.createOrder("wait upload");
+          this.createOrder("wait upload").then(resp => {
+            // remove all history about transaction
+            this.shoppingClear().then(() => {
+              // alert
+              this.$swal({
+                type: "success",
+                title: "ยืนยันการทำรายการ",
+                text: "ระบบจะนำคุณไปหน้าโชว์รายชื่อการสั่งซื้อ"
+              }).then(() => {
+                this.$router.push({ name: "ProfileHistory" });
+              });
+            });
+          });
         }
-
-        // this.$swal({
-        //   type: "success",
-        //   title: "ยืนยันการทำรายการ",
-        //   text: "ระบบจะนำคุณไปหน้าโชว์รายชื่อการสั่งซื้อ"
-        // }).then(() => {
-        //   this.$router.push({ name: "ProfileHistory" });
-        // });
       });
     }
+  },
+
+  // ! COMPUTED
+  computed: {
+    ...mapGetters(["popupUploadData"])
+  },
+
+  // ! COMPONENTS
+  components: {
+    UploadComponent
   }
 };
 </script>

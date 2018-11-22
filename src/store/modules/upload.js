@@ -30,6 +30,7 @@ const actions = {
      * @param data OBJECT - {
      *  file: OBJECT - image data
      *  destination: STRING - route to upload to backend
+     *  objectId: NUMBER - _id to update
      * }
      */
 
@@ -39,8 +40,9 @@ const actions = {
       if (!data || isEmpty(data)) return reject('bad params');
 
       // create from and append image to from
-      let form = new FormData();
+      var form = new FormData();
       form.append('image', data.file);
+      form.append('objectId', data.objectId);
 
       // ! Call
       try {

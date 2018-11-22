@@ -105,7 +105,6 @@ export default {
         // ok button
         if (result.value) {
           // ! Call create order
-
           this.createOrder("wait upload").then(resp => {
             // remove all history about transaction
             this.shoppingClear().then(() => {

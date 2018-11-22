@@ -11,49 +11,22 @@
         <div class="title">
           อัพโหลดหลักฐานการโอน
         </div>
-        <form enctype="multipart/form-data" @submit.prevent="submitUpload()">
-          <div class="row m-0">
-            <div class="col-12 form-upload">
-              <input type="file" ref="atmUpload" id="upload" name="upload" accept="image/png, image/jpeg, image/gif" @change="previewUpload" required>
-              <div class="form-upload-preview image-preview" style="background-image: url('/static/images/icon/upload.svg');"></div>
-            </div>
-            <div class="col-12 p-0">
-              <button type="submit" class="button">อัพโหลดหลักฐาน</button>
-            </div>
+        <transition name="fade" mode="out-in">
+          <div v-if="loadingState">
+            <loading style="min-height: auto; height: 200px !important;"></loading>
           </div>
-          <!-- <div class="row m-0">
-            <div class="col-12 col-md-6">
-              <b-form-group label="วันที่โอน">
-                <input type="date" name="form-dateDay">
-              </b-form-group>
+          <form v-else enctype="multipart/form-data" @submit.prevent="submitUpload()">
+            <div class="row m-0">
+              <div class="col-12 form-upload">
+                <input type="file" ref="atmUpload" id="upload" name="upload" accept="image/png, image/jpeg, image/gif" @change="previewUpload" required>
+                <div class="form-upload-preview image-preview" style="background-image: url('/static/images/icon/upload.svg');"></div>
+              </div>
+              <div class="col-12 p-0">
+                <button type="submit" class="button">อัพโหลดหลักฐาน</button>
+              </div>
             </div>
-
-            <div class="col-12 col-md-6">
-              <b-form-group label="เวลาที่โอน">
-                <input type="date" name="form-dateTime">
-              </b-form-group>
-            </div>
-
-            <div class="col-12">
-              <b-form-group label="หมายเลขบัญชีของท่านที่โอน (4 ตัวสุดท้าย)">
-                <input type="number" name="form-BankNumber">
-              </b-form-group>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <b-form-group label="โอนจากธนาคาร">
-                <input type="text" name="form-fromBank">
-              </b-form-group>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <b-form-group label="มายังธนาคาร">
-                <b-form-select id="exampleInput3" name="form-toBank" :options="options.formBank">
-                </b-form-select>
-              </b-form-group>
-            </div>
-          </div> -->
-        </form>
+          </form>
+        </transition>
       </div>
     </div>
   </div>
@@ -61,11 +34,13 @@
 
 <script>
 import { mapMutations, mapActions } from "vuex";
+import Loading from "../Loading";
 import isEmpty from "lodash.isempty";
 export default {
   data() {
     return {
       file: null,
+      loadingState: false,
       options: {
         fromBank: [
           "ธนาคารกรุงเทพ",
@@ -93,7 +68,7 @@ export default {
     destination: String,
     maxSize: Number, // 1000 = 1MB
     type: Array,
-    message: Object
+    message: Object,
   },
 
   // ! METHODS
@@ -102,47 +77,67 @@ export default {
     ...mapMutations(["popupUploadUpdate"]),
 
     // ? Actions
-    ...mapActions(["upload"]),
+    ...mapActions(["upload", "createOrder", "shoppingClear"]),
 
     // ? Submit form
     submitUpload() {
-      this.upload({
-        file: this.submitFile,
-        destination: this.destination
-      }).then(
-        resp => {
-          // success
 
-          // alert
-          this.$swal(
-            this.message.success || {
-              type: "success",
-              title: "อัพโหลดเสร็จสิ้น"
-            }
-          );
 
-          // disable popup upload
-          this.popupUploadUpdate(true);
+      // disable loading
+      this.loadingState = true;
 
-          return resp || true;
-        },
-        err => {
-          // error
+      this.createOrder("wait upload").then(resp => {
 
-          // alert
-          this.$swal(
-            this.message.error || {
-              type: "error",
-              title: "เกิดข้อผิดพลาดในการอัพโหลด",
-              html: `ไม่สามารถอัพโหลดได้ กรุณาลองใหม่ในภายหลัง ${
-                err.statusText ? `<br>Error: ${err.statusText}` : ""
-              }`
-            }
-          );
+        this.upload({
+          file: this.file[0],
+          destination: this.destination,
+          objectId: resp.data.data._id
+        }).then(
+          resp => {
+            // success
 
-          return err || false;
-        }
-      );
+            // alert
+            this.$swal(
+              this.message.success || {
+                type: "success",
+                title: "อัพโหลดเสร็จสิ้น"
+              }
+            );
+
+            // disable popup upload
+            this.popupUploadUpdate(true);
+
+            // remove all history about transaction
+            this.shoppingClear();
+
+            // disable loading
+            this.loadingState = false;
+
+            this.$router.push({ name: 'ProfileHistory'});
+
+          },
+          err => {
+            // error
+
+            // disable loading
+            this.loadingState = false;
+
+            // alert
+            this.$swal(
+              this.message.error || {
+                type: "error",
+                title: "เกิดข้อผิดพลาดในการอัพโหลด",
+                html: `ไม่สามารถอัพโหลดได้ กรุณาลองใหม่ในภายหลัง ${
+                  err.statusText ? `<br>Error: ${err.statusText}` : ""
+                }`
+              }
+            );
+          }
+        );
+
+      });
+
+
     },
 
     // ? Preview image
@@ -192,9 +187,6 @@ export default {
         });
       }
 
-      // prepare payload to submit
-      this.uploadFile = this.file[0];
-
       // preview image
       const reader = new FileReader();
       reader.onload = function(e) {
@@ -205,7 +197,10 @@ export default {
       };
       reader.readAsDataURL(this.file[0]);
     }
-  }
+  },
+  mounted() {
+  },
+  components: { Loading },
 };
 </script>
 

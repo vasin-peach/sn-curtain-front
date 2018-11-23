@@ -18,12 +18,25 @@
           <div class="col-12">
             <hr>
           </div>
-          <div class="col">
+          <div class="col" v-if="items.order_status == 'order_success'">
             <router-link :to="{ name: 'Bill_View', params: { id: items._id } }">
               <button type="button" class="button">
                 ดูบิลด์
               </button>
             </router-link>
+          </div>
+          <div class="col wait_confirm" v-if="items.order_status == 'wait_confirm'">
+            <div class="row m-0">
+              <div class="col">
+                ค่าขนส่ง: {{ items.pricing.delivery_price }} <br>
+                ราคารวม: {{ items.pricing.summary_price }} <br>
+                สถานที่ส่ง: {{ items.delivery.delivery_description }} <br>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <hr>
+            <button type="button" class="button" @click="deleteTrigger(items._id)">ลบรายการนี้</button>
           </div>
         </b-collapse>
       </div>
@@ -57,7 +70,7 @@ export default {
   },
   watch: {},
   methods: {
-    ...mapActions(["getOrder"]),
+    ...mapActions(["getOrder", "deleteOrder"]),
     makePad(str, size) {
       if (!str || !size) return false;
       var s = String(str);
@@ -72,6 +85,12 @@ export default {
     },
     getMessage(status) {
       return getMessage(status);
+    },
+    deleteTrigger(id) {
+      this.deleteOrder(id).then(resp => {
+        const orderValue = resp.data.data._id;
+        this.order_data = this.order_data.filter(e => e._id != orderValue);
+      });
     }
   }
 };

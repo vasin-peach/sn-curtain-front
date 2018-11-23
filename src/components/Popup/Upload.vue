@@ -68,7 +68,7 @@ export default {
     destination: String,
     maxSize: Number, // 1000 = 1MB
     type: Array,
-    message: Object,
+    message: Object
   },
 
   // ! METHODS
@@ -81,13 +81,10 @@ export default {
 
     // ? Submit form
     submitUpload() {
-
-
-      // disable loading
+      // eanble loading
       this.loadingState = true;
 
       this.createOrder("wait upload").then(resp => {
-
         this.upload({
           file: this.file[0],
           destination: this.destination,
@@ -105,7 +102,7 @@ export default {
             );
 
             // disable popup upload
-            this.popupUploadUpdate(true);
+            this.popupUploadUpdate(false);
 
             // remove all history about transaction
             this.shoppingClear();
@@ -113,12 +110,12 @@ export default {
             // disable loading
             this.loadingState = false;
 
-            this.$router.push({ name: 'ProfileHistory'});
-
+            this.$router.push({ name: "ProfileHistory" });
           },
           err => {
             // error
 
+            this.popupUploadUpdate(false);
             // disable loading
             this.loadingState = false;
 
@@ -134,10 +131,7 @@ export default {
             );
           }
         );
-
       });
-
-
     },
 
     // ? Preview image
@@ -198,9 +192,8 @@ export default {
       reader.readAsDataURL(this.file[0]);
     }
   },
-  mounted() {
-  },
-  components: { Loading },
+  mounted() {},
+  components: { Loading }
 };
 </script>
 

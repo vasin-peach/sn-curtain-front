@@ -91,7 +91,40 @@ const actions = {
 
     });
 
+  }, // // create order block end
+
+  // ? deleteOrder
+  async deleteOrder({
+    commit
+  }, id) {
+
+    /**
+     * @param id NUMBER - order id to delete
+     */
+
+
+    return new Promise((resolve, reject) => {
+
+      // ! Validate
+      if (!id) return reject('bad param, `id` is empty.');
+
+      // ! Delete
+      Vue.http.post(`${process.env.BACKEND_URI}/order/delete`, {
+        delete_id: id
+      }).then(
+        response => { // success
+          return resolve(response);
+        },
+        error => { // error
+          return reject('delete error, ' + error);
+        }
+      );
+    })
+
+
   }
+
+
 
 } // action block end.
 

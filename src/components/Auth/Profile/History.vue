@@ -3,13 +3,13 @@
     <div class="profile-order-container">
       <div class="profile-order-list" v-for="(items, id) in order_data" :key="items._id" v-b-toggle="'order-list-collapse-' + id">
         <div class="row m-0">
-          <div class="col-5">
-            รายการ: {{ makePad(items._id, 7) }}
+          <div class="col-md-3">
+            <b>รายการ:</b> {{ makePad(items._id, 7) }}
           </div>
           <div class="col">
-            สถาณะ: {{ items.order_status }}
+            <b>สถาณะ:</b> <span>{{ getMessage(items.order_status) }}</span>
           </div>
-          <div class="col">
+          <div class="col-md-3">
             {{ makeDate(items.created_at) }}
           </div>
         </div>
@@ -18,12 +18,25 @@
           <div class="col-12">
             <hr>
           </div>
-          <div class="col">
+          <div class="col" v-if="items.order_status == 'order_success'">
             <router-link :to="{ name: 'Bill_View', params: { id: items._id } }">
               <button type="button" class="button">
                 ดูบิลด์
               </button>
             </router-link>
+          </div>
+          <div class="col wait_confirm" v-if="items.order_status == 'wait_confirm'">
+            <div class="row m-0">
+              <div class="col">
+                ค่าขนส่ง: {{ items.pricing.delivery_price }} <br>
+                ราคารวม: {{ items.pricing.summary_price }} <br>
+                สถานที่ส่ง: {{ items.delivery.delivery_description }} <br>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <hr>
+            <button type="button" class="button" @click="deleteTrigger(items._id)">ลบรายการนี้</button>
           </div>
         </b-collapse>
       </div>
@@ -32,43 +45,55 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import moment from 'moment';
+import { mapActions } from "vuex";
+import { getMessage } from "./orderMessageFunc";
+import moment from "moment";
 export default {
-  name: 'ProfileHistory',
+  name: "ProfileHistory",
   mounted() {
-
     // change moment to th
-    moment.locale('th'); 
+    moment.locale("th");
 
-    this.getOrder().then(response => {
-      this.order_data = response.data.data;
-    }, error => {
-      this.order_data = null;
-    })
+    this.getOrder().then(
+      response => {
+        this.order_data = response.data.data;
+      },
+      error => {
+        this.order_data = null;
+      }
+    );
   },
   data() {
     return {
       order_data: null
-    }
+    };
   },
-  watch: {
-
-  },
+  watch: {},
   methods: {
-    ...mapActions(['getOrder']),
+    ...mapActions(["getOrder", "deleteOrder"]),
     makePad(str, size) {
       if (!str || !size) return false;
       var s = String(str);
-      while (s.length < (size || 2)) { s = "0" + s;}
+      while (s.length < (size || 2)) {
+        s = "0" + s;
+      }
       return s;
     },
     makeDate(data) {
       if (!data) return false;
-      return moment(data).format('ll', 'th');
+      return moment(data).format("ll", "th");
     },
+    getMessage(status) {
+      return getMessage(status);
+    },
+    deleteTrigger(id) {
+      this.deleteOrder(id).then(resp => {
+        const orderValue = resp.data.data._id;
+        this.order_data = this.order_data.filter(e => e._id != orderValue);
+      });
+    }
   }
-}
+};
 </script>
 
 <style>

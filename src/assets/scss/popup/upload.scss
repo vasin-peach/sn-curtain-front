@@ -1,0 +1,53 @@
+.upload-wrapper {
+  width: 60vw;
+
+  @include desktop {
+    max-width: 600px !important;
+  }
+
+  @include extra {
+    max-width: 800px !important;
+  }
+
+  .form-upload {
+    position: relative;
+    width: 100%;
+    min-height: 20vh;
+    border: 1px solid $gray2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    input[type='file'] {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      width: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .form-upload-preview {
+      display: block;
+      width: 100px;
+      height: 100px;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .button {
+    margin-top: 15px;
+    // border-color: $orange1;
+    // color: $orange1;
+
+    // &:hover {
+    //   color: $white1;
+    //   background: $orange1;
+    //   border-color: $orange1;
+    // }
+  }
+}

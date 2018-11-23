@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   name: "Payment",
   data() {
@@ -104,6 +104,7 @@ export default {
   },
   methods: {
     ...mapActions(["basketGetSession"]),
+    ...mapMutations(["popupPaymentOptionsUpdate"]),
     numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
@@ -125,11 +126,12 @@ export default {
   },
   mounted() {
     this.initPrice();
+    this.popupPaymentOptionsUpdate(false);
     this.basketGetSession().then(response => {
       this.productPrice = response.data.price || 0;
-      this.discountPrice = response.data.discount  || 0;
-      this.transportPrice = response.data.deliveryPrice  || 0;
-      this.weight = response.data.weight  || 0;
+      this.discountPrice = response.data.discount || 0;
+      this.transportPrice = response.data.deliveryPrice || 0;
+      this.weight = response.data.weight || 0;
     });
   }
 };

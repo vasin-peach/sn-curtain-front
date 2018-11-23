@@ -6,10 +6,10 @@
     .profile-order-list {
       padding-top: 15px;
       padding-bottom: 15px;
-      margin: 10px 0;
-      background: $white2;
+      margin: 15px 0;
+      background: $white1;
       border-radius: 5px;
-      box-shadow: 0 1px 2px $gray2;
+      box-shadow: 0 1px 2px 1px $gray2;
 
       &:first-child {
         margin-top: 0px;
@@ -20,6 +20,26 @@
       }
     }
 
-    .profile-order-collapse {}
+    .profile-order-collapse {
+
+      .button {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        color: $red3;
+        border-color: $red3;
+
+        &:hover {
+          color: $white1;
+          background: $red3;
+          border-color: $red3;
+        }
+      }
+    }
+  }
+
+  .wait_confirm {
+    font-size: 15px;
+
   }
 }

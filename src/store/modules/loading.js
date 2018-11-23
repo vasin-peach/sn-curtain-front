@@ -6,7 +6,8 @@ const state = {
   loading: {
     page: false,
     store: false,
-    storePopular: false
+    storePopular: false,
+    atm: false
   }
 }
 
@@ -56,6 +57,16 @@ const mutations = {
           state.loading.storePopular = data.value;
         }
         break;
+      
+      case 'atm': // atm
+        if (state.loading.atm) {
+          setTimeout(() => {
+            state.loading.atm = data.value;
+          }, 300);
+        } else {
+          state.loading.atm = data.value;
+        }
+      break;
 
       default: // Default
         if (state.loading.page) {

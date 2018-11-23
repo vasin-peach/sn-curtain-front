@@ -1,0 +1,61 @@
+.payment_atm {
+  .atm-body {
+    padding: 30px;
+
+    @include tablet {
+      padding: 20px !important;
+    }
+
+    @include mobile {
+      padding: 15px !important;
+    }
+
+    @include small {
+      padding: 10px !important;
+    }
+
+    .atm-title {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      color: $dark1;
+      margin: 15px 0;
+    }
+
+    .button {
+      border-radius: 5px;
+      background: $orange1;
+      border-color: $orange1;
+      color: $white1;
+      margin: 10px 0;
+      transition: opacity 0.3s ease-out;
+
+      &:last-child {
+        background: $white1;
+        color: $orange1;
+      }
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .atm-card {
+      margin: 15px 0;
+      border-radius: 10px;
+      border: 1px solid $gray2;
+      padding: 15px 25px;
+      color: $dark2;
+
+      .title {
+        color: $dark1;
+        font-size: 16px;
+      }
+
+      .detail {
+        font-weight: lighter;
+        font-size: 15px;
+      }
+    }
+  }
+}

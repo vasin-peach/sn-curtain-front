@@ -137,13 +137,13 @@ export default {
   data() {
     return {
       timeout: null,
-      oldItems: JSON.parse(localStorage.getItem("basket") || 'null') || null,
+      oldItems: JSON.parse(localStorage.getItem("basket") || "null") || null,
       sumPrice: 0,
       sumAll: 0,
       sumDiscount: 0,
       codeNumber: null,
       buyOption: {},
-      weight: 0,
+      weight: 0
     };
   },
 
@@ -221,34 +221,36 @@ export default {
       /**
        * @param data data of product to sum weight
        */
-        
-        // * Sum by reduce
-        const sumWeight = data.reduce((sums, items) => {
 
-          return sums + items.data.price.reduce((sum, item) => { // get weight match buyOpyion
-            if (item.value == items.buyOption) return sum + (item.weight * items.amount);
+      // * Sum by reduce
+      const sumWeight = data.reduce((sums, items) => {
+        return (
+          sums +
+          items.data.price.reduce((sum, item) => {
+            // get weight match buyOpyion
+            if (item.value == items.buyOption)
+              return sum + item.weight * items.amount;
             else return sum + 0;
-          }, 0);
+          }, 0)
+        );
+      }, 0);
 
-        }, 0);
+      // * Update weight
+      this.weight = sumWeight;
 
-        // * Update weight
-        this.weight = sumWeight;
+      // ! Call
+      const deliveryPriceResult = await this.getDeliveryPrice(sumWeight).then(
+        result => result,
+        err => 0
+      );
 
-        // ! Call
-        const deliveryPriceResult = await this.getDeliveryPrice(sumWeight).then(result => result, err => 0);
-
-        // * Update delivery price by amount
-
+      // * Update delivery price by amount
     },
     async updateSumAll() {
-
-      
-
       this.sumWeight(this.basketData);
 
-      var sumAll = (this.sumPrice - this.sumDiscount) + this.deliveryPriceData ;
-      sumAll = (this.sumPrice - this.sumDiscount) + this.deliveryPriceData;
+      var sumAll = this.sumPrice - this.sumDiscount + this.deliveryPriceData;
+      sumAll = this.sumPrice - this.sumDiscount + this.deliveryPriceData;
       this.sumAll = sumAll > 0 ? sumAll : 0;
 
       // update discount state
@@ -315,7 +317,9 @@ export default {
           // discount sumPrice
           var discount = response.data.discount;
           if (discount.percent) {
-            this.sumDiscount = Math.floor((this.sumPrice * discount.percent) / 100);
+            this.sumDiscount = Math.floor(
+              (this.sumPrice * discount.percent) / 100
+            );
           } else if (discount.amount) {
             this.sumDiscount = Math.floor(discount.amount);
           }

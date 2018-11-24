@@ -28,9 +28,12 @@
           <div class="col wait_confirm" v-if="items.order_status == 'wait_confirm'">
             <div class="row m-0">
               <div class="col">
-                ค่าขนส่ง: {{ items.pricing.delivery_price }} <br>
-                ราคารวม: {{ items.pricing.summary_price }} <br>
-                สถานที่ส่ง: {{ items.delivery.delivery_description }} <br>
+                ค่าขนส่ง: {{ numberWithCommas(items.pricing.delivery_price) }} <br>
+                ราคารวม: {{ numberWithCommas(String(items.pricing.summary_price).slice(0, -2)) }} <br>
+                สถานที่ส่ง: {{ numberWithCommas(items.delivery.delivery_description) }} <br>
+              </div>
+              <div class="col">
+                <img :src="items.order_image">
               </div>
             </div>
           </div>
@@ -71,6 +74,9 @@ export default {
   watch: {},
   methods: {
     ...mapActions(["getOrder", "deleteOrder"]),
+    numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
     makePad(str, size) {
       if (!str || !size) return false;
       var s = String(str);
@@ -87,9 +93,21 @@ export default {
       return getMessage(status);
     },
     deleteTrigger(id) {
-      this.deleteOrder(id).then(resp => {
-        const orderValue = resp.data.data._id;
-        this.order_data = this.order_data.filter(e => e._id != orderValue);
+      this.$swal({
+        type: "warning",
+        title: "ลบรายการ",
+        text: "คุณต้องลบรายการนี้หรือไม่?",
+        showCancelButton: true,
+        confirmButtonText: "ใช่, ลบรายการนี้",
+        confirmButtonColor: "#ee9b5c",
+        cancelButtonText: "ไม่, ย้อนกลับ"
+      }).then(async result => {
+        if (result.value) {
+          this.deleteOrder(id).then(resp => {
+            const orderValue = resp.data.data._id;
+            this.order_data = this.order_data.filter(e => e._id != orderValue);
+          });
+        }
       });
     }
   }

@@ -64,7 +64,7 @@
         </div>
         <div class="col-12">
           <div class="button" @click="popupUploadUpdate(true)">อัพโหลดหลักฐานการชำระเงิน</div>
-          <div class="button" @click="confirmPaymentLater()">ชำระเงินภายหลัง, กลับไปหน้าแสดงรายการสั่งซื้อ</div>
+          <div class="button" @click="confirmPaymentLater()">ชำระเงินภายหลัง, กลับไปที่ตะกร้าสินค้า</div>
         </div>
         <div class="col-12 atm-title">
           <div class="circle">3</div>
@@ -93,33 +93,34 @@ export default {
 
     // * Confirm
     confirmPaymentLater() {
-      this.$swal({
-        type: "warning",
-        title: "ยืนยันรายการ",
-        text: "คุณต้องการยืนยันรายการ เพื่อชำระเงินภายหลังหรือไม่?",
-        showCancelButton: true,
-        confirmButtonText: "ใช่, ยืนยันการทำรายการ",
-        confirmButtonColor: "#ee9b5c",
-        cancelButtonText: "ไม่, ย้อนกลับ"
-      }).then(async result => {
-        // ok button
-        if (result.value) {
-          // ! Call create order
-          this.createOrder("wait upload").then(resp => {
-            // remove all history about transaction
-            this.shoppingClear().then(() => {
-              // alert
-              this.$swal({
-                type: "success",
-                title: "ยืนยันการทำรายการ",
-                text: "ระบบจะนำคุณไปหน้าโชว์รายชื่อการสั่งซื้อ"
-              }).then(() => {
-                this.$router.push({ name: "ProfileHistory" });
-              });
-            });
-          });
-        }
-      });
+      this.$router.push({ name: "Basket" });
+      // this.$swal({
+      //   type: "warning",
+      //   title: "ยืนยันรายการ",
+      //   text: "คุณต้องการยืนยันรายการ เพื่อชำระเงินภายหลังหรือไม่?",
+      //   showCancelButton: true,
+      //   confirmButtonText: "ใช่, ยืนยันการทำรายการ",
+      //   confirmButtonColor: "#ee9b5c",
+      //   cancelButtonText: "ไม่, ย้อนกลับ"
+      // }).then(async result => {
+      //   // ok button
+      //   if (result.value) {
+      //     // ! Call create order
+      //     this.createOrder("wait upload").then(resp => {
+      //       // remove all history about transaction
+      //       this.shoppingClear().then(() => {
+      //         // alert
+      //         this.$swal({
+      //           type: "success",
+      //           title: "ยืนยันการทำรายการ",
+      //           text: "ระบบจะนำคุณไปหน้าโชว์รายชื่อการสั่งซื้อ"
+      //         }).then(() => {
+      //           this.$router.push({ name: "ProfileHistory" });
+      //         });
+      //       });
+      //     });
+      //   }
+      // });
     }
   },
 

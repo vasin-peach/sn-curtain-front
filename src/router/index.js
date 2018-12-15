@@ -61,6 +61,12 @@ const ProfileMe = () =>
 const ProfileHistory = () =>
   import('@component/Auth/Profile/History');
 
+// Admin
+const Admin = () => import('@component/Admin/Admin');
+const AdminProduct = () => import('@component/Admin/AdminProduct');
+const AdminDashboard = () => import('@component/Admin/AdminDashboard');
+
+
 Vue.use(Router)
 
 
@@ -232,7 +238,10 @@ const router = new Router({
         }
       },
 
-      // Profile
+      // ?
+      // ? ─── PROFILE ─────────────────────────────────────────────────────
+      // ?
+
       {
         path: '/profile',
         component: Profile,
@@ -255,7 +264,38 @@ const router = new Router({
             },
           }
         ]
+      },
+
+      // ?
+      // ?─── ADMIN ───────────────────────────────────────────────────────
+      // ?
+
+      {
+        path: '/admin',
+        component: Admin,
+        children: [{
+            path: 'dashboard',
+            component: AdminDashboard,
+            alias: '',
+            name: 'Admin',
+            meta: {
+              title: 'แดชบอร์ด - จัดการเว็บไซต์',
+              login: 3
+            }
+          },
+          {
+            path: 'product',
+            component: AdminProduct,
+            name: 'AdminProduct',
+            meta: {
+              title: 'สินค้า - จัดการเว็บไซต์',
+              login: 3
+            }
+          }
+        ]
       }
+
+
     ]
   }],
   scrollBehavior(to, from, savedPosition) {

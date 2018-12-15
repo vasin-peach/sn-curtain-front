@@ -89,8 +89,9 @@
             </div>
             <div class="transport">
               <div>ค่าขนส่ง</div>
-              <div>
-                <b-form-select v-model="delivery" :options="deliveryData ? deliveryData : {text: 'LOADING...'}" id="delivery_option"></b-form-select>
+              <div class="text-right">
+                <div class="color-green1">฿{{numberWithCommas(Math.round(deliveryPriceData))}}</div>
+                <div class="">({{Math.round(weight / 1000 * 100) / 100}} kg)</div>
               </div>
             </div>
             <div class="code">
@@ -136,14 +137,13 @@ export default {
   data() {
     return {
       timeout: null,
-      oldItems: JSON.parse(localStorage.getItem("basket") || 'null') || null,
+      oldItems: JSON.parse(localStorage.getItem("basket") || "null") || null,
       sumPrice: 0,
-      sumTran: 0,
       sumAll: 0,
       sumDiscount: 0,
       codeNumber: null,
-      delivery: null,
-      buyOption: {}
+      buyOption: {},
+      weight: 0
     };
   },
 
@@ -152,7 +152,6 @@ export default {
   ///
   mounted() {
     this.updateSumPrice();
-    this.deliveryGet();
     this.discountCodeUpdate("");
   },
 
@@ -175,18 +174,6 @@ export default {
       this.timeout = setTimeout(function() {
         _this.codeNumberSearch(code);
       }, 500);
-    },
-    delivery: function(data) {
-      this.sumTran = data;
-      this.updateSumAll();
-
-      // update paymentPayload delivery type
-      this.deliveryTypeUpdate(data);
-    },
-    deliveryData: function(data) {
-      if (!_.isEmpty(data)) {
-        this.delivery = data[0].value;
-      }
     },
     basketData: {
       handler: function(data) {
@@ -221,32 +208,63 @@ export default {
       "basketDelete",
       "discountUpdate",
       "discountCodeUpdate",
-      "transportUpdate",
-      "deliveryTypeUpdate"
+      "deliveryPriceUpdate"
     ]),
-    ...mapActions(["discountGet", "deliveryGet", "basketUpdateSession"]),
+    ...mapActions(["discountGet", "basketUpdateSession", "getDeliveryPrice"]),
     updateSumPrice() {
       this.sumPrice = this.basketData.reduce((sum, item) => {
         return sum + item.buyOption * item.amount;
       }, 0);
       this.updateSumAll();
     },
-    updateSumAll() {
-      var sumAll = this.sumPrice + this.sumTran - this.sumDiscount;
-      sumAll = this.sumPrice + this.sumTran - this.sumDiscount;
+    async sumWeight(data) {
+      /**
+       * @param data data of product to sum weight
+       */
+
+      // * Sum by reduce
+      const sumWeight = data.reduce((sums, items) => {
+        return (
+          sums +
+          items.data.price.reduce((sum, item) => {
+            // get weight match buyOpyion
+            if (item.value == items.buyOption)
+              return sum + item.weight * items.amount;
+            else return sum + 0;
+          }, 0)
+        );
+      }, 0);
+
+      // * Update weight
+      this.weight = sumWeight;
+
+      // ! Call
+      const deliveryPriceResult = await this.getDeliveryPrice(sumWeight).then(
+        result => result,
+        err => 0
+      );
+
+      // * Update delivery price by amount
+    },
+    async updateSumAll() {
+      this.sumWeight(this.basketData);
+
+      var sumAll = this.sumPrice - this.sumDiscount + this.deliveryPriceData;
+      sumAll = this.sumPrice - this.sumDiscount + this.deliveryPriceData;
       this.sumAll = sumAll > 0 ? sumAll : 0;
 
       // update discount state
       this.discountUpdate(this.sumDiscount);
 
       // update transport state
-      this.transportUpdate(this.delivery);
+      // this.transportUpdate(this.delivery);
 
       // update basket session
       this.basketUpdateSession({
         price: this.sumPrice,
-        delivery: this.delivery,
-        discount: this.sumDiscount
+        discount: this.sumDiscount,
+        deliveryPrice: this.deliveryPriceData,
+        weight: this.weight
       });
     },
     amountMinus(id) {
@@ -299,7 +317,9 @@ export default {
           // discount sumPrice
           var discount = response.data.discount;
           if (discount.percent) {
-            this.sumDiscount = Math.floor((this.sumPrice * discount.percent) / 100);
+            this.sumDiscount = Math.floor(
+              (this.sumPrice * discount.percent) / 100
+            );
           } else if (discount.amount) {
             this.sumDiscount = Math.floor(discount.amount);
           }
@@ -333,8 +353,9 @@ export default {
         // update data to session
         this.basketUpdateSession({
           price: this.sumPrice,
-          delivery: this.delivery,
-          discount: this.sumDiscount
+          discount: this.sumDiscount,
+          deliveryPrice: this.deliveryPriceData,
+          weight: this.weight
         });
 
         // navigation to payment page
@@ -347,7 +368,7 @@ export default {
   // Computed
   ///
   computed: {
-    ...mapGetters(["basketData", "deliveryData"])
+    ...mapGetters(["basketData", "deliveryPriceData"])
   }
 };
 </script>

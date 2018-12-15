@@ -7,11 +7,11 @@ import _ from 'lodash';
 const state = {
   basket: [],
   discount: 0,
-  transport: 0,
+  // transport: 0,
   paymentPayload: {
     basket: [],
     discount: null,
-    delivery: null
+    // delivery: null
   }
 }
 
@@ -26,9 +26,9 @@ const getters = {
   discountData: state => {
     return state.discount
   },
-  transportData: state => {
-    return state.transport
-  }
+  // transportData: state => {
+  //   return state.transport
+  // }
 }
 
 
@@ -54,12 +54,12 @@ const mutations = {
     localStorage.setItem("discount", JSON.stringify(data));
   },
 
-  transportUpdate(state, data) {
-    state.transport = data;
-  },
-  deliveryTypeUpdate(state, data) {
-    localStorage.setItem("delivery", JSON.stringify(data));
-  }
+  // transportUpdate(state, data) {
+  //   state.transport = data;
+  // },
+  // deliveryTypeUpdate(state, data) {
+  //   localStorage.setItem("delivery", JSON.stringify(data));
+  // }
 }
 
 

@@ -31,11 +31,12 @@ const actions = {
 
         if (statusCode == 200) { // check request card token status is 200
 
+
           const product = { // declear production payload
             email: getters.userData.email,
             product: localStorage.basket,
             discount: localStorage.discount,
-            delivery: localStorage.delivery,
+            delivery: getters.deliveryPriceData,
             card_token: response.id,
             card: response.card,
             payment: JSON.parse(Vue.cookie.get("paymentAddress") || 'null') || null

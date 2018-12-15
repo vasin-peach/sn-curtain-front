@@ -91,7 +91,7 @@
         <div class="row m-0">
           <div class="col">
             <div class="detail">ราคาสินค้ารวม</div>
-            <div>{{ numberWithCommas(order_data.pricing.product_price) }} - <span v-if="order_data.discount.discount_code"> {{ numberWithCommas(order_data.discount.discount_amount )}}</span> บาท</div>
+            <div>{{ numberWithCommas(order_data.pricing.product_price) }} <span v-if="order_data.discount.discount_code"> - {{ numberWithCommas(order_data.discount.discount_amount )}}</span> บาท</div>
           </div>
           <div class="col">
             <div class="detail">ค่าขนส่ง</div>

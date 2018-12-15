@@ -41,5 +41,9 @@
   .wait_confirm {
     font-size: 15px;
 
+    img {
+      border-radius: 5px;
+      max-width: 100%;
+    }
   }
 }

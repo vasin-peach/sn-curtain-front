@@ -106,6 +106,7 @@ export default {
           this.deleteOrder(id).then(resp => {
             const orderValue = resp.data.data._id;
             this.order_data = this.order_data.filter(e => e._id != orderValue);
+            location.reload();
           });
         }
       });

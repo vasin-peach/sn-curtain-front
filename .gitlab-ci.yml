@@ -20,6 +20,7 @@ build-staging-image:
   image: docker:stable
   tags:
     - docker
+    - deploy
   services:
     - docker:dind
   script:
@@ -59,6 +60,7 @@ build-production-image:
   image: docker:stable
   tags:
     - docker
+    - deploy
   services:
     - docker:dind
   only:

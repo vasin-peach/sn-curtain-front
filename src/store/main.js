@@ -15,6 +15,7 @@ import csrf from './modules/csrf';
 import order from './modules/payment/order';
 import clear from './modules/clear';
 import upload from './modules/upload';
+import redirect from './modules/redirect';
 
 // Use Moduesl
 Vue.use(Vuex)
@@ -35,7 +36,8 @@ export default new Vuex.Store({
     csrf,
     order,
     clear,
-    upload
+    upload,
+    redirect
   },
   strict: false
 })

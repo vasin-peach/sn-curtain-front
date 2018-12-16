@@ -321,9 +321,8 @@ router.beforeEach((to, from, next) => {
   // init smooth scroll
   smoothScroll(to);
 
-  // update redirect after login path every time
-  Vue.cookie.set("redirect", to.path);
-
+  // ? update redirect after login)
+  store.dispatch('updateRedirect', to.path.replace('/', ""));
 
 
 

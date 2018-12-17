@@ -1,4 +1,5 @@
 .basket {
+  min-height: 90vh;
   padding-bottom: 80px;
 
   .basket-container {
@@ -217,11 +218,13 @@
             color: $green1;
 
             @include small {
-              font-size: 17px;
+              font-size: 20px;
+              text-align: center;
             }
 
             @include mobile {
               font-size: 17px;
+              text-align: center;
             }
 
             @include desktop {
@@ -258,6 +261,18 @@
 
     .basket-summary {
       position: relative;
+
+      @include tablet {
+        padding-right: 0px !important;
+      }
+
+      @include desktop {
+        padding-right: 0px !important;
+      }
+
+      @include extra {
+        padding-right: 0px !important;
+      }
 
       .summary-block {
         background-color: $white1;

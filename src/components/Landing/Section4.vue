@@ -2,43 +2,64 @@
   <div class="section4">
     <div class="container">
       <div class="product-header">
-        <span class="">สินค้าแนะนำ</span>
-        <hr>
+        <span>สินค้าแนะนำ -
+          <b>
+            <router-link
+              :to="{ name: 'Store' }"
+              class="color-dark2 font-weight-bold"
+            >ดูสินค้าทั้งหมด</router-link>
+          </b>
+        </span>
+        <hr class="mt-1">
       </div>
-        <div class="product-container">
+      <div class="product-container">
 
-          <transition name="fade" mode="out-in">
-            <div v-if="!storePopularData() || loadingData().storePopular">
-              <loading></loading>
-            </div>
-            <div class="row" v-else key="content">
-              <div class="col-sm-6 product-item" v-for="(item, index) in storePopularData()" :key="index">
-                <router-link :to="{ name: 'Product', params: { id: item._id } }">
-                  <div class="row m-0">
-                    <div class="col-6 col-sm-12 col-md-4 product-content">
-                      <p class="text">{{item.name}}</p>
-                      <p>฿{{item.price[0].value}}</p>
-                      <div class="button">ดูสินค้า</div>
-                    </div>
-                    <div class="col order-first product-img">
-                      <img v-lazy="item.brand.src" :alt="item.name">
+        <transition
+          name="fade"
+          mode="out-in"
+        >
+          <div v-if="!storePopularData() || loadingData().storePopular">
+            <loading></loading>
+          </div>
+          <div
+            class="row"
+            v-else
+            key="content"
+          >
+            <div
+              class="col-sm-6 product-item"
+              v-for="(item, index) in storePopularData()"
+              :key="index"
+            >
+              <router-link :to="{ name: 'Product', params: { id: item._id } }">
+                <div class="row m-0">
+                  <div class="col-6 col-sm-12 col-md-4 product-content">
+                    <p class="text">{{item.name}}</p>
+                    <p>฿{{item.price[0].value}}</p>
+                    <div class="button">ดูสินค้า</div>
                   </div>
-                    </div>
-                </router-link>
-              </div>
+                  <div class="col order-first product-img">
+                    <img
+                      v-lazy="item.brand.src"
+                      :alt="item.name"
+                    >
+                  </div>
+                </div>
+              </router-link>
             </div>
-          </transition>
-        </div>
-        <div class="product-footer">
-          <hr class="bg-dark1">
-          <router-link :to="{ name: 'Store' }">
-            <div class="dot"></div>
-            <p>MORE</p>
-            <span>สินค้าเพิ่มเติม</span>
-          </router-link>
-        </div>
+          </div>
+        </transition>
+      </div>
+      <div class="product-footer">
+        <hr class="bg-dark1">
+        <router-link :to="{ name: 'Store' }">
+          <div class="dot"></div>
+          <p>MORE</p>
+          <span>สินค้าเพิ่มเติม</span>
+        </router-link>
       </div>
     </div>
+  </div>
 </template>
 
 <script>

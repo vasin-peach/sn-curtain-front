@@ -13,6 +13,10 @@
     justify-content: center;
     align-content: center;
 
+    @include mobile {
+      padding: 5px;
+    }
+
     .floatbar-basket-icon {
       cursor: pointer;
       width: 50px;
@@ -23,6 +27,11 @@
       box-shadow: 0 0 1px 1px $dark3;
       position: relative;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      @include mobile {
+        width: 40px;
+        height: 40px;
+      }
 
       &:hover {
         transform: scale(1.1);
@@ -50,10 +59,19 @@
         width: 20px;
         height: 20px;
 
+        @include mobile {
+          width: 15px;
+          height: 15px;
+        }
+
         >div {
           font-size: 15px;
           font-weight: 400;
           color: $white1;
+
+          @include mobile {
+            font-size: 10px;
+          }
         }
       }
     }

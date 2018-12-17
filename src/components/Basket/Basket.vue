@@ -34,7 +34,7 @@
 
                   <div
                     class="remove"
-                    @click="basketDelete(item.id)"
+                    @click="basketDeleteTrigger(item.id)"
                   >
                     <font-awesome-icon
                       icon="times"
@@ -303,6 +303,15 @@ export default {
         deliveryPrice: this.deliveryPriceData,
         weight: this.weight
       });
+    },
+
+    basketDeleteTrigger(id) {
+      var getIndex = this.basketData.findIndex(item => item.id == id);
+      if (getIndex >= 0) {
+        this.basketData.splice(getIndex, 1);
+        this.oldItems.splice(getIndex, 1);
+        localStorage.setItem("basket", JSON.stringify(this.basketData));
+      }
     },
     amountMinus(id) {
       // get index by id

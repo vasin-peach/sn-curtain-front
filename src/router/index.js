@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from '../store/main';
 import _ from 'lodash';
-
+import middlewareFunction from './middleware.func';
 
 const main = () =>
   import('@component/Main');
@@ -280,7 +280,7 @@ const router = new Router({
             name: 'Admin',
             meta: {
               title: 'แดชบอร์ด - จัดการเว็บไซต์',
-              login: 3
+              permission: 3
             }
           },
           {
@@ -289,7 +289,7 @@ const router = new Router({
             name: 'AdminProduct',
             meta: {
               title: 'สินค้า - จัดการเว็บไซต์',
-              login: 3
+              permission: 3
             }
           }
         ]
@@ -310,7 +310,7 @@ const router = new Router({
   },
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
 
   // init storeUpdate
   if (from.name == 'Store-Filter') store.commit('storeUpdate', null);
@@ -325,12 +325,21 @@ router.beforeEach((to, from, next) => {
   store.dispatch('updateRedirect', to.path.replace('/', ""));
 
 
-
   /// --
   // Metadata Middleware
   /// --
 
 
+  // ? check auth is admin
+  if (to.matched.some(record => record.meta.permission >= 3)) {
+    const checkPermissionResult = await middlewareFunction.checkPermission(3).then(result => result, error => error);
+    if (!checkPermissionResult) return next({
+      name: 'Profile'
+    });
+  }
+
+
+  // ? check auth is login
   if (to.matched.some(record => record.meta.login == 0 || record.meta.login == 1 || record.meta.login == 2)) {
     checkAuth().then(() => {
       var user = store.getters.userData;

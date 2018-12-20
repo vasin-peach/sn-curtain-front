@@ -1,0 +1,38 @@
+.container-content {
+
+  &>.row {
+    height: calc(100vh - 81px - 72.94px);
+  }
+
+  .content-menu {
+    height: 100%;
+    background: $dark3;
+    color: $white2;
+    padding-left: 0px;
+    padding-right: 0px;
+    border-right: 1px solid $dark3;
+    box-shadow: 2px 0 0 0 $orange1;
+
+    hr {
+      margin: 5px 0;
+      border-color: $gray2;
+    }
+
+    .menu-label {
+      padding-top: 5px;
+      font-size: 15px;
+      color: $gray3;
+    }
+
+    .menu-list {
+      cursor: pointer;
+      padding: 10px 0;
+      background: $dark3;
+      transition: 0.3s ease background;
+
+      &:hover {
+        background: $orange1;
+      }
+    }
+  }
+}

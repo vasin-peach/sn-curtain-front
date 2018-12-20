@@ -11,21 +11,58 @@
             </router-link>
           </div>
           <div class="col-6 col-md-4 menu">
-            <input type="checkbox" id="menu-toggle" v-model="menu_toggle" :disabled="menu_state">
-            <label id="trigger" for="menu-toggle"></label>
-            <label id="burger" for="menu-toggle"></label>
+            <input
+              type="checkbox"
+              id="menu-toggle"
+              v-model="menu_toggle"
+              :disabled="menu_state"
+            >
+            <label
+              id="trigger"
+              for="menu-toggle"
+            ></label>
+            <label
+              id="burger"
+              for="menu-toggle"
+            ></label>
           </div>
         </div>
       </div>
     </div>
     <div class="header-menu">
       <div @click="menu_off()">
-        <router-link :to="{ name: 'Landing' }" id="menu-1">หน้าหลัก</router-link>
-        <router-link :to="{ name: 'Login' }" id="menu-2" v-if="!userData">เข้าสู่ระบบ</router-link>
-        <router-link :to="{ name: 'Profile' }" id="menu-2" v-else>ข้อมูลส่วนตัว</router-link>
-        <router-link :to="{ name: 'Store' }" id="menu-3">สินค้า</router-link>
-        <router-link :to="{ name: 'Service' }" id="menu-4">บริการ</router-link>
-        <a :href="BACKEND_URI + '/auth/logout'" id="menu-5" v-if="userData">ออกจากระบบ</a>
+        <router-link
+          :to="{ name: 'Landing' }"
+          id="menu-1"
+        >หน้าหลัก</router-link>
+        <router-link
+          :to="{ name: 'Login' }"
+          id="menu-2"
+          v-if="!userData"
+        >เข้าสู่ระบบ</router-link>
+        <router-link
+          :to="{ name: 'Profile' }"
+          id="menu-2"
+          v-else
+        >ข้อมูลส่วนตัว</router-link>
+        <router-link
+          :to="{ name: 'Admin' }"
+          id="menu-3"
+          v-if="userData && userData.permission.value >= 3"
+        >แผงควบคุม</router-link>
+        <router-link
+          :to="{ name: 'Store' }"
+          id="menu-4"
+        >สินค้า</router-link>
+        <router-link
+          :to="{ name: 'Service' }"
+          id="menu-5"
+        >บริการ</router-link>
+        <a
+          :href="BACKEND_URI + '/auth/logout'"
+          id="menu-6"
+          v-if="userData"
+        >ออกจากระบบ</a>
       </div>
     </div>
     <div class="header-fade">
@@ -34,16 +71,16 @@
 </template>
 
 <script>
-import velocity from 'velocity-animate';
-import { mapGetters } from 'vuex';
+import velocity from "velocity-animate";
+import { mapGetters } from "vuex";
 export default {
-  name: 'Header',
+  name: "Header",
   data() {
     return {
       menu_toggle: false,
       menu_state: false,
       BACKEND_URI: process.env.BACKEND_URI
-    }
+    };
   },
   watch: {
     menu_toggle: function(status) {
@@ -52,61 +89,134 @@ export default {
   },
   methods: {
     menu_on() {
+      var _this = this;
+      this.menu_toggle = true;
 
-        var _this = this;
-        this.menu_toggle = true;
+      $(".header-menu").velocity("slideDown", { duration: 300 }, [
+        0.53,
+        0.49,
+        0.18,
+        0.97
+      ]);
+      $(".header-fade").velocity("slideDown", { duration: 300 }, [
+        0.53,
+        0.49,
+        0.18,
+        0.97
+      ]);
+      // text animate
+      $("#menu-1").velocity(
+        { opacity: "1", top: "40px" },
+        { duration: 300, delay: 50, _cacheValues: false },
+        [0.53, 0.49, 0.18, 0.97]
+      );
+      $("#menu-2").velocity(
+        { opacity: "1", top: "40px" },
+        { duration: 300, delay: 100, _cacheValues: false },
+        [0.53, 0.49, 0.18, 0.97]
+      );
+      $("#menu-3").velocity(
+        { opacity: "1", top: "40px" },
+        { duration: 300, delay: 150, _cacheValues: false },
+        [0.53, 0.49, 0.18, 0.97]
+      );
+      $("#menu-4").velocity(
+        { opacity: "1", top: "40px" },
+        { duration: 300, delay: 200, _cacheValues: false },
+        [0.53, 0.49, 0.18, 0.97]
+      );
+      $("#menu-5").velocity(
+        { opacity: "1", top: "40px" },
+        { duration: 300, delay: 250, _cacheValues: false },
+        [0.53, 0.49, 0.18, 0.97]
+      );
+      $("#menu-6").velocity(
+        { opacity: "1", top: "40px" },
+        { duration: 300, delay: 300, _cacheValues: false },
+        [0.53, 0.49, 0.18, 0.97]
+      );
+      // $('#menu-6').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 200, _cacheValues:false}, [.53,.49,.18,.97]);
 
-        $('.header-menu').velocity("slideDown", { duration: 300 }, [.53,.49,.18,.97]);
-        $('.header-fade').velocity("slideDown", { duration: 300 }, [.53,.49,.18,.97]);
-        // text animate
-        $('#menu-1').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 50, _cacheValues:false}, [.53,.49,.18,.97]);
-        $('#menu-2').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 100, _cacheValues:false}, [.53,.49,.18,.97]);
-        $('#menu-3').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 150, _cacheValues:false}, [.53,.49,.18,.97]);
-        $('#menu-4').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 200, _cacheValues:false}, [.53,.49,.18,.97]);
-        $('#menu-5').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 200, _cacheValues:false}, [.53,.49,.18,.97]);
-        // $('#menu-6').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 200, _cacheValues:false}, [.53,.49,.18,.97]);
-        
-        // // disable scroll
-        // $('html').addClass('stop-scrolling');
-        // $('html').bind('touchmove', function(e) {e.preventDefault()});
+      // // disable scroll
+      // $('html').addClass('stop-scrolling');
+      // $('html').bind('touchmove', function(e) {e.preventDefault()});
 
-        // disable button
-        this.menu_state = true;
-        setTimeout(function () {
-          _this.menu_state = false;
-        }, 450);
-
+      // disable button
+      this.menu_state = true;
+      setTimeout(function() {
+        _this.menu_state = false;
+      }, 450);
     },
     menu_off() {
-      
-        var _this = this;
-        this.menu_toggle = false;
+      var _this = this;
+      this.menu_toggle = false;
 
-        $('.header-menu').velocity("slideUp", { duration: 300, delay: 150 }, [.53,.49,.18,.97]);
-        $('.header-fade').velocity("slideUp", { duration: 300, delay: 200 }, [.53,.49,.18,.97]);
-        // text animate
-        $('#menu-1').velocity({ opacity: "0", top: "0px" }, { duration: 250}, [.53,.49,.18,.97]);
-        $('#menu-2').velocity({ opacity: "0", top: "0px" }, { duration: 300}, [.53,.49,.18,.97]);
-        $('#menu-3').velocity({ opacity: "0", top: "0px" }, { duration: 350}, [.53,.49,.18,.97]);
-        $('#menu-4').velocity({ opacity: "0", top: "0px" }, { duration: 400}, [.53,.49,.18,.97]);
-        $('#menu-5').velocity({ opacity: "0", top: "0px" }, { duration: 400}, [.53,.49,.18,.97]);
-        // $('#menu-6').velocity({ opacity: "0", top: "0px" }, { duration: 400}, [.53,.49,.18,.97]);
+      $(".header-menu").velocity("slideUp", { duration: 300, delay: 150 }, [
+        0.53,
+        0.49,
+        0.18,
+        0.97
+      ]);
+      $(".header-fade").velocity("slideUp", { duration: 300, delay: 200 }, [
+        0.53,
+        0.49,
+        0.18,
+        0.97
+      ]);
+      // text animate
+      $("#menu-1").velocity({ opacity: "0", top: "0px" }, { duration: 250 }, [
+        0.53,
+        0.49,
+        0.18,
+        0.97
+      ]);
+      $("#menu-2").velocity({ opacity: "0", top: "0px" }, { duration: 300 }, [
+        0.53,
+        0.49,
+        0.18,
+        0.97
+      ]);
+      $("#menu-3").velocity({ opacity: "0", top: "0px" }, { duration: 350 }, [
+        0.53,
+        0.49,
+        0.18,
+        0.97
+      ]);
+      $("#menu-4").velocity({ opacity: "0", top: "0px" }, { duration: 400 }, [
+        0.53,
+        0.49,
+        0.18,
+        0.97
+      ]);
+      $("#menu-5").velocity({ opacity: "0", top: "0px" }, { duration: 400 }, [
+        0.53,
+        0.49,
+        0.18,
+        0.97
+      ]);
+      $("#menu-6").velocity({ opacity: "0", top: "0px" }, { duration: 400 }, [
+        0.53,
+        0.49,
+        0.18,
+        0.97
+      ]);
+      // $('#menu-6').velocity({ opacity: "0", top: "0px" }, { duration: 400}, [.53,.49,.18,.97]);
 
-        // // enable scroll
-        // $('html').removeClass('stop-scrolling');
-        // $('html').unbind('touchmove');
+      // // enable scroll
+      // $('html').removeClass('stop-scrolling');
+      // $('html').unbind('touchmove');
 
-        // disable button
-        this.menu_state = true;
-        setTimeout(function () {
-          _this.menu_state = false;
-        }, 450);
+      // disable button
+      this.menu_state = true;
+      setTimeout(function() {
+        _this.menu_state = false;
+      }, 450);
     }
   },
   computed: {
-    ...mapGetters(['userData'])
+    ...mapGetters(["userData"])
   }
-}
+};
 </script>
 
 <style>

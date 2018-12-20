@@ -22,8 +22,10 @@ import {
 } from '@fortawesome/fontawesome-svg-core'
 import {
   faTime,
+  faUniversity,
   faSearch,
   faClone,
+  faBarcode,
   faShoppingBag,
   faTimes,
   faUserCircle,
@@ -31,11 +33,16 @@ import {
   faListAlt,
   faChevronLeft,
   faMapMarkedAlt,
-  faCreditCard
+  faShoppingCart,
+  faTachometerAlt,
+  faCreditCard,
+  faChalkboard,
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faFacebookSquare,
-  faGooglePlusSquare
+  faGooglePlusSquare,
+  faSlideshare,
+  faUniregistry
 } from '@fortawesome/free-brands-svg-icons'
 import {
   FontAwesomeIcon
@@ -57,6 +64,9 @@ library.add(
   faSearch,
   faClone,
   faShoppingBag,
+  faShoppingCart,
+  faUniversity,
+  faChalkboard,
   faTimes,
   faUserCircle,
   faLock,
@@ -65,7 +75,10 @@ library.add(
   faListAlt,
   faChevronLeft,
   faMapMarkedAlt,
-  faCreditCard
+  faCreditCard,
+  faTachometerAlt,
+  faSlideshare,
+  faBarcode
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

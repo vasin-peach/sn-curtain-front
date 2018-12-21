@@ -99,7 +99,7 @@ const router = new Router({
         component: Landing,
         name: 'Landing',
         meta: {
-          title: 'หน้าหลัก',
+          title: 'ขายผ้าม่านออนไลน์ ราคาถูก มีคุณภาพ',
           login: 2,
         }
       },
@@ -412,7 +412,7 @@ router.beforeEach(async (to, from, next) => {
   if (from.name == 'Store-Filter') store.commit('storeUpdate', null);
 
   // update title
-  document.title = to.meta.title + " - S&N Curtain";
+  document.title = to.meta.title + " - S&N Curtain จำหน่ายผ้าม่านออนไลน์";
 
   // init smooth scroll
   smoothScroll(to);

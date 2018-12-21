@@ -9,7 +9,7 @@ const state = {
 // ? GETTERS
 const getters = {
   memberShipData(state) {
-    return state.membership || false;
+    return state.membership || 0;
   }
 }
 
@@ -26,11 +26,11 @@ const mutations = {
      */
 
 
-    if (isEmpty(data) || !data.data || !data.target) return false;
+    if (isEmpty(data) || !data.data || !data.target) return 0;
     try {
-      state[data.target] = data.data || false
+      state[data.target] = data.data || 0
     } catch (err) {
-      return false
+      return 0
     }
 
   }
@@ -51,7 +51,7 @@ const actions = {
       try {
         const callResult = await Vue.http.get(`${process.env.BACKEND_URI}/summary/user`);
         commit('updateState', {
-          data: callResult.data.data || false,
+          data: callResult.data.data || 0,
           target: 'membership'
         }, );
         return resolve(true);

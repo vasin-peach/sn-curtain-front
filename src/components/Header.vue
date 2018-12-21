@@ -46,7 +46,7 @@
           v-else
         >ข้อมูลส่วนตัว</router-link>
         <router-link
-          :to="{ name: 'Admin' }"
+          :to="{ name: 'AdminDashboard' }"
           id="menu-3"
           v-if="userData && userData.permission.value >= 3"
         >แผงควบคุม</router-link>

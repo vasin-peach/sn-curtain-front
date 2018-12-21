@@ -16,12 +16,12 @@
           </div>
         </div>
       </div>
-      <div class="col d-sm-block d-none stat">
+      <div class="col stat">
         <div class="stat-title">
-          จำนวนลูกค้า
+          จำนวนสมาชิก
         </div>
         <div class="stat-content">
-          30,000
+          {{ commas(memberShipData) + ' คน' }}
         </div>
       </div>
       <div class="col d-sm-block d-none stat">
@@ -29,15 +29,23 @@
           ยอดรายวัน
         </div>
         <div class="stat-content">
-          30,000
+          {{ commas(saleDayData) }}
         </div>
       </div>
-      <div class="col stat">
+      <div class="col d-sm-block d-none stat">
+        <div class="stat-title">
+          ยอดรายสัปดา
+        </div>
+        <div class="stat-content">
+          {{ commas(saleWeekData) }}
+        </div>
+      </div>
+      <div class="col d-sm-block d-none stat">
         <div class="stat-title">
           ยอดรายเดือน
         </div>
         <div class="stat-content">
-          30,000
+          {{ commas(saleMonthData) }}
         </div>
       </div>
       <div class="col stat">
@@ -45,7 +53,7 @@
           ยอดทั้งหมด
         </div>
         <div class="stat-content">
-          30,000
+          {{ commas(saleYearData) }}
         </div>
       </div>
     </div>
@@ -140,8 +148,37 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
-  name: "admin"
+  name: "admin",
+  mounted() {
+    this.getMemberShip();
+    this.getSaleDay();
+    this.getSaleWeek();
+    this.getSaleMonth();
+    this.getSaleYear();
+  },
+  methods: {
+    ...mapActions([
+      "getMemberShip",
+      "getSaleDay",
+      "getSaleWeek",
+      "getSaleMonth",
+      "getSaleYear"
+    ]),
+    commas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  },
+  computed: {
+    ...mapGetters([
+      "memberShipData",
+      "saleDayData",
+      "saleWeekData",
+      "saleMonthData",
+      "saleYearData"
+    ])
+  }
 };
 </script>
 

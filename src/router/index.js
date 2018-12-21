@@ -285,6 +285,7 @@ const router = new Router({
             name: 'AdminDashboard',
             meta: {
               title: 'แดชบอร์ด - จัดการเว็บไซต์',
+              login: 1,
               permission: 3
             }
           },
@@ -296,6 +297,7 @@ const router = new Router({
             name: 'AdminSlide',
             meta: {
               title: 'สไลด์ - จัดการเว็บไซต์',
+              login: 1,
               permission: 3
             }
           },
@@ -307,6 +309,7 @@ const router = new Router({
             name: 'AdminProduct',
             meta: {
               title: 'สินค้า - จัดการเว็บไซต์',
+              login: 1,
               permission: 3
             }
           },
@@ -318,6 +321,7 @@ const router = new Router({
             name: 'AdminDiscount',
             meta: {
               title: 'รหัสส่วนลด - จัดการเว็บไซต์',
+              login: 1,
               permission: 3
             }
           },
@@ -329,6 +333,7 @@ const router = new Router({
             name: 'AdminBank',
             meta: {
               title: 'การโอน - จัดการเว็บไซต์',
+              login: 1,
               permission: 3
             }
           },

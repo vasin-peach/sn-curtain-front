@@ -8,6 +8,16 @@ const main = () =>
   import('@component/Main');
 const Notfound = () =>
   import('@component/Notfound');
+const Policy = () =>
+  import('@component/Policy/Policy');
+const PolicyService = () =>
+  import('@component/Policy/PolicyService');
+const PolicyPrivacy = () =>
+  import('@component/Policy/PolicyPrivacy');
+const PolicyRefunds = () =>
+  import('@component/Policy/PolicyRefunds');
+const Rules = () =>
+  import('@component/Rules');
 const Header = () =>
   import('@component/Header');
 const Body = () =>
@@ -99,6 +109,46 @@ const router = new Router({
         name: 'Notfound',
         meta: {
           title: '404'
+        }
+      },
+      {
+        path: 'policy',
+        component: Policy,
+        name: 'Policy',
+        meta: {
+          title: 'นโยบาย'
+        }
+      },
+      {
+        path: 'policy/privacy',
+        component: PolicyPrivacy,
+        name: 'PolicyPrivacy',
+        meta: {
+          title: 'นโยบายความเป็นส่วนตัว'
+        }
+      },
+      {
+        path: 'policy/service',
+        component: PolicyService,
+        name: 'PolicyService',
+        meta: {
+          title: 'เขื่อนไขการให้บริการ'
+        }
+      },
+      {
+        path: 'policy/refunds',
+        component: PolicyRefunds,
+        name: 'PolicyRefunds',
+        meta: {
+          title: 'นโยบายการคืนเงิน'
+        }
+      },
+      {
+        path: 'rules',
+        component: Rules,
+        name: 'Rules',
+        meta: {
+          title: 'กฎระเบียบ'
         }
       },
       {

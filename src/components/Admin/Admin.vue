@@ -16,17 +16,37 @@
           </div>
         </div>
       </div>
-      <div class="col">
-        Stat1
+      <div class="col d-sm-block d-none stat">
+        <div class="stat-title">
+          จำนวนลูกค้า
+        </div>
+        <div class="stat-content">
+          30,000
+        </div>
       </div>
-      <div class="col">
-        Stat1
+      <div class="col d-sm-block d-none stat">
+        <div class="stat-title">
+          ยอดรายวัน
+        </div>
+        <div class="stat-content">
+          30,000
+        </div>
       </div>
-      <div class="col">
-        Stat1
+      <div class="col stat">
+        <div class="stat-title">
+          ยอดรายเดือน
+        </div>
+        <div class="stat-content">
+          30,000
+        </div>
       </div>
-      <div class="col">
-        Stat1
+      <div class="col stat">
+        <div class="stat-title">
+          ยอดทั้งหมด
+        </div>
+        <div class="stat-content">
+          30,000
+        </div>
       </div>
     </div>
     <div class="container-content">

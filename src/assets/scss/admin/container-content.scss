@@ -4,13 +4,13 @@
   }
 
   .content-menu {
-    min-width: 70px;
+    min-width: 72px;
     height: 100%;
-    background: $dark3;
+    background: $dark2;
     color: $white2;
     padding-left: 0px;
     padding-right: 0px;
-    border-right: 1px solid $dark3;
+    border-right: 1px solid $dark2;
     box-shadow: 2px 0 0 0 $orange1;
 
     hr {
@@ -27,7 +27,7 @@
     .menu-list {
       cursor: pointer;
       padding: 10px 0;
-      background: $dark3;
+      background: $dark2;
       transition: 0.3s ease background;
 
       &:hover {

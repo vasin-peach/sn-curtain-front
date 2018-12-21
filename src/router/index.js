@@ -63,8 +63,11 @@ const ProfileHistory = () =>
 
 // Admin
 const Admin = () => import('@component/Admin/Admin');
-const AdminProduct = () => import('@component/Admin/AdminProduct');
 const AdminDashboard = () => import('@component/Admin/AdminDashboard');
+const AdminSlide = () => import('@component/Admin/AdminSlide');
+const AdminProduct = () => import('@component/Admin/AdminProduct');
+const AdminDiscount = () => import('@component/Admin/AdminDiscount');
+const AdminBank = () => import('@component/Admin/AdminBank');
 
 
 Vue.use(Router)
@@ -266,24 +269,39 @@ const router = new Router({
         ]
       },
 
-      // ?
-      // ?─── ADMIN ───────────────────────────────────────────────────────
-      // ?
+      //
+      // ─── ADMIN ───────────────────────────────────────────────────────
+      //
 
       {
         path: '/admin',
         component: Admin,
         children: [{
+
+            // ? Dashboard
             path: 'dashboard',
             component: AdminDashboard,
             alias: '',
-            name: 'Admin',
+            name: 'AdminDashboard',
             meta: {
               title: 'แดชบอร์ด - จัดการเว็บไซต์',
               permission: 3
             }
           },
           {
+
+            // ? Slide
+            path: 'slide',
+            component: AdminSlide,
+            name: 'AdminSlide',
+            meta: {
+              title: 'สไลด์ - จัดการเว็บไซต์',
+              permission: 3
+            }
+          },
+          {
+
+            // ? Product
             path: 'product',
             component: AdminProduct,
             name: 'AdminProduct',
@@ -291,7 +309,30 @@ const router = new Router({
               title: 'สินค้า - จัดการเว็บไซต์',
               permission: 3
             }
-          }
+          },
+          {
+
+            // ? Discount
+            path: 'discount',
+            component: AdminDiscount,
+            name: 'AdminDiscount',
+            meta: {
+              title: 'รหัสส่วนลด - จัดการเว็บไซต์',
+              permission: 3
+            }
+          },
+          {
+
+            // ? Bank
+            path: 'bank',
+            component: AdminBank,
+            name: 'AdminBank',
+            meta: {
+              title: 'การโอน - จัดการเว็บไซต์',
+              permission: 3
+            }
+          },
+
         ]
       }
 

@@ -56,7 +56,10 @@
             ทั่วไป
           </div>
           <hr class="d-sm-block d-none">
-          <div class="menu-list row m-0">
+          <router-link
+            :to="{name: 'AdminDashboard'}"
+            class="menu-list row m-0"
+          >
             <div class="col-12 col-sm-3">
               <font-awesome-icon
                 icon="tachometer-alt"
@@ -66,8 +69,11 @@
             <div class="col-10 col-sm d-none d-sm-block">
               แดชบอร์ด
             </div>
-          </div>
-          <div class="menu-list row m-0">
+          </router-link>
+          <router-link
+            :to="{name: 'AdminSlide'}"
+            class="menu-list row m-0"
+          >
             <div class="col-12 col-sm-3">
               <font-awesome-icon
                 icon="chalkboard"
@@ -77,12 +83,15 @@
             <div class="col-10 col-sm d-none d-sm-block">
               ไสลด์โชว์
             </div>
-          </div>
+          </router-link>
           <div class="menu-label col d-none d-sm-block">
             การขาย
           </div>
           <hr>
-          <div class="menu-list row m-0">
+          <router-link
+            :to="{name: 'AdminProduct'}"
+            class="menu-list row m-0"
+          >
             <div class="col-12 col-sm-3">
               <font-awesome-icon
                 icon="shopping-cart"
@@ -92,8 +101,11 @@
             <div class="col-10 col-sm d-none d-sm-block">
               สินค้า
             </div>
-          </div>
-          <div class="menu-list row m-0">
+          </router-link>
+          <router-link
+            :to="{name: 'AdminDiscount'}"
+            class="menu-list row m-0"
+          >
             <div class="col-12 col-sm-3">
               <font-awesome-icon
                 icon="barcode"
@@ -103,8 +115,11 @@
             <div class="col-10 col-sm d-none d-sm-block">
               รหัสส่วนลด
             </div>
-          </div>
-          <div class="menu-list row m-0">
+          </router-link>
+          <router-link
+            :to="{name: 'AdminBank'}"
+            class="menu-list row m-0"
+          >
             <div class="col-12 col-sm-3">
               <font-awesome-icon
                 icon="university"
@@ -114,10 +129,10 @@
             <div class="col-10 col-sm d-none d-sm-block">
               การโอน
             </div>
-          </div>
+          </router-link>
         </div>
         <div class="content-content">
-          Content
+          <router-view></router-view>
         </div>
       </div>
     </div>

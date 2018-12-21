@@ -29,6 +29,7 @@
       padding: 10px 0;
       background: $dark2;
       transition: 0.3s ease background;
+      color: $white1 !important;
 
       &:hover {
         background: $orange1;

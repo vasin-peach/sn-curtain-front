@@ -1,0 +1,47 @@
+.policy {
+  height: calc(100vh - 81px - 72.94px);
+  padding: 10vh 0;
+
+  .title {
+    font-size: 20px;
+    font-weight: 500;
+    color: $dark2;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  li {
+    transition: 0.3s ease opacity;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.policy-layout {
+  margin-bottom: 20vh;
+
+  * {
+    font-family: initial !important;
+  }
+
+  p {
+    margin-top: 15px;
+  }
+
+  .content {
+    margin: 15px 0;
+    padding-bottom: 10px;
+    font-size: 14px;
+    border-bottom: 1px solid $gray2;
+  }
+
+  .subcontent {
+    & * {
+      font-size: 12px !important;
+    }
+
+    margin: 15px 0;
+  }
+}

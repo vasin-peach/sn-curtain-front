@@ -16,6 +16,9 @@ import order from './modules/payment/order';
 import clear from './modules/clear';
 import upload from './modules/upload';
 import redirect from './modules/redirect';
+import func from './modules/func';
+import sum_user from './modules/summary/sum-user';
+import sum_sale from './modules/summary/sum-sale';
 
 // Use Moduesl
 Vue.use(Vuex)
@@ -37,7 +40,10 @@ export default new Vuex.Store({
     order,
     clear,
     upload,
-    redirect
+    redirect,
+    func,
+    sum_user,
+    sum_sale
   },
   strict: false
 })

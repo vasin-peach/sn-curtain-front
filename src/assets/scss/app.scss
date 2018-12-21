@@ -1,4 +1,6 @@
 @import 'layouts/main';
+@import 'layouts/policy';
+@import 'layouts/rules';
 @import 'text/main';
 @import 'color/main';
 @import 'landing/main';
@@ -12,6 +14,7 @@
 @import 'payment/main';
 @import 'bill/main';
 @import 'popup/main';
+@import 'admin/main';
 
 a {
   color: $dark2 !important;

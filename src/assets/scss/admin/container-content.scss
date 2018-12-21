@@ -1,0 +1,57 @@
+.container-content {
+  &>.row {
+    height: calc(100vh - 81px - 72.94px);
+  }
+
+  .content-menu {
+    min-width: 72px;
+    height: 100%;
+    background: $dark2;
+    color: $white2;
+    padding-left: 0px;
+    padding-right: 0px;
+    border-right: 1px solid $dark2;
+    box-shadow: 2px 0 0 0 $orange1;
+
+    hr {
+      margin: 5px 0;
+      border-color: $gray2;
+    }
+
+    .menu-label {
+      padding-top: 5px;
+      font-size: 15px;
+      color: $gray3;
+    }
+
+    .menu-list {
+      cursor: pointer;
+      padding: 10px 0;
+      background: $dark2;
+      transition: 0.3s ease background;
+      color: $white1 !important;
+
+      &:hover {
+        background: $orange1;
+      }
+
+      &>div {
+        @include mobile {
+          text-align: center;
+        }
+
+        svg {
+          width: 100%;
+        }
+
+        &:first-child {
+          padding-right: 0px;
+
+          @include mobile {
+            padding-left: 0px;
+          }
+        }
+      }
+    }
+  }
+}

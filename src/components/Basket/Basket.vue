@@ -9,7 +9,10 @@
             <div class="col-12 hr"></div>
           </div>
           <div class="content">
-            <transition name="fade" mode="out-in">
+            <transition
+              name="fade"
+              mode="out-in"
+            >
               <div v-if="basketData == [] || basketData == ''">
                 <div class="warpper">
                   <div>ตระกร้าสินค้าว่างปล่าว</div>
@@ -18,16 +21,33 @@
                   </div>
                 </div>
               </div>
-              <transition-group name="list" tag="p" v-else>
-                <div v-for="(item) in basketData" :key="item.id" class="basket-item">
+              <transition-group
+                name="list"
+                tag="p"
+                v-else
+              >
+                <div
+                  v-for="(item) in basketData"
+                  :key="item.id"
+                  class="basket-item"
+                >
 
-                  <div class="remove" @click="basketDelete(item.id)">
-                    <font-awesome-icon icon="times" aria-hidden="true" />
+                  <div
+                    class="remove"
+                    @click="basketDeleteTrigger(item.id)"
+                  >
+                    <font-awesome-icon
+                      icon="times"
+                      aria-hidden="true"
+                    />
                   </div>
                   <div class="row">
                     <div class="col-5 col-sm-5 col-md-5 image">
                       <router-link :to="{ name: 'Product', params: { id: item.id } }">
-                        <img v-lazy="item.data.brand.src" :alt="item.name || 'ชื่อสินค้า'">
+                        <img
+                          v-lazy="item.data.brand.src"
+                          :alt="item.name || 'ชื่อสินค้า'"
+                        >
                       </router-link>
                     </div>
                     <div class="col col-sm col-md detail">
@@ -42,13 +62,19 @@
                       <div class="amount">
                         <div class="amount-wrapper">
                           <div class="">
-                            <div class="minus" @click="amountMinus(item.id)">
+                            <div
+                              class="minus"
+                              @click="amountMinus(item.id)"
+                            >
                               -
                             </div>
                             <div class="num">
                               {{ numberWithCommas(item.amount) }}
                             </div>
-                            <div class="plus" @click="amountPlus(item.id)">
+                            <div
+                              class="plus"
+                              @click="amountPlus(item.id)"
+                            >
                               +
                             </div>
                           </div>
@@ -59,11 +85,15 @@
                       </div>
                       <div class="option-container">
                         <div class="option-block">
-                          <div>ตัวเลือก</div>
-                          <b-form-select v-model="item.buyOption" :options="item.data ? item.data.price : {text: 'LOADING...'}"></b-form-select>
+                          <div class="d-none d-md-block">ตัวเลือก</div>
+                          <b-form-select
+                            v-model="item.buyOption"
+                            :options="item.data ? item.data.price : {text: 'LOADING...'}"
+                          ></b-form-select>
                         </div>
                       </div>
                       <div class="price-sm">
+                        <hr class="d-md-none d-block">
                         ฿{{numberWithCommas(item.buyOption * item.amount)}}
                       </div>
                     </div>
@@ -77,7 +107,7 @@
             </transition>
           </div>
         </div>
-        <div class="basket-summary col pt-4 pr-0">
+        <div class="basket-summary col pt-4">
           <div class="summary-block">
             <div class="title">
               ORDER SUMMARY
@@ -105,7 +135,11 @@
             </div>
             <hr>
             <div class="code-input">
-              <input type="text" id="codeNumber" v-model="codeNumber">
+              <input
+                type="text"
+                id="codeNumber"
+                v-model="codeNumber"
+              >
             </div>
             <div class="transport-input p-0">
 
@@ -115,7 +149,10 @@
               Our Phoenix Collection of Contemporary Door Styles now includes Strata, a very durable textured surface that provides a look and feel that is unmatched.
               <hr>
             </div>
-            <div class="button" @click="validateBasket()">
+            <div
+              class="button"
+              @click="validateBasket()"
+            >
               ชำระเงิน
             </div>
           </div>
@@ -247,25 +284,34 @@ export default {
       // * Update delivery price by amount
     },
     async updateSumAll() {
-      this.sumWeight(this.basketData);
+      await this.sumWeight(this.basketData);
 
       var sumAll = this.sumPrice - this.sumDiscount + this.deliveryPriceData;
       sumAll = this.sumPrice - this.sumDiscount + this.deliveryPriceData;
       this.sumAll = sumAll > 0 ? sumAll : 0;
 
       // update discount state
-      this.discountUpdate(this.sumDiscount);
+      await this.discountUpdate(this.sumDiscount);
 
       // update transport state
       // this.transportUpdate(this.delivery);
 
       // update basket session
-      this.basketUpdateSession({
+      await this.basketUpdateSession({
         price: this.sumPrice,
         discount: this.sumDiscount,
         deliveryPrice: this.deliveryPriceData,
         weight: this.weight
       });
+    },
+
+    basketDeleteTrigger(id) {
+      var getIndex = this.basketData.findIndex(item => item.id == id);
+      if (getIndex >= 0) {
+        this.basketData.splice(getIndex, 1);
+        this.oldItems.splice(getIndex, 1);
+        localStorage.setItem("basket", JSON.stringify(this.basketData));
+      }
     },
     amountMinus(id) {
       // get index by id

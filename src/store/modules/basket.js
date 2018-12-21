@@ -40,6 +40,7 @@ const mutations = {
     state.basket = data;
     state.paymentPayload.basket = data;
   },
+  // ไม่ได้ใช้แล้ว บัคที่ olditems
   basketDelete(state, id) {
     var getIndex = state.basket.findIndex(item => item.id == id)
     if (getIndex >= 0) {

@@ -2,37 +2,51 @@
   text-align: center;
   color: $white3;
   background-color: $dark1;
+
   .row {
     padding: 30px;
+
     #webcredit,
     #otherweb,
       {
       display: flex;
       align-items: center;
     }
+
     #webcredit {
       font-size: 15px;
+
       @include small {
         text-align: center !important;
         justify-content: center;
       }
     }
+
     #otherweb {
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
       padding: 0px;
+
       @include small {
         justify-content: center;
         padding-top: 30px;
       }
+
       div {
         padding-left: 20px;
+
+        @include small {
+          padding-left: 0px;
+          padding: 0 10px;
+        }
+
         img {
           width: 40px;
           height: 40px;
           border-radius: 50%;
           transition: filter 0.3s ease;
+
           &:hover {
             filter: brightness(0.8);
           }
@@ -40,8 +54,10 @@
       }
     }
   }
+
   .scrolltop-container {
     position: relative;
+
     .scrolltop {
       z-index: 6;
       position: absolute;
@@ -50,19 +66,23 @@
       top: -60px;
       display: flex;
       justify-content: center;
+
       @include small {
         top: -70px;
       }
+
       img {
         cursor: pointer;
         padding: 10px;
         width: 60px;
         height: 60px;
         transition: transform 0.3s ease-out;
+
         @include small {
           width: 70px;
           height: 70px
         }
+
         &:hover {
           transform: translateY(-5px);
         }

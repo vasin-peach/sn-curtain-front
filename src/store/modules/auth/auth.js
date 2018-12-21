@@ -27,6 +27,7 @@ const mutations = {
 }
 
 const actions = {
+
   localLogin({
     commit
   }, payload) {
@@ -104,6 +105,16 @@ const actions = {
       });
     });
   },
+
+  getPermission() {
+    return new Promise((resolve, reject) => {
+      Vue.http.get(process.env.BACKEND_URI + "/permission").then(response => {
+        return resolve(response);
+      }, error => {
+        return reject(error);
+      })
+    })
+  }
 }
 
 export default {

@@ -1,6 +1,6 @@
 <template>
-  <div class="admin-product">
-    admin product
+  <div class="admin-slide">
+    admin slide
   </div>
 </template>
 

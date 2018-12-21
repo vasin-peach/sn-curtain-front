@@ -284,20 +284,20 @@ export default {
       // * Update delivery price by amount
     },
     async updateSumAll() {
-      this.sumWeight(this.basketData);
+      await this.sumWeight(this.basketData);
 
       var sumAll = this.sumPrice - this.sumDiscount + this.deliveryPriceData;
       sumAll = this.sumPrice - this.sumDiscount + this.deliveryPriceData;
       this.sumAll = sumAll > 0 ? sumAll : 0;
 
       // update discount state
-      this.discountUpdate(this.sumDiscount);
+      await this.discountUpdate(this.sumDiscount);
 
       // update transport state
       // this.transportUpdate(this.delivery);
 
       // update basket session
-      this.basketUpdateSession({
+      await this.basketUpdateSession({
         price: this.sumPrice,
         discount: this.sumDiscount,
         deliveryPrice: this.deliveryPriceData,

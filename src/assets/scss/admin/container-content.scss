@@ -1,10 +1,10 @@
 .container-content {
-
   &>.row {
     height: calc(100vh - 81px - 72.94px);
   }
 
   .content-menu {
+    min-width: 70px;
     height: 100%;
     background: $dark3;
     color: $white2;
@@ -32,6 +32,24 @@
 
       &:hover {
         background: $orange1;
+      }
+
+      &>div {
+        @include mobile {
+          text-align: center;
+        }
+
+        svg {
+          width: 100%;
+        }
+
+        &:first-child {
+          padding-right: 0px;
+
+          @include mobile {
+            padding-left: 0px;
+          }
+        }
       }
     }
   }

@@ -1,0 +1,40 @@
+.admin-product {
+
+  &.closed {
+    height: auto !important;
+  }
+
+  .disable {
+    opacity: 0.7 !important;
+  }
+
+  .bar-search {
+
+    #search {
+      border: 1px solid $dark3;
+      border-top-right-radius: 30px;
+      border-bottom-right-radius: 30px;
+
+      @include small {
+        border-radius: 0px !important;
+      }
+
+      &:focus {
+        box-shadow: none !important;
+      }
+    }
+
+    .input-group-text {
+      background-color: $white1;
+      border-top-left-radius: 30px !important;
+      border-bottom-left-radius: 30px !important;
+
+
+      @include small {
+        border-radius: 0px !important;
+      }
+    }
+  }
+
+
+}

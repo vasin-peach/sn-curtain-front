@@ -67,7 +67,7 @@ const actions = {
           end: moment().endOf('day').toISOString()
         }
         let callResult = await Vue.http.post(`${process.env.BACKEND_URI}/summary/sale/date`, payload);
-        if (!callResult.data || !callResult.data.data || !callResult.data.data[0]) return reject(0);
+        if (!callResult.data || !callResult.data.data || !callResult.data.data[0]) return 0;
         callResult = callResult.data.data[0].sum.toString().slice(0, -2);
         commit('updateState', {
           data: callResult || 0,
@@ -95,7 +95,7 @@ const actions = {
           end: moment().endOf('week').toISOString()
         }
         let callResult = await Vue.http.post(`${process.env.BACKEND_URI}/summary/sale/date`, payload);
-        if (!callResult.data || !callResult.data.data || !callResult.data.data[0]) return reject(0);
+        if (!callResult.data || !callResult.data.data || !callResult.data.data[0]) return 0;
         callResult = callResult.data.data[0].sum.toString().slice(0, -2);
         commit('updateState', {
           data: callResult || 0,
@@ -123,7 +123,7 @@ const actions = {
           end: moment().endOf('month').toISOString()
         }
         let callResult = await Vue.http.post(`${process.env.BACKEND_URI}/summary/sale/date`, payload);
-        if (!callResult.data || !callResult.data.data || !callResult.data.data[0]) return reject(0);
+        if (!callResult.data || !callResult.data.data || !callResult.data.data[0]) return 0;
         callResult = callResult.data.data[0].sum.toString().slice(0, -2);
         commit('updateState', {
           data: callResult || 0,
@@ -151,7 +151,7 @@ const actions = {
           end: moment().endOf('year').toISOString()
         }
         let callResult = await Vue.http.post(`${process.env.BACKEND_URI}/summary/sale/date`, payload);
-        if (!callResult.data || !callResult.data.data || !callResult.data.data[0]) return reject(0);
+        if (!callResult.data || !callResult.data.data || !callResult.data.data[0]) return 0;
         callResult = callResult.data.data[0].sum.toString().slice(0, -2);
         commit('updateState', {
           data: callResult || 0,

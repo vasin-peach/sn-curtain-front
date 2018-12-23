@@ -76,6 +76,7 @@ const Admin = () => import('@component/Admin/Admin');
 const AdminDashboard = () => import('@component/Admin/AdminDashboard');
 const AdminSlide = () => import('@component/Admin/AdminSlide');
 const AdminProduct = () => import('@component/Admin/AdminProduct');
+const AdminOrder = () => import('@component/Admin/AdminOrder');
 const AdminDiscount = () => import('@component/Admin/AdminDiscount');
 const AdminBank = () => import('@component/Admin/AdminBank');
 
@@ -383,6 +384,18 @@ const router = new Router({
             name: 'AdminBank',
             meta: {
               title: 'การโอน - จัดการเว็บไซต์',
+              login: 1,
+              permission: 3
+            }
+          },
+          {
+
+            // ? Order
+            path: 'order',
+            component: AdminOrder,
+            name: 'AdminOrder',
+            meta: {
+              title: 'ใบสั่งซื้อ - จัดการเว็บไซต์',
               login: 1,
               permission: 3
             }

@@ -111,6 +111,20 @@
             </div>
           </router-link>
           <router-link
+            :to="{name: 'AdminOrder'}"
+            class="menu-list row m-0"
+          >
+            <div class="col-12 col-sm-3">
+              <font-awesome-icon
+                icon="file-invoice"
+                aria-hidden="true"
+              />
+            </div>
+            <div class="col-10 col-sm d-none d-sm-block">
+              ออเดอร์
+            </div>
+          </router-link>
+          <router-link
             :to="{name: 'AdminDiscount'}"
             class="menu-list row m-0"
           >
@@ -139,7 +153,7 @@
             </div>
           </router-link>
         </div>
-        <div class="content-content">
+        <div class="content-content col">
           <router-view></router-view>
         </div>
       </div>
@@ -159,6 +173,7 @@ export default {
     this.getSaleYear();
   },
   methods: {
+    // * Actions
     ...mapActions([
       "getMemberShip",
       "getSaleDay",
@@ -166,6 +181,7 @@ export default {
       "getSaleMonth",
       "getSaleYear"
     ]),
+    // * Number with comma
     commas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }

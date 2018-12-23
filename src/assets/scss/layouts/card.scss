@@ -1,0 +1,23 @@
+.card-container {
+  padding: 20px;
+
+  &:first-child {
+    padding-right: 12px;
+  }
+
+  &:last-child {
+    padding-left: 12px;
+  }
+
+  .card-box {
+    background: $white1;
+    padding: 15px;
+    border-radius: 10px;
+    min-height: 100%;
+
+
+    @include small {
+      border-radius: 0px;
+    }
+  }
+}

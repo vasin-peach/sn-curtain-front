@@ -1,6 +1,7 @@
 .admin-product {
   margin-bottom: 10vh;
 
+
   &.closed {
     height: auto !important;
   }
@@ -140,11 +141,17 @@
           }
         }
 
+
+
         &:hover,
         &:focus,
-        .focus {
-          filter: brightness(0.8);
+        .checked {
+          filter: brightness(0.8) !important;
         }
+      }
+
+      .checked {
+        filter: brightness(0.9) !important;
       }
     }
   }

@@ -44,9 +44,10 @@
             </div>
             <div class="product-list-container">
               <div
-                class="product-list row m-0 "
-                v-for="items in productShow"
+                class="product-list row m-0"
+                v-for="(items, count) in productShow"
                 :key="items._id"
+                :class="[items._id, {'checked' : count == 0}]"
                 @click="triggerChecked(items._id)"
               >
                 <div
@@ -79,7 +80,7 @@
         <div class="admin-product-right card-container col-12 col-md">
           <div class="card-box">
             <div class="product-detail">
-              รายละเอียดสินค้าที่คลิ๊ก
+              {{ productDetail }}
             </div>
           </div>
         </div>
@@ -91,13 +92,18 @@
 <script>
 import Loading from "../Loading";
 import { mapActions, mapGetters } from "vuex";
+import isEmpty from "lodash.isempty";
+import $ from "jquery";
 export default {
   name: "admin_product",
   data() {
     return {
       search: "",
       loadingState: true,
-      productShow: null
+      productShow: null,
+      productDetail: null,
+      prevCheckedDiv: null,
+      timeout: null
     };
   },
   methods: {
@@ -126,13 +132,53 @@ export default {
     },
 
     // * Trigger Checked Product
-    triggerChecked(id) {
-      console.log("checked product " + id);
+    async triggerChecked(id) {
+      this.productDetail = await this.productAllData.filter(
+        item => item._id == id
+      );
+      $(`.${this.prevCheckedDiv}`).removeClass("checked");
+      $(`.${id}`).addClass("checked");
+      this.prevCheckedDiv = id;
+    },
+
+    // * Trigger Search
+    async triggerSearch(word) {
+      // filter `productAllData` to `productShow` by `search`
+      const filterResult = await this.productAllData.filter(items => {
+        return (
+          items.name.includes(word) ||
+          items.category.val.includes(word) ||
+          items.category.quantity == word ||
+          items.category.type.val.includes(word) ||
+          !isEmpty(items.price.filter(item => item.value == word)) ||
+          !isEmpty(items.price.filter(item => item.weight == word)) ||
+          !isEmpty(
+            items.category.type.nature.filter(item => item.val.includes(word))
+          )
+        );
+      });
+
+      // return false if empty
+      if (isEmpty(filterResult)) this.productShow = false;
+      // set filter to `productShow`
+      else this.productShow = filterResult;
     }
   },
   watch: {
+    // update `productShow` when get data from `productAllData`
     productAllData: function(data) {
       this.productShow = data;
+      this.productDetail = data[0] || false;
+      this.prevCheckedDiv = data[0]._id;
+    },
+
+    // set delay 500ms and call `triggerSearch`
+    search: function(word) {
+      var _this = this;
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(function() {
+        _this.triggerSearch(word);
+      }, 500);
     }
   },
   computed: {

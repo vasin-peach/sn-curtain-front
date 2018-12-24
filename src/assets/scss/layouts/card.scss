@@ -1,12 +1,19 @@
 .card-container {
   padding: 20px;
 
+
+
   &:first-child {
     padding-right: 12px;
   }
 
   &:last-child {
     padding-left: 12px;
+  }
+
+
+  @include mobile {
+    padding: 0 !important;
   }
 
   .card-box {

@@ -12,7 +12,7 @@
         key="admin-product"
         v-else
       >
-        <div class="admin-product-left card-container col-12 col-md">
+        <div class="admin-product-left card-container col-12 col-md col-xl-4">
           <div class="card-box">
             <div class="product-search bar-search">
               <div class="input-group">
@@ -33,9 +33,33 @@
                 >
               </div>
             </div>
-            <div class="product-list">
-              โชว์สินค้า
-              {{ productAllData }}
+            <div class="product-list-container">
+              <div
+                class="product-list row m-0 "
+                v-for="items in productShow"
+                :key="items._id"
+              >
+                <div class="product-list-delete">
+                  <font-awesome-icon
+                    icon="times"
+                    aria-hidden="true"
+                  />
+                </div>
+                <div class="col-6 col-sm-4 col-md-4 pl-0">
+                  <img
+                    v-lazy="items.brand"
+                    class="border-2"
+                    :alt="'promotion2'"
+                  >
+                </div>
+                <div class="content col col-md">
+                  <div>
+                    <div>{{ items.name}}</div>
+                    <div><span>จำนวน: </span><span>{{ items.quantity }}</span></div>
+                    <div>฿{{ items.price[0].value}}</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -59,7 +83,8 @@ export default {
   data() {
     return {
       search: "",
-      loadingState: true
+      loadingState: true,
+      productShow: null
     };
   },
   methods: {
@@ -75,6 +100,11 @@ export default {
 
       // disable loading
       this.loadingState = false;
+    }
+  },
+  watch: {
+    productAllData: function(data) {
+      this.productShow = data;
     }
   },
   computed: {

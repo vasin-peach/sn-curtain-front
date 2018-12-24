@@ -14,10 +14,10 @@
       >
         <div class="admin-product-left card-container col-12 col-md col-xl-4">
           <div class="card-box">
-            <div class="product-search bar-search">
-              <div class="input-group">
+            <div class="product-search bar-search row m-0">
+              <div class="input-group col pl-0">
                 <span class="input-group-append">
-                  <div class="input-group-text border-right-0 border">
+                  <div class="input-group-text border-right-0 border pl-2 pr-2">
                     <font-awesome-icon
                       icon="search"
                       aria-hidden="true"
@@ -25,12 +25,21 @@
                   </div>
                 </span>
                 <input
-                  class="form-control py-2 border-left-0 border"
+                  class="form-control pl-1 border-left-0 border"
                   type="search"
                   placeholder="ค้นหา"
                   id="search"
                   v-model="search"
                 >
+              </div>
+              <div
+                class="add col-2 pr-0"
+                @click="triggerAddProduct()"
+              >
+                <font-awesome-icon
+                  icon="plus"
+                  aria-hidden="true"
+                />
               </div>
             </div>
             <div class="product-list-container">
@@ -38,8 +47,12 @@
                 class="product-list row m-0 "
                 v-for="items in productShow"
                 :key="items._id"
+                @click="triggerChecked(items._id)"
               >
-                <div class="product-list-delete">
+                <div
+                  class="product-list-delete"
+                  @click="triggerDeleteProduct(items._id)"
+                >
                   <font-awesome-icon
                     icon="times"
                     aria-hidden="true"
@@ -100,6 +113,21 @@ export default {
 
       // disable loading
       this.loadingState = false;
+    },
+
+    // * Trigger Add Product
+    triggerAddProduct() {
+      console.log("add product call");
+    },
+
+    // * Trigger Delete Product
+    triggerDeleteProduct(id) {
+      console.log("delete product " + id);
+    },
+
+    // * Trigger Checked Product
+    triggerChecked(id) {
+      console.log("checked product " + id);
     }
   },
   watch: {

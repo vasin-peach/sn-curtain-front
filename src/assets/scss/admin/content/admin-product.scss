@@ -36,5 +36,13 @@
     }
   }
 
+  .admin-product-left {
+    .product-list {
+      margin-top: 25px;
+      max-height: 100vh;
+      overflow: scroll;
+    }
+  }
+
 
 }

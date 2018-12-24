@@ -63,7 +63,7 @@
                   <img
                     v-lazy="items.brand"
                     class="border-2"
-                    :alt="'promotion2'"
+                    :alt="items.name"
                   >
                 </div>
                 <div class="content col col-md">
@@ -80,7 +80,23 @@
         <div class="admin-product-right card-container col-12 col-md">
           <div class="card-box">
             <div class="product-detail">
-              {{ productDetail }}
+              <div class="row m-0">
+                <div class="col-12 col-md">
+                  <img
+                    v-lazy="productDetail.brand"
+                    :alt="productDetail.name"
+                  >
+                </div>
+                <div class="col col-md">
+                  {{ productDetail.name }}
+                </div>
+                <div class="col-12">
+                  {{ productDetail.desc[0].val }}
+                </div>
+                <div class="col-12">
+                  {{ productDetail.price[0].value }}
+                </div>
+              </div>
             </div>
           </div>
         </div>

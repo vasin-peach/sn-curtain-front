@@ -517,7 +517,6 @@ function smoothScroll(to) {
   var scrollDistance = 270; //Distance. Use smaller value for shorter scroll and greater value for longer scroll
 
   // check if path area ['address'] or ['credit']
-  console.log(to.path);
   if (to.path.split("/").indexOf('payment') == -1 && to.path.split("/").indexOf('credit') == -1 && to.path.split("/").indexOf('admin') == -1) {
     // bind html scroll
     $window.bind("mousewheel DOMMouseScroll scroll", function (event) {

@@ -2,6 +2,7 @@
   <div class="admin-product">
     <transition
       name="fade"
+      id=""
       mode="out-in"
     >
       <div v-if="loadingState">
@@ -79,25 +80,144 @@
         </div>
         <div class="admin-product-right card-container col-12 col-md">
           <div class="card-box">
-            <div class="product-detail">
-              <div class="row m-0">
-                <div class="col-12 col-md">
-                  <img
-                    v-lazy="productDetail.brand"
-                    :alt="productDetail.name"
-                  >
+            <form
+              class="product-detail-form"
+              @submit.prevent="updateProduct(productDetail._id)"
+            >
+              <div class="product-detail">
+                <div class="row m-0">
+                  <div class="col-12 col-sm col-md-12 col-xl-4 pmb-0">
+                    <img
+                      :src="
+                  productDetail.brand.src"
+                      :alt="productDetail.name"
+                      class="image"
+                    >
+                  </div>
+                  <div class="col-12 col-sm col-md col-xl pmb-0">
+                    <div>
+                      <div class="name">
+                        <input
+                          type="text"
+                          :value="productDetail.name"
+                          name="name"
+                          id="name"
+                        >
+                      </div>
+                      <div class="desc">
+                        <textarea
+                          type="text"
+                          :value="productDetail.desc[0].val"
+                          name="desc"
+                          id="desc"
+                        >
+                      </textarea>
+                      </div>
+                      <hr class="mt-1 mb-2">
+                      <div class="price">
+                        <div class="title">
+                          <div>ตัวเลือกราคา</div>
+                          <div
+                            class="add col-2 pr-0"
+                            @click="triggerAddOption(productDetail._id)"
+                          >
+                            <font-awesome-icon
+                              icon="plus"
+                              aria-hidden="true"
+                            />
+                          </div>
+                        </div>
+                        <div class="box">
+                          <div
+                            class="list"
+                            v-for="(items, count) in productDetail.price"
+                            :key="items._id"
+                          >
+                            <div class="name">
+                              <input
+                                type="text"
+                                :value="productDetail.price[count].text"
+                                name="price_name"
+                                id="price_name"
+                                required
+                              >
+                            </div>
+                            <div class="value">
+                              ฿<input
+                                type="text"
+                                :value="productDetail.price[count].value"
+                                name="price_value"
+                                id="price_value"
+                                required
+                              > (<input
+                                type="text"
+                                :value="productDetail.price[count].weight"
+                                name="price_weight"
+                                id="price_weight"
+                                required
+                              >ก.)
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="quantity">
+                        จำนวนที่เหลือ: <input
+                          type="number"
+                          :value="productDetail.quantity"
+                          name="quantity"
+                          id="quantity"
+                          required
+                        >
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="col col-md">
-                  {{ productDetail.name }}
-                </div>
-                <div class="col-12">
-                  {{ productDetail.desc[0].val }}
-                </div>
-                <div class="col-12">
-                  {{ productDetail.price[0].value }}
+                <div class="row m-0">
+                  <div class="col-12">
+                    <hr class="mt-1 mb-3">
+                  </div>
+                  <div class="col-12 pmb-0">
+                    <div class="row m-0 category">
+                      <div class="col">
+                        ประเภท
+                      </div>
+                      <div class="col">
+                        <b-form-select
+                          :value="productDetail.category.val"
+                          :options="productCategoryOptionData"
+                          name="category"
+                          id="category"
+                        />
+                      </div>
+                    </div>
+                    <div class="row m-0 type ">
+                      <div class="col">
+                        ชนิด
+                      </div>
+                      <div class="col">
+                        <b-form-select
+                          :value="productDetail.category.type.val"
+                          :options="productTypeOptionData"
+                          name="type"
+                          id="type"
+                        />
+                      </div>
+                    </div>
+                    <div class="row m-0 nature">
+                      <div class="col">
+                        ลักษณะ
+                      </div>
+                      <div class="col">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <input type="submit">
+                  </div>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -107,7 +227,7 @@
 
 <script>
 import Loading from "../Loading";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import isEmpty from "lodash.isempty";
 import $ from "jquery";
 export default {
@@ -119,11 +239,18 @@ export default {
       productShow: null,
       productDetail: null,
       prevCheckedDiv: null,
-      timeout: null
+      timeout: null,
+      productEdit: {},
+      productEditUpdate: {}
     };
   },
   methods: {
     ...mapActions(["productAll"]),
+    ...mapMutations([
+      "filterCategoryOption",
+      "filterTypeOption",
+      "filterNatureOption"
+    ]),
 
     // * Get all product
     async callProductAll() {
@@ -147,14 +274,19 @@ export default {
       console.log("delete product " + id);
     },
 
+    // * Trigger Delete Product
+    triggerAddOption(id) {
+      console.log("add option " + id);
+    },
+
     // * Trigger Checked Product
     async triggerChecked(id) {
-      this.productDetail = await this.productAllData.filter(
-        item => item._id == id
-      );
+      this.productDetail =
+        (await this.productAllData.filter(item => item._id == id)[0]) || false;
       $(`.${this.prevCheckedDiv}`).removeClass("checked");
       $(`.${id}`).addClass("checked");
       this.prevCheckedDiv = id;
+      1;
     },
 
     // * Trigger Search
@@ -175,17 +307,48 @@ export default {
       });
 
       // return false if empty
-      if (isEmpty(filterResult)) this.productShow = false;
+      if (isEmpty(filterResult)) return (this.productShow = false);
       // set filter to `productShow`
-      else this.productShow = filterResult;
+      this.productShow = filterResult;
+      // reload product detail
+      this.productDetail = this.productShow[0];
+      // unchecked & checked dev
+      $(`.${this.prevCheckedDiv}`).removeClass("checked");
+      $(`.${this.productShow[0]._id}`).addClass("checked");
+      this.prevCheckedDiv = this.productShow[0]._id;
+    },
+
+    // * Number with comma
+    commas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+
+    updateProduct(id) {
+      console.log($("#name").val());
     }
   },
   watch: {
     // update `productShow` when get data from `productAllData`
-    productAllData: function(data) {
-      this.productShow = data;
-      this.productDetail = data[0] || false;
-      this.prevCheckedDiv = data[0]._id;
+    productAllData: {
+      handler: function(data) {
+        this.productShow = data;
+        this.productDetail = data[0] || false;
+        this.prevCheckedDiv = data[0]._id;
+
+        // init options
+        this.filterCategoryOption(data);
+        this.filterTypeOption(data);
+        this.filterNatureOption(data);
+
+        return;
+      },
+      deep: false
+    },
+
+    // update `productEdit`
+    productDetail: function(data) {
+      if (!data) return false;
+      // return (this.productEdit = data);
     },
 
     // set delay 500ms and call `triggerSearch`
@@ -198,7 +361,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["productAllData"])
+    ...mapGetters([
+      "productAllData",
+      "productCategoryOptionData",
+      "productTypeOptionData",
+      "productNatureOptionData"
+    ])
   },
   mounted() {
     this.callProductAll();

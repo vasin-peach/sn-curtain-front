@@ -99,7 +99,7 @@
                       <div class="name">
                         <input
                           type="text"
-                          :value="productDetail.name"
+                          v-model="productEdit.name"
                           name="name"
                           id="name"
                         >
@@ -107,7 +107,7 @@
                       <div class="desc">
                         <textarea
                           type="text"
-                          :value="productDetail.desc[0].val"
+                          v-model="productEdit.desc[0].val"
                           name="desc"
                           id="desc"
                         >
@@ -119,7 +119,7 @@
                           <div>ตัวเลือกราคา</div>
                           <div
                             class="add col-2 pr-0"
-                            @click="triggerAddOption(productDetail._id)"
+                            @click="triggerAddOption(productEdit._id)"
                           >
                             <font-awesome-icon
                               icon="plus"
@@ -130,13 +130,13 @@
                         <div class="box">
                           <div
                             class="list"
-                            v-for="(items, count) in productDetail.price"
+                            v-for="(items, count) in productEdit.price"
                             :key="items._id"
                           >
                             <div class="name">
                               <input
                                 type="text"
-                                :value="productDetail.price[count].text"
+                                v-model="productEdit.price[count].text"
                                 name="price_name"
                                 id="price_name"
                                 required
@@ -145,13 +145,13 @@
                             <div class="value">
                               ฿<input
                                 type="text"
-                                :value="productDetail.price[count].value"
+                                v-model="productEdit.price[count].value"
                                 name="price_value"
                                 id="price_value"
                                 required
                               > (<input
                                 type="text"
-                                :value="productDetail.price[count].weight"
+                                v-model="productEdit.price[count].weight"
                                 name="price_weight"
                                 id="price_weight"
                                 required
@@ -164,7 +164,7 @@
                       <div class="quantity">
                         จำนวนที่เหลือ: <input
                           type="number"
-                          :value="productDetail.quantity"
+                          v-model="productEdit.quantity"
                           name="quantity"
                           id="quantity"
                           required
@@ -184,7 +184,7 @@
                       </div>
                       <div class="col">
                         <b-form-select
-                          :value="productDetail.category.val"
+                          v-model="productEdit.category.val"
                           :options="productCategoryOptionData"
                           name="category"
                           id="category"
@@ -197,7 +197,7 @@
                       </div>
                       <div class="col">
                         <b-form-select
-                          :value="productDetail.category.type.val"
+                          v-model="productEdit.category.type.val"
                           :options="productTypeOptionData"
                           name="type"
                           id="type"
@@ -324,7 +324,11 @@ export default {
     },
 
     updateProduct(id) {
-      console.log($("#name").val());
+      const productNew = {
+        _id: id,
+        name: $("#name").val(),
+        desc: $("#desc").val()
+      };
     }
   },
   watch: {
@@ -349,6 +353,11 @@ export default {
     productDetail: function(data) {
       if (!data) return false;
       // return (this.productEdit = data);
+      this.productEdit.name = data.name;
+      this.productEdit.price = data.price;
+      this.productEdit.quantity = data.quantity;
+      this.productEdit.desc = data.desc;
+      this.productEdit.category = data.category;
     },
 
     // set delay 500ms and call `triggerSearch`

@@ -24,6 +24,9 @@ const getters = {
   productAllData: state => {
     return state.productAll;
   },
+  productTempData: state => {
+    return state.productAll;
+  },
   productCategoryOptionData: state => {
     return state.productCategoryOption;
   },

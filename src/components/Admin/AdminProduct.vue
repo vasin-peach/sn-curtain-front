@@ -53,7 +53,7 @@
               >
                 <div
                   class="product-list-delete"
-                  @click="triggerDeleteProduct(items._id)"
+                  @click="triggerRemoveProduct(items._id)"
                 >
                   <font-awesome-icon
                     icon="times"
@@ -99,7 +99,7 @@
                       <div class="name">
                         <input
                           type="text"
-                          v-model="productEdit.name"
+                          :value="productDetail.name"
                           name="name"
                           id="name"
                         >
@@ -107,7 +107,7 @@
                       <div class="desc">
                         <textarea
                           type="text"
-                          v-model="productEdit.desc[0].val"
+                          :value="productDetail.desc[0].val"
                           name="desc"
                           id="desc"
                         >
@@ -119,7 +119,7 @@
                           <div>ตัวเลือกราคา</div>
                           <div
                             class="add col-2 pr-0"
-                            @click="triggerAddOption(productEdit._id)"
+                            @click="triggerAddOption(productDetail._id)"
                           >
                             <font-awesome-icon
                               icon="plus"
@@ -130,14 +130,14 @@
                         <div class="box">
                           <div
                             class="list"
-                            v-for="(items, count) in productEdit.price"
+                            v-for="(items, count) in productDetail.price"
                             :key="items._id"
                           >
                             <div class="name">
                               <input
                                 type="text"
-                                v-model="productEdit.price[count].text"
-                                name="price_name"
+                                :value="items.text"
+                                :name="`price_name_${count}`"
                                 id="price_name"
                                 required
                               >
@@ -145,14 +145,14 @@
                             <div class="value">
                               ฿<input
                                 type="text"
-                                v-model="productEdit.price[count].value"
-                                name="price_value"
+                                :value="items.value"
+                                :name="`price_value_${count}`"
                                 id="price_value"
                                 required
                               > (<input
                                 type="text"
-                                v-model="productEdit.price[count].weight"
-                                name="price_weight"
+                                :value="items.weight"
+                                :name="`price_weight_${count}`"
                                 id="price_weight"
                                 required
                               >ก.)
@@ -164,7 +164,7 @@
                       <div class="quantity">
                         จำนวนที่เหลือ: <input
                           type="number"
-                          v-model="productEdit.quantity"
+                          :value="productDetail.quantity"
                           name="quantity"
                           id="quantity"
                           required
@@ -175,7 +175,7 @@
                 </div>
                 <div class="row m-0">
                   <div class="col-12">
-                    <hr class="mt-1 mb-3">
+                    <hr class="mt-4 mb-4">
                   </div>
                   <div class="col-12 pmb-0">
                     <div class="row m-0 category">
@@ -184,7 +184,7 @@
                       </div>
                       <div class="col">
                         <b-form-select
-                          v-model="productEdit.category.val"
+                          :value="productDetail.category.val"
                           :options="productCategoryOptionData"
                           name="category"
                           id="category"
@@ -197,7 +197,7 @@
                       </div>
                       <div class="col">
                         <b-form-select
-                          v-model="productEdit.category.type.val"
+                          :value="productDetail.category.type.val"
                           :options="productTypeOptionData"
                           name="type"
                           id="type"
@@ -208,7 +208,69 @@
                       <div class="col">
                         ลักษณะ
                       </div>
-                      <div class="col">
+                      <div class="col row m-0">
+                        <div
+                          v-for="nature in productDetail.category.type.nature"
+                          :key="nature.val"
+                          :style="`background-image: url(${nature.option}); background: ${nature.option}`"
+                          class="col"
+                        >
+                          {{ nature.text }}
+                          <div
+                            class="remove"
+                            @click="triggerRemoveNature(nature.val)"
+                          >
+                            <font-awesome-icon
+                              icon="times"
+                              aria-hidden="true"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="col"
+                          @click="triggerAddNature()"
+                        >
+                          <font-awesome-icon
+                            icon="plus"
+                            aria-hidden="true"
+                          />
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <hr class="mt-3 mb-2">
+                  </div>
+                  <div class="slideshow col-12">
+                    <div class="title">
+                      <div>รูปภาพ</div>
+                      <div
+                        class="add col-2"
+                        @click="triggerAddSlide()"
+                      >
+                        <font-awesome-icon
+                          icon="plus"
+                          aria-hidden="true"
+                        />
+                      </div>
+                    </div>
+                    <div class="slidebox row m-0">
+                      <div
+                        v-for="slide in productDetail.assets"
+                        :key="slide._id"
+                        class="slide col-4"
+                      >
+                        <img v-lazy="slide.src">
+                        <div
+                          class="remove"
+                          @click="triggerRemoveSlide(slide._id)"
+                        >
+                          <font-awesome-icon
+                            icon="times"
+                            aria-hidden="true"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -270,13 +332,30 @@ export default {
     },
 
     // * Trigger Delete Product
-    triggerDeleteProduct(id) {
+    triggerRemoveProduct(id) {
       console.log("delete product " + id);
     },
 
-    // * Trigger Delete Product
+    triggerRemoveNature(id) {
+      console.log("delete nature " + id);
+    },
+
+    triggerRemoveSlide(id) {
+      console.log("delete slide " + id);
+    },
+
+    // * Trigger Add Option
     triggerAddOption(id) {
       console.log("add option " + id);
+    },
+
+    // * Trigger Add Nature
+    triggerAddNature() {
+      console.log("add nature");
+    },
+
+    triggerAddSlide() {
+      console.log("add slide");
     },
 
     // * Trigger Checked Product
@@ -324,11 +403,16 @@ export default {
     },
 
     updateProduct(id) {
-      const productNew = {
-        _id: id,
-        name: $("#name").val(),
-        desc: $("#desc").val()
-      };
+      var unindexed_array = $("form.product-detail-form").serializeArray();
+      var indexed_array = {};
+
+      $.map(unindexed_array, function(n, i) {
+        indexed_array[n["name"]] = n["value"];
+      });
+
+      console.log(indexed_array);
+
+      return indexed_array;
     }
   },
   watch: {
@@ -349,16 +433,12 @@ export default {
       deep: false
     },
 
-    // update `productEdit`
-    productDetail: function(data) {
-      if (!data) return false;
-      // return (this.productEdit = data);
-      this.productEdit.name = data.name;
-      this.productEdit.price = data.price;
-      this.productEdit.quantity = data.quantity;
-      this.productEdit.desc = data.desc;
-      this.productEdit.category = data.category;
-    },
+    // // update `productEdit`
+    // productDetail: {
+    //   handler: function(data) {
+    //     if (!data) return false;
+    //   }
+    // },
 
     // set delay 500ms and call `triggerSearch`
     search: function(word) {

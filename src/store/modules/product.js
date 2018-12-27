@@ -169,6 +169,28 @@ const actions = {
         }
       );
     });
+  },
+
+  productDelete({}, id) {
+
+    /**
+     * @param id OBJECT - id send to backend
+     */
+
+    return new Promise((resolve, reject) => {
+
+      // validate
+      if (!id) return reject('bad param, `id` is empty.');
+
+      // call
+      Vue.http.post(`${process.env.BACKEND_URI}/product/delete`, {
+        id: id
+      }).then(response => {
+        return resolve(response.data);
+      }, error => {
+        return reject(error);
+      })
+    })
   }
 };
 

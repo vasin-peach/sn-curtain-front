@@ -183,12 +183,17 @@
                         ประเภท
                       </div>
                       <div class="col">
-                        <b-form-select
+                        <input
+                          type="text"
+                          v-model="productEdit.category.val"
+                          class="p-0 text-right"
+                        />
+                        <!-- <b-form-select
                           v-model="productEdit.category.val"
                           :options="productCategoryOptionData"
                           name="category"
                           id="category"
-                        />
+                        /> -->
                       </div>
                     </div>
                     <div class="row m-0 type ">
@@ -196,12 +201,17 @@
                         ชนิด
                       </div>
                       <div class="col">
-                        <b-form-select
+                        <input
+                          type="text"
+                          v-model="productEdit.category.type.val"
+                          class="p-0 text-right"
+                        />
+                        <!-- <b-form-select
                           v-model="productEdit.category.type.val"
                           :options="productTypeOptionData"
                           name="type"
                           id="type"
-                        />
+                        /> -->
                       </div>
                     </div>
                     <div class="row m-0 nature">
@@ -293,6 +303,7 @@
 <script>
 import Loading from "../Loading";
 import { mapActions, mapGetters, mapMutations } from "vuex";
+import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
 import isEmpty from "lodash.isempty";
 import _ from "lodash";
 import $ from "jquery";
@@ -402,15 +413,20 @@ export default {
           }
         ])
         .then(result => {
-          if (result.value) {
-            const data = {
-              text: result.value[0],
-              val: result.value[1],
-              option: result.value[2]
-            };
+          let val = result.value;
+          if (!val[0] || !val[1] || !val)
+            return this.$swal({
+              type: "error",
+              title: "ค่าต้องไม่ว่างปล่าว"
+            });
 
-            this.productEdit.category.type.nature.push(data);
-          }
+          const data = {
+            text: result.value[0],
+            val: result.value[1],
+            option: result.value[2]
+          };
+
+          this.productEdit.category.type.nature.push(data);
         });
     },
 
@@ -522,7 +538,7 @@ export default {
   mounted() {
     this.callProductAll();
   },
-  components: { Loading }
+  components: { Loading, VueBootstrapTypeahead }
 };
 </script>
 

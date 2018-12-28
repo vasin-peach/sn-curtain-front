@@ -6,7 +6,7 @@
   text-align: center;
   font-size: 17px;
   font-weight: 400;
-  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  transition: background 0.3s ease-out, color 0.3s ease-out, box-shadow 0.3s ease-out;
   background: $white1;
 
   &:hover {
@@ -17,5 +17,32 @@
 
   &:focus {
     outline: none;
+  }
+}
+
+.button2 {
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 2px solid $orange1;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 400;
+  transition: background 0.3s ease-out, color 0.3s ease-out, box-shadow 0.3s ease-out, transform 0.3s ease-out;
+  background: $orange1;
+  color: $white1;
+
+  &:hover {
+    background: $white1;
+    color: $orange1;
+    box-shadow: 0 0 2px 0 $gray2;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:active {
+    transform: translateY(2px);
   }
 }

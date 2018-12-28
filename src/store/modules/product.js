@@ -45,12 +45,16 @@ const mutations = {
   productUpdate(state, data) {
     data ? (state.product = data) : false;
   },
+  updateStateProductAll(state, data) {
+    state.productAll[data.index] = data.data;
+  },
   updateState(state, data) {
     /**
      * @param state OBJECT - state object
      * @param data OBJECT - {
      *  data ANY - set data to state
      *  target STRING - state name
+     *  index NUMBER - number
      * }
      */
 
@@ -59,7 +63,10 @@ const mutations = {
 
     // update
     try {
-      state[data.target] = data.data || 0;
+      if (data.index) {
+        console.log(state[data.target][data.index]);
+        state[data.target][data.index] = data.data || 0;
+      } else state[data.target] = data.data || 0;
     } catch (err) {
       return 0;
     }
@@ -171,6 +178,8 @@ const actions = {
     });
   },
 
+
+  // ! Delete Product
   productDelete({}, id) {
 
     /**
@@ -191,7 +200,29 @@ const actions = {
         return reject(error);
       })
     })
+  },
+
+  // ! Update Product
+  productUpdate({}, data) {
+
+    /**
+     * @param data OBJECT - data to update
+     */
+
+    return new Promise(async (resolve, reject) => {
+
+      // validate
+      if (!data || isEmpty(data)) return reject('bad param, `data` is empty');
+
+      // call
+      const callResult = await Vue.http.post(`${process.env.BACKEND_URI}/product/update`, data);
+      return resolve(callResult.data.data);
+    })
+
+
   }
+
+
 };
 
 export default {

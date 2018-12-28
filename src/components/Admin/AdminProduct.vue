@@ -1,15 +1,23 @@
 <template>
-  <div class="admin-product">
+  <div
+    class="admin-product"
+    ref="admin_container"
+  >
     <transition
       name="fade"
       id=""
       mode="out-in"
     >
-      <div v-if="loadingState">
+      {{ loadingHeight }}
+      <div
+        v-if="loadingState"
+        :style="{height: loadingHeight + 'px'}"
+      >
         <loading class="card-loading"></loading>
       </div>
       <div
         class="admin-product-container row m-0"
+        ref="admin_container"
         key="admin-product"
         v-else
       >
@@ -82,7 +90,7 @@
           <div class="card-box">
             <form
               class="product-detail-form"
-              @submit.prevent="updateProduct(productEdit._id)"
+              @submit.prevent="triggerUpdateProduct(productEdit._id)"
             >
               <div class="product-detail">
                 <div class="row m-0">
@@ -92,6 +100,7 @@
                   productEdit.brand.src"
                       :alt="productEdit.name"
                       class="image"
+                      @click="triggerUpdateBrand()"
                     >
                   </div>
                   <div class="col-12 col-sm col-md col-xl pmb-0">
@@ -141,6 +150,15 @@
                                 id="price_name"
                                 required
                               >
+                              <div
+                                class="remove"
+                                @click="triggerDeletePrice(items._id)"
+                              >
+                                <font-awesome-icon
+                                  icon="times"
+                                  aria-hidden="true"
+                                />
+                              </div>
                             </div>
                             <div class="value">
                               ฿<input
@@ -188,12 +206,6 @@
                           v-model="productEdit.category.val"
                           class="p-0 text-right"
                         />
-                        <!-- <b-form-select
-                          v-model="productEdit.category.val"
-                          :options="productCategoryOptionData"
-                          name="category"
-                          id="category"
-                        /> -->
                       </div>
                     </div>
                     <div class="row m-0 type ">
@@ -206,12 +218,6 @@
                           v-model="productEdit.category.type.val"
                           class="p-0 text-right"
                         />
-                        <!-- <b-form-select
-                          v-model="productEdit.category.type.val"
-                          :options="productTypeOptionData"
-                          name="type"
-                          id="type"
-                        /> -->
                       </div>
                     </div>
                     <div class="row m-0 nature">
@@ -288,7 +294,10 @@
                     <hr class="mt-3 mb-2">
                   </div>
                   <div class="col-12">
-                    <div class="button2">อัพเดท</div>
+                    <div
+                      class="button2"
+                      @click="triggerUpdateProduct(productEdit._id)"
+                    >อัพเดท</div>
                   </div>
                 </div>
               </div>
@@ -318,15 +327,17 @@ export default {
       prevCheckedDiv: null,
       timeout: null,
       productEdit: {},
-      productEditUpdate: {}
+      productEditUpdate: {},
+      loadingHeight: 0
     };
   },
   methods: {
-    ...mapActions(["productAll", "productDelete"]),
+    ...mapActions(["productAll", "productDelete", "productUpdate"]),
     ...mapMutations([
       "filterCategoryOption",
       "filterTypeOption",
-      "filterNatureOption"
+      "filterNatureOption",
+      "updateStateProductAll"
     ]),
 
     // * Get all product
@@ -371,11 +382,35 @@ export default {
       this.productAllData.splice(index, 1);
     },
 
+    triggerUpdateBrand() {
+      this.$swal({
+        title: "เลือกภาพที่ต้องการเพิ่ม",
+        input: "file",
+        inputAttributes: {
+          accept: "image/*",
+          "aria-label": "อัพโหลดสไลด์ภาพสินค้า"
+        }
+      }).then(result => {
+        if (!result.value) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+          this.productEdit.brand.src = e.target.result;
+          this.productEdit.brand.status = "temp";
+        };
+        reader.readAsDataURL(result.value);
+      });
+    },
+
     triggerDeleteNature(id) {
       const index = this.productEdit.category.type.nature.findIndex(
         x => x.val == id
       );
       this.productEdit.category.type.nature.splice(index, 1);
+    },
+
+    triggerDeletePrice(id) {
+      const index = this.productEdit.price.findIndex(x => x._id == id);
+      this.productEdit.price.splice(index, 1);
     },
 
     triggerDeleteSlide(id) {
@@ -385,7 +420,43 @@ export default {
 
     // * Trigger Add Option
     triggerAddOption(id) {
-      console.log("add option " + id);
+      this.$swal
+        .mixin({
+          input: "text",
+          showCancelButton: true,
+          confirmButtonText: "ต่อไป &rarr;",
+          progressSteps: ["1", "2", "3"]
+        })
+        .queue([
+          {
+            title: "ชื่อของตัวเลือก",
+            text: "เช่น ขนาด `150x250`"
+          },
+          {
+            title: "ราคาของตัวเลือก",
+            text: "ราคาของสินค้าในตัวเลือกนี้ เช่น `799`"
+          },
+          {
+            title: "น้ำหนักสินค้า",
+            text: "นำไปคิดราคาค่าส่งสินค้า หน่วยเป็นกรัม"
+          }
+        ])
+        .then(result => {
+          let val = result.value;
+          if (!val[0] || !val[1] || !val)
+            return this.$swal({
+              type: "error",
+              title: "ค่าต้องไม่ว่างปล่าว"
+            });
+
+          const data = {
+            text: result.value[0],
+            value: result.value[1],
+            weight: result.value[2]
+          };
+
+          this.productEdit.price.push(data);
+        });
     },
 
     // * Trigger Add Nature
@@ -431,7 +502,26 @@ export default {
     },
 
     triggerAddSlide() {
-      console.log("add slide");
+      this.$swal({
+        title: "เลือกภาพที่ต้องการเพิ่ม",
+        input: "file",
+        inputAttributes: {
+          accept: "image/*",
+          "aria-label": "อัพโหลดสไลด์ภาพสินค้า"
+        }
+      }).then(result => {
+        if (!result.value) return;
+        const reader = new FileReader();
+        const id = Date.now();
+        reader.onload = e => {
+          this.productEdit.assets.push({
+            _id: id,
+            src: e.target.result,
+            status: "temp"
+          });
+        };
+        reader.readAsDataURL(result.value);
+      });
     },
 
     // * Trigger Checked Product
@@ -478,17 +568,20 @@ export default {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
 
-    updateProduct(id) {
-      var unindexed_array = $("form.product-detail-form").serializeArray();
-      var indexed_array = {};
+    triggerUpdateProduct(id) {
+      const original = this.productAllData.filter(x => x._id == id)[0];
+      const update = this.productEdit;
 
-      $.map(unindexed_array, function(n, i) {
-        indexed_array[n["name"]] = n["value"];
+      this.loadingState = true;
+      this.productUpdate(this.productEdit).then(resp => {
+        this.loadingState = false;
+
+        // update `productAllData`
+        let index = this.productAllData.findIndex(x => x._id == id);
+        this.productAllData[index] = resp;
+        this.productShow[index] = resp;
+        this.updateStateProductAll({ data: resp, index: index });
       });
-
-      console.log(indexed_array);
-
-      return indexed_array;
     }
   },
   watch: {
@@ -506,7 +599,7 @@ export default {
 
         return;
       },
-      deep: false
+      deep: true
     },
 
     // update `productEdit`
@@ -537,6 +630,12 @@ export default {
   },
   mounted() {
     this.callProductAll();
+    this.$nextTick(() => {
+      setTimeout(
+        () => (this.loadingHeight = this.$refs.admin_container.clientHeight),
+        2000
+      );
+    });
   },
   components: { Loading, VueBootstrapTypeahead }
 };

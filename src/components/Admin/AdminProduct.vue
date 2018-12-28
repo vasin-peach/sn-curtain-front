@@ -200,7 +200,7 @@
                       <div class="col">
                         ประเภท
                       </div>
-                      <div class="col">
+                      <div class="col text-right">
                         <input
                           type="text"
                           v-model="productEdit.category.val"
@@ -212,7 +212,7 @@
                       <div class="col">
                         ชนิด
                       </div>
-                      <div class="col">
+                      <div class="col text-right">
                         <input
                           type="text"
                           v-model="productEdit.category.type.val"

@@ -138,6 +138,7 @@
               <input
                 type="text"
                 id="codeNumber"
+                placeholder="รหัสส่วนลด "
                 v-model="codeNumber"
               >
             </div>
@@ -146,8 +147,8 @@
             </div>
             <hr>
             <div class="detail">
-              Our Phoenix Collection of Contemporary Door Styles now includes Strata, a very durable textured surface that provides a look and feel that is unmatched.
-              <hr>
+              <!-- Our Phoenix Collection of Contemporary Door Styles now includes Strata, a very durable textured surface that provides a look and feel that is unmatched. -->
+              <!-- <hr> -->
             </div>
             <div
               class="button"

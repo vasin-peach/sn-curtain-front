@@ -8,7 +8,6 @@
       id=""
       mode="out-in"
     >
-      {{ loadingHeight }}
       <div
         v-if="loadingState"
         :style="{height: loadingHeight + 'px'}"
@@ -679,10 +678,11 @@ export default {
   mounted() {
     this.callProductAll();
     this.$nextTick(() => {
-      setTimeout(
-        () => (this.loadingHeight = this.$refs.admin_container.clientHeight),
-        2000
-      );
+      setTimeout(() => {
+        if (this.$refs.admin_container) {
+          this.loadingHeight = this.$refs.admin_container.clientHeight;
+        }
+      }, 2000);
     });
   },
   components: { Loading, VueBootstrapTypeahead }

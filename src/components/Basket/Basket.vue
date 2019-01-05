@@ -180,7 +180,8 @@ export default {
       sumDiscount: 0,
       codeNumber: null,
       buyOption: {},
-      weight: 0
+      weight: 0,
+      discountDelivery: false
     };
   },
 
@@ -231,6 +232,12 @@ export default {
 
         // animate
         this.basketAnimate();
+      },
+      deep: true
+    },
+    deliveryPriceData: {
+      handler: function(data) {
+        if (this.discountDelivery) this.sumDiscount = this.deliveryPriceData;
       },
       deep: true
     }
@@ -364,10 +371,13 @@ export default {
           var discount = response.data.discount;
           if (discount.percent) {
             this.sumDiscount = Math.floor(
-              (this.sumPrice * discount.percent) / 100
+              (this.sumDiscount = 0(this.sumPrice * discount.percent) / 100)
             );
           } else if (discount.amount) {
             this.sumDiscount = Math.floor(discount.amount);
+          } else if (discount.delivery) {
+            this.sumDiscount = this.deliveryPriceData;
+            this.discountDelivery = true;
           }
 
           // sum all
@@ -376,6 +386,7 @@ export default {
         .catch(err => {
           $("#codeNumber").removeClass("color-green1 border-green1");
           $("#codeNumber").addClass("color-red3 border-red3");
+          this.discountDelivery = false;
           this.updateSumAll();
         });
     },

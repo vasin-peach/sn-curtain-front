@@ -384,13 +384,7 @@ export default {
             val: null
           }
         ],
-        price: [
-          {
-            text: null,
-            value: null,
-            weight: null
-          }
-        ],
+        price: [],
         view: 0
       };
     },
@@ -610,7 +604,18 @@ export default {
     },
 
     triggerUpdateProduct(id) {
-      console.log("hi");
+      if (isEmpty(this.productEdit.price))
+        return this.$swal({
+          type: "warning",
+          title: "ตัวเลือกราคาว่างปล่าว",
+          text: "กรุณาเพิ่มเติมเลือกราคา อย่างน้อยหนึ่งตัวเลือก."
+        });
+      if (isEmpty(this.productEdit.assets))
+        return this.$swal({
+          type: "warning",
+          title: "รูปภาพว่างปล่าว",
+          text: "กรุณาเพิ่มภาพ อย่างน้อยหนึ่งภาพ."
+        });
       const original = this.productAllData.filter(x => x._id == id)[0];
       const update = this.productEdit;
 
@@ -623,6 +628,7 @@ export default {
         this.productAllData[index] = resp;
         this.productShow[index] = resp;
         this.updateStateProductAll({ data: resp, index: index });
+        this.triggerChecked(resp._id);
       });
     }
   },

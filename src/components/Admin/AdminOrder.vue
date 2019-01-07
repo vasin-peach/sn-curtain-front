@@ -28,7 +28,7 @@
                 v-if="!orderEvidenceData[0]"
                 class="data-empty"
               >
-                ว่างปล่าว
+                ไม่มีรายการ
               </div>
               <div
                 v-else
@@ -78,7 +78,7 @@
                 v-if="!orderConfirmData[0]"
                 class="data-empty"
               >
-                ว่างปล่าว
+                ไม่มีรายการ
               </div>
               <div
                 v-else
@@ -135,7 +135,7 @@
                 v-if="!orderSuccessData[0]"
                 class="data-empty"
               >
-                ว่างปล่าว
+                ไม่มีรายการ
               </div>
               <div
                 v-else

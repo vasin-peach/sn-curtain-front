@@ -87,14 +87,118 @@
           <div class="card-box">
             <form
               class="discount-detail-form"
-              @submit.prevent="triggerUpdateDiscount(discountCheckedData)"
+              @submit.prevent="triggerDiscountUpdate(discountCheckedData)"
             >
               <div class="discount-detail">
                 <div class="row m-0">
-                  {{discountCheckedData}}
+                  <div class="col-12">
+                    <div>
+                      <div class="name row m-0 d-flex justify-content-center align-items-center">
+                        <div class="col-3">
+                          ชื่อส่วนลด:
+                        </div>
+                        <div class="col">
+                          <input
+                            type="text"
+                            v-model="discountCheckedData.name"
+                            name="name"
+                            id="name"
+                            placeholder="ชื่อส่วนลด"
+                            required
+                          >
+                        </div>
+                      </div>
+                      <div class="mb-3 name row m-0 d-flex justify-content-center align-items-center">
+                        <div class="col-3">
+                          โค้ดส่วนลด
+                        </div>
+                        <div class="col">
+                          <input
+                            class="mt-0"
+                            type="text"
+                            v-model="discountCheckedData.code"
+                            placeholder="โค้ดส่วนลด"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="desc row m-0 d-flex">
+                        <div class="col-3">
+                          คำอธิบาย:
+                        </div>
+                        <div class="col">
+                          <textarea
+                            type="text"
+                            v-model="discountCheckedData.desc"
+                            name="desc"
+                            id="desc"
+                            placeholder="คำอธิบายส่วนลด"
+                            required
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div class="row m-0 d-flex justify-content-center align-items-center">
+                        <div class='col-3'>
+                          ประเภท:
+                        </div>
+                        <div class="col">
+                          <b-form-select
+                            v-model="select.selected"
+                            :options="select.options"
+                          ></b-form-select>
+                          <b-form-input
+                            type="number"
+                            v-if="select.selected == 'percent'"
+                            v-model="discountCheckedData.discount.percent"
+                            placeholder="จำนวนเปอร์เซ็นที่ลด เช่น 20 (คือลด 20%)"
+                            min="1"
+                            max="100"
+                            required
+                          />
+                          <b-form-input
+                            type="number"
+                            v-if="select.selected == 'amount'"
+                            v-model="discountCheckedData.discount.amount"
+                            placeholder="จำนวนราคาที่ลด เช่น 200 (คือลด 200 บาท)"
+                            min="1"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="row m-0 mt-2">
+                        <div class="col">
+                          <hr>
+                        </div>
+                      </div>
+                      <div class="row m-0 d-flex justify-content-center align-items-center">
+                        <div class='col-3'>
+                          เจ้าของโค้ด:
+                        </div>
+                        <div class="col">
+                          <input
+                            type="text"
+                            v-model="discountCheckedData.owner"
+                            placeholder="ไม่มีเจ้าของ"
+                          >
+                        </div>
+                      </div>
+                      <div class="row m-0">
+                        <div class="col">
+                          <hr class="mt-3 mb-4">
+                        </div>
+                      </div>
+                      <div class="row m-0">
+                        <div class="col">
+                          <button
+                            type="submit"
+                            class="button2 w-100"
+                          >อัพเดท</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-
             </form>
           </div>
         </div>
@@ -108,6 +212,7 @@ import Loading from "../Loading";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import isEmpty from "lodash.isempty";
 import $ from "jquery";
+import _ from "lodash";
 export default {
   // ! DATA
   data() {
@@ -117,7 +222,15 @@ export default {
       search: "",
       discountCheckedData: null,
       discountAllShowData: null,
-      discountPrevId: null
+      discountPrevId: null,
+      select: {
+        selected: null,
+        options: [
+          { value: "percent", text: "เปอร์เซ็น" },
+          { value: "amount", text: "จำนวนบาท" },
+          { value: "delivery", text: "ส่งฟรี" }
+        ]
+      }
     };
   },
 
@@ -133,8 +246,13 @@ export default {
 
     // * [TRIGGER] User Checked
     async triggerChecked(data) {
-      this.discountCheckedData = data;
+      this.discountCheckedData = _.cloneDeep(data, true);
       this.checkAnimate(this.discountPrevId, data._id);
+
+      // init discount type selected
+      if (data.discount.percent) this.select.selected = "percent";
+      else if (data.discount.amount) this.select.selected = "amount";
+      else this.select.selected = "delivery";
     },
 
     // * [TRIGGER] Get Discount data
@@ -144,21 +262,80 @@ export default {
       !isEmpty(discountData) ? (this.loadingState = false) : false;
 
       // init show discount
-      this.discountAllShowData = this.discountAllData || [];
+      this.discountAllShowData = _.cloneDeep(this.discountAllData || [], true);
+
       // init discountCheckedData by data index 0
-      this.discountCheckedData = this.discountAllData[0] || null;
+      this.discountCheckedData = _.cloneDeep(
+        this.discountAllData[0] || null,
+        true
+      );
       // init discountPrevId by data index 0
-      this.discountPrevId = this.discountAllData[0]._id || null;
+      this.discountPrevId = _.cloneDeep(
+        this.discountAllData[0]._id || null,
+        true
+      );
+
+      // init discount type selected
+      if (this.discountAllData[0].discount.percent)
+        this.select.selected = "percent";
+      else if (this.discountAllData[0].discount.amount)
+        this.select.selected = "amount";
+      else this.select.selected = "delivery";
     },
 
     // * [TRIGGER] Update Discount
-    async triggerDiscountUpdate() {},
+    async triggerDiscountUpdate(data) {
+      // send data to backend
+      if (!data || isEmpty(data)) return;
+      let updateResult = await this.discountUpdate(data);
+      updateResult = updateResult.data ? updateResult.data.data : false;
+
+      // update discountShow
+      let index = await this.discountAllShowData.findIndex(
+        x => x._id == updateResult._id
+      );
+
+      if (index < 0) return this.discountAllShowData.unshift(updateResult);
+
+      this.discountAllShowData[index] = updateResult;
+    },
 
     // * [TRIGGER] Delete Discount
-    async triggerDiscountDelete() {},
+    async triggerDiscountDelete(id) {
+      const confirm = await this.$swal({
+        type: "warning",
+        title: "ยืนยันการลบส่วนลด",
+        text: "คุณต้องการลบส่วนลดนี้หรือไม่?",
+        showCancelButton: true,
+        confirmButtonColor: "#D44638",
+        confirmButtonText: "ใช่, ลบ ",
+        cancelButtonText: "ไม่, ย้อนกลับ"
+      }).then(result => result.value);
+      if (!confirm) return;
+
+      let deleteResult = await this.discountDelete(id);
+      deleteResult = deleteResult.data.data;
+
+      let index = await this.discountAllShowData.findIndex(
+        x => x._id == deleteResult._id
+      );
+      this.discountAllShowData.splice(index, 1);
+    },
 
     // * [TRIGGER] Create Discount
-    async triggerDiscountCreate() {},
+    async triggerDiscountCreate() {
+      // init discouintChecked to empty
+      this.select.selected = "percent";
+      this.discountCheckedData = {
+        name: null,
+        code: null,
+        desc: null,
+        discount: {
+          percent: 0
+        },
+        owner: null
+      };
+    },
 
     // * [TRIGGER] Search
     async triggerSearch(word) {
@@ -177,13 +354,13 @@ export default {
       if (isEmpty(searchResult)) return (this.discountAllShowData = null);
 
       // update checked data to index 0
-      this.discountCheckedData = searchResult[0];
+      this.discountCheckedData = _.cloneDeep(searchResult[0], true);
 
       // re check animate
       this.checkAnimate(this.discountPrevId, searchResult[0]._id);
 
       // display discount data
-      return (this.discountAllShowData = searchResult);
+      return (this.discountAllShowData = _.cloneDeep(searchResult, true));
     },
 
     // * [ANIMATE] checked
@@ -210,6 +387,19 @@ export default {
       this.timeout = setTimeout(function() {
         _this.triggerSearch(word);
       }, 500);
+    },
+    "select.selected": function(type) {
+      if (type == "delivery") {
+        delete this.discountCheckedData.discount.percent;
+        delete this.discountCheckedData.discount.amount;
+        this.discountCheckedData.discount.delivery = true;
+      } else if (type == "percent") {
+        delete this.discountCheckedData.discount.delivery;
+        delete this.discountCheckedData.discount.amount;
+      } else {
+        delete this.discountCheckedData.discount.percent;
+        delete this.discountCheckedData.discount.delivery;
+      }
     }
   },
 

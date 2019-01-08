@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import isEmpty from 'lodash.isempty';
+import swal from 'sweetalert2';
 
 // !
 // ! ─── STATE ──────────────────────────────────────────────────────────────────────
@@ -105,7 +106,85 @@ const actions = {
       // return function
       return err;
     }
-  } //// end `discountAllGet` block
+  }, //// end `discountAllGet` block
+
+  async discountUpdate({
+    commit
+  }, data) {
+
+    /**
+     * @param {MUTATIONS} commit - function from mutations
+     * @param {OBJECT} data - object to update
+     */
+
+    try {
+
+      // * Call
+      const callResult = await Vue.http.post(`${process.env.BACKEND_URI}/discount/update`, data);
+      swal({
+        type: 'success',
+        title: 'อัพเดทเสร็จสิ้น',
+        text: 'ทำการอัพเดทส่วนลด ' + callResult.body.data.name + ' เสร็จสิ้น.'
+      });
+
+      return callResult;
+
+    } catch (err) {
+
+      // * Alert
+      if (err.body.err == 'code is exist') return swal({
+        type: 'error',
+        title: 'โค้ดส่วนลดนี้ถูกใช้ไปแล้ว',
+        text: 'โค้ดส่วนลดจำเป็นต้องไม่ซ้ำกับ โค้ดส่วนลดอื่นๆที่เคยสร้างไว้'
+      });
+
+      swal({
+        type: 'error',
+        title: 'เกิดข้อผิดพลาดในการอัพเดทส่วนลด',
+        text: err.body.err
+      });
+
+      // return function
+      return err;
+    }
+  }, //// end `discountUpdate` block
+
+  async discountDelete({
+    commit
+  }, id) {
+
+    /**
+     * @param {MUTATIONS} commit - function from mutations
+     * @param {STRING} id - discount id to delete
+     */
+
+    try {
+
+      // * Call
+      const callResult = await Vue.http.post(`${process.env.BACKEND_URI}/discount/delete`, {
+        id: id
+      });
+      swal({
+        type: 'success',
+        title: 'ลบส่วนลดเสร็จสิ้น',
+        text: 'ทำการลบส่วนลด ' + callResult.body.data.name + ' เสร็จสิ้น.'
+      });
+
+      return callResult;
+
+    } catch (err) {
+
+      // * Alert
+      swal({
+        type: 'error',
+        title: 'เกิดข้อผิดพลาดในการอัพเดทส่วนลด',
+        text: err.body.err
+      });
+
+      // return function
+      return err;
+    }
+  }, //// end `discountUpdate` block
 } //// end `actions` block
 
 export default {

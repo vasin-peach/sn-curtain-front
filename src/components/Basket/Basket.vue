@@ -364,7 +364,6 @@ export default {
         .then(response => {
           $("#codeNumber").removeClass("color-red3 border-red3");
           $("#codeNumber").addClass("color-green1 border-green1");
-
           // update paymentPayload discount code
           this.discountCodeUpdate(code);
 
@@ -372,7 +371,7 @@ export default {
           var discount = response.data.discount;
           if (discount.percent) {
             this.sumDiscount = Math.floor(
-              (this.sumDiscount = 0(this.sumPrice * discount.percent) / 100)
+              (this.sumDiscount = (this.sumPrice * discount.percent) / 100)
             );
           } else if (discount.amount) {
             this.sumDiscount = Math.floor(discount.amount);

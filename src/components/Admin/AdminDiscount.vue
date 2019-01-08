@@ -18,7 +18,7 @@
         key="admin-discount"
         v-else
       >
-        <div class="admin-discount-left card-container col-6 col-md col-xl-4">
+        <div class="admin-discount-left card-container col col-md col-xl-4">
           <div class="card-box">
             <div class="discount-search bar-search row m-0">
               <div class="input-group col pl-0">
@@ -83,7 +83,7 @@
             </div>
           </div>
         </div>
-        <div class="admin-discount-right card-container col-6 col-md-8">
+        <div class="admin-discount-right card-container col col-md-8">
           <div class="card-box">
             <form
               class="discount-detail-form"

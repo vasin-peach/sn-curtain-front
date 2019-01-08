@@ -75,7 +75,7 @@
                     <div>
                       <div>{{items.name}}</div>
                       <div>ประเภท: {{items.discount.delivery ? 'ฟรีค่าส่ง' : items.discount.percent ? 'ลดเป็นเปอร์เซ็น' : items.discount.amount ? 'ลดเป็นจำนวนเงิน' : ''}}</div>
-                      <div>จำนวน: {{ items.infinity ? 'ไม่จำกัด' : items.quantity }}</div>
+                      <!-- <div>จำนวน: {{ items.infinity ? 'ไม่จำกัด' : items.quantity }}</div> -->
                     </div>
                   </div>
                 </div>

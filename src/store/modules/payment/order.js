@@ -120,9 +120,43 @@ const actions = {
         }
       );
     })
+  }, // // delete order block end
 
 
-  }
+  // ? Update Order
+  updateOrder({
+    getters
+  }, data) {
+
+    /**
+     * @param {OBJECT} data - {
+     *  @param {STRING} query - target to update
+     *  @param {OBJECT} data - data to update
+     * }
+     */
+
+    return new Promise(async (resolve, reject) => {
+
+      // validate
+      if (!data || !data.query || !data.data) return reject(false);
+
+      // call backend
+      Vue.http.post(`${process.env.BACKEND_URI}/order/update`, data).then(
+
+        response => { // response success
+          return resolve(response);
+        },
+
+        (error) => { // response error
+          return reject(error);
+        }
+      );
+
+    });
+
+  }, // // create order block end
+
+
 
 
 

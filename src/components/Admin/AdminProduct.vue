@@ -8,7 +8,6 @@
       id=""
       mode="out-in"
     >
-      {{ loadingHeight }}
       <div
         v-if="loadingState"
         :style="{height: loadingHeight + 'px'}"
@@ -111,6 +110,8 @@
                           v-model="productEdit.name"
                           name="name"
                           id="name"
+                          placeholder="ชื่อสินค้า"
+                          required
                         >
                       </div>
                       <div class="desc">
@@ -119,6 +120,8 @@
                           v-model="productEdit.desc[0].val"
                           name="desc"
                           id="desc"
+                          placeholder="คำอธิบายสินค้า"
+                          required
                         >
                       </textarea>
                       </div>
@@ -149,6 +152,7 @@
                                 :name="`price_name_${count}`"
                                 id="price_name"
                                 required
+                                placeholder="ชื่อตัวเลือก"
                               >
                               <div
                                 class="remove"
@@ -167,11 +171,13 @@
                                 :name="`price_value_${count}`"
                                 id="price_value"
                                 required
+                                placeholder="ราคาตัวเลือก"
                               > (<input
                                 type="text"
                                 v-model="items.weight"
                                 :name="`price_weight_${count}`"
                                 id="price_weight"
+                                placeholder="น้ำหนักตัวเลือก หน่วยกรัม"
                                 required
                               >ก.)
                             </div>
@@ -185,6 +191,7 @@
                           v-model="productEdit.quantity"
                           name="quantity"
                           id="quantity"
+                          placeholder="จำนวนสินค้า"
                           required
                         >
                       </div>
@@ -200,11 +207,13 @@
                       <div class="col">
                         ประเภท
                       </div>
-                      <div class="col">
+                      <div class="col text-right">
                         <input
                           type="text"
                           v-model="productEdit.category.val"
                           class="p-0 text-right"
+                          placeholder="ประเภทสินค้า"
+                          required
                         />
                       </div>
                     </div>
@@ -212,11 +221,13 @@
                       <div class="col">
                         ชนิด
                       </div>
-                      <div class="col">
+                      <div class="col text-right">
                         <input
                           type="text"
                           v-model="productEdit.category.type.val"
                           class="p-0 text-right"
+                          placeholder="ชนิดสินค้า"
+                          required
                         />
                       </div>
                     </div>
@@ -294,10 +305,12 @@
                     <hr class="mt-3 mb-2">
                   </div>
                   <div class="col-12">
-                    <div
-                      class="button2"
-                      @click="triggerUpdateProduct(productEdit._id)"
-                    >อัพเดท</div>
+                    <button
+                      type="submit"
+                      class="button2 w-100"
+                    >
+                      อัพเดท
+                    </button>
                   </div>
                 </div>
               </div>
@@ -351,7 +364,28 @@ export default {
 
     // * Trigger Add Product
     triggerAddProduct() {
-      console.log("add product call");
+      this.productEdit = {
+        assets: [],
+        brand: {
+          src: "/static/images/lazy/lazyload.svg"
+        },
+        category: {
+          val: null,
+          type: {
+            val: null,
+            nature: []
+          }
+        },
+        date: Date.now(),
+        desc: [
+          {
+            lang: "th",
+            val: null
+          }
+        ],
+        price: [],
+        view: 0
+      };
     },
 
     // * Trigger Delete Product
@@ -569,6 +603,18 @@ export default {
     },
 
     triggerUpdateProduct(id) {
+      if (isEmpty(this.productEdit.price))
+        return this.$swal({
+          type: "warning",
+          title: "ตัวเลือกราคาว่างปล่าว",
+          text: "กรุณาเพิ่มเติมเลือกราคา อย่างน้อยหนึ่งตัวเลือก."
+        });
+      if (isEmpty(this.productEdit.assets))
+        return this.$swal({
+          type: "warning",
+          title: "รูปภาพว่างปล่าว",
+          text: "กรุณาเพิ่มภาพ อย่างน้อยหนึ่งภาพ."
+        });
       const original = this.productAllData.filter(x => x._id == id)[0];
       const update = this.productEdit;
 
@@ -581,6 +627,7 @@ export default {
         this.productAllData[index] = resp;
         this.productShow[index] = resp;
         this.updateStateProductAll({ data: resp, index: index });
+        this.triggerChecked(resp._id);
       });
     }
   },
@@ -631,10 +678,11 @@ export default {
   mounted() {
     this.callProductAll();
     this.$nextTick(() => {
-      setTimeout(
-        () => (this.loadingHeight = this.$refs.admin_container.clientHeight),
-        2000
-      );
+      setTimeout(() => {
+        if (this.$refs.admin_container) {
+          this.loadingHeight = this.$refs.admin_container.clientHeight;
+        }
+      }, 2000);
     });
   },
   components: { Loading, VueBootstrapTypeahead }

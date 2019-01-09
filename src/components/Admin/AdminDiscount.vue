@@ -261,26 +261,33 @@ export default {
       const discountData = await this.discountAllGet();
       !isEmpty(discountData) ? (this.loadingState = false) : false;
 
-      // init show discount
-      this.discountAllShowData = _.cloneDeep(this.discountAllData || [], true);
+      if (this.discountAllData) {
+        // init show discount
+        this.discountAllShowData = _.cloneDeep(
+          this.discountAllData || [],
+          true
+        );
 
-      // init discountCheckedData by data index 0
-      this.discountCheckedData = _.cloneDeep(
-        this.discountAllData[0] || null,
-        true
-      );
-      // init discountPrevId by data index 0
-      this.discountPrevId = _.cloneDeep(
-        this.discountAllData[0]._id || null,
-        true
-      );
+        // init discountCheckedData by data index 0
+        this.discountCheckedData = _.cloneDeep(
+          this.discountAllData[0] || null,
+          true
+        );
+        // init discountPrevId by data index 0
+        this.discountPrevId = _.cloneDeep(
+          this.discountAllData[0]._id || null,
+          true
+        );
 
-      // init discount type selected
-      if (this.discountAllData[0].discount.percent)
-        this.select.selected = "percent";
-      else if (this.discountAllData[0].discount.amount)
-        this.select.selected = "amount";
-      else this.select.selected = "delivery";
+        // init discount type selected
+        if (this.discountAllData[0].discount.percent)
+          this.select.selected = "percent";
+        else if (this.discountAllData[0].discount.amount)
+          this.select.selected = "amount";
+        else this.select.selected = "delivery";
+      } else {
+        this.triggerDiscountCreate();
+      }
     },
 
     // * [TRIGGER] Update Discount
@@ -290,14 +297,19 @@ export default {
       let updateResult = await this.discountUpdate(data);
       updateResult = updateResult.data ? updateResult.data.data : false;
 
-      // update discountShow
-      let index = await this.discountAllShowData.findIndex(
-        x => x._id == updateResult._id
-      );
+      if (this.discountAllShowData) {
+        // update discountShow
+        let index = await this.discountAllShowData.findIndex(
+          x => x._id == updateResult._id
+        );
 
-      if (index < 0) return this.discountAllShowData.unshift(updateResult);
+        if (index < 0) return this.discountAllShowData.unshift(updateResult);
 
-      this.discountAllShowData[index] = updateResult;
+        this.discountAllShowData[index] = updateResult;
+      } else {
+        this.discountAllShowData = [];
+        this.discountAllShowData[0] = updateResult;
+      }
     },
 
     // * [TRIGGER] Delete Discount
@@ -319,7 +331,9 @@ export default {
       let index = await this.discountAllShowData.findIndex(
         x => x._id == deleteResult._id
       );
-      this.discountAllShowData.splice(index, 1);
+
+      if (this.discountAllData) this.discountAllShowData.splice(index, 1);
+      else this.discountAllShowData = null;
     },
 
     // * [TRIGGER] Create Discount

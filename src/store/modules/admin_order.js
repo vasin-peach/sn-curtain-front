@@ -14,6 +14,8 @@ const state = {
   orderConfirm: null,
   // ออเดอร์ที่ดำเนินการเสร็จแล้ว
   orderSuccess: null,
+  // ออเดอร์ที่ถูกยกเลิก,
+  orderCancel: null
 }
 
 // !
@@ -24,7 +26,8 @@ const getters = {
   orderAllData: state => state.orderAll,
   orderEvidenceData: state => state.orderEvidence,
   orderConfirmData: state => state.orderConfirm,
-  orderSuccessData: state => state.orderSuccess
+  orderSuccessData: state => state.orderSuccess,
+  orderCancelData: state => state.orderCancel
 }
 
 // !
@@ -98,6 +101,12 @@ const actions = {
         data: originalResult.filter(x => x.order_status == 'success'),
         target: 'orderSuccess'
       });
+
+      // update state orderCancel
+      commit("updateState", {
+        data: originalResult.filter(x => x.order_status == 'cancel'),
+        target: 'orderCancel'
+      })
 
       // return
       return resolve(callResult.data.data);

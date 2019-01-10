@@ -7,6 +7,7 @@ import _ from 'lodash';
 const state = {
   basket: [],
   discount: 0,
+  taxPrice: 0,
   // transport: 0,
   paymentPayload: {
     basket: [],
@@ -26,6 +27,9 @@ const getters = {
   discountData: state => {
     return state.discount
   },
+  taxPriceData: state => {
+    return state.taxPrice
+  }
   // transportData: state => {
   //   return state.transport
   // }

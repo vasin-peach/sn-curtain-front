@@ -74,7 +74,7 @@ const ProfileHistory = () =>
 // Admin
 const Admin = () => import('@component/Admin/Admin');
 const AdminDashboard = () => import('@component/Admin/AdminDashboard');
-const AdminSlide = () => import('@component/Admin/AdminSlide');
+const AdminSlide = () => import('@component/Admin/Slide/Main');
 const AdminProduct = () => import('@component/Admin/AdminProduct');
 const AdminOrder = () => import('@component/Admin/AdminOrder');
 const AdminDiscount = () => import('@component/Admin/AdminDiscount');

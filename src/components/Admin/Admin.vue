@@ -67,6 +67,7 @@
           <router-link
             :to="{name: 'AdminDashboard'}"
             class="menu-list row m-0"
+            id="dashboard"
           >
             <div class="col-12 col-sm-3">
               <font-awesome-icon
@@ -81,6 +82,7 @@
           <router-link
             :to="{name: 'AdminSlide'}"
             class="menu-list row m-0"
+            id="slide"
           >
             <div class="col-12 col-sm-3">
               <font-awesome-icon
@@ -99,6 +101,7 @@
           <router-link
             :to="{name: 'AdminProduct'}"
             class="menu-list row m-0"
+            id="product"
           >
             <div class="col-12 col-sm-3">
               <font-awesome-icon
@@ -113,6 +116,7 @@
           <router-link
             :to="{name: 'AdminOrder'}"
             class="menu-list row m-0"
+            id="order"
           >
             <div class="col-12 col-sm-3">
               <font-awesome-icon
@@ -127,6 +131,7 @@
           <router-link
             :to="{name: 'AdminDiscount'}"
             class="menu-list row m-0"
+            id="discount"
           >
             <div class="col-12 col-sm-3">
               <font-awesome-icon
@@ -141,6 +146,7 @@
           <router-link
             :to="{name: 'AdminBank'}"
             class="menu-list row m-0"
+            id="bank"
           >
             <div class="col-12 col-sm-3">
               <font-awesome-icon
@@ -163,14 +169,28 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import $ from "jquery";
 export default {
   name: "admin",
+  data() {
+    return {
+      currentPage: "dashboard"
+    };
+  },
   mounted() {
     this.getMemberShip();
     this.getSaleDay();
     this.getSaleWeek();
     this.getSaleMonth();
     this.getSaleYear();
+  },
+  watch: {
+    // $route(to, from) {
+    //   let next = to.path.split("/")[to.path.split("/").length - 1];
+    //   let prev = from.path.split("/")[to.path.split("/").length - 1];
+    //   $(`#${prev}`).removeClass("active");
+    //   $(`#${next}`).addClass("active");
+    // }
   },
   methods: {
     // * Actions

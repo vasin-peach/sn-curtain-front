@@ -27,6 +27,16 @@
     @include small {
       border-radius: 0px;
     }
+
+    .add {
+      cursor: pointer;
+      color: $orange1;
+      transition: opacity 0.3s ease-out;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
   }
 }
 

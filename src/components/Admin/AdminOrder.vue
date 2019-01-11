@@ -308,6 +308,20 @@ export default {
           `<div class="col-12">ส่วนลด: <b>${
             data.pricing.discount_price
           } บาท</b></div>` +
+          `<div class="col-12">ภาษี: <b>${Math.round(
+            ((data.pricing.product_price +
+              data.pricing.delivery_price -
+              data.pricing.discount_price) *
+              3.65) /
+              100 +
+              ((((data.pricing.product_price +
+                data.pricing.delivery_price -
+                data.pricing.discount_price) *
+                3.65) /
+                100) *
+                7) /
+                100
+          )} บาท</b></div>` +
           `<div class="col-12">ราคารวม: <b>${String(
             data.pricing.summary_price
           ).slice(0, -2)} บาท</b></div>` +
@@ -385,6 +399,20 @@ export default {
           `<div class="col-12">ส่วนลด: <b>${
             data.pricing.discount_price
           } บาท</b></div>` +
+          `<div class="col-12">ภาษี: <b>${Math.round(
+            ((data.pricing.product_price +
+              data.pricing.delivery_price -
+              data.pricing.discount_price) *
+              3.65) /
+              100 +
+              ((((data.pricing.product_price +
+                data.pricing.delivery_price -
+                data.pricing.discount_price) *
+                3.65) /
+                100) *
+                7) /
+                100
+          )} บาท</b></div>` +
           `<div class="col-12">ราคารวม: <b>${String(
             data.pricing.summary_price
           ).slice(0, -2)} บาท</b></div>` +
@@ -456,6 +484,20 @@ export default {
           `<div class="col-12">ส่วนลด: <b>${
             data.pricing.discount_price
           } บาท</b></div>` +
+          `<div class="col-12">ภาษี: <b>${Math.round(
+            ((data.pricing.product_price +
+              data.pricing.delivery_price -
+              data.pricing.discount_price) *
+              3.65) /
+              100 +
+              ((((data.pricing.product_price +
+                data.pricing.delivery_price -
+                data.pricing.discount_price) *
+                3.65) /
+                100) *
+                7) /
+                100
+          )} บาท</b></div>` +
           `<div class="col-12">ราคารวม: <b>${String(
             data.pricing.summary_price
           ).slice(0, -2)} บาท</b></div>` +

@@ -12,6 +12,7 @@ import router from './router';
 import store from './store/main';
 import VueLazyLoad from 'vue-lazyload';
 import VueCookie from 'vue-cookie';
+import Chat from 'vue-beautiful-chat'
 
 // import Assets
 import '@scss/app.scss';
@@ -39,7 +40,8 @@ import {
   faChalkboard,
   faFileInvoice,
   faPlus,
-  faBan
+  faBan,
+  faComments
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faFacebookSquare,
@@ -57,6 +59,7 @@ Vue.use(VueResource);
 Vue.use(VeeValidate);
 Vue.use(VueSweetalert2);
 Vue.use(VueCookie);
+Vue.use(Chat)
 Vue.use(VueLazyLoad, {
   preLoad: 1.3,
   loading: '../static/images/lazy/lazyload.svg',
@@ -84,7 +87,8 @@ library.add(
   faBarcode,
   faFileInvoice,
   faPlus,
-  faBan
+  faBan,
+  faComments
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

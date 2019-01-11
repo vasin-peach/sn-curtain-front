@@ -18,9 +18,11 @@ const orderMessageFunc = {
         case 'evidence':
           return 'รอยืนยันหลักฐานการโอน'
         case 'confirm':
-          return 'รอยืนยันรายการ เพื่อดำเนินการ'
+          return 'กำลังดำเนินการ'
         case 'success':
-          return 'รายการสำเร็จ'
+          return 'รายการเสร็จสิ้น'
+        case 'cancel':
+          return 'รายการถูกยกเลิก'
       }
     }
   }

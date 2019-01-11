@@ -18,7 +18,7 @@
         key="admin-order"
         v-else
       >
-        <div class="admin-order-left card-contianer col-12 col-md col-xl-4">
+        <div class="admin-order-left card-contianer col-12 col-md-6 col-xl">
           <div class="card-box">
             <div class="card-title">
               รอการยืนยันหลักฐาน
@@ -46,6 +46,16 @@
                   />
                 </div>
                 <div
+                  class="order-list-cancel"
+                  @click="triggerCancelEvidance(items._id)"
+                >
+                  <font-awesome-icon
+                    icon="ban"
+                    aria-hidden="true"
+                  />
+                </div>
+
+                <div
                   class="col-6 col-sm-4 col-md-4 pl-0"
                   @click="triggerCheckedEvidence(items)"
                 >
@@ -68,7 +78,7 @@
             </div>
           </div>
         </div>
-        <div class="admin-order-left card-contianer col-12 col-md col-xl-4">
+        <div class="admin-order-left card-contianer col-12 col-md-6 col-xl">
           <div class="card-box">
             <div class="card-title">
               รอการยืนยันการทำรายการ
@@ -92,6 +102,15 @@
                 >
                   <font-awesome-icon
                     icon="times"
+                    aria-hidden="true"
+                  />
+                </div>
+                <div
+                  class="order-list-cancel"
+                  @click="triggerCancelConfirm(items._id)"
+                >
+                  <font-awesome-icon
+                    icon="ban"
                     aria-hidden="true"
                   />
                 </div>
@@ -125,7 +144,7 @@
             </div>
           </div>
         </div>
-        <div class="admin-order-left card-contianer col-12 col-md col-xl-4">
+        <div class="admin-order-left card-contianer col-12 col-md-6 col-xl">
           <div class="card-box">
             <div class="card-title">
               รายการที่สำเร็จ
@@ -182,6 +201,55 @@
             </div>
           </div>
         </div>
+        <div class="admin-order-left card-contianer col-12 col-md-6 col-xl">
+          <div class="card-box">
+            <div class="card-title">
+              รายการที่ถูกยกเลิก
+            </div>
+            <div class="order-list-container">
+              <div
+                v-if="!orderCancelData || !orderCancelData[0]"
+                class="data-empty"
+              >
+                ไม่มีรายการ
+              </div>
+              <div
+                v-else
+                class="order-list row m-0"
+                v-for="(items) in orderCancelData"
+                :key="items._id"
+              >
+
+                <div
+                  class="col-6 col-sm-4 col-md-4 pl-0"
+                  @click="triggerCheckedSuccess(items)"
+                >
+                  <img
+                    v-if="items.order_image"
+                    v-lazy="items.order_image"
+                    class="border-2"
+                    :alt="items.order_desccription"
+                  >
+                  <img
+                    v-else
+                    src="../../assets/images/credit/visa.png"
+                    class="border-2"
+                    :alt="items.order_description"
+                  >
+                </div>
+                <div
+                  class="content col col-md"
+                  @click="triggerCheckedSuccess(items)"
+                >
+                  <div>
+                    <div>รายการที่: {{ items._id }}</div>
+                    <div>฿{{ String(items.pricing.summary_price).slice(0, -2) }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </transition>
   </div>
@@ -204,7 +272,7 @@ export default {
 
   // ! METHODS
   methods: {
-    ...mapActions(["orderAllGet", "updateOrder", "deleteOrder"]),
+    ...mapActions(["orderAllGet", "updateOrder", "deleteOrder", "cancelOrder"]),
 
     // * [Actions] trigger call `orderAllGet`
     async triggerOrderAllGet() {
@@ -240,6 +308,20 @@ export default {
           `<div class="col-12">ส่วนลด: <b>${
             data.pricing.discount_price
           } บาท</b></div>` +
+          `<div class="col-12">ภาษี: <b>${Math.round(
+            ((data.pricing.product_price +
+              data.pricing.delivery_price -
+              data.pricing.discount_price) *
+              3.65) /
+              100 +
+              ((((data.pricing.product_price +
+                data.pricing.delivery_price -
+                data.pricing.discount_price) *
+                3.65) /
+                100) *
+                7) /
+                100
+          )} บาท</b></div>` +
           `<div class="col-12">ราคารวม: <b>${String(
             data.pricing.summary_price
           ).slice(0, -2)} บาท</b></div>` +
@@ -317,6 +399,20 @@ export default {
           `<div class="col-12">ส่วนลด: <b>${
             data.pricing.discount_price
           } บาท</b></div>` +
+          `<div class="col-12">ภาษี: <b>${Math.round(
+            ((data.pricing.product_price +
+              data.pricing.delivery_price -
+              data.pricing.discount_price) *
+              3.65) /
+              100 +
+              ((((data.pricing.product_price +
+                data.pricing.delivery_price -
+                data.pricing.discount_price) *
+                3.65) /
+                100) *
+                7) /
+                100
+          )} บาท</b></div>` +
           `<div class="col-12">ราคารวม: <b>${String(
             data.pricing.summary_price
           ).slice(0, -2)} บาท</b></div>` +
@@ -388,6 +484,20 @@ export default {
           `<div class="col-12">ส่วนลด: <b>${
             data.pricing.discount_price
           } บาท</b></div>` +
+          `<div class="col-12">ภาษี: <b>${Math.round(
+            ((data.pricing.product_price +
+              data.pricing.delivery_price -
+              data.pricing.discount_price) *
+              3.65) /
+              100 +
+              ((((data.pricing.product_price +
+                data.pricing.delivery_price -
+                data.pricing.discount_price) *
+                3.65) /
+                100) *
+                7) /
+                100
+          )} บาท</b></div>` +
           `<div class="col-12">ราคารวม: <b>${String(
             data.pricing.summary_price
           ).slice(0, -2)} บาท</b></div>` +
@@ -413,31 +523,7 @@ export default {
             )
             .join("<br>")}</div>` +
           `</div>`
-      }).then(result => result.value);
-
-      // user cancel, do nothing
-      if (!confirm) return;
-
-      // // update order
-      // const callResult = await this.updateOrder({
-      //   query: { _id: data._id },
-      //   data: { order_status: "success" }
-      // }).then(resp => resp, err => err);
-
-      // if (callResult.status != 200) {
-      //   return this.$swal({
-      //     type: "error",
-      //     title: "เกิดข้อผิดพลาดในการยืนยันรายการ",
-      //     text: callResult.err
-      //   });
-      // }
-
-      // // remove old order in evidence
-      // const index = await this.orderConfirmData.findIndex(
-      //   x => x._id == data._id
-      // );
-      // this.orderConfirmData.splice(index, 1);
-      // this.orderSuccessData.unshift(data);
+      });
     },
 
     // * [Popup] trigger delete evidence
@@ -474,6 +560,41 @@ export default {
       this.orderEvidanceData.splice(index, 1);
     },
 
+    async triggerCancelEvidance(id) {
+      // get user confirm
+      const confirm = await this.$swal({
+        title: "ยกเลิกรายการ",
+        text: "คุณต้องการยกเลิกรายการนี้หรือไม่?",
+        showCancelButton: true,
+        confirmButtonColor: "#ee9b5c",
+        cancelButtonText: "ไม่, ย้อนกลับ",
+        confirmButtonText: "ใช่, ยืนยัน"
+      }).then(result => result.value);
+
+      // user cancel, do nothing
+      if (!confirm) return;
+
+      // update order
+      const callResult = await this.cancelOrder(id).then(
+        resp => resp,
+        err => err
+      );
+
+      if (callResult.status != 200) {
+        return this.$swal({
+          type: "error",
+          title: "เกิดข้อผิดพลาดในการยกเลิกรายการ",
+          text: callResult.err
+        });
+      }
+      // remove old order in evidence
+      const index = await this.orderEvidenceData.findIndex(x => x._id == id);
+      this.orderEvidenceData.splice(index, 1);
+
+      // unshift to cancel order
+      this.orderCancelData.unshift(callResult.data.data);
+    },
+
     // * [Popup] trigger delete confirm
     async triggerDeleteConfirm(id) {
       // get user confirm
@@ -508,6 +629,42 @@ export default {
       this.orderConfirmData.splice(index, 1);
     },
 
+    // * [Popup] trigger cancel confirm
+    async triggerCancelConfirm(id) {
+      // get user confirm
+      const confirm = await this.$swal({
+        title: "ยกเลิกรายการ",
+        text: "คุณต้องการยกเลิกรายการนี้หรือไม่?",
+        showCancelButton: true,
+        confirmButtonColor: "#ee9b5c",
+        cancelButtonText: "ไม่, ย้อนกลับ",
+        confirmButtonText: "ใช่, ยืนยัน"
+      }).then(result => result.value);
+
+      // user cancel, do nothing
+      if (!confirm) return;
+
+      // update order
+      const callResult = await this.cancelOrder(id).then(
+        resp => resp,
+        err => err
+      );
+
+      if (callResult.status != 200) {
+        return this.$swal({
+          type: "error",
+          title: "เกิดข้อผิดพลาดในการยกเลิกรายการ",
+          text: callResult.err
+        });
+      }
+      // remove old order in ฉ
+      const index = await this.orderฉData.findIndex(x => x._id == id);
+      this.orderฉData.splice(index, 1);
+
+      // unshift to cancel order
+      this.orderCancelData.unshift(callResult.data.data);
+    },
+
     // * [Popup] trigger delete Success
     async triggerDeleteSuccess(id) {
       // get user confirm
@@ -540,6 +697,40 @@ export default {
       // remove old order in success
       const index = await this.orderSuccessData.findIndex(x => x._id == id);
       this.orderSuccessData.splice(index, 1);
+    },
+
+    // * [Popup] trigger delete Cancel
+    async triggerDeleteCancel(id) {
+      // get user confirm
+      const confirm = await this.$swal({
+        title: "ลบรายการ",
+        text: "คุณต้องการลบรายการนี้ หรือไม่?",
+        showCancelButton: true,
+        confirmButtonColor: "#ee9b5c",
+        cancelButtonText: "ไม่, ย้อนกลับ",
+        confirmButtonText: "ใช่, ยืนยัน"
+      }).then(result => result.value);
+
+      // user cancel, do nothing
+      if (!confirm) return;
+
+      // update order
+      const callResult = await this.deleteOrder(id).then(
+        resp => resp,
+        err => err
+      );
+
+      if (callResult.status != 200) {
+        return this.$swal({
+          type: "error",
+          title: "เกิดข้อผิดพลาดในการลบรายการ",
+          text: callResult.err
+        });
+      }
+
+      // // remove old order in Cancel
+      // const index = await this.orderCancelData.findIndex(x => x._id == id);
+      // this.orderCancelData.splice(index, 1);
     }
   },
 
@@ -556,7 +747,8 @@ export default {
       "orderAllData",
       "orderEvidenceData",
       "orderConfirmData",
-      "orderSuccessData"
+      "orderSuccessData",
+      "orderCancelData"
     ])
   },
 

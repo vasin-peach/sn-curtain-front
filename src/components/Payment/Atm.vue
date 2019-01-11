@@ -1,18 +1,36 @@
 <template>
   <div class="payment_atm">
-    <transition name="fade" mode="out-in">
-      <div class="popup-container" v-show="popupUploadData">
-        <upload-component class="float" :destination="'atm'" :maxSize="2000" :type="['image/gif', 'image/jpeg', 'image/png']" :message="{success: {type: 'success', title: 'อัพโหลดหลักฐานการโอนเสร็จสิ้น', text: 'ทางทีมงานจะทำการตรวจสอบหลักฐานการโอนและดำเนินการภายใน 24 ชม.'}}"></upload-component>
+    <transition
+      name="fade"
+      mode="out-in"
+    >
+      <div
+        class="popup-container"
+        v-show="popupUploadData"
+      >
+        <upload-component
+          class="float"
+          :destination="'atm'"
+          :maxSize="2000"
+          :type="['image/gif', 'image/jpeg', 'image/png']"
+          :message="{success: {type: 'success', title: 'อัพโหลดหลักฐานการโอนเสร็จสิ้น', text: 'ทางทีมงานจะทำการตรวจสอบหลักฐานการโอนและดำเนินการภายใน 24 ชม.'}}"
+        ></upload-component>
       </div>
     </transition>
     <div class="wrapper-header">
       <div class="back">
         <router-link :to="{ name: 'Payment'}">
-          <font-awesome-icon icon="chevron-left" aria-hidden="true" /> <span>ย้อนกลับ</span>
+          <font-awesome-icon
+            icon="chevron-left"
+            aria-hidden="true"
+          /> <span>ย้อนกลับ</span>
         </router-link>
       </div>
       <div class="title">
-        <font-awesome-icon icon="credit-card" aria-hidden="true" /> ชำระด้วยการโอน</div>
+        <font-awesome-icon
+          icon="credit-card"
+          aria-hidden="true"
+        /> ชำระด้วยการโอน</div>
     </div>
 
     <hr>
@@ -30,7 +48,7 @@
             <div class="detail">
               ชื่อบัญชี: บริษัท S&N Curtain ประเทศไทยจำกัด <br>
               เลขบัญชี: 468 0601 709 <br>
-              จำนวนเงิน: 4,175
+              <!-- จำนวนเงิน: 4,175 -->
             </div>
           </div>
         </div>
@@ -42,7 +60,7 @@
             <div class="detail">
               ชื่อบัญชี: บริษัท S&N Curtain ประเทศไทยจำกัด <br>
               เลขบัญชี: 468 0601 709 <br>
-              จำนวนเงิน: 4,175
+              <!-- จำนวนเงิน: 4,175 -->
             </div>
           </div>
         </div>
@@ -54,7 +72,7 @@
             <div class="detail">
               ชื่อบัญชี: บริษัท S&N Curtain ประเทศไทยจำกัด <br>
               เลขบัญชี: 468 0601 709 <br>
-              จำนวนเงิน: 4,175
+              <!-- จำนวนเงิน: 4,175 -->
             </div>
           </div>
         </div>
@@ -63,8 +81,14 @@
           หลังจากท่านทำการโอนแล้ว ให้เก็บหลักฐานการโอนแล้วอัพโหลดลงในระบบ ผ่านทางปุ่มด้านล่างนี้
         </div>
         <div class="col-12">
-          <div class="button" @click="popupUploadUpdate(true)">อัพโหลดหลักฐานการชำระเงิน</div>
-          <div class="button" @click="confirmPaymentLater()">ชำระเงินภายหลัง, กลับไปที่ตะกร้าสินค้า</div>
+          <div
+            class="button"
+            @click="popupUploadUpdate(true)"
+          >อัพโหลดหลักฐานการชำระเงิน</div>
+          <div
+            class="button"
+            @click="confirmPaymentLater()"
+          >ชำระเงินภายหลัง, กลับไปที่ตะกร้าสินค้า</div>
         </div>
         <div class="col-12 atm-title">
           <div class="circle">3</div>

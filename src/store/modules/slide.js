@@ -6,16 +6,9 @@ import isEmpty from "lodash.isempty";
 // !
 
 const state = {
-  // ออเดอร์ทั้งหมด
-  orderAll: null,
-  // ออเดอร์ที่ผู้ใช้อัพโหลดหลักฐานมา
-  orderEvidence: null,
-  // ออเดอร์ที่ยืนยันโดยทีมงานแล้ว
-  orderConfirm: null,
-  // ออเดอร์ที่ดำเนินการเสร็จแล้ว
-  orderSuccess: null,
-  // ออเดอร์ที่ถูกยกเลิก,
-  orderCancel: null
+  slideAll: null,
+  slideMain: null,
+  slideSub: null,
 }
 
 // !
@@ -23,11 +16,9 @@ const state = {
 // !
 
 const getters = {
-  orderAllData: state => state.orderAll,
-  orderEvidenceData: state => state.orderEvidence,
-  orderConfirmData: state => state.orderConfirm,
-  orderSuccessData: state => state.orderSuccess,
-  orderCancelData: state => state.orderCancel
+  slideAllData: state => state.slideAll,
+  slideMainData: state => state.slideMain,
+  slideSubData: state => state.slideSub
 }
 
 // !
@@ -64,55 +55,84 @@ const mutations = {
 // !
 
 const actions = {
-  orderAllGet({
+
+  // * Get Slide
+  slideAllGet({
     commit
   }) {
     return new Promise(async (resolve, reject) => {
 
       // call
-      const callResult = await Vue.http.post(`${process.env.BACKEND_URI}/order/all`);
+      const callResult = await Vue.http.get(`${process.env.BACKEND_URI}/slide`);
 
       // validate result
-      if (!callResult.data || !callResult.data.data || isEmpty(callResult.data.data)) return reject(false);
+      if (!callResult.data || !callResult.data.data || isEmpty(callResult.data.data)) {
+
+        // update state to empty arrray
+        commit("updateState", {
+          data: [],
+          target: 'slideAll'
+        });
+        commit("updateState", {
+          data: [],
+          target: 'slideMain'
+        });
+        commit("updateState", {
+          data: [],
+          target: 'slideSub'
+        });
+
+        // return is empty
+        return reject('empty');
+      }
 
       const originalResult = callResult.data.data
 
-      // update state orderAll
+      // update state slideAll
       commit("updateState", {
         data: originalResult,
-        target: 'orderAll'
+        target: 'slideAll'
       });
 
-      // update state orderEvidence
+      // update state slideEvidence
       commit("updateState", {
-        data: originalResult.filter(x => x.order_status == 'evidence'),
-        target: 'orderEvidence'
+        data: originalResult.filter(x => x.type == 'main'),
+        target: 'slideMain'
       })
 
-      // update state orderConfirm
+      // update state slideConfirm
       commit("updateState", {
-        data: originalResult.filter(x => x.order_status == 'confirm'),
-        target: 'orderConfirm'
+        data: originalResult.filter(x => x.type == 'sub'),
+        target: 'slideSub'
       });
-
-
-      // update state orderSuccess
-      commit("updateState", {
-        data: originalResult.filter(x => x.order_status == 'success'),
-        target: 'orderSuccess'
-      });
-
-      // update state orderCancel
-      commit("updateState", {
-        data: originalResult.filter(x => x.order_status == 'cancel'),
-        target: 'orderCancel'
-      })
 
       // return
       return resolve(callResult.data.data);
     });
-  }
-} //// End `orderAllGet` block
+  }, //// End `slideAllGet` block
+
+  // * Update Slide
+  async slideUpdate({
+    commit
+  }, data) {
+
+    const callResult = await Vue.http.post(`${process.env.BACKEND_URI}/slide`, data);
+    return callResult;
+
+  }, //// End `slideUpdate` block
+
+  // * Delete Slide
+  async slideDelete({
+    commit
+  }, data) {
+
+    const callResult = await Vue.http.post(`${process.env.BACKEND_URI}/slide/delete`, data);
+    return callResult;
+
+  } //// End `slideDelete` block
+
+
+}
 
 // !
 // ! ─── EXPORT ─────────────────────────────────────────────────────────────────────

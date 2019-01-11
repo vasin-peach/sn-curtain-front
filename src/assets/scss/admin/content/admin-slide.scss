@@ -1,0 +1,59 @@
+.admin-slide {
+
+  .content {
+    img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 1px 2px 0 $gray1;
+    }
+
+    input {
+      margin: 15px 0 20px 0;
+      border-radius: 15px;
+      border-color: $gray2;
+    }
+
+    hr {
+      margin-bottom: 30px;
+    }
+
+    button {
+      width: 100%;
+      margin: 15px 0 20px 0;
+      height: calc(2.25rem + 2px);
+      padding: 0.375rem 0.75rem;
+      border-radius: 15px;
+    }
+  }
+
+  .slide-list {
+    position: relative;
+  }
+
+  .slide-list-delete {
+    z-index: 2;
+    background: $red3;
+    color: $white1;
+    border-radius: 50%;
+    width: 23px;
+    height: 23px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    position: absolute;
+    right: 5px;
+    top: -7px;
+
+    &:hover,
+    &:focus {
+      opacity: 0.5;
+    }
+
+    &:active,
+    &:focus {
+      transform: translateY(2px);
+    }
+  }
+}

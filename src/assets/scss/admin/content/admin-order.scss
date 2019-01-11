@@ -71,7 +71,8 @@
           object-fit: cover;
         }
 
-        .order-list-delete {
+        .order-list-delete,
+        .order-list-cancel {
           z-index: 3;
           color: $red3;
           cursor: pointer;
@@ -90,6 +91,11 @@
             transform: translateY(2px);
           }
         }
+
+        .order-list-cancel {
+          right: 35px;
+        }
+
 
         .content {
           padding: 10px;

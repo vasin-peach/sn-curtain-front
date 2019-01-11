@@ -124,11 +124,9 @@ const actions = {
   // * Delete Slide
   async slideDelete({
     commit
-  }, id) {
+  }, data) {
 
-    const callResult = await Vue.http.post(`${process.env.BACKEND_URI}/slide/delete`, {
-      id: id
-    });
+    const callResult = await Vue.http.post(`${process.env.BACKEND_URI}/slide/delete`, data);
     return callResult;
 
   } //// End `slideDelete` block

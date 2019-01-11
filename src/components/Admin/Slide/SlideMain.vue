@@ -119,7 +119,7 @@ export default {
 
       try {
         // call
-        const result = await this.slideDelete(id);
+        const result = await this.slideDelete({ id: id, type: "main" });
 
         // alert
         this.$swal({

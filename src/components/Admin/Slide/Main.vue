@@ -57,13 +57,7 @@ export default {
 
     // * [TRIGGER] get slide
     triggerSlideAllGet() {
-      this.slideAllGet().then(
-        resp => {
-          // console.log(resp, "succ");
-        },
-        err => {}
-      );
-
+      this.slideAllGet();
       this.loading.state = false;
     }
   },
@@ -94,4 +88,11 @@ export default {
 </script>
 
 <style>
+.admin-slide .container {
+  width: 100%;
+}
+
+.admin-slide .container .row {
+  padding-bottom: 0px !important;
+}
 </style>

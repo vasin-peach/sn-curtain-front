@@ -33,7 +33,33 @@
                 :colors="colors"
                 :alwaysScrollToBottom="alwaysScrollToBottom"
                 :messageStyling="messageStyling"
-              />
+              >
+              </beautiful-chat>
+              <transition
+                name="fade"
+                mode="out-in"
+              >
+                <div
+                  class="chat-list-container"
+                  v-show="isChatOpen"
+                >
+                  <div
+                    class="chat-list"
+                    v-show="isChatOpen"
+                    v-for="chat in chatList"
+                    :key="chat._id"
+                    @click="triggerActiveChatList(chat)"
+                    :style="{'background-image': 'url(' + (chat.author[0].image || '/static/images/lazy/lazyload.svg') + ')'}"
+                  >
+                    <div class="chat-list-remove">
+                      <font-awesome-icon
+                        icon="times"
+                        aria-hidden="true"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </transition>
             </a>
             <router-link
               :to="{ name: 'Basket' }"
@@ -62,6 +88,7 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import io from "socket.io-client";
 import Chat from "../Popup/Chat";
+import _ from "lodash";
 export default {
   name: "FloatBar",
 
@@ -72,6 +99,8 @@ export default {
     return {
       state: false,
       socket: io(`${process.env.BACKEND_URI}`),
+      room: null,
+      chatList: {},
       participants: [
         {
           id: "me",
@@ -92,6 +121,7 @@ export default {
           data: { text: `S&N การม่าน, ยินดีต้อนรับครับ` }
         }
       ], // the list of the messages to show, can be paginated and adjusted dynamically
+      messageListTemp: [],
       newMessagesCount: 0,
       isChatOpen: false, // to determine whether the chat window should be open or closed
       showTypingIndicator: "", // when set to a value matching the participant.id it shows the typing indicator for the specific user
@@ -144,7 +174,7 @@ export default {
   // Methods
   ///
   methods: {
-    ...mapActions(["chatGet"]),
+    ...mapActions(["chatGet", "guestGet", "guestUpdate"]),
     ...mapMutations(["basketUpdate"]),
     basketAnimate() {
       var basket = $(".floatbar-basket");
@@ -155,6 +185,19 @@ export default {
     },
     updateState(state) {
       this.state = state;
+    },
+    async triggerActiveChatList(data) {
+      this.room = this.chatData[data.index]._id;
+      this.messageList = this.chatData[data.index].msg;
+
+      const indexMe = await this.messageList.map((x, y) => {
+        if (
+          x.author == this.userData
+            ? this.userData._id
+            : null || x.author == this.uid
+        )
+          this.messageList[y].author = "me";
+      });
     },
     sendMessage(text) {
       if (text.length > 0) {
@@ -171,7 +214,11 @@ export default {
     onMessageWasSent(message) {
       // called when the user sends a message
       this.messageList = [...this.messageList, message];
-      this.socket.emit("chat message", message);
+      this.socket.emit("chat message", {
+        room: this.room,
+        msg: this.messageList,
+        client: this.uid
+      });
     },
     openChat() {
       // called when the user clicks on the fab button to open the chat
@@ -186,22 +233,54 @@ export default {
     async triggerChatGet() {
       try {
         // Auth
-        const chatData = await this.chatGet();
+        const chatData = await this.chatGet(this.uid);
+        if (_.isEmpty(chatData)) return;
+        this.chatList =
+          (await chatData.map((x, y) => ({
+            author: x.author,
+            room: x._id,
+            index: y
+          }))) || [];
+
+        if (!_.isEmpty(this.chatList)) {
+          this.messageList = chatData[0].msg;
+          this.messageListTemp = chatData[0].msg;
+          this.room = chatData[0]._id;
+        }
+
+        const indexMe = await this.chatData[0].msg.map((x, y) => {
+          if (
+            x.author == this.userData
+              ? this.userData._id
+              : null || x.author == this.uid
+          )
+            return (this.messageList[y].author = "me");
+        });
+        return true;
       } catch (error) {
-        // Not auth
+        console.log(error);
+        return false;
+      }
+    },
+    async triggerGuestGet() {
+      if (this.userData) {
+        await this.guestUpdate(null);
+      } else {
+        let guestGet = await this.guestGet();
+        const uid = guestGet ? guestGet : await this.guestUpdate(this.uid);
+        this.uid = uid;
       }
     }
   },
 
   // ! WATCH
   watch: {
-    // messageList: {
-    //   handler: function(data) {
-    //     const msg = data[data.length - 1];
-    //     this.socket.emit("chat message", msg);
-    //   },
-    //   deep: true
-    // }
+    messageList: {
+      handler: function(data) {
+        this.messageListTemp = _.cloneDeep(data, true);
+      },
+      deep: true
+    }
     // chatData: {
     //   handler: function(data) {
     //     this.messageList = data.map(x => x.msg);
@@ -211,10 +290,34 @@ export default {
   },
 
   // ! MOUNTED
-  mounted() {
-    this.triggerChatGet();
-    this.socket.on("chat message", msg => {
-      console.log("msg: " + msg);
+  async mounted() {
+    this.uid = this.userData
+      ? this.userData._id
+      : "_" +
+        Math.random()
+          .toString(36)
+          .substr(2, 9) +
+        "_" +
+        Date.now().toString();
+
+    await this.triggerGuestGet();
+    await this.triggerChatGet();
+
+    this.socket.on("chat guest updated", async data => {
+      if (data.author.findIndex(x => x.id == this.uid) >= 0) {
+        this.room = data._id;
+        this.messageList = data.msg;
+        if (this.chatData) this.chatData.msg = data.msg;
+
+        const indexMe = await data.msg.map((x, y) => {
+          if (
+            x.author == this.userData
+              ? this.userData._id
+              : null || x.author == this.uid
+          )
+            this.messageList[y].author = "me";
+        });
+      }
     });
   },
 

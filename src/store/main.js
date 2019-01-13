@@ -22,6 +22,7 @@ import sum_sale from './modules/summary/sum-sale';
 import admin_order from './modules/admin_order';
 import slide from './modules/slide';
 import chat from './modules/chat';
+import guest from './modules/guest';
 
 // Use Moduesl
 Vue.use(Vuex)
@@ -49,7 +50,8 @@ export default new Vuex.Store({
     sum_sale,
     admin_order,
     slide,
-    chat
+    chat,
+    guest
   },
   strict: false
 })

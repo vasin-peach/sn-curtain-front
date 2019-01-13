@@ -1,12 +1,14 @@
 import Vue from "vue";
 import isEmpty from "lodash.isempty";
+// ────────────────────────────────────────────────────────────────────────────────
+
 
 // !
 // ! ─── STATE ──────────────────────────────────────────────────────────────────────
 // !
 
 const state = {
-  chat: null
+  guest: null
 }
 
 // !
@@ -14,7 +16,7 @@ const state = {
 // !
 
 const getters = {
-  chatData: state => state.chat
+  guestData: state => guestId
 }
 
 // !
@@ -52,52 +54,62 @@ const mutations = {
 
 const actions = {
 
-  // * Get Slide
-  chatGet({
+  // * Get Guest
+  async guestGet({
     commit
-  }, uid) {
-    return new Promise(async (resolve, reject) => {
+  }) {
 
-      try {
-        const result = await Vue.http.get(`${process.env.BACKEND_URI}/chat/${uid}`);
-        commit("updateState", {
-          data: result.data.data,
-          target: 'chat'
-        })
-        return resolve(result.data.data);
-      } catch (error) {
-        commit("updateState", {
-          data: null,
-          target: 'chat'
-        })
-        return reject(error);
-      }
+    try {
 
-    });
-  }, //// End `slideAllGet` block
+      // call
+      const result = await Vue.http.get(`${process.env.BACKEND_URI}/guest`)
 
-  // // * Update Slide
-  // async slideUpdate({
-  //   commit
-  // }, data) {
+      // update state
+      commit("updateState", {
+        data: result.data.data,
+        target: 'guest'
+      })
 
-  //   const callResult = await Vue.http.post(`${process.env.BACKEND_URI}/slide`, data);
-  //   return callResult;
+      // return
+      return result.data.data;
 
-  // }, //// End `slideUpdate` block
+    } catch (error) {
 
-  // // * Delete Slide
-  // async slideDelete({
-  //   commit
-  // }, data) {
+      // return
+      return error;
+    }
+  },
 
-  //   const callResult = await Vue.http.post(`${process.env.BACKEND_URI}/slide/delete`, data);
-  //   return callResult;
+  // * Update Guest
+  async guestUpdate({
+    commit
+  }, payload) {
 
-  // } //// End `slideDelete` block
+    // try
+    try {
 
+      // call
+      const result = await Vue.http.post(`${process.env.BACKEND_URI}/guest/update`, {
+        payload: payload
+      })
 
+      // update state
+      commit("updateState", {
+        data: result.data.data,
+        target: 'guest'
+      })
+
+      // return
+      return result.data.data;
+
+    } catch (error) {
+
+      // return
+      return error;
+    }
+  },
 }
+
 
 // !
 // ! ─── EXPORT ─────────────────────────────────────────────────────────────────────

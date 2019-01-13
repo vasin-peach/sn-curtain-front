@@ -7,5 +7,53 @@
   .floatbar-wrapper {
     @import 'basket';
     position: relative;
+
+    .chat-list-container {
+      position: absolute;
+      display: flex;
+      right: 0;
+      flex-direction: row-reverse;
+      top: 15px;
+      margin-right: 80px;
+
+      .chat-list {
+        cursor: pointer;
+        margin-right: 15px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        padding: 5px;
+        background: #ccc;
+        transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        background-size: cover;
+        box-shadow: 1px 0 1px 0 $gray2;
+        position: relative;
+
+        &:hover,
+        &:focus {
+          transform: translateY(-2px);
+          opacity: 0.9;
+        }
+
+        &:active {
+          transform: translateY(2px);
+        }
+
+        .chat-list-remove {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          width: 18px;
+          height: 18px;
+          font-size: 13px;
+          border-radius: 50%;
+          color: $white1;
+          background: $red3;
+          right: -5px;
+          top: 0;
+        }
+      }
+    }
   }
 }

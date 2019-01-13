@@ -95,7 +95,17 @@ const actions = {
   profile({
     commit
   }) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+
+      // try {
+      //   const result = await Vue.http.get(`${process.env.BACKEND_URI}/auth/profile`);
+      //   commit('userUpdate', result.data.data);
+      //   return resolve(response.data);
+      // } catch (err) {
+      //   commit('userUpdate', null);
+      //   return err;
+      // }
+
       Vue.http.get(process.env.BACKEND_URI + "/auth/profile").then(response => {
         commit('userUpdate', response.data.data);
         return resolve(response.data);

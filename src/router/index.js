@@ -495,10 +495,10 @@ router.beforeEach(async (to, from, next) => {
 
   async function checkAuth() {
     return new Promise((resolve, reject) => {
-      store.dispatch('profile').then(() => {
-        return resolve()
-      }, () => {
-        return resolve()
+      store.dispatch('profile').then((result) => {
+        return resolve(result)
+      }, (err) => {
+        return resolve(err)
       })
     })
   }

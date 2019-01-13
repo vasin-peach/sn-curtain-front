@@ -13,10 +13,7 @@
 
       </transition>
 
-      <transition
-        name="basket"
-        v-if="userData"
-      >
+      <transition name="basket">
         <div class="floatbar-basket">
 
           <div class="floatbar-basket-wrapper">
@@ -77,22 +74,23 @@ export default {
       socket: io(`${process.env.BACKEND_URI}`),
       participants: [
         {
-          id: "user1",
-          name: "Matteo",
-          imageUrl: "https://avatars3.githubusercontent.com/u/1915989?s=230&v=4"
+          id: "me",
+          name: "ผู้เยี่ยมชม",
+          imageUrl: "/static/images/lazy/lazyload.svg"
         },
         {
-          id: "user2",
-          name: "Support",
-          imageUrl:
-            "https://avatars3.githubusercontent.com/u/37018832?s=200&v=4"
+          id: "admin",
+          name: "S&N การม่าน",
+          imageUrl: "/static/favicon/apple-icon-114x114.png"
         }
       ], // the list of all the participant of the conversation. `name` is the user name, `id` is used to establish the author of a message, `imageUrl` is supposed to be the user avatar.
-      titleImageUrl:
-        "https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png",
+      titleImageUrl: "/static/images/lazy/lazyload.svg",
       messageList: [
-        { type: "text", author: `me`, data: { text: `Say yes!` } },
-        { type: "text", author: `user1`, data: { text: `No.` } }
+        {
+          type: "text",
+          author: `admin`,
+          data: { text: `S&N การม่าน, ยินดีต้อนรับครับ` }
+        }
       ], // the list of the messages to show, can be paginated and adjusted dynamically
       newMessagesCount: 0,
       isChatOpen: false, // to determine whether the chat window should be open or closed
@@ -146,6 +144,7 @@ export default {
   // Methods
   ///
   methods: {
+    ...mapActions(["chatGet"]),
     ...mapMutations(["basketUpdate"]),
     basketAnimate() {
       var basket = $(".floatbar-basket");
@@ -172,6 +171,7 @@ export default {
     onMessageWasSent(message) {
       // called when the user sends a message
       this.messageList = [...this.messageList, message];
+      this.socket.emit("chat message", message);
     },
     openChat() {
       // called when the user clicks on the fab button to open the chat
@@ -181,14 +181,46 @@ export default {
     closeChat() {
       // called when the user clicks on the botton to close the chat
       this.isChatOpen = false;
+    },
+    // * [Trigger] Get Chat
+    async triggerChatGet() {
+      try {
+        // Auth
+        const chatData = await this.chatGet();
+      } catch (error) {
+        // Not auth
+      }
     }
   },
 
-  ///
-  // Computed
-  ///
+  // ! WATCH
+  watch: {
+    // messageList: {
+    //   handler: function(data) {
+    //     const msg = data[data.length - 1];
+    //     this.socket.emit("chat message", msg);
+    //   },
+    //   deep: true
+    // }
+    // chatData: {
+    //   handler: function(data) {
+    //     this.messageList = data.map(x => x.msg);
+    //   },
+    //   deep: true
+    // }
+  },
+
+  // ! MOUNTED
+  mounted() {
+    this.triggerChatGet();
+    this.socket.on("chat message", msg => {
+      console.log("msg: " + msg);
+    });
+  },
+
+  // ! COMPUTED
   computed: {
-    ...mapGetters(["basketData", "userData"])
+    ...mapGetters(["chatData", "basketData", "userData"])
   },
 
   components: { Chat }

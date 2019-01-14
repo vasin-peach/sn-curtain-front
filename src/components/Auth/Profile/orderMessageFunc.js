@@ -15,14 +15,14 @@ const orderMessageFunc = {
     if (status) {
       // * Switch case
       switch (status) {
-        case 'wait_upload':
-          return 'รอการอัพโหลดหลักฐาน'
-        case 'wait_confirm':
-          return 'รอการตรวจเช็คหลักฐาน'
-        case 'order_wait':
-          return 'รอการยืนยันรายการจากทางร้าน'
-        case 'order_success':
-          return 'รายการสำเร็จ'
+        case 'evidence':
+          return 'รอยืนยันหลักฐานการโอน'
+        case 'confirm':
+          return 'กำลังดำเนินการ'
+        case 'success':
+          return 'รายการเสร็จสิ้น'
+        case 'cancel':
+          return 'รายการถูกยกเลิก'
       }
     }
   }

@@ -120,9 +120,72 @@ const actions = {
         }
       );
     })
+  }, // // delete order block end
+
+  // ? deleteOrder
+  async cancelOrder({
+    commit
+  }, id) {
+
+    /**
+     * @param id NUMBER - order id to delete
+     */
 
 
-  }
+    return new Promise((resolve, reject) => {
+
+      // ! Validate
+      if (!id) return reject('bad param, `id` is empty.');
+
+      // ! Delete
+      Vue.http.post(`${process.env.BACKEND_URI}/order/cancel`, {
+        id: id
+      }).then(
+        response => { // success
+          return resolve(response);
+        },
+        error => { // error
+          return reject('delete error, ' + error);
+        }
+      );
+    })
+  }, // // delete order block end
+
+
+  // ? Update Order
+  updateOrder({
+    getters
+  }, data) {
+
+    /**
+     * @param {OBJECT} data - {
+     *  @param {STRING} query - target to update
+     *  @param {OBJECT} data - data to update
+     * }
+     */
+
+    return new Promise(async (resolve, reject) => {
+
+      // validate
+      if (!data || !data.query || !data.data) return reject(false);
+
+      // call backend
+      Vue.http.post(`${process.env.BACKEND_URI}/order/update`, data).then(
+
+        response => { // response success
+          return resolve(response);
+        },
+
+        (error) => { // response error
+          return reject(error);
+        }
+      );
+
+    });
+
+  }, // // create order block end
+
+
 
 
 

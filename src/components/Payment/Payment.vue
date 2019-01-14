@@ -19,7 +19,11 @@
             <hr>
             <div class="wrapper-content">
               <div class="order-box scrollCancel">
-                <div class="order-item" v-for="items in basketData" :key="items.id">
+                <div
+                  class="order-item"
+                  v-for="items in basketData"
+                  :key="items.id"
+                >
                   <div class="row m-0">
                     <div class="col-7 col-sm-7 col-md-7">
                       <router-link :to="{ name: 'Product', params: { id: items.id} }">
@@ -59,6 +63,15 @@
                   </div>
                 </div>
                 <div class="row m-0">
+                  <div class="col">
+                    ภาษี
+                  </div>
+                  <div class="col">
+                    ฿{{ numberWithCommas(Math.round(((productPrice + transportPrice - discountPrice) * 3.65 / 100) + ((productPrice + transportPrice - discountPrice) * 3.65 / 100) * 7 / 100)) }}
+
+                  </div>
+                </div>
+                <div class="row m-0">
                   <div class="col-12">
                     <hr>
                   </div>
@@ -69,7 +82,7 @@
                   </div>
                   <div class="col">
                     <span v-if="(productPrice + transportPrice - discountPrice) > 0">
-                      ฿{{numberWithCommas((productPrice + transportPrice - discountPrice) )}}
+                      ฿{{numberWithCommas((productPrice + transportPrice - discountPrice + Math.round(((productPrice + transportPrice - discountPrice) * 3.65 / 100) + ((productPrice + transportPrice - discountPrice) * 3.65 / 100) * 7 / 100)) )}}
                     </span>
                     <span v-else>
                       ฿20
@@ -94,6 +107,7 @@ export default {
       productPrice: 0,
       discountPrice: 0,
       transportPrice: 0,
+      taxPrice: 0,
       weight: 0
     };
   },
@@ -119,10 +133,18 @@ export default {
 
       // init price of deliveryPrice
       this.transportPrice = Math.round(this.deliveryPriceData);
+
+      // init tax price
+      this.taxPrice = Math.round(this.taxPriceData);
     }
   },
   computed: {
-    ...mapGetters(["basketData", "discountData", "deliveryPriceData"])
+    ...mapGetters([
+      "basketData",
+      "discountData",
+      "deliveryPriceData",
+      "taxPriceData"
+    ])
   },
   mounted() {
     this.initPrice();
@@ -131,6 +153,7 @@ export default {
       this.productPrice = response.data.price || 0;
       this.discountPrice = response.data.discount || 0;
       this.transportPrice = response.data.deliveryPrice || 0;
+      this.taxPrice = response.data.taxPrice || 0;
       this.weight = response.data.weight || 0;
     });
   }

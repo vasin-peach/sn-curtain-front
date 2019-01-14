@@ -74,8 +74,9 @@ const ProfileHistory = () =>
 // Admin
 const Admin = () => import('@component/Admin/Admin');
 const AdminDashboard = () => import('@component/Admin/AdminDashboard');
-const AdminSlide = () => import('@component/Admin/AdminSlide');
+const AdminSlide = () => import('@component/Admin/Slide/Main');
 const AdminProduct = () => import('@component/Admin/AdminProduct');
+const AdminOrder = () => import('@component/Admin/AdminOrder');
 const AdminDiscount = () => import('@component/Admin/AdminDiscount');
 const AdminBank = () => import('@component/Admin/AdminBank');
 
@@ -387,6 +388,18 @@ const router = new Router({
               permission: 3
             }
           },
+          {
+
+            // ? Order
+            path: 'order',
+            component: AdminOrder,
+            name: 'AdminOrder',
+            meta: {
+              title: 'ใบสั่งซื้อ - จัดการเว็บไซต์',
+              login: 1,
+              permission: 3
+            }
+          },
 
         ]
       }
@@ -504,7 +517,7 @@ function smoothScroll(to) {
   var scrollDistance = 270; //Distance. Use smaller value for shorter scroll and greater value for longer scroll
 
   // check if path area ['address'] or ['credit']
-  if (to.path.split("/").indexOf('address') == -1 && to.path.split("/").indexOf('credit') == -1) {
+  if (to.path.split("/").indexOf('payment') == -1 && to.path.split("/").indexOf('credit') == -1 && to.path.split("/").indexOf('admin') == -1) {
     // bind html scroll
     $window.bind("mousewheel DOMMouseScroll scroll", function (event) {
       event.preventDefault();

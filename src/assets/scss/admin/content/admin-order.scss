@@ -1,0 +1,142 @@
+.data-empty {
+  width: 100%;
+  font-weight: 300;
+  font-size: 20px;
+  color: $gray1;
+  text-align: center;
+  background: $white1;
+  padding: 15px 10px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.admin-order {
+
+
+  &.closed {
+    height: auto !important;
+  }
+
+  .disable {
+    opacity: 0.7 !important;
+  }
+
+  margin-bottom: 10vh;
+
+  .pmb-0 {
+    @include mobile {
+      padding: 0;
+    }
+  }
+
+  .admin-order-left {
+    .title {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 5px;
+
+      &>div {
+        color: $gray1;
+        font-weight: 400;
+      }
+    }
+
+    .order-list-container {
+      width: 100%;
+      overflow-y: scroll;
+      max-height: calc(100vh - 81px - 72.94px - 75.25px);
+
+      @include mobile {}
+
+      .order-list {
+        width: 100%;
+        background: $white1;
+        padding: 15px;
+        margin: 5px;
+        border-radius: 10px;
+        transition: filter 0.3s ease-out;
+        position: relative;
+        cursor: pointer;
+
+        @include mobile {
+          padding: 10px 0;
+          margin: 2px 0;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          max-width: 140px;
+          object-fit: cover;
+        }
+
+        .order-list-delete,
+        .order-list-cancel {
+          z-index: 3;
+          color: $red3;
+          cursor: pointer;
+          transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+          position: absolute;
+          right: 15px;
+          top: 10px;
+
+          &:hover,
+          &:focus {
+            opacity: 0.5;
+          }
+
+          &:active,
+          &:focus {
+            transform: translateY(2px);
+          }
+        }
+
+        .order-list-cancel {
+          right: 35px;
+        }
+
+
+        .content {
+          padding: 10px;
+          display: flex;
+
+          &>div>div {
+            font-size: 17px;
+
+            @include mobile {
+              font-size: 13px;
+            }
+
+            &:first-child {
+              color: $dark3;
+            }
+
+            &:nth-child(2) span {
+              font-weight: lighter;
+
+              @include mobile {
+                font-size: 13px;
+              }
+            }
+
+            &:last-child {
+              color: $orange1;
+              font-weight: bold;
+            }
+          }
+        }
+
+        &:hover,
+        &:focus,
+        .checked {
+          filter: brightness(0.8) !important;
+        }
+      }
+
+      .checked {
+        filter: brightness(0.9) !important;
+      }
+    }
+  }
+}

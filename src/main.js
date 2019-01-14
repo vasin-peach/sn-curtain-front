@@ -37,6 +37,9 @@ import {
   faTachometerAlt,
   faCreditCard,
   faChalkboard,
+  faFileInvoice,
+  faPlus,
+  faBan
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faFacebookSquare,
@@ -78,7 +81,10 @@ library.add(
   faCreditCard,
   faTachometerAlt,
   faSlideshare,
-  faBarcode
+  faBarcode,
+  faFileInvoice,
+  faPlus,
+  faBan
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

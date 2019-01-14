@@ -16,7 +16,7 @@ const state = {
 // !
 
 const getters = {
-  guestData: state => guestId
+  guestData: state => state.guest
 }
 
 // !

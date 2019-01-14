@@ -264,7 +264,7 @@ export default {
     },
     async triggerGuestGet() {
       if (this.userData) {
-        await this.guestUpdate(null);
+        await this.guestUpdate(this.userData._id);
       } else {
         let guestGet = await this.guestGet();
         const uid = guestGet ? guestGet : await this.guestUpdate(this.uid);

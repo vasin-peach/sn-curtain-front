@@ -57,6 +57,7 @@
         height: 50px;
         border-radius: 50%;
         border: 3px solid $orange2;
+        object-fit: cover;
 
         @include small {
           width: 40px;

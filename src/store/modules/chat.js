@@ -22,6 +22,21 @@ const getters = {
 // !
 
 const mutations = {
+  pushState(state, data) {
+    /**
+     * @param {OBJECT} state - state
+     * @param {OBJECT} - {
+     *  @param {ANY} - data to push to target
+     *  @param {STRING} - target to push
+     * }
+     */
+
+    if (isEmpty(data) || !data.data || !data.target) return 0;
+
+    // push
+    return state[data.target].push(data.data);
+
+  },
   updateState(state, data) {
     /**
      * @param state OBJECT - state object

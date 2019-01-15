@@ -45,6 +45,7 @@
                 >
                   <div
                     class="chat-list"
+                    :class="{'active': chat.room == room }"
                     v-show="isChatOpen"
                     v-for="chat in chatList"
                     :key="chat._id"
@@ -100,7 +101,7 @@ export default {
       state: false,
       socket: io(`${process.env.BACKEND_URI}`),
       room: null,
-      chatList: {},
+      chatList: [],
       uid: null,
       participants: [
         {
@@ -176,7 +177,7 @@ export default {
   ///
   methods: {
     ...mapActions(["chatGet", "guestGet", "guestUpdate"]),
-    ...mapMutations(["basketUpdate"]),
+    ...mapMutations(["basketUpdate", "pushState"]),
     basketAnimate() {
       var basket = $(".floatbar-basket");
       $(".floatbar-basket a.basket-animate").removeClass("animate");
@@ -268,7 +269,6 @@ export default {
         await this.guestUpdate(this.userData._id);
       } else {
         let guestGet = await this.guestGet();
-        console.log(guestGet);
         const uid = guestGet ? guestGet : await this.guestUpdate(this.uid);
         this.uid = uid;
       }
@@ -310,6 +310,28 @@ export default {
         this.room = data._id;
         this.messageList = data.msg;
         if (this.chatData) this.chatData.msg = data.msg;
+
+        // init user chat first time
+        if (_.isEmpty(this.chatList)) {
+          this.chatList.push({
+            author: data.author,
+            index: 0,
+            room: data._id
+          });
+        } else {
+          // init chatlist in secondtime
+          for (let index in this.chatList) {
+            let item = this.chatList[index];
+            if (item.room != data._id)
+              this.chatList.unshift({
+                author: data.author,
+                index: index,
+                room: data._id
+              });
+          }
+        }
+
+        this.pushState({ data: data, target: "chat" });
 
         const indexMe = await data.msg.map((x, y) => {
           if (

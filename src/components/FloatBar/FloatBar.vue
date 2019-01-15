@@ -101,6 +101,7 @@ export default {
       socket: io(`${process.env.BACKEND_URI}`),
       room: null,
       chatList: {},
+      uid: null,
       participants: [
         {
           id: "me",
@@ -267,6 +268,7 @@ export default {
         await this.guestUpdate(this.userData._id);
       } else {
         let guestGet = await this.guestGet();
+        console.log(guestGet);
         const uid = guestGet ? guestGet : await this.guestUpdate(this.uid);
         this.uid = uid;
       }

@@ -6,7 +6,7 @@ import isEmpty from "lodash.isempty";
 // !
 
 const state = {
-  chat: null
+  chat: []
 }
 
 // !
@@ -34,7 +34,8 @@ const mutations = {
     if (isEmpty(data) || !data.data || !data.target) return 0;
 
     // push
-    return state[data.target].push(data.data);
+    state[data.target].push(data.data);
+    return state[data.target];
 
   },
   updateState(state, data) {

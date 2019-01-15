@@ -311,6 +311,9 @@ export default {
         this.messageList = data.msg;
         if (this.chatData) this.chatData.msg = data.msg;
 
+        // let findIndex = this.chatData.findIndex(x => x._id == this.room);
+        // this.chatData[findIndex].msg = data.msg;
+
         // init user chat first time
         if (_.isEmpty(this.chatList)) {
           this.chatList.push({
@@ -318,20 +321,21 @@ export default {
             index: 0,
             room: data._id
           });
+          this.chatData.push(data);
         } else {
           // init chatlist in secondtime
           for (let index in this.chatList) {
             let item = this.chatList[index];
-            if (item.room != data._id)
+            if (item.room != data._id) {
               this.chatList.unshift({
                 author: data.author,
                 index: index,
                 room: data._id
               });
+              this.chatData.push(data);
+            }
           }
         }
-
-        this.pushState({ data: data, target: "chat" });
 
         const indexMe = await data.msg.map((x, y) => {
           if (

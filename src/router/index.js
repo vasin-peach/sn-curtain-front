@@ -6,6 +6,7 @@ import middlewareFunction from './middleware.func';
 
 const main = () =>
   import('@component/Main');
+const PrintOrder = () => import('@component/PrintOrder');
 const Notfound = () =>
   import('@component/Notfound');
 const Policy = () =>
@@ -95,6 +96,16 @@ const router = new Router({
       floatbar: FloatBar
     },
     children: [{
+        path: '/printorder/:id',
+        component: PrintOrder,
+        name: 'PrintOrder',
+        meta: {
+          title: 'ปริ้นออเดอร์',
+          login: 1,
+          permission: 3
+        }
+      },
+      {
         path: 'landing',
         alias: '/',
         component: Landing,

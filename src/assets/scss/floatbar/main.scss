@@ -4,31 +4,64 @@
   bottom: 0;
   width: 100%;
 
+  .sc-chat-window {
+    @include mobile {
+      bottom: 80px !important;
+    }
+  }
+
   .floatbar-wrapper {
     @import 'basket';
     position: relative;
+
 
     .chat-list-container {
       position: absolute;
       display: flex;
       right: 0;
+      padding: 2px;
       flex-direction: row-reverse;
       top: 15px;
-      margin-right: 80px;
+      margin-right: 145px;
+      width: calc(100vw - 145px);
+      overflow-x: scroll;
+      padding-top: 5px;
+
+      &::-webkit-scrollbar {
+        width: 0px;
+        /* remove scrollbar space */
+        background: transparent;
+        /* optional: just make scrollbar invisible */
+      }
+
+      @include small {
+        top: 10px;
+      }
 
       .chat-list {
+        position: relative;
         cursor: pointer;
+        display: block;
         margin-right: 15px;
-        width: 50px;
-        height: 50px;
         border-radius: 50%;
-        padding: 5px;
         background: #ccc;
         transition: transform 0.3s ease-out, opacity 0.3s ease-out;
         background-size: cover;
         box-shadow: 1px 0 1px 0 $gray2;
         position: relative;
         transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        bottom: 2px;
+
+        &>span {
+          display: block;
+          width: 45px;
+          height: 45px;
+        }
+
+        @include mobile {
+          width: 47px !important;
+          height: 47px;
+        }
 
         &.active {
           box-shadow: 0px 1px 3px 1px $gray1;
@@ -55,10 +88,26 @@
           height: 18px;
           font-size: 13px;
           border-radius: 50%;
-          color: $white1;
+          color: $white1 !important;
           background: $red3;
           right: -5px;
           top: 0;
+        }
+
+        .chat-list-alert {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          font-size: 13px;
+          border-radius: 50%;
+          color: $white1;
+          background: $red4;
+          right: 0px;
+          bottom: 0;
+          animation: basket 1.5s ease-out infinite;
         }
       }
     }

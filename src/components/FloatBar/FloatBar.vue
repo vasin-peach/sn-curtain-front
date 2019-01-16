@@ -18,23 +18,25 @@
 
           <div class="floatbar-basket-wrapper">
             <a class="chat-animate">
-              <beautiful-chat
-                :participants="participants"
-                :titleImageUrl="titleImageUrl"
-                :onMessageWasSent="onMessageWasSent"
-                :messageList="messageList"
-                :newMessagesCount="newMessagesCount"
-                :isOpen="isChatOpen"
-                :close="closeChat"
-                :open="openChat"
-                :showEmoji="true"
-                :showFile="true"
-                :showTypingIndicator="showTypingIndicator"
-                :colors="colors"
-                :alwaysScrollToBottom="alwaysScrollToBottom"
-                :messageStyling="messageStyling"
-              >
-              </beautiful-chat>
+              <div>
+                <beautiful-chat
+                  :participants="participants"
+                  :titleImageUrl="titleImageUrl"
+                  :onMessageWasSent="onMessageWasSent"
+                  :messageList="messageList"
+                  :newMessagesCount="newMessagesCount"
+                  :isOpen="isChatOpen"
+                  :close="closeChat"
+                  :open="openChat"
+                  :showEmoji="true"
+                  :showFile="true"
+                  :showTypingIndicator="showTypingIndicator"
+                  :colors="colors"
+                  :alwaysScrollToBottom="alwaysScrollToBottom"
+                  :messageStyling="messageStyling"
+                >
+                </beautiful-chat>
+              </div>
               <transition
                 name="fade"
                 mode="out-in"
@@ -48,17 +50,26 @@
                     :class="{'active': chat.room == chats.room }"
                     :ref="chat.room"
                     v-show="isChatOpen && chats.list"
-                    v-for="chat in chats.list"
+                    v-for="(chat, index) in chats.list"
                     :key="chat._id"
                     @click="triggerActiveChatList(chat)"
                     :style="{'background-image': 'url(' + (chat.author[0].image || '/static/images/lazy/lazyload.svg') + ')'}"
                   >
-                    <div class="chat-list-remove color-red1">
-                      <!-- {{ chat.room }} -->
+                    <span></span>
+                    <div
+                      class="chat-list-remove color-red1"
+                      v-show="chats.list.length != 1"
+                      @click="removeChat(index)"
+                    >
                       <font-awesome-icon
                         icon="times"
                         aria-hidden="true"
                       />
+                    </div>
+                    <div
+                      class="chat-list-alert color-red1"
+                      v-show="chat.alert"
+                    >
                     </div>
                   </div>
                 </div>
@@ -216,6 +227,10 @@ export default {
       this.isChatOpen = false;
     },
 
+    removeChat(index) {
+      this.chats.list.splice(index, 1);
+    },
+
     // * Change author id to 'me'
     async idToMe() {
       // check chat data
@@ -240,13 +255,18 @@ export default {
         return {
           room: items._id,
           index: index,
-          author: items.author
+          author: items.author,
+          alert: false
         };
       });
     },
     // * [Trigger] Chat Group
     async triggerActiveChatList(list) {
+      let prev = this.chats.data[0];
+      let next = this.chats.data[list.index];
+
       this.messageList = await this.chats.data[list.index].msg;
+      this.chats.list[list.index].alert = false;
       this.chats.room = list.room;
       this.scrollToBottom();
     },
@@ -342,6 +362,11 @@ export default {
         if (this.chats.room == data._id) {
           this.messageList = data.msg;
           this.scrollToBottom();
+        } else {
+          const alertIndex = this.chats.list.findIndex(
+            list => list.room == data._id
+          );
+          this.chats.list[alertIndex].alert = true;
         }
 
         // init idToMe

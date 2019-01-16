@@ -59,7 +59,7 @@
           id="menu-5"
         >บริการ</router-link>
         <a
-          :href="BACKEND_URI + '/auth/logout'"
+          @click="triggerLogout()"
           id="menu-6"
           v-if="userData"
         >ออกจากระบบ</a>
@@ -72,7 +72,7 @@
 
 <script>
 import velocity from "velocity-animate";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Header",
   data() {
@@ -88,6 +88,11 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["guestUpdate"]),
+    async triggerLogout() {
+      await this.guestUpdate("empty");
+      location.href = this.BACKEND_URI + "/auth/logout";
+    },
     menu_on() {
       var _this = this;
       this.menu_toggle = true;

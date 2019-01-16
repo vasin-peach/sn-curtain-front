@@ -62,7 +62,7 @@
                     ฿{{ numberWithCommas(transportPrice) }} ({{Math.round(weight / 1000 * 100) / 100}}kg)
                   </div>
                 </div>
-                <div class="row m-0">
+                <!-- <div class="row m-0">
                   <div class="col">
                     ภาษี
                   </div>
@@ -70,7 +70,7 @@
                     ฿{{ numberWithCommas(Math.round(((productPrice + transportPrice - discountPrice) * 3.65 / 100) + ((productPrice + transportPrice - discountPrice) * 3.65 / 100) * 7 / 100)) }}
 
                   </div>
-                </div>
+                </div> -->
                 <div class="row m-0">
                   <div class="col-12">
                     <hr>
@@ -82,7 +82,7 @@
                   </div>
                   <div class="col">
                     <span v-if="(productPrice + transportPrice - discountPrice) > 0">
-                      ฿{{numberWithCommas((productPrice + transportPrice - discountPrice + Math.round(((productPrice + transportPrice - discountPrice) * 3.65 / 100) + ((productPrice + transportPrice - discountPrice) * 3.65 / 100) * 7 / 100)) )}}
+                      ฿{{numberWithCommas((productPrice + transportPrice - discountPrice))}}
                     </span>
                     <span v-else>
                       ฿20

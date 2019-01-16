@@ -45,14 +45,16 @@
                 >
                   <div
                     class="chat-list"
-                    :class="{'active': chat.room == room }"
-                    v-show="isChatOpen"
-                    v-for="chat in chatList"
+                    :class="{'active': chat.room == chats.room }"
+                    :ref="chat.room"
+                    v-show="isChatOpen && chats.list"
+                    v-for="chat in chats.list"
                     :key="chat._id"
                     @click="triggerActiveChatList(chat)"
                     :style="{'background-image': 'url(' + (chat.author[0].image || '/static/images/lazy/lazyload.svg') + ')'}"
                   >
-                    <div class="chat-list-remove">
+                    <div class="chat-list-remove color-red1">
+                      <!-- {{ chat.room }} -->
                       <font-awesome-icon
                         icon="times"
                         aria-hidden="true"
@@ -100,8 +102,11 @@ export default {
     return {
       state: false,
       socket: io(`${process.env.BACKEND_URI}`),
-      room: null,
-      chatList: [],
+      chats: {
+        room: null,
+        data: null,
+        list: []
+      },
       uid: null,
       participants: [
         {
@@ -165,14 +170,6 @@ export default {
     }
   },
   ///
-  // Mounted
-  ///
-  mounted() {
-    if (localStorage.basket)
-      this.basketUpdate(JSON.parse(localStorage.getItem("basket")));
-  },
-
-  ///
   // Methods
   ///
   methods: {
@@ -187,19 +184,6 @@ export default {
     },
     updateState(state) {
       this.state = state;
-    },
-    async triggerActiveChatList(data) {
-      this.room = this.chatData[data.index]._id;
-      this.messageList = this.chatData[data.index].msg;
-
-      const indexMe = await this.messageList.map((x, y) => {
-        if (
-          x.author == this.userData
-            ? this.userData._id
-            : null || x.author == this.uid
-        )
-          this.messageList[y].author = "me";
-      });
     },
     sendMessage(text) {
       if (text.length > 0) {
@@ -217,7 +201,7 @@ export default {
       // called when the user sends a message
       this.messageList = [...this.messageList, message];
       this.socket.emit("chat message", {
-        room: this.room,
+        room: this.chats.room,
         msg: this.messageList,
         client: this.uid
       });
@@ -231,37 +215,58 @@ export default {
       // called when the user clicks on the botton to close the chat
       this.isChatOpen = false;
     },
-    // * [Trigger] Get Chat
-    async triggerChatGet() {
-      try {
-        // Auth
-        const chatData = await this.chatGet(this.uid);
-        if (_.isEmpty(chatData)) return;
-        this.chatList =
-          (await chatData.map((x, y) => ({
-            author: x.author,
-            room: x._id,
-            index: y
-          }))) || [];
 
-        if (!_.isEmpty(this.chatList)) {
-          this.messageList = chatData[0].msg;
-          this.messageListTemp = chatData[0].msg;
-          this.room = chatData[0]._id;
-        }
+    // * Change author id to 'me'
+    async idToMe() {
+      // check chat data
+      if (_.isEmpty(this.chats.data)) return false;
 
-        const indexMe = await this.chatData[0].msg.map((x, y) => {
-          if (
-            x.author == this.userData
-              ? this.userData._id
-              : null || x.author == this.uid
-          )
-            return (this.messageList[y].author = "me");
+      await this.chats.data.map((items, indexs) => {
+        items.msg.map((item, index) => {
+          if (this.uid == item.author)
+            this.chats.data[indexs].msg[index].author = "me";
         });
-        return true;
-      } catch (error) {
-        console.log(error);
-        return false;
+      });
+
+      return true;
+    },
+
+    // * Create chat list
+    async chatList() {
+      if (_.isEmpty(this.chats.data)) return false;
+
+      this.chats.list = await this.chats.data.map((items, index) => {
+        // [bug] index not working
+        return {
+          room: items._id,
+          index: index,
+          author: items.author
+        };
+      });
+    },
+    // * [Trigger] Chat Group
+    async triggerActiveChatList(list) {
+      this.messageList = await this.chats.data[list.index].msg;
+      this.chats.room = list.room;
+      this.scrollToBottom();
+    },
+    async triggerChatGet() {
+      // get chat
+      this.chats.data = await this.chatGet(this.uid);
+
+      // init idToMe
+      await this.idToMe();
+
+      // init chat list
+      await this.chatList();
+
+      // init room to index [0]
+      if (!_.isEmpty(this.chats.data)) this.chats.room = this.chats.data[0]._id;
+
+      // init messageList from chats index [0]
+      if (!_.isEmpty(this.chats.data)) {
+        this.messageList = this.chats.data[0].msg;
+        this.scrollToBottom();
       }
     },
     async triggerGuestGet() {
@@ -272,27 +277,31 @@ export default {
         const uid = guestGet ? guestGet : await this.guestUpdate(this.uid);
         this.uid = uid;
       }
+    },
+    scrollToBottom() {
+      // validate
+
+      this.$nextTick(() => {
+        $(function() {
+          let target = $(".sc-message-list");
+          $(".sc-message-list").scrollTop(
+            $(".sc-message-list")[0].scrollHeight
+          );
+        });
+      });
     }
   },
 
   // ! WATCH
-  watch: {
-    messageList: {
-      handler: function(data) {
-        this.messageListTemp = _.cloneDeep(data, true);
-      },
-      deep: true
-    }
-    // chatData: {
-    //   handler: function(data) {
-    //     this.messageList = data.map(x => x.msg);
-    //   },
-    //   deep: true
-    // }
-  },
+  watch: {},
 
   // ! MOUNTED
   async mounted() {
+    // get localStorage
+    if (localStorage.basket)
+      this.basketUpdate(JSON.parse(localStorage.getItem("basket")));
+
+    // init uid
     this.uid = this.userData
       ? this.userData._id
       : "_" +
@@ -302,56 +311,48 @@ export default {
         "_" +
         Date.now().toString();
 
+    // call GuestGet
     await this.triggerGuestGet();
+
+    // call ChatGet
     await this.triggerChatGet();
 
+    // on chat update
     this.socket.on("chat guest updated", async data => {
-      if (data.author.findIndex(x => x.id == this.uid) >= 0) {
-        this.room = data._id;
-        this.messageList = data.msg;
-        if (this.chatData) this.chatData.msg = data.msg;
+      // chat message id is match uid
+      if (data.author.findIndex(author => author.id == this.uid) >= 0) {
+        // update room
+        if (!this.chats.room) this.chats.room = data._id;
 
-        // let findIndex = this.chatData.findIndex(x => x._id == this.room);
-        // this.chatData[findIndex].msg = data.msg;
-
-        // init user chat first time
-        if (_.isEmpty(this.chatList)) {
-          this.chatList.push({
-            author: data.author,
-            index: 0,
-            room: data._id
-          });
-          this.chatData.push(data);
-        } else {
-          // init chatlist in secondtime
-          for (let index in this.chatList) {
-            let item = this.chatList[index];
-            if (item.room != data._id) {
-              this.chatList.unshift({
-                author: data.author,
-                index: index,
-                room: data._id
-              });
-              this.chatData.push(data);
-            }
-          }
+        // update new data --> unshift chat object
+        if (this.chats.data.findIndex(item => item._id == data._id) < 0) {
+          this.chats.data.unshift(data);
         }
 
-        const indexMe = await data.msg.map((x, y) => {
-          if (
-            x.author == this.userData
-              ? this.userData._id
-              : null || x.author == this.uid
-          )
-            this.messageList[y].author = "me";
-        });
+        // update chat list
+        await this.chatList();
+
+        // update old data --> message
+        const updateIndex = this.chats.data.findIndex(
+          list => list._id == data._id
+        );
+        this.chats.data[updateIndex].msg = data.msg;
+
+        // update chat message room match data._id
+        if (this.chats.room == data._id) {
+          this.messageList = data.msg;
+          this.scrollToBottom();
+        }
+
+        // init idToMe
+        await this.idToMe();
       }
     });
   },
 
   // ! COMPUTED
   computed: {
-    ...mapGetters(["chatData", "basketData", "userData"])
+    ...mapGetters(["basketData", "userData"])
   },
 
   components: { Chat }

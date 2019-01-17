@@ -529,7 +529,11 @@ export default {
       }).then(x => x.value);
       if (!confirm) return;
 
-      this.$router.push({ name: "PrintOrder", params: { id: data._id } });
+      const href = this.$router.resolve({
+        name: "PrintOrder",
+        params: { id: data._id }
+      });
+      window.open(href.href, "_blank");
     },
 
     // * [Popup] trigger delete evidence

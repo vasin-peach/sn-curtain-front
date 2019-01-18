@@ -533,7 +533,7 @@ function smoothScroll(to) {
   // if (to.path.split("/").indexOf('payment') == -1 && to.path.split("/").indexOf('credit') == -1 && to.path.split("/").indexOf('admin') == -1) {
   // bind html scroll
   $window.bind("mousewheel DOMMouseScroll scroll", function (event) {
-    if ($(event.target).closest('.sc-message-list, .order-box, .chat-list-container').length <= 0) {
+    if ($(event.target).closest('.sc-message-list, .order-box, .chat-list-container, .product-list-container').length <= 0) {
 
       event.preventDefault();
       var delta =

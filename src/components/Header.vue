@@ -144,7 +144,7 @@ export default {
         { duration: 300, delay: 300, _cacheValues: false },
         [0.53, 0.49, 0.18, 0.97]
       );
-      $("#menu-6").velocity(
+      $("#menu-7").velocity(
         { opacity: "1", top: "40px" },
         { duration: 300, delay: 350, _cacheValues: false },
         [0.53, 0.49, 0.18, 0.97]
@@ -209,6 +209,12 @@ export default {
         0.97
       ]);
       $("#menu-6").velocity({ opacity: "0", top: "0px" }, { duration: 400 }, [
+        0.53,
+        0.49,
+        0.18,
+        0.97
+      ]);
+      $("#menu-7").velocity({ opacity: "0", top: "0px" }, { duration: 400 }, [
         0.53,
         0.49,
         0.18,

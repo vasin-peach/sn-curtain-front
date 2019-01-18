@@ -1,22 +1,18 @@
 .printOrder {
   background: $white1;
   z-index: 50;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 10vh 0 20vh;
 
   .print-wrapper {
     cursor: pointer;
     width: 842px;
-    height: 595px;
+    // height: 595px;
     max-width: 842px;
-    max-height: 595px;
-    overflow: hidden;
+    min-height: 595px;
+    // overflow: hidden;
     box-shadow: 0 1px 5px 1px $gray3;
     transition: opacity ease-out 0.3s;
 

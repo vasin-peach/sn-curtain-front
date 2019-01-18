@@ -56,7 +56,7 @@
                     :style="{'background-image': 'url(' + (chat.author[0].image || '/static/images/lazy/lazyload.svg') + ')'}"
                   >
                     <span></span>
-                    <div
+                    <!-- <div
                       class="chat-list-remove color-red1"
                       v-show="chats.list.length != 1"
                       @click="removeChat(index)"
@@ -65,7 +65,7 @@
                         icon="times"
                         aria-hidden="true"
                       />
-                    </div>
+                    </div> -->
                     <div
                       class="chat-list-alert color-red1"
                       v-show="chat.alert"

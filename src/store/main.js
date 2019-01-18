@@ -19,8 +19,11 @@ import redirect from './modules/redirect';
 import func from './modules/func';
 import sum_user from './modules/summary/sum-user';
 import sum_sale from './modules/summary/sum-sale';
+import view from './modules/summary/view';
 import admin_order from './modules/admin_order';
 import slide from './modules/slide';
+import chat from './modules/chat';
+import guest from './modules/guest';
 
 // Use Moduesl
 Vue.use(Vuex)
@@ -47,7 +50,10 @@ export default new Vuex.Store({
     sum_user,
     sum_sale,
     admin_order,
-    slide
+    slide,
+    chat,
+    guest,
+    view
   },
   strict: false
 })

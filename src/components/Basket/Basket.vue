@@ -446,7 +446,7 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.4s ease-in;
+  transition: opacity 0.2s ease-in;
 }
 
 .fade-enter,

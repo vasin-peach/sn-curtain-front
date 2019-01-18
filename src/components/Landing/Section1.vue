@@ -53,6 +53,7 @@
                 <div
                   class="col-6 p-0 col-md-12 mb-2"
                   id="promotion-1"
+                  v-if="slideSubData[0]"
                 >
                   <a
                     class="child-box flex justify-center align-center border-2"
@@ -70,6 +71,7 @@
                 <div
                   class="col-6 p-0 col-md-12 mt-2"
                   id="promotion-2"
+                  v-if="slideSubData[1]"
                 >
                   <a
                     class="child-box flex justify-center align-center border-2"

@@ -6,6 +6,7 @@ import middlewareFunction from './middleware.func';
 
 const main = () =>
   import('@component/Main');
+const PrintOrder = () => import('@component/PrintOrder');
 const Notfound = () =>
   import('@component/Notfound');
 const Policy = () =>
@@ -95,6 +96,16 @@ const router = new Router({
       floatbar: FloatBar
     },
     children: [{
+        path: '/printorder/:id',
+        component: PrintOrder,
+        name: 'PrintOrder',
+        meta: {
+          title: 'ปริ้นออเดอร์',
+          login: 1,
+          permission: 3
+        }
+      },
+      {
         path: 'landing',
         alias: '/',
         component: Landing,
@@ -428,7 +439,9 @@ router.beforeEach(async (to, from, next) => {
   document.title = to.meta.title + " - S&N Curtain จำหน่ายผ้าม่านออนไลน์";
 
   // init smooth scroll
-  smoothScroll(to);
+  $(function () {
+    smoothScroll(to);
+  })
 
   // ? update redirect after login)
   store.dispatch('updateRedirect', to.path.replace('/', ""));
@@ -493,10 +506,10 @@ router.beforeEach(async (to, from, next) => {
 
   async function checkAuth() {
     return new Promise((resolve, reject) => {
-      store.dispatch('profile').then(() => {
-        return resolve()
-      }, () => {
-        return resolve()
+      store.dispatch('profile').then((result) => {
+        return resolve(result)
+      }, (err) => {
+        return resolve(err)
       })
     })
   }
@@ -516,12 +529,13 @@ function smoothScroll(to) {
   var scrollTime = 0.8; //Scroll time
   var scrollDistance = 270; //Distance. Use smaller value for shorter scroll and greater value for longer scroll
 
-  // check if path area ['address'] or ['credit']
-  if (to.path.split("/").indexOf('payment') == -1 && to.path.split("/").indexOf('credit') == -1 && to.path.split("/").indexOf('admin') == -1) {
-    // bind html scroll
-    $window.bind("mousewheel DOMMouseScroll scroll", function (event) {
-      event.preventDefault();
+  // // check if path area ['address'] or ['credit']
+  // if (to.path.split("/").indexOf('payment') == -1 && to.path.split("/").indexOf('credit') == -1 && to.path.split("/").indexOf('admin') == -1) {
+  // bind html scroll
+  $window.bind("mousewheel DOMMouseScroll scroll", function (event) {
+    if ($(event.target).closest('.sc-message-list, .order-box, .chat-list-container, .product-list-container').length <= 0) {
 
+      event.preventDefault();
       var delta =
         event.originalEvent.wheelDelta / 120 ||
         -event.originalEvent.detail / 3;
@@ -536,11 +550,14 @@ function smoothScroll(to) {
         ease: Power1.easeOut, //For more easing functions see https://api.greensock.com/js/com/greensock/easing/package-detail.html
         overwrite: 5
       });
-    });
-  } else {
-    // unbind html scroll
-    $window.unbind("mousewheel DOMMouseScroll scroll");
-  }
+
+    }
+  });
+
+  // } else {
+  //   // unbind html scroll
+  //   $window.unbind("mousewheel DOMMouseScroll scroll");
+  // }
 
 }
 

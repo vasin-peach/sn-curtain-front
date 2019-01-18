@@ -2,10 +2,17 @@
   <div class="section2">
     <div class="container">
       <div class="row category-container d-flex justify-content-between">
-        <div class="col-3 col-md-2 category-box fade" v-for="(item, index) in category" :key="index">
+        <div
+          class="col-3 col-md-2 category-box fade"
+          v-for="(item, index) in category"
+          :key="index"
+        >
           <router-link :to="{ name: 'Store-Filter', params: { category: item.params} }">
             <div class="category-content">
-              <img v-lazy="'/static/images/category/' + item.name" :alt="item.name">
+              <img
+                v-lazy="'/static/images/category/' + item.name"
+                :alt="item.name"
+              >
             </div>
             <div class="category-title">
               {{ item.title }}
@@ -55,32 +62,32 @@ export default {
           title: "ม่านมู่ลี่"
         },
         {
-          name: "category-01.png",
+          name: "category-07.png",
           params: "ผ้าม่าน,ม่านม้วน",
           title: "ม่านม้วน"
         },
         {
-          name: "category-02.png",
+          name: "category-08.png",
           params: "ผ้าม่าน,ม่านกั้นแอร์",
           title: "ม่านกั้นแอร์"
         },
         {
-          name: "category-06.png",
+          name: "category-09.png",
           params: "ผ้าม่าน,ม่านลอน",
           title: "ม่านลอน"
         },
         {
-          name: "category-03.png",
+          name: "category-10.png",
           params: "วอลล์เปอเปอร์",
           title: "วอลล์เปอเปอร์"
         },
         {
-          name: "category-04.png",
+          name: "category-11.png",
           params: "ผ้าม่าน,มุ้งลวด-มุ้งจีบ",
           title: "มุ้งลวด-มุ้งจีบ"
         },
         {
-          name: "category-05.png",
+          name: "category-12.png",
           params: "อุปกรณ์",
           title: "อุปกรณ์ม่าน"
         }

@@ -8,7 +8,7 @@ const actions = {
     return new Promise((resolve, reject) => {
 
       // ! Validate
-      if (!data || isEmpty(data)) return reject('bad param, data is empty.');
+      if (!data || isEmpty(data)) return;
 
       // !Call
 

@@ -1,17 +1,20 @@
 <template>
   <div class="admin">
     <div class="container-header row m-0">
-      <div class="col-2 col-sm-3 col-md-2 header-profile">
+      <div
+        class="col-2 col-sm-3 col-md-2 header-profile"
+        v-if="userData"
+      >
         <div class="row m-0">
           <div class="col-12 col-sm-5 profile-image">
             <div>
-              <img src="https://storage.googleapis.com/sn-curtain-dev-profile/shinasaki07@gmail.com--1545032057180">
+              <img v-lazy="userData.photo">
             </div>
           </div>
           <div class="col-12 col-sm-7 profile-desc d-sm-block d-none">
             <div>
-              <span>Welcome,</span><br>
-              <span>Peachesfewffwefwef</span>
+              <span>ยินดีต้อนรับ,</span><br>
+              <span>{{userData.name.first_name || userData.name.display_name}}</span>
             </div>
           </div>
         </div>
@@ -143,7 +146,7 @@
               รหัสส่วนลด
             </div>
           </router-link>
-          <router-link
+          <!-- <router-link
             :to="{name: 'AdminBank'}"
             class="menu-list row m-0"
             id="bank"
@@ -157,7 +160,7 @@
             <div class="col-10 col-sm d-none d-sm-block">
               การโอน
             </div>
-          </router-link>
+          </router-link> -->
         </div>
         <div class="content-content col">
           <router-view></router-view>
@@ -212,7 +215,8 @@ export default {
       "saleDayData",
       "saleWeekData",
       "saleMonthData",
-      "saleYearData"
+      "saleYearData",
+      "userData"
     ])
   }
 };

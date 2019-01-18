@@ -216,7 +216,7 @@
 <script>
 import moment from "moment";
 import html2canvas from "html2canvas";
-import jsPDF from "jsPDF";
+import jsPDF from "jspdf";
 import { mapGetters, mapActions } from "vuex";
 export default {
   name: "PrintOrder",

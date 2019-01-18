@@ -46,21 +46,25 @@
           v-else
         >ข้อมูลส่วนตัว</router-link>
         <router-link
-          :to="{ name: 'AdminDashboard' }"
+          :to="{ name: 'Service' }"
           id="menu-3"
+        >คำนวนราคา</router-link>
+        <router-link
+          :to="{ name: 'AdminDashboard' }"
+          id="menu-4"
           v-if="userData && userData.permission.value >= 3"
         >แผงควบคุม</router-link>
         <router-link
           :to="{ name: 'Store' }"
-          id="menu-4"
+          id="menu-5"
         >สินค้า</router-link>
         <router-link
           :to="{ name: 'Service' }"
-          id="menu-5"
+          id="menu-6"
         >บริการ</router-link>
         <a
           @click="triggerLogout()"
-          id="menu-6"
+          id="menu-7"
           v-if="userData"
         >ออกจากระบบ</a>
       </div>
@@ -140,6 +144,11 @@ export default {
         { duration: 300, delay: 300, _cacheValues: false },
         [0.53, 0.49, 0.18, 0.97]
       );
+      $("#menu-7").velocity(
+        { opacity: "1", top: "40px" },
+        { duration: 300, delay: 350, _cacheValues: false },
+        [0.53, 0.49, 0.18, 0.97]
+      );
       // $('#menu-6').velocity({ opacity: "1", top: "40px" }, { duration: 300, delay: 200, _cacheValues:false}, [.53,.49,.18,.97]);
 
       // // disable scroll
@@ -200,6 +209,12 @@ export default {
         0.97
       ]);
       $("#menu-6").velocity({ opacity: "0", top: "0px" }, { duration: 400 }, [
+        0.53,
+        0.49,
+        0.18,
+        0.97
+      ]);
+      $("#menu-7").velocity({ opacity: "0", top: "0px" }, { duration: 400 }, [
         0.53,
         0.49,
         0.18,

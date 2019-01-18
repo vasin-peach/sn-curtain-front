@@ -19,15 +19,24 @@
       <div
         class="admin-dashboard-container row m-0"
         key="admin-dashboard"
+        x
         v-else
       >
-        <div class="admin-dashboard-left card-container col">
+        <div class="admin-dashboard-left col-12">
           <div class="card-box">
-            <canvas
-              id="myChart"
-              width="auto"
-              height="100"
-            ></canvas>
+            <div class="card-title">
+              (Time Series) การดูสินค้า
+            </div>
+            <canvas id="graph"></canvas>
+          </div>
+        </div>
+
+        <div class="admin-dashboard-left card-container col-12">
+          <div class="card-box">
+            <div class="card-title">
+              สินค้ายอดนิยม
+            </div>
+            <Section4></Section4>
           </div>
         </div>
 
@@ -41,7 +50,8 @@
 <script>
 import Chart1 from "./Charts/Chart1";
 import Loading from "../Loading";
-import moment from "moment";
+import Section4 from "../Landing/Section4";
+import moment from "moment-timezone";
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "dashboard",
@@ -52,7 +62,8 @@ export default {
       productData: null,
       productView: null,
       productViewNew: null,
-      timeList: []
+      timeList: [],
+      timeSeries: []
     };
   },
 
@@ -91,7 +102,7 @@ export default {
             moment(
               `${("0" + hour).slice(-2)}:${("0" + min).slice(-2)}`,
               "hh:mm"
-            ).format("hh:mm")
+            ).format("HH:mm")
           );
         }
       }
@@ -99,92 +110,83 @@ export default {
 
     // * [FORMAT] change VIEW time format to HH:MM
     async viewTimeFormat() {
-      this.productViewNew = this.productView.map(items => {
-        let start = moment(items.created_at);
-        let remaider = 30 - (start.minute() % 30);
-        return {
-          t: moment(start)
-            .add(remaider, "minute")
-            .format("hh:mm"),
-          y: 30
-        };
-      });
+      for (let hour = 0; hour < 24; hour++) {
+        for (let min = 0; min <= 30; min += 30) {
+          var before = moment(
+            `${("0" + hour).slice(-2)}:${("0" + min).slice(-2)}`,
+            "HH:mm"
+          ).subtract(30, "minute");
+          var after = moment(
+            `${("0" + hour).slice(-2)}:${("0" + min).slice(-2)}`,
+            "HH:mm"
+          );
+
+          var f = 0;
+          this.productView.map(items => {
+            let isBW = moment(items.created_at)
+              .tz("Asia/Bangkok")
+              .isBetween(before, after);
+            if (isBW) f += 1;
+          });
+
+          this.timeSeries.push({ x: after.format("HH:mm"), y: f });
+        }
+      }
     },
 
     // * [INIT] init chart
     initChart() {
-      $(function() {
-        console.log(document.getElementById("myChart"));
-        var ctx = document.getElementById("myChart").getContext("2d");
-
-        var myLineChart = new Chart(ctx, {
-          type: "line",
-          data: {
-            xLabels: this.timeList,
-            // yLabels: [0, 100],
-            datasets: [
-              {
-                label: "time",
-                backgroundColor: "#0088d4",
-                borderColor: "#0088d4",
-                data: this.productViewNew,
-                fill: false
-              }
-              // {
-              //   label: "time",
-              //   backgroundColor: "rgba(0, 136, 212, .4)",
-              //   borderColor: "rgba(0, 136, 212, .4)",
-              //   borderDash: [8, 8],
-              //   data: [
-              //     "55.88",
-              //     "56.69",
-              //     "56.31",
-              //     "55.85",
-              //     "56.47",
-              //     "55.53",
-              //     "56.58",
-              //     "55.14",
-              //     "55.39"
-              //   ],
-              //   fill: false
-              // }
-            ]
-          },
-          options: {
-            animation: false,
-            responsive: true,
-            elements: {
-              line: {
-                tension: 0
-              }
-            },
-            legend: {
-              display: false
-            },
-            scales: {
-              xAxes: [
-                {
-                  display: true
-                }
-              ],
-              yAxes: [
-                {
-                  display: true,
-                  type: "category",
-                  position: "left",
-                  ticks: {
-                    stepSize: 1,
-                    callback: function(tickValue, index, ticks) {
-                      if (!(index % parseInt(ticks.length / 5))) {
-                        return tickValue;
-                      }
-                    }
-                  }
-                }
-              ]
+      var ctx = document.getElementById("graph").getContext("2d");
+      var bar = new Chart(ctx, {
+        type: "line",
+        data: {
+          datasets: [
+            {
+              label: "รับชม",
+              data: this.timeSeries,
+              fill: false,
+              borderColor: "#ee9b5c",
+              pointRadius: 5,
+              pointHoverRadius: 10
             }
+          ]
+        },
+        options: {
+          responsive: true,
+          title: {
+            display: false
+          },
+          tooltips: {
+            mode: "index",
+            intersect: false
+          },
+          hover: {
+            mode: "nearest",
+            intersect: true
+          },
+          scales: {
+            xAxes: [
+              {
+                type: "time",
+                time: {
+                  parser: "HH:mm"
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: "เวลา"
+                }
+              }
+            ],
+            yAxes: [
+              {
+                scaleLabel: {
+                  display: true,
+                  labelString: "จำนวน"
+                }
+              }
+            ]
           }
-        });
+        }
       });
     }
   },
@@ -210,7 +212,7 @@ export default {
   },
 
   // ! COMPONENTS
-  components: { Loading, Chart1 }
+  components: { Loading, Chart1, Section4 }
 };
 </script>
 

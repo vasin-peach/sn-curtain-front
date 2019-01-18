@@ -22,6 +22,13 @@
         v-else
       >
         <div class="admin-dashboard-left card-container col">
+          <div class="card-box">
+            <canvas
+              id="myChart"
+              width="auto"
+              height="100"
+            ></canvas>
+          </div>
         </div>
 
       </div>
@@ -32,26 +39,153 @@
 </template>
 
 <script>
+import Chart1 from "./Charts/Chart1";
 import Loading from "../Loading";
-import Chart from 'chart.js';
+import moment from "moment";
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "dashboard",
   data() {
     return {
       loadingState: true,
-      loadingHeight: 0
+      loadingHeight: 0,
+      productData: null,
+      productView: null,
+      productViewNew: null,
+      timeList: []
     };
+  },
+
+  watch: {
+    timeList: function() {
+      setTimeout(() => {
+        this.initChart();
+      }, 1000);
+    }
   },
 
   // !METHODS
   methods: {
-    ...mapActions(["productAll"]),
+    ...mapActions(["productAll", "viewGet"]),
 
     // * [TRIGGER] get product
     async triggerProductGet() {
-      await this.productAll();
+      this.productData = await this.productAll();
+      this.productView = await this.viewGet();
+
+      // * View time change format
+      await this.viewTimeFormat();
+
+      // * Genarate Time
+      await this.genTime();
+
       this.loadingState = false;
+    },
+
+    // * [GENERATE] create array of time
+    async genTime() {
+      this.timeList = [];
+      for (let hour = 0; hour < 24; hour++) {
+        for (let min = 0; min <= 30; min += 30) {
+          this.timeList.push(
+            moment(
+              `${("0" + hour).slice(-2)}:${("0" + min).slice(-2)}`,
+              "hh:mm"
+            ).format("hh:mm")
+          );
+        }
+      }
+    },
+
+    // * [FORMAT] change VIEW time format to HH:MM
+    async viewTimeFormat() {
+      this.productViewNew = this.productView.map(items => {
+        let start = moment(items.created_at);
+        let remaider = 30 - (start.minute() % 30);
+        return {
+          t: moment(start)
+            .add(remaider, "minute")
+            .format("hh:mm"),
+          y: 30
+        };
+      });
+    },
+
+    // * [INIT] init chart
+    initChart() {
+      $(function() {
+        console.log(document.getElementById("myChart"));
+        var ctx = document.getElementById("myChart").getContext("2d");
+
+        var myLineChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            xLabels: this.timeList,
+            // yLabels: [0, 100],
+            datasets: [
+              {
+                label: "time",
+                backgroundColor: "#0088d4",
+                borderColor: "#0088d4",
+                data: this.productViewNew,
+                fill: false
+              }
+              // {
+              //   label: "time",
+              //   backgroundColor: "rgba(0, 136, 212, .4)",
+              //   borderColor: "rgba(0, 136, 212, .4)",
+              //   borderDash: [8, 8],
+              //   data: [
+              //     "55.88",
+              //     "56.69",
+              //     "56.31",
+              //     "55.85",
+              //     "56.47",
+              //     "55.53",
+              //     "56.58",
+              //     "55.14",
+              //     "55.39"
+              //   ],
+              //   fill: false
+              // }
+            ]
+          },
+          options: {
+            animation: false,
+            responsive: true,
+            elements: {
+              line: {
+                tension: 0
+              }
+            },
+            legend: {
+              display: false
+            },
+            scales: {
+              xAxes: [
+                {
+                  display: true
+                }
+              ],
+              yAxes: [
+                {
+                  display: true,
+                  type: "category",
+                  position: "left",
+                  ticks: {
+                    stepSize: 1,
+                    callback: function(tickValue, index, ticks) {
+                      if (!(index % parseInt(ticks.length / 5))) {
+                        return tickValue;
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        });
+      });
     }
   },
 
@@ -61,9 +195,9 @@ export default {
   },
 
   // ! MOUNTED
-  mounted() {
+  async mounted() {
     // * Trigger get product
-    this.triggerProductGet();
+    await this.triggerProductGet();
 
     // * init loading height
     this.$nextTick(() => {
@@ -76,7 +210,7 @@ export default {
   },
 
   // ! COMPONENTS
-  components: { Loading }
+  components: { Loading, Chart1 }
 };
 </script>
 

@@ -19,6 +19,7 @@ import redirect from './modules/redirect';
 import func from './modules/func';
 import sum_user from './modules/summary/sum-user';
 import sum_sale from './modules/summary/sum-sale';
+import view from './modules/summary/view';
 import admin_order from './modules/admin_order';
 import slide from './modules/slide';
 import chat from './modules/chat';
@@ -51,7 +52,8 @@ export default new Vuex.Store({
     admin_order,
     slide,
     chat,
-    guest
+    guest,
+    view
   },
   strict: false
 })

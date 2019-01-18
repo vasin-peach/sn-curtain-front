@@ -471,6 +471,9 @@ export default {
       const confirm = await this.$swal({
         imageUrl: data.order_image,
         imageAlt: data.description,
+        showCancelButton: true,
+        confirmButtonText: "ปริ้น",
+        cancelButtonText: "ปิด",
         html:
           `<div class="row m-0 text-left">` +
           `<div class="col-12">รหัส: <b>${data._id}</b></div>` +
@@ -523,7 +526,14 @@ export default {
             )
             .join("<br>")}</div>` +
           `</div>`
+      }).then(x => x.value);
+      if (!confirm) return;
+
+      const href = this.$router.resolve({
+        name: "PrintOrder",
+        params: { id: data._id }
       });
+      window.open(href.href, "_blank");
     },
 
     // * [Popup] trigger delete evidence

@@ -1,7 +1,12 @@
 <template>
   <div class="profile-order">
     <div class="profile-order-container">
-      <div class="profile-order-list" v-for="(items, id) in order_data" :key="items._id" v-b-toggle="'order-list-collapse-' + id">
+      <div
+        class="profile-order-list"
+        v-for="(items, id) in order_data"
+        :key="items._id"
+        v-b-toggle="'order-list-collapse-' + id"
+      >
         <div class="row m-0">
           <div class="col-md-3">
             <b>รายการ:</b> {{ makePad(items._id, 7) }}
@@ -14,18 +19,30 @@
           </div>
         </div>
 
-        <b-collapse class="row m-0 profile-order-collapse" :id="'order-list-collapse-' + id">
+        <b-collapse
+          class="row m-0 profile-order-collapse"
+          :id="'order-list-collapse-' + id"
+        >
           <div class="col-12">
             <hr>
           </div>
-          <div class="col" v-if="items.order_status == 'order_success'">
+          <div
+            class="col"
+            v-if="items.order_status == 'success'"
+          >
             <router-link :to="{ name: 'Bill_View', params: { id: items._id } }">
-              <button type="button" class="button">
+              <button
+                type="button"
+                class="button"
+              >
                 ดูบิลด์
               </button>
             </router-link>
           </div>
-          <div class="col wait_confirm" v-if="items.order_status == 'wait_confirm'">
+          <div
+            class="col wait_confirm"
+            v-if="items.order_status == 'confirm'"
+          >
             <div class="row m-0">
               <div class="col">
                 ค่าขนส่ง: {{ numberWithCommas(items.pricing.delivery_price) }} <br>
@@ -39,7 +56,11 @@
           </div>
           <div class="col-12">
             <hr>
-            <button type="button" class="button" @click="deleteTrigger(items._id)">ลบรายการนี้</button>
+            <button
+              type="button"
+              class="button"
+              @click="deleteTrigger(items._id)"
+            >ลบรายการนี้</button>
           </div>
         </b-collapse>
       </div>

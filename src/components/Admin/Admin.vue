@@ -146,7 +146,7 @@
               รหัสส่วนลด
             </div>
           </router-link>
-          <router-link
+          <!-- <router-link
             :to="{name: 'AdminBank'}"
             class="menu-list row m-0"
             id="bank"
@@ -160,7 +160,7 @@
             <div class="col-10 col-sm d-none d-sm-block">
               การโอน
             </div>
-          </router-link>
+          </router-link> -->
         </div>
         <div class="content-content col">
           <router-view></router-view>

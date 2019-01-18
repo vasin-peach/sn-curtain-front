@@ -157,25 +157,36 @@ const actions = {
   productGet({
     commit
   }, payload) {
-    return new Promise((resolve, reject) => {
-      // check payload
-      if (!payload) return reject("payload empty");
+    return new Promise(async (resolve, reject) => {
+        // check payload
+        if (!payload) return reject("payload empty");
 
-      // create uri
-      var uriRequest = "/product/id/" + payload;
+        // create uri
+        var uriRequest = "/product/id/" + payload;
 
-      // send request
-      Vue.http.get(process.env.BACKEND_URI + uriRequest).then(
-        response => {
-          commit("productUpdate", response.data.data);
-          return resolve(response.data);
-        },
-        error => {
-          commit("productUpdate", error);
-          return reject(error);
-        }
-      );
-    });
+        // send request
+        Vue.http.get(process.env.BACKEND_URI + uriRequest).then(
+          async response => {
+            const payload = {
+              product: {
+                id: response.data.data[0]._id,
+                brand: response.data.data[0].brand,
+                name: response.data.data[0].name
+              }
+            }
+            await Vue.http.post(`${process.env.BACKEND_URI}/view`, payload);
+            await Vue.http.post(`${process.env.BACKEND_URI}/product/view`, {
+              id: response.data.data[0]._id
+            });
+            commit("productUpdate", response.data.data);
+            return resolve(response.data);
+          });
+      },
+      error => {
+        commit("productUpdate", error);
+        return reject(error);
+      });
+
   },
 
 

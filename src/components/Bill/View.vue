@@ -1,6 +1,9 @@
 <template>
   <div class="bill-view">
-    <div class="container bill-container" v-if="order_data">
+    <div
+      class="container bill-container"
+      v-if="order_data"
+    >
 
       <span @click="print()"></span>
       <div class="bill-head">
@@ -36,7 +39,7 @@
             <span class="title">ผู้ซื้อ</span>
           </div>
           <div class="col">
-            <div>{{ order_data.payment.customer_name }}</div>
+            <!-- <div>{{ order_data.payment.customer_name }}</div> -->
             <div class="detail">{{ order_data.delivery.delivery_description }}</div>
             <div class="detail">{{ order_data.tel }}</div>
           </div>
@@ -58,7 +61,11 @@
             รวม
           </div>
         </div>
-        <div class="row m-0 order-list" v-for="items in order_data.product" :key="items.data._id">
+        <div
+          class="row m-0 order-list"
+          v-for="items in order_data.product"
+          :key="items.data._id"
+        >
           <div class="col-5 detail">
             {{ items.data.name }}
           </div>
@@ -72,7 +79,10 @@
             {{ numberWithCommas(items.amount * items.option) }} บาท
           </div>
         </div>
-        <div class="row m-0 order-list" v-if="order_data.discount.discount_code">
+        <div
+          class="row m-0 order-list"
+          v-if="order_data.discount.discount_code"
+        >
           <div class="col-5 detail">
             ส่วนลดโค้ด ({{ order_data.discount.discount_code }}) บาท
           </div>
@@ -129,41 +139,40 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import moment from 'moment';
+import { mapActions } from "vuex";
+import moment from "moment";
 export default {
-  name: 'Bill_View',
+  name: "Bill_View",
   mounted() {
-
     // change moment to th
-    moment.locale('th'); 
-    
+    moment.locale("th");
+
     // check params is exist
     if (this.$route.params.id) {
-
       // init order id
       this.order_id = this.$route.params.id;
-      this.orderGetById(this.order_id).then((resp) => { // get order detail from backend
+      this.orderGetById(this.order_id).then(
+        resp => {
+          // get order detail from backend
 
-        // set order_data
-        this.order_data = resp.data.data;
+          // set order_data
+          this.order_data = resp.data.data;
 
-        // make pad
-        this.order_id_mask = this.makePad(this.order_id, 7) || null;
+          // make pad
+          this.order_id_mask = this.makePad(this.order_id, 7) || null;
 
-        // make date
-        this.order_date_mask = this.makeDate(resp.data.data.created_at) || null;
+          // make date
+          this.order_date_mask =
+            this.makeDate(resp.data.data.created_at) || null;
+        },
+        err => {
+          // clear order_data
+          this.order_data = null;
 
-      }, (err) => {
-
-        // clear order_data
-        this.order_data = null;
-
-        // navigation to landing
-        this.$router.push({ name: 'Landing' });
-
-      });
-
+          // navigation to landing
+          this.$router.push({ name: "Landing" });
+        }
+      );
     }
   },
   data() {
@@ -171,34 +180,32 @@ export default {
       order_id: null,
       order_data: null,
       order_id_mask: null,
-      order_date_mask: null,
-    }
+      order_date_mask: null
+    };
   },
-  computed: {
-
-  },
-  watch: {
-
-  },
+  computed: {},
+  watch: {},
   methods: {
-    ...mapActions(['orderGetById']),
+    ...mapActions(["orderGetById"]),
 
     // format id
     makePad(str, size) {
       if (!str || !size) return false;
       var s = String(str);
-      while (s.length < (size || 2)) { s = "0" + s;}
+      while (s.length < (size || 2)) {
+        s = "0" + s;
+      }
       return s;
     },
     makeDate(data) {
       if (!data) return false;
-      return moment(data).format('LLL', 'th');
+      return moment(data).format("LLL", "th");
     },
     numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    },
+    }
   }
-}
+};
 </script>
 
 <style>

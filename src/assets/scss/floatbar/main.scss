@@ -4,6 +4,10 @@
   bottom: 0;
   width: 100%;
 
+  .sc-user-input--button:nth-child(3) {
+    display: none;
+  }
+
   .sc-chat-window {
     @include mobile {
       bottom: 80px !important;

@@ -32,62 +32,62 @@ export default {
     return {
       category: [
         {
-          name: "category-01.png",
+          name: "new-category-01.png",
           params: "ผ้าม่าน,ม่านตาไก่",
           title: "ม่านตาไก่"
         },
         {
-          name: "category-02.png",
+          name: "new-category-02.png",
           params: "ผ้าม่าน,ม่านจีบ",
           title: "ม่านจีบ"
         },
         {
-          name: "category-03.png",
+          name: "new-category-03.png",
           params: "ผ้าม่าน,ม่านพับ",
           title: "ม่านพับ"
         },
         {
-          name: "category-04.png",
+          name: "new-category-04.png",
           params: "ผ้าม่าน,ม่านคอกระเช้า",
           title: "ม่านคอกระเช้า"
         },
         {
-          name: "category-05.png",
+          name: "new-category-05.png",
           params: "ผ้าม่าน,ม่านหลุย",
           title: "ม่านหลุย"
         },
         {
-          name: "category-06.png",
+          name: "new-category-06.png",
           params: "ผ้าม่าน,ม่านมู่ลี่",
           title: "ม่านมู่ลี่"
         },
         {
-          name: "category-07.png",
+          name: "new-category-07.png",
           params: "ผ้าม่าน,ม่านม้วน",
           title: "ม่านม้วน"
         },
         {
-          name: "category-08.png",
+          name: "new-category-08.png",
           params: "ผ้าม่าน,ม่านกั้นแอร์",
           title: "ม่านกั้นแอร์"
         },
         {
-          name: "category-09.png",
+          name: "new-category-09.png",
           params: "ผ้าม่าน,ม่านลอน",
           title: "ม่านลอน"
         },
         {
-          name: "category-10.png",
+          name: "new-category-10.png",
           params: "วอลล์เปอเปอร์",
           title: "วอลล์เปอเปอร์"
         },
         {
-          name: "category-11.png",
+          name: "new-category-11.png",
           params: "ผ้าม่าน,มุ้งลวด-มุ้งจีบ",
           title: "มุ้งลวด-มุ้งจีบ"
         },
         {
-          name: "category-12.png",
+          name: "new-category-12.png",
           params: "อุปกรณ์",
           title: "อุปกรณ์ม่าน"
         }

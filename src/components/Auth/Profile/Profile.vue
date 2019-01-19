@@ -2,15 +2,28 @@
   <div class="profile">
     <div class="profile-wrapper">
       <div class="profile-header">
-        <div class="profile-box">
+        <div
+          class="profile-box"
+          v-if="userData"
+        >
           <div class="profile-background"></div>
           <div class="profile-profile">
             <form enctype="multipart/form-data">
               <div class="image">
                 <!-- <img :src="userData.photo || '/static/images/lazy/lazyload.svg'"> -->
-                <input type="file" ref="profileUpload" id="profileUpload" name="profile_img" accept="image/png, image/jpeg, image/gif" @change="previewUpload">
+                <input
+                  type="file"
+                  ref="profileUpload"
+                  id="profileUpload"
+                  name="profile_img"
+                  accept="image/png, image/jpeg, image/gif"
+                  @change="previewUpload"
+                >
                 <div class="image-hover"></div>
-                <div class="image-preview" :style="{ 'background-image' : 'url(' + userData.photo || '/static/images/lazy/lazyload.svg' + ')' }">
+                <div
+                  class="image-preview"
+                  :style="{ 'background-image' : 'url(' + (userData.photo || '/static/images/lazy/lazyload.svg') + ')' }"
+                >
                   <div>
                     <span>UPLOAD</span>
                   </div>
@@ -29,7 +42,10 @@
             <router-link :to="{ name: 'Profile' }">
               <div class="nav">
                 <div>
-                  <font-awesome-icon icon="user-circle" aria-hidden="true" />
+                  <font-awesome-icon
+                    icon="user-circle"
+                    aria-hidden="true"
+                  />
                 </div>
                 <span :class="{'color-orange1' : currentRoute == 'Profile'}">ข้อมูลส่วนตัว</span>
               </div>
@@ -37,7 +53,10 @@
             <router-link :to="{ name: 'ProfileHistory' }">
               <div class="nav">
                 <div>
-                  <font-awesome-icon icon="list-alt" aria-hidden="true" />
+                  <font-awesome-icon
+                    icon="list-alt"
+                    aria-hidden="true"
+                  />
                 </div>
                 <span :class="{'color-orange1' : currentRoute == 'ProfileHistory'}">รายการสั่งซื้อ</span>
               </div>

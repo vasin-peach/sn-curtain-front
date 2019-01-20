@@ -126,7 +126,8 @@ export default {
         var f = 0;
         this.orderSuccessData.map(x => {
           let thisMonth = moment(x.updated_at).format("M");
-          if (thisMonth == month) f += 1;
+          if (thisMonth == month)
+            f += parseInt(String(x.pricing.summary_price).slice(0, -2));
         });
 
         this.yearData.push({
@@ -225,7 +226,7 @@ export default {
         data: {
           datasets: [
             {
-              label: "จำนวนซื้อ",
+              label: "ยอดขาย",
               data: this.yearData,
               fill: false,
               borderColor: "#ee9b5c",
@@ -256,7 +257,7 @@ export default {
                 },
                 scaleLabel: {
                   display: true,
-                  labelString: "เวลา"
+                  labelString: "เดือน"
                 }
               }
             ],
@@ -264,7 +265,7 @@ export default {
               {
                 scaleLabel: {
                   display: true,
-                  labelString: "จำนวน"
+                  labelString: "ยอดขายรวม"
                 }
               }
             ]

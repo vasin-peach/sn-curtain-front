@@ -13,7 +13,6 @@ import store from './store/main';
 import VueLazyLoad from 'vue-lazyload';
 import VueCookie from 'vue-cookie';
 import Chat from 'vue-beautiful-chat'
-
 // import Assets
 import '@scss/app.scss';
 import 'bootstrap/dist/css/bootstrap.css'
@@ -118,6 +117,7 @@ store.dispatch("csrfGet").then(response => {
 
 
 Vue.config.productionTip = false
+
 
 
 /* eslint-disable no-new */

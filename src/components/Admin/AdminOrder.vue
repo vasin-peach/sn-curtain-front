@@ -81,7 +81,7 @@
         <div class="admin-order-left card-contianer col-12 col-md-6 col-xl">
           <div class="card-box">
             <div class="card-title">
-              รอการยืนยันการทำรายการ
+              คอนเฟิร์มการทำรายการ
             </div>
             <div class="order-list-container">
               <div
@@ -147,7 +147,7 @@
         <div class="admin-order-left card-contianer col-12 col-md-6 col-xl">
           <div class="card-box">
             <div class="card-title">
-              รายการที่สำเร็จ
+              เริ่มการผลิตและดำเนินการเสร็จสิ้น
             </div>
             <div class="order-list-container">
               <div

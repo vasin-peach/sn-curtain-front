@@ -1,9 +1,18 @@
 <template>
   <div class="login-form">
-    <div class="bg-fade" @click="popupAuthUpdate(false)"></div>
+    <div
+      class="bg-fade"
+      @click="popupAuthUpdate(false)"
+    ></div>
     <div class="login-wrapper">
-      <div class="close" @click="popupAuthUpdate(false)">
-        <font-awesome-icon icon="times" aria-hidden="true" />
+      <div
+        class="close"
+        @click="popupAuthUpdate(false)"
+      >
+        <font-awesome-icon
+          icon="times"
+          aria-hidden="true"
+        />
       </div>
       <div class="login-head">
         <div class="login-head-wrapper">
@@ -13,7 +22,7 @@
       <div class="login-container">
         <form @submit.prevent="validateLogin">
           <div class="login-body row">
-            <div class="col-12">
+            <!-- <div class="col-12">
               <div class="input-group">
                 <b-form-group label="อีเมลล์">
                   <b-form-input :state="!errors.has('email')" v-validate="'required|min:4|email'" name="email" v-model="form.email" type="text" placeholder="Email"></b-form-input>
@@ -37,30 +46,35 @@
               <button type="submit" class="button-login">
                 เข้าสู่ระบบ
               </button>
-            </div>
+            </div> -->
             <div class="col-6 pr-1">
               <a :href="keys.BACKEND_URI + '/auth/facebook/login'">
                 <div class="button-facebook">
-                  <font-awesome-icon :icon="['fab', 'facebook-square']" aria-hidden="true" />
-                  <!-- FACEBOOK -->
+                  <font-awesome-icon
+                    :icon="['fab', 'facebook-square']"
+                    aria-hidden="true"
+                  />
                 </div>
               </a>
             </div>
             <div class="col-6 pl-1">
               <a :href="keys.BACKEND_URI + '/auth/google/login'">
                 <div class="button-google">
-                  <font-awesome-icon :icon="['fab', 'google-plus-square']" aria-hidden="true" />
+                  <font-awesome-icon
+                    :icon="['fab', 'google-plus-square']"
+                    aria-hidden="true"
+                  />
                 </div>
               </a>
             </div>
-            <div class="col-12">
+            <!-- <div class="col-12">
               <div class="button-register">
                 <span>ยังไม่มีบัญชี?</span>
                 <router-link :to="{ name: 'Register' }">
                   <span>สมัครสมาชิก</span>
                 </router-link>
               </div>
-            </div>
+            </div> -->
           </div>
         </form>
       </div>
@@ -69,9 +83,9 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex';
+import { mapActions, mapMutations } from "vuex";
 export default {
-  name: 'LoginForm',
+  name: "LoginForm",
   data() {
     return {
       keys: process.env,
@@ -79,33 +93,27 @@ export default {
         email: "",
         password: ""
       }
-    }
+    };
   },
-  mounted() {
-
-  },
+  mounted() {},
   methods: {
-    ...mapMutations(['popupAuthUpdate']),
-    ...mapActions(['localLogin']),
+    ...mapMutations(["popupAuthUpdate"]),
+    ...mapActions(["localLogin"]),
     validateLogin() {
-      this.$validator.validateAll().then((result) => {
+      this.$validator.validateAll().then(result => {
         if (result) {
-           var payload = {
+          var payload = {
             username: this.form.email,
-            password: this.form.password,
-          }
-           this.localLogin(payload)
+            password: this.form.password
+          };
+          this.localLogin(payload);
         }
-      })
+      });
     }
   },
-  computed: {
-
-  },
-  watch: {
-    
-  }
-}
+  computed: {},
+  watch: {}
+};
 </script>
 
 <style>

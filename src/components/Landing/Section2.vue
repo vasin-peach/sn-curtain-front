@@ -78,8 +78,8 @@ export default {
         },
         {
           name: "new-category-10.png",
-          params: "วอลล์เปอเปอร์",
-          title: "วอลล์เปอเปอร์"
+          params: "วอลล์เปเปอร์",
+          title: "วอลล์เปเปอร์"
         },
         {
           name: "new-category-11.png",

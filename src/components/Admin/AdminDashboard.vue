@@ -31,6 +31,15 @@
           </div>
         </div>
 
+        <div class="admin-dashboard-left col-12">
+          <div class="card-box">
+            <div class="card-title">
+              (Time Series) สรุปยอดการขาย
+            </div>
+            <canvas id="graph2"></canvas>
+          </div>
+        </div>
+
         <div class="admin-dashboard-left card-container col-12">
           <div class="card-box">
             <div class="card-title">
@@ -77,18 +86,21 @@ export default {
 
   // !METHODS
   methods: {
-    ...mapActions(["productAll", "viewGet"]),
+    ...mapActions(["productAll", "viewGet", "orderAllGet"]),
 
     // * [TRIGGER] get product
     async triggerProductGet() {
       this.productData = await this.productAll();
       this.productView = await this.viewGet();
+      this.orderData = await this.orderAllGet();
 
       // * View time change format
       await this.viewTimeFormat();
 
       // * Genarate Time
       await this.genTime();
+
+      await this.genYear();
 
       this.loadingState = false;
     },
@@ -105,6 +117,25 @@ export default {
             ).format("HH:mm")
           );
         }
+      }
+    },
+
+    async genYear() {
+      this.yearData = [];
+      for (let month = 1; month <= 12; month++) {
+        var f = 0;
+        this.orderSuccessData.map(x => {
+          let thisMonth = moment(x.updated_at).format("M");
+          if (thisMonth == month)
+            f += parseInt(String(x.pricing.summary_price).slice(0, -2));
+        });
+
+        this.yearData.push({
+          x: moment()
+            .month(month - 1)
+            .format("YYYY-MM"),
+          y: f
+        });
       }
     },
 
@@ -137,6 +168,7 @@ export default {
     // * [INIT] init chart
     initChart() {
       var ctx = document.getElementById("graph").getContext("2d");
+      var ctx2 = document.getElementById("graph2").getContext("2d");
       var bar = new Chart(ctx, {
         type: "line",
         data: {
@@ -188,12 +220,64 @@ export default {
           }
         }
       });
+
+      var bar2 = new Chart(ctx2, {
+        type: "line",
+        data: {
+          datasets: [
+            {
+              label: "ยอดขาย",
+              data: this.yearData,
+              fill: false,
+              borderColor: "#ee9b5c",
+              pointRadius: 5,
+              pointHoverRadius: 10
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          title: {
+            display: false
+          },
+          tooltips: {
+            mode: "index",
+            intersect: false
+          },
+          hover: {
+            mode: "nearest",
+            intersect: true
+          },
+          scales: {
+            xAxes: [
+              {
+                type: "time",
+                time: {
+                  parser: "YYYY-MM"
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: "เดือน"
+                }
+              }
+            ],
+            yAxes: [
+              {
+                scaleLabel: {
+                  display: true,
+                  labelString: "ยอดขายรวม"
+                }
+              }
+            ]
+          }
+        }
+      });
     }
   },
 
   // ! COMPUTED
   computed: {
-    ...mapGetters(["productAllData"])
+    ...mapGetters(["productAllData", "orderSuccessData"])
   },
 
   // ! MOUNTED

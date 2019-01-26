@@ -112,7 +112,7 @@ export default {
   data() {
     return {
       state: false,
-      socket: io(`${process.env.BACKEND_URI}`),
+      socket: io(`${process.env.BACKEND_IP}`),
       chats: {
         room: null,
         data: null,

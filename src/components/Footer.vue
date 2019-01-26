@@ -24,12 +24,12 @@
           id="otherweb"
         >
           <div>
-            <router-link
+            <!-- <router-link
               :to="{ name: 'Policy'}"
               class="color-white1"
             >
               นโยบาย
-            </router-link>
+            </router-link> -->
             <router-link
               :to="{ name: 'Rules'}"
               class="color-white1"

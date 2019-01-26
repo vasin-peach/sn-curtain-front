@@ -39,8 +39,8 @@ const Basket = () =>
   import('@component/Basket/Basket');
 const Login = () =>
   import('@component/Auth/Login');
-const Register = () =>
-  import('@component/Auth/Register');
+// const Register = () =>
+//   import('@component/Auth/Register');
 
 // Payment
 const Payment = () =>
@@ -216,15 +216,15 @@ const router = new Router({
           login: 0
         }
       },
-      {
-        path: 'register',
-        component: Register,
-        name: 'Register',
-        meta: {
-          title: 'สมัครสมาชิก',
-          login: 0
-        }
-      },
+      // {
+      //   path: 'register',
+      //   component: Register,
+      //   name: 'Register',
+      //   meta: {
+      //     title: 'สมัครสมาชิก',
+      //     login: 0
+      //   }
+      // },
       {
         path: 'payment',
         component: Payment,

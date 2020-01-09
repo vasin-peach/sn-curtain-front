@@ -1,142 +1,152 @@
-import Vue from "vue";
-import "../../../lib/omise";
+import Vue from 'vue'
+import '../../../lib/omise'
 
 // State
-const state = {};
+const state = {}
 
 // Getters
-const getters = {};
+const getters = {}
 
 // Mutations
-const mutations = {};
+const mutations = {}
 
 // Actions
 const actions = {
-  creditCreateToken({
-    state,
-    getters
-  }, data) {
+  creditCreateToken({ state, getters }, data) {
     return new Promise((resolve, reject) => {
-      Omise.setPublicKey(process.env.OMISE_CLIENT);
+      Omise.setPublicKey(process.env.OMISE_CLIENT)
 
       const card = {
         name: data.card_name,
-        number: data.card_number.replace(/\s/g, ""),
-        expiration_month: data.expires_date.split("/")[0],
-        expiration_year: "20" + data.expires_date.split("/")[1],
-        security_code: data.cvv
-      };
+        number: data.card_number.replace(/\s/g, ''),
+        expiration_month: data.expires_date.split('/')[0],
+        expiration_year: '20' + data.expires_date.split('/')[1],
+        security_code: data.cvv,
+      }
 
-      Omise.createToken("card", card, (statusCode, response) => {
+      Omise.createToken('card', card, (statusCode, response) => {
+        if (statusCode == 200) {
+          // check request card token status is 200
 
-        if (statusCode == 200) { // check request card token status is 200
-
-
-          const product = { // declear production payload
+          const product = {
+            // declear production payload
             email: getters.userData.email,
             product: localStorage.basket,
             discount: localStorage.discount,
             delivery: getters.deliveryPriceData,
             card_token: response.id,
             card: response.card,
-            payment: JSON.parse(Vue.cookie.get("paymentAddress") || 'null') || null
-          };
+            payment:
+              JSON.parse(
+                Vue.cookie.get('paymentAddress') || 'null',
+              ) || null,
+          }
 
           // create request uri
-          let urlRequest = process.env.BACKEND_URI + "/payment/charge";
+          let urlRequest = process.env.BACKEND_URI + '/payment/charge'
 
+          Vue.http.post(urlRequest, product).then(
+            // call
 
-          Vue.http.post(urlRequest, product).then( // call
+            (response) => {
+              // response success
 
-            response => { // response success
-
-
-              if (response.body.status == 200) { // check response from backend status is 200
+              if (response.body.status == 200) {
+                // check response from backend status is 200
 
                 // check error code
-                let errorCode = response.body.data.failure_code;
+                let errorCode = response.body.data.failure_code
 
-                if (!errorCode) { // success
+                if (!errorCode) {
+                  // success
 
                   Vue.swal({
                     type: 'success',
                     title: 'ชำระเงินเสร็จสิ้น',
-                    text: 'ท่านสามารถดูรายระเอียดรายได้ใน ข้อมูลส่วนตัว -> รายการ.'
-                  });
-                  return resolve(response.body);
-
-                } else if (errorCode == 'invalid_security_code') { // invalid_security_code
+                    text:
+                      'ท่านสามารถดูรายระเอียดรายได้ใน ข้อมูลส่วนตัว -> รายการ.',
+                  })
+                  return resolve(response.body)
+                } else if (errorCode == 'invalid_security_code') {
+                  // invalid_security_code
 
                   Vue.swal({
                     type: 'warning',
                     title: 'CVV ไม่ถูกต้อง',
-                    text: 'ไม่สามารถชำระเงินได้ เนื่องจากรหัสความปลอดภัย (CVV) ไม่ถูกต้อง, หรือบัตรยังไม่ได้รับการอนุมัติ.'
-                  });
-                  return reject(response.body);
-
-                } else if (errorCode == 'payment_rejected') { // payment_rejected
+                    text:
+                      'ไม่สามารถชำระเงินได้ เนื่องจากรหัสความปลอดภัย (CVV) ไม่ถูกต้อง, หรือบัตรยังไม่ได้รับการอนุมัติ.',
+                  })
+                  return reject(response.body)
+                } else if (errorCode == 'payment_rejected') {
+                  // payment_rejected
 
                   Vue.swal({
                     type: 'warning',
                     title: 'การชำระเงินถูกปฎิเสธโดยผู้ออกบัตร',
-                    text: 'ไม่สามารถชำระเงินได้ เนื่องจากถูกปฎิเสธโดยผู้ออกบัตร, หรือผู้ซื้อ.'
-                  });
-                  return reject(response.body);
-
-                } else if (errorCode == 'insufficient_fund') { // insufficient_fund
+                    text:
+                      'ไม่สามารถชำระเงินได้ เนื่องจากถูกปฎิเสธโดยผู้ออกบัตร, หรือผู้ซื้อ.',
+                  })
+                  return reject(response.body)
+                } else if (errorCode == 'insufficient_fund') {
+                  // insufficient_fund
 
                   Vue.swal({
                     type: 'warning',
                     title: 'วงเงินภายในบัตรไม่เพียงพอ',
-                    text: 'ไม่สามารถชำระเงินได้ เนื่องจากเงินไม่เพียงพอ, หรือวงเงินภายในบัตรไม่เพียงพอ.'
-                  });
-                  return reject(response.body);
-
-                } else if (errorCode == 'stolen_or_lost_card') { // stolen_or_lost_card
+                    text:
+                      'ไม่สามารถชำระเงินได้ เนื่องจากเงินไม่เพียงพอ, หรือวงเงินภายในบัตรไม่เพียงพอ.',
+                  })
+                  return reject(response.body)
+                } else if (errorCode == 'stolen_or_lost_card') {
+                  // stolen_or_lost_card
 
                   Vue.swal({
                     type: 'warning',
                     title: 'ปฎิเสธการชำระเงิน',
-                    text: 'ธุรกรรมนี้ได้ถูกปฎิเสธ เนื่องจากบัตรหายหรือถูกโจรกรรม.'
-                  });
-                  return reject(response.body);
-
-                } else if (errorCode == 'failed_processing') { // payment_rejected
+                    text:
+                      'ธุรกรรมนี้ได้ถูกปฎิเสธ เนื่องจากบัตรหายหรือถูกโจรกรรม.',
+                  })
+                  return reject(response.body)
+                } else if (errorCode == 'failed_processing') {
+                  // payment_rejected
 
                   Vue.swal({
                     type: 'warning',
                     title: 'การดำเนินการไม่สำเร็จ',
-                    text: 'การประมวลผลบัตรล้วเหลว กรุณาทำรายการใหม่อีกครั้ง'
-                  });
-                  return reject(response.body);
-
-                } else if (errorCode == 'failed_fraud_check') { // failed_fraud_check
+                    text:
+                      'การประมวลผลบัตรล้วเหลว กรุณาทำรายการใหม่อีกครั้ง',
+                  })
+                  return reject(response.body)
+                } else if (errorCode == 'failed_fraud_check') {
+                  // failed_fraud_check
 
                   Vue.swal({
                     type: 'warning',
                     title: 'ปฎิเสธการชำระเงิน',
-                    text: 'ธุรกรรมนี้ได้ถูกปฎิเสธ เนื่องจากบัตรไม่ผ่านการตรวจสอบระบบคัดกรองทุจริต (fraud check).'
-                  });
-                  return reject(response.body);
-
-                } else if (errorCode == 'invalid_account_number') { // invalid_account_number
+                    text:
+                      'ธุรกรรมนี้ได้ถูกปฎิเสธ เนื่องจากบัตรไม่ผ่านการตรวจสอบระบบคัดกรองทุจริต (fraud check).',
+                  })
+                  return reject(response.body)
+                } else if (errorCode == 'invalid_account_number') {
+                  // invalid_account_number
 
                   Vue.swal({
                     type: 'warning',
                     title: 'เลขบัตรไม่ถูกต้อง',
-                    text: 'ไม่สามารถชำระเงินได้ เลขบัตรไม่ถูกต้อง กรุณาทำรายการใหม่อีกครั้ง.'
-                  });
-                  return reject(response.body);
-
+                    text:
+                      'ไม่สามารถชำระเงินได้ เลขบัตรไม่ถูกต้อง กรุณาทำรายการใหม่อีกครั้ง.',
+                  })
+                  return reject(response.body)
                 }
-
-              } else { // if response from backend status is not 200
+              } else {
+                // if response from backend status is not 200
                 Vue.swal({
                   type: 'error',
                   title: 'ผิดพลาด',
-                  text: 'เกิดข้อผิดพลาดในการชำระเงิน กรุณาติดต่อเจ้าหน้าที่ผ่านแชท.'
-                });
-                return reject(response.body);
+                  text:
+                    'เกิดข้อผิดพลาดในการชำระเงิน กรุณาติดต่อเจ้าหน้าที่ผ่านแชท.',
+                })
+                return reject(response.body)
               }
             }, // response succes block end.
 
@@ -145,43 +155,44 @@ const actions = {
               Vue.swal({
                 type: 'error',
                 title: 'ผิดพลาด',
-                text: 'เกิดข้อผิดพลาดในการชำระเงิน กรุณาติดต่อเจ้าหน้าที่ผ่านแชท.'
-              });
-              return reject(response.body);
-            }
+                text:
+                  'เกิดข้อผิดพลาดในการชำระเงิน กรุณาติดต่อเจ้าหน้าที่ผ่านแชท.',
+              })
+              return reject(response.body)
+            },
+          ) // http request block end.
+        } else if (statusCode == 400) {
+          // if request card token status is 400.
 
-          ); // http request block end.
-
-        } else if (statusCode == 400) { // if request card token status is 400.
-
-          if (response.code == 'invalid_card') { // invalid_card
+          if (response.code == 'invalid_card') {
+            // invalid_card
             Vue.swal({
               type: 'warning',
               title: 'เลขบัตรไม่ถูกต้อง',
-              text: 'ไม่สามารถชำระเงินได้ เลขบัตรไม่ถูกต้อง กรุณาทำรายการใหม่อีกครั้ง.'
-            });
-            return reject(response.body);
+              text:
+                'ไม่สามารถชำระเงินได้ เลขบัตรไม่ถูกต้อง กรุณาทำรายการใหม่อีกครั้ง.',
+            })
+            return reject(response.body)
           }
-
-        } else { // other condition idk lol.
+        } else {
+          // other condition idk lol.
 
           Vue.swal({
             type: 'warning',
             title: 'เลขบัตรไม่ถูกต้อง',
-            text: 'ไม่สามารถชำระเงินได้ เลขบัตรไม่ถูกต้อง กรุณาทำรายการใหม่อีกครั้ง.'
-          });
-          return reject(response.body);
-
+            text:
+              'ไม่สามารถชำระเงินได้ เลขบัตรไม่ถูกต้อง กรุณาทำรายการใหม่อีกครั้ง.',
+          })
+          return reject(response.body)
         } // condition response status block end.
-
-      });
-    });
-  }
-};
+      })
+    })
+  },
+}
 
 export default {
   state,
   getters,
   actions,
-  mutations
-};
+  mutations,
+}

@@ -1,5 +1,5 @@
-import Vue from "vue";
-import isEmpty from "lodash.isempty";
+import Vue from 'vue'
+import isEmpty from 'lodash.isempty'
 
 // !
 // ! ─── STATE ──────────────────────────────────────────────────────────────────────
@@ -16,9 +16,9 @@ const state = {
 // !
 
 const getters = {
-  slideAllData: state => state.slideAll,
-  slideMainData: state => state.slideMain,
-  slideSubData: state => state.slideSub
+  slideAllData: (state) => state.slideAll,
+  slideMainData: (state) => state.slideMain,
+  slideSubData: (state) => state.slideSub,
 }
 
 // !
@@ -37,15 +37,15 @@ const mutations = {
      */
 
     // validate
-    if (isEmpty(data) || !data.data || !data.target) return 0;
+    if (isEmpty(data) || !data.data || !data.target) return 0
 
     // update
     try {
       if (data.index) {
-        state[data.target][data.index] = data.data || 0;
-      } else state[data.target] = data.data || 0;
+        state[data.target][data.index] = data.data || 0
+      } else state[data.target] = data.data || 0
     } catch (err) {
-      return 0;
+      return 0
     }
   },
 } //// End `updateState` block
@@ -55,83 +55,80 @@ const mutations = {
 // !
 
 const actions = {
-
   // * Get Slide
-  slideAllGet({
-    commit
-  }) {
+  slideAllGet({ commit }) {
     return new Promise(async (resolve, reject) => {
-
       // call
-      const callResult = await Vue.http.get(`${process.env.BACKEND_URI}/slide`);
+      const callResult = await Vue.http.get(
+        `${process.env.BACKEND_URI}/slide`,
+      )
 
       // validate result
-      if (!callResult.data || !callResult.data.data || isEmpty(callResult.data.data)) {
-
+      if (
+        !callResult.data ||
+        !callResult.data.data ||
+        isEmpty(callResult.data.data)
+      ) {
         // update state to empty arrray
-        commit("updateState", {
+        commit('updateState', {
           data: [],
-          target: 'slideAll'
-        });
-        commit("updateState", {
+          target: 'slideAll',
+        })
+        commit('updateState', {
           data: [],
-          target: 'slideMain'
-        });
-        commit("updateState", {
+          target: 'slideMain',
+        })
+        commit('updateState', {
           data: [],
-          target: 'slideSub'
-        });
+          target: 'slideSub',
+        })
 
         // return is empty
-        return reject('empty');
+        return reject('empty')
       }
 
       const originalResult = callResult.data.data
 
       // update state slideAll
-      commit("updateState", {
+      commit('updateState', {
         data: originalResult,
-        target: 'slideAll'
-      });
+        target: 'slideAll',
+      })
 
       // update state slideEvidence
-      commit("updateState", {
-        data: originalResult.filter(x => x.type == 'main'),
-        target: 'slideMain'
+      commit('updateState', {
+        data: originalResult.filter((x) => x.type == 'main'),
+        target: 'slideMain',
       })
 
       // update state slideConfirm
-      commit("updateState", {
-        data: originalResult.filter(x => x.type == 'sub'),
-        target: 'slideSub'
-      });
+      commit('updateState', {
+        data: originalResult.filter((x) => x.type == 'sub'),
+        target: 'slideSub',
+      })
 
       // return
-      return resolve(callResult.data.data);
-    });
+      return resolve(callResult.data.data)
+    })
   }, //// End `slideAllGet` block
 
   // * Update Slide
-  async slideUpdate({
-    commit
-  }, data) {
-
-    const callResult = await Vue.http.post(`${process.env.BACKEND_URI}/slide`, data);
-    return callResult;
-
+  async slideUpdate({ commit }, data) {
+    const callResult = await Vue.http.post(
+      `${process.env.BACKEND_URI}/slide`,
+      data,
+    )
+    return callResult
   }, //// End `slideUpdate` block
 
   // * Delete Slide
-  async slideDelete({
-    commit
-  }, data) {
-
-    const callResult = await Vue.http.post(`${process.env.BACKEND_URI}/slide/delete`, data);
-    return callResult;
-
-  } //// End `slideDelete` block
-
-
+  async slideDelete({ commit }, data) {
+    const callResult = await Vue.http.post(
+      `${process.env.BACKEND_URI}/slide/delete`,
+      data,
+    )
+    return callResult
+  }, //// End `slideDelete` block
 }
 
 // !

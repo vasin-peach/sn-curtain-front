@@ -1,5 +1,5 @@
-import Vue from "vue";
-import isEmpty from "lodash.isempty";
+import Vue from 'vue'
+import isEmpty from 'lodash.isempty'
 
 // !
 // ! ─── ACTIONS ────────────────────────────────────────────────────────────────────
@@ -7,13 +7,14 @@ import isEmpty from "lodash.isempty";
 
 const actions = {
   async viewGet() {
-
     // * Call
     try {
-      const response = await Vue.http.get(`${process.env.BACKEND_URI}/view`);
-      return response.data.data;
+      const response = await Vue.http.get(
+        `${process.env.BACKEND_URI}/view`,
+      )
+      return response.data.data
     } catch (error) {
-      return error;
+      return error
     }
   },
 
@@ -23,12 +24,15 @@ const actions = {
 
     // * Call
     try {
-      const response = await Vue.http.post(`${process.env.BACKEND_URI}/view`, data);
-      return response.data.data;
+      const response = await Vue.http.post(
+        `${process.env.BACKEND_URI}/view`,
+        data,
+      )
+      return response.data.data
     } catch (error) {
-      return error;
+      return error
     }
-  }
+  },
 }
 
 // !
@@ -36,5 +40,5 @@ const actions = {
 // !
 
 export default {
-  actions
+  actions,
 }

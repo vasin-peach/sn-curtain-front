@@ -1,5 +1,5 @@
-import Vue from 'vue';
-import _ from 'lodash';
+import Vue from 'vue'
+import _ from 'lodash'
 ///
 // State
 ///
@@ -13,50 +13,48 @@ const state = {
     basket: [],
     discount: null,
     // delivery: null
-  }
+  },
 }
-
 
 ///
 // Getters
 ///
 const getters = {
-  basketData: state => {
+  basketData: (state) => {
     return state.basket
   },
-  discountData: state => {
+  discountData: (state) => {
     return state.discount
   },
-  taxPriceData: state => {
+  taxPriceData: (state) => {
     return state.taxPrice
-  }
+  },
   // transportData: state => {
   //   return state.transport
   // }
 }
-
 
 ///
 // Mutations
 ///
 const mutations = {
   basketUpdate(state, data) {
-    state.basket = data;
-    state.paymentPayload.basket = data;
+    state.basket = data
+    state.paymentPayload.basket = data
   },
   // ไม่ได้ใช้แล้ว บัคที่ olditems
   basketDelete(state, id) {
-    var getIndex = state.basket.findIndex(item => item.id == id)
+    var getIndex = state.basket.findIndex((item) => item.id == id)
     if (getIndex >= 0) {
-      state.basket.splice(getIndex, 1);
-      localStorage.setItem("basket", JSON.stringify(state.basket));
+      state.basket.splice(getIndex, 1)
+      localStorage.setItem('basket', JSON.stringify(state.basket))
     }
   },
   discountUpdate(state, data) {
-    state.discount = data;
+    state.discount = data
   },
   discountCodeUpdate(state, data) {
-    localStorage.setItem("discount", JSON.stringify(data));
+    localStorage.setItem('discount', JSON.stringify(data))
   },
 
   // transportUpdate(state, data) {
@@ -67,40 +65,41 @@ const mutations = {
   // }
 }
 
-
 ///
 // Actions
 ///
 const actions = {
-  basketUpdateSession({
-    commit
-  }, data) {
+  basketUpdateSession({ commit }, data) {
     return new Promise((resolve, reject) => {
-      let uriRequest = process.env.BACKEND_URI + "/basket/update";
-      Vue.http.post(uriRequest, data).then(response => {
-        resolve(response.data);
-      }, error => {
-        reject(error);
-      })
+      let uriRequest = process.env.BACKEND_URI + '/basket/update'
+      Vue.http.post(uriRequest, data).then(
+        (response) => {
+          resolve(response.data)
+        },
+        (error) => {
+          reject(error)
+        },
+      )
     })
   },
-  basketGetSession({
-    commit
-  }) {
+  basketGetSession({ commit }) {
     return new Promise((resolve, reject) => {
-      let uriRequest = process.env.BACKEND_URI + "/basket/get";
-      Vue.http.get(uriRequest).then(response => {
-        resolve(response.data);
-      }, error => {
-        reject(error);
-      })
+      let uriRequest = process.env.BACKEND_URI + '/basket/get'
+      Vue.http.get(uriRequest).then(
+        (response) => {
+          resolve(response.data)
+        },
+        (error) => {
+          reject(error)
+        },
+      )
     })
-  }
+  },
 }
 
 export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 }

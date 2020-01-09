@@ -7,20 +7,18 @@ const state = {
     page: false,
     store: false,
     storePopular: false,
-    atm: false
-  }
+    atm: false,
+  },
 }
-
 
 ///
 // Getters
 ///
 const getters = {
-  loadingData: state => {
+  loadingData: (state) => {
     return state.loading
   },
 }
-
 
 ///
 // Mutations
@@ -31,57 +29,56 @@ const mutations = {
       case 'page': // Page
         if (state.loading.page) {
           setTimeout(() => {
-            state.loading.page = data.value;
-          }, 300);
+            state.loading.page = data.value
+          }, 300)
         } else {
-          state.loading.page = data.value;
+          state.loading.page = data.value
         }
-        break;
+        break
 
       case 'store': // Store
         if (state.loading.store) {
           setTimeout(() => {
-            state.loading.store = data.value;
-          }, 300);
+            state.loading.store = data.value
+          }, 300)
         } else {
-          state.loading.store = data.value;
+          state.loading.store = data.value
         }
-        break;
+        break
 
       case 'storePopular': // Store
         if (state.loading.storePopular) {
           setTimeout(() => {
-            state.loading.storePopular = data.value;
-          }, 300);
+            state.loading.storePopular = data.value
+          }, 300)
         } else {
-          state.loading.storePopular = data.value;
+          state.loading.storePopular = data.value
         }
-        break;
-      
+        break
+
       case 'atm': // atm
         if (state.loading.atm) {
           setTimeout(() => {
-            state.loading.atm = data.value;
-          }, 300);
+            state.loading.atm = data.value
+          }, 300)
         } else {
-          state.loading.atm = data.value;
+          state.loading.atm = data.value
         }
-      break;
+        break
 
-      default: // Default
+      default:
+        // Default
         if (state.loading.page) {
           setTimeout(() => {
-            state.loading.page = data.value;
-          }, 300);
+            state.loading.page = data.value
+          }, 300)
         } else {
-          state.loading.full = data.value;
+          state.loading.full = data.value
         }
-        break;
-
+        break
     }
-  }
+  },
 }
-
 
 ///
 // Actions
@@ -92,5 +89,5 @@ export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 }

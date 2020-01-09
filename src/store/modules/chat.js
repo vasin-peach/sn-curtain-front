@@ -1,12 +1,12 @@
-import Vue from "vue";
-import isEmpty from "lodash.isempty";
+import Vue from 'vue'
+import isEmpty from 'lodash.isempty'
 
 // !
 // ! ─── STATE ──────────────────────────────────────────────────────────────────────
 // !
 
 const state = {
-  chat: []
+  chat: [],
 }
 
 // !
@@ -14,7 +14,7 @@ const state = {
 // !
 
 const getters = {
-  chatData: state => state.chat
+  chatData: (state) => state.chat,
 }
 
 // !
@@ -31,12 +31,11 @@ const mutations = {
      * }
      */
 
-    if (isEmpty(data) || !data.data || !data.target) return 0;
+    if (isEmpty(data) || !data.data || !data.target) return 0
 
     // push
-    state[data.target].push(data.data);
-    return state[data.target];
-
+    state[data.target].push(data.data)
+    return state[data.target]
   },
   updateState(state, data) {
     /**
@@ -49,15 +48,15 @@ const mutations = {
      */
 
     // validate
-    if (isEmpty(data) || !data.data || !data.target) return 0;
+    if (isEmpty(data) || !data.data || !data.target) return 0
 
     // update
     try {
       if (data.index) {
-        state[data.target][data.index] = data.data || 0;
-      } else state[data.target] = data.data || 0;
+        state[data.target][data.index] = data.data || 0
+      } else state[data.target] = data.data || 0
     } catch (err) {
-      return 0;
+      return 0
     }
   },
 } //// End `updateState` block
@@ -67,29 +66,26 @@ const mutations = {
 // !
 
 const actions = {
-
   // * Get Slide
-  chatGet({
-    commit
-  }, uid) {
+  chatGet({ commit }, uid) {
     return new Promise(async (resolve, reject) => {
-
       try {
-        const result = await Vue.http.get(`${process.env.BACKEND_URI}/chat/${uid}`);
-        commit("updateState", {
+        const result = await Vue.http.get(
+          `${process.env.BACKEND_URI}/chat/${uid}`,
+        )
+        commit('updateState', {
           data: result.data.data,
-          target: 'chat'
+          target: 'chat',
         })
-        return resolve(result.data.data);
+        return resolve(result.data.data)
       } catch (error) {
-        commit("updateState", {
+        commit('updateState', {
           data: null,
-          target: 'chat'
+          target: 'chat',
         })
-        return reject(error);
+        return reject(error)
       }
-
-    });
+    })
   }, //// End `slideAllGet` block
 
   // // * Update Slide
@@ -111,8 +107,6 @@ const actions = {
   //   return callResult;
 
   // } //// End `slideDelete` block
-
-
 }
 
 // !

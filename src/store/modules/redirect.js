@@ -1,22 +1,20 @@
-import Vue from 'vue';
-import isEmpty from 'lodash.isempty';
+import Vue from 'vue'
+import isEmpty from 'lodash.isempty'
 
 const actions = {
-
   updateRedirect({}, data) {
-
     return new Promise((resolve, reject) => {
-
       // ! Validate
-      if (!data || isEmpty(data)) return;
+      if (!data || isEmpty(data)) return
 
       // !Call
 
       data = data.replace(/\//g, '|')
-      Vue.http.get(`${process.env.BACKEND_URI}/redirect/update/${data}`);
-
-    });
-  }
+      Vue.http.get(
+        `${process.env.BACKEND_URI}/redirect/update/${data}`,
+      )
+    })
+  },
 }
 
 //
@@ -24,5 +22,5 @@ const actions = {
 //
 
 export default {
-  actions
+  actions,
 }

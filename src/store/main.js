@@ -1,29 +1,29 @@
 // Import Modules
-import Vuex from 'vuex';
-import Vue from 'vue';
-import auth from './modules/auth/auth';
-import payment from './modules/payment/payment';
-import payment_credit from './modules/payment/credit';
-import profile from './modules/auth/profile';
-import store from './modules/store';
-import loading from './modules/loading';
-import product from './modules/product';
-import basket from './modules/basket';
-import discount from './modules/discount';
+import Vuex from 'vuex'
+import Vue from 'vue'
+import auth from './modules/auth/auth'
+import payment from './modules/payment/payment'
+import payment_credit from './modules/payment/credit'
+import profile from './modules/auth/profile'
+import store from './modules/store'
+import loading from './modules/loading'
+import product from './modules/product'
+import basket from './modules/basket'
+import discount from './modules/discount'
 import delivery from './modules/delivery'
-import csrf from './modules/csrf';
-import order from './modules/payment/order';
-import clear from './modules/clear';
-import upload from './modules/upload';
-import redirect from './modules/redirect';
-import func from './modules/func';
-import sum_user from './modules/summary/sum-user';
-import sum_sale from './modules/summary/sum-sale';
-import view from './modules/summary/view';
-import admin_order from './modules/admin_order';
-import slide from './modules/slide';
-import chat from './modules/chat';
-import guest from './modules/guest';
+import csrf from './modules/csrf'
+import order from './modules/payment/order'
+import clear from './modules/clear'
+import upload from './modules/upload'
+import redirect from './modules/redirect'
+import func from './modules/func'
+import sum_user from './modules/summary/sum-user'
+import sum_sale from './modules/summary/sum-sale'
+import view from './modules/summary/view'
+import admin_order from './modules/admin_order'
+import slide from './modules/slide'
+import chat from './modules/chat'
+import guest from './modules/guest'
 
 // Use Moduesl
 Vue.use(Vuex)
@@ -53,7 +53,7 @@ export default new Vuex.Store({
     slide,
     chat,
     guest,
-    view
+    view,
   },
-  strict: false
+  strict: false,
 })

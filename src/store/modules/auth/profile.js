@@ -1,10 +1,9 @@
-import Vue from 'vue';
-import router from '../../../router';
-import _ from 'lodash';
-
+import Vue from 'vue'
+import router from '../../../router'
+import _ from 'lodash'
 
 const state = {
-  user: null
+  user: null,
 }
 
 const getters = {
@@ -20,84 +19,91 @@ const mutations = {
 }
 
 const actions = {
-  profileUpdate({
-    commit,
-    dispatch
-  }, payload) {
+  profileUpdate({ commit, dispatch }, payload) {
     return new Promise((resolve, reject) => {
-
-      // check payload 
-      if (!payload) return reject('payload empty');
+      // check payload
+      if (!payload) return reject('payload empty')
 
       // send request
-      Vue.http.post(process.env.BACKEND_URI + "/auth/profile/update", payload).then(response => {
-        Vue.swal({
-          type: "success",
-          title: "บันทึก",
-          text: "ทำการอัพเดทข้อมูลส่วนตัวแล้ว."
-        })
-        return resolve(response);
-      }, error => {
-        Vue.swal({
-          type: "error",
-          title: "ผิดพลาด",
-          text: "ไม่สามารถอัพเดทข้อมูลส่วนตัวได้ กรุณาติดต่อผู้ดูแลระบบ."
-        });
-        return reject(error);
-      })
-
+      Vue.http
+        .post(
+          process.env.BACKEND_URI + '/auth/profile/update',
+          payload,
+        )
+        .then(
+          (response) => {
+            Vue.swal({
+              type: 'success',
+              title: 'บันทึก',
+              text: 'ทำการอัพเดทข้อมูลส่วนตัวแล้ว.',
+            })
+            return resolve(response)
+          },
+          (error) => {
+            Vue.swal({
+              type: 'error',
+              title: 'ผิดพลาด',
+              text:
+                'ไม่สามารถอัพเดทข้อมูลส่วนตัวได้ กรุณาติดต่อผู้ดูแลระบบ.',
+            })
+            return reject(error)
+          },
+        )
     })
   },
 
-  localRegister({
-    commit
-  }, payload) {
+  localRegister({ commit }, payload) {
     return new Promise((resolve, reject) => {
-
-      // check payload 
-      if (!payload) return reject('payload empty');
+      // check payload
+      if (!payload) return reject('payload empty')
 
       // send request
-      Vue.http.post(process.env.BACKEND_URI + "/auth/local/register", payload).then(response => {
-        Vue.swal({
-          type: "success",
-          title: "สมัครสมาชิกเสร็จสิ้น",
-          text: "ท่านสามารถเข้าสู่ระบบเพื่อใช้งานได้แล้ว."
-        }).then(() => {
-          router.push({
-            name: 'Login'
-          })
-        })
-      }, error => {
-        var status = error.body.status;
-        if (status == 409) {
-          Vue.swal({
-            type: "warning",
-            title: "อีเมลล์นี้ถูกใช้ไปแล้ว",
-            text: "อีเมลลน์นี้ถูกใช้ไปแล้ว กรุณาลองอีเมลล์อื่น."
-          });
-        }
-      })
+      Vue.http
+        .post(
+          process.env.BACKEND_URI + '/auth/local/register',
+          payload,
+        )
+        .then(
+          (response) => {
+            Vue.swal({
+              type: 'success',
+              title: 'สมัครสมาชิกเสร็จสิ้น',
+              text: 'ท่านสามารถเข้าสู่ระบบเพื่อใช้งานได้แล้ว.',
+            }).then(() => {
+              router.push({
+                name: 'Login',
+              })
+            })
+          },
+          (error) => {
+            var status = error.body.status
+            if (status == 409) {
+              Vue.swal({
+                type: 'warning',
+                title: 'อีเมลล์นี้ถูกใช้ไปแล้ว',
+                text: 'อีเมลลน์นี้ถูกใช้ไปแล้ว กรุณาลองอีเมลล์อื่น.',
+              })
+            }
+          },
+        )
     })
   },
 
-  profile({
-    commit
-  }) {
+  profile({ commit }) {
     return new Promise((resolve, reject) => {
-      Vue.http.get(process.env.BACKEND_URI + "/auth/profile").then(response => {
-        commit('userUpdate', response.data.data);
-        return resolve(response.data);
-      }, error => {
-        commit('userUpdate', null);
-        return reject(error);
-      });
-    });
+      Vue.http.get(process.env.BACKEND_URI + '/auth/profile').then(
+        (response) => {
+          commit('userUpdate', response.data.data)
+          return resolve(response.data)
+        },
+        (error) => {
+          commit('userUpdate', null)
+          return reject(error)
+        },
+      )
+    })
   },
-  profileAddressUpdate({
-    commit,
-    getters
-  }, data) {
+  profileAddressUpdate({ commit, getters }, data) {
     return new Promise((resolve, reject) => {
       const payload = {
         house_no: data.house_no,
@@ -106,26 +112,32 @@ const actions = {
         district: data.district,
         road: data.road,
         province: data.province,
-        zip: data.zip
+        zip: data.zip,
       }
 
       // update new profile to userData state
-      let temp = getters.userData;
-      temp.address = payload;
-      commit('userUpdate', temp);
+      let temp = getters.userData
+      temp.address = payload
+      commit('userUpdate', temp)
 
-
-
-      Vue.http.post(process.env.BACKEND_URI + "/auth/profile/address/update", payload).then(response => {
-        return resolve(response);
-      }, error => {
-        Vue.swal({
-          type: 'error',
-          title: 'ผิดพลาด',
-          text: 'ไม่สามารถอัพเดทที่อยู่ได้ กรุณาลองใหม่อีกครั้ง'
-        });
-        return reject(error);
-      })
+      Vue.http
+        .post(
+          process.env.BACKEND_URI + '/auth/profile/address/update',
+          payload,
+        )
+        .then(
+          (response) => {
+            return resolve(response)
+          },
+          (error) => {
+            Vue.swal({
+              type: 'error',
+              title: 'ผิดพลาด',
+              text: 'ไม่สามารถอัพเดทที่อยู่ได้ กรุณาลองใหม่อีกครั้ง',
+            })
+            return reject(error)
+          },
+        )
     })
   },
 }
@@ -134,5 +146,5 @@ export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 }

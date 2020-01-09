@@ -7,5 +7,5 @@ module.exports = merge(prodEnv, {
   BACKEND_URI: '"http://localhost:5000"',
   BACKEND_IP: '"http://localhost:5000"',
   GITLAB_USERNAME: '"Peaches"',
-  OMISE_CLIENT: '"pkey_test_5diatzutqj695r6wsvp"'
+  OMISE_CLIENT: '"pkey_test_5diatzutqj695r6wsvp"',
 })

@@ -3,10 +3,8 @@
 //
 
 const orderMessageFunc = {
-
   // ? get message by order status
   getMessage(status) {
-
     /**
      * @param status STRING - order status
      */
@@ -25,12 +23,11 @@ const orderMessageFunc = {
           return 'รายการถูกยกเลิก'
       }
     }
-  }
+  },
 }
 
 //
 // ─── EXPORT ─────────────────────────────────────────────────────────────────────
 //
-
 
 module.exports = orderMessageFunc

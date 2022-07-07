@@ -34,7 +34,7 @@
     "lodash-webpack-plugin": "^0.11.5",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isempty": "^4.4.0",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.23",
     "paroller.js": "^1.4.2",
     "raven-js": "^3.26.2",
